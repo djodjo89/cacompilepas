@@ -13,7 +13,7 @@ use App\Connexion;
 use App\Controller\DefaultController;
 
 $connexion = new Connexion())::init();
-$controller = new Controller($connexion);
+$controller = new DefaultController($connexion);
 $controller->redirect();
 
 ?>
