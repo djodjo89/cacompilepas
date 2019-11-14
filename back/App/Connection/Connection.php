@@ -62,7 +62,7 @@ oui, bisous <3
 
 
 BONNE NUIT MATHYSSS !!! 
-Oui, merci, je vais me coucher après la classe connection, promis !
+Oui, merci, je vais me coucher après la classe Connection, promis !
 On te veut en pleine forme demain
 Tu veux dire tout à l'heure ? Oui, pas de soucis !
 En effet, tout à l'heure !
@@ -79,14 +79,14 @@ Clairement, on va oui, gérer les 24h
 
 le seull probleme cest que l'on sait pas qui ecrit 
 signé : hippo
-aller bisous je coupe la connection 
+aller bisous je coupe la Connection
 <3
 <3
 
 qui controle mon pc encore ???
 
 Alexandre
-Bon bah, go corédiger la classe connection
+Bon bah, go corédiger la classe Connection
 
 Ouais, on fait puis go dormir 
 ok, ça me va
