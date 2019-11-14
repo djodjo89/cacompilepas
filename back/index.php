@@ -1,19 +1,19 @@
 <?php
 
-// Traitement erreur et sécurité
+// Error handling and security
 error_reporting(-1);
 ini_set('display_errors', 'On');
 set_error_handler("var_dump");
 define ('CONST_INCLUDE', NULL);
 
-require_once path(__DIR__ . '/../App/Connexion/Connexion.php');
-require_once path(__DIR__ . '/../App/Controller/DefaultController.php');
+require_once __DIR__ . '../Connection/Connection.php';
+require_once __DIR__ . '../Controller/DefaultController.php';
 
-use App\Connexion;
+use App\Connection;
 use App\Controller\DefaultController;
 
-$connexion = new Connexion())::init();
-$controller = new DefaultController($connexion);
+($connection = new Connection())::init();
+$controller = new DefaultController($connection);
 $controller->redirect();
 
 ?>
