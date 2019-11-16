@@ -1,5 +1,4 @@
 <?php
-
 namespace App\Controller;
 
 require_once __DIR__ . '/../Connection/Connection.php';

@@ -1,16 +1,17 @@
 <?php
-
 namespace App;
 
 if (!defined('CONST_INCLUDE'))
     die('Access Forbidden !');
 
-class Connection {
+class Connection
+{
     
     public static $bdd;
     
-    public static function init() {
-        self::$bdd = new \PDO("mysql:host=localhost;dbname=cacompilepasdb;port=3306;user=root;password=root)")
+    public static function init()
+    {
+        self::$bdd = new \PDO("mysql:host=localhost;dbname=cacompilepasdb;port=3306;user=root;password=root)");
     }
 }
 /*
