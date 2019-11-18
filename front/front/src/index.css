@@ -136,6 +136,12 @@ input {
 	height: 350px;
 }
 
+.write-message-zone {
+	height: 44px;
+	font-size: 16px;
+	background-color: #6669c8;
+}
+
 code {
   font-family: source-code-pro, Menlo, Monaco, Consolas, "Courier New",
     monospace;
