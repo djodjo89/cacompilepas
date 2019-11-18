@@ -5,6 +5,135 @@ body {
     sans-serif;
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
+  font-family: 'Quicksand', sans-serif;
+  background-color: #5757e7;
+  color: white;
+  font-size: 14px;
+}
+
+h1 {
+	font-size: 44px;
+}
+
+h2 {
+	font-size: 32px;
+}
+
+h3 {
+	font-size: 24px;
+}
+
+h4 {
+	font-size: 20px;
+}
+
+a {
+	font-size: 20px;
+	color: white;
+}
+
+a:hover {
+	color: #27276a;
+	text-decoration: none;
+}
+
+p {
+	text-align: left;
+}
+
+li {
+	text-align: left;
+	font-size: 14px;
+}
+
+.App {
+	padding-right: 0px !important;
+	margin-right: 0px !important;
+	text-align: left;
+}
+
+.App-logo {
+	width: 64px;
+	height: 48px !important;
+}
+
+.content {
+	margin-right: 0px !important;
+}
+
+#search {
+	position: absolute;
+	z-index: 0;
+	width: 250px;
+	text-indent: 16px;
+}
+
+#search-icon {
+	z-index: 1;
+	color: grey;
+	margin-left: 10px;
+}
+
+#search-placeholder {
+	margin-left: 5px;
+	font-size: 16px;
+}
+
+#user {
+	font-size: 28px;
+}
+
+input {
+	border-radius: 20px !important;
+}
+
+.course-sheet-card {
+}
+
+.course-sheet-image {
+	height: 110px;
+	width: 80px;
+}
+
+.course-sheet-presentation {
+	overflow: scroll;
+	height: 100px;
+}
+
+.top-section {
+	height: 200px;
+}
+
+.ccp-list {
+	font-size: 16px;
+	overflow: scroll;
+	height: 100px;
+}
+
+.separator {
+	height: 1px;
+	width: 150px;
+	margin-top: 20px;
+	margin-bottom: 20px;
+	border: 1px solid white;
+}
+
+.message-body {
+	position: absolute;
+}
+
+.messages-list {
+	overflow: scroll;
+	height: 350px;
+}
+
+.divider  {
+	margin-top: 24px;
+}
+
+.course-sheets-section {
+	overflow: scroll;
+	height: 350px;
 }
 
 code {

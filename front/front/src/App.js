@@ -1,11 +1,22 @@
 import React from 'react';
+import Nav from './Nav';
+import Footer from './Footer';
 import logo from './logo.svg';
+import Lobby from './Lobby';
 import './App.css';
 
 function App() {
   return (
-    <div className="App">
-      <header className="App-header">
+    <div className="App container-fluid ml-lg-4">
+      <Nav/>
+      <Lobby/>
+      <Footer/>
+    </div>
+  );
+}
+
+/*
+     <header className="App-header">
         <nav className="navbar navbar-expand-lg navbar-light bg-primary">
           <a className="navbar-brand" href="#">Navbar</a>
           <form className="form-inline my-2 my-lg-0">
@@ -34,8 +45,6 @@ function App() {
       <footer>
         <p>Copyrights</p>
       </footer>
-    </div>
-  );
-}
+*/
 
 export default App;
