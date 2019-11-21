@@ -1,5 +1,7 @@
 import React from 'react';
 import Divider from './Divider';
+import Link from './Link';
+import Action from './Action';
 import userIcon from './icon-female-user.svg';
 import exampleImage from './example.png';
 
@@ -7,8 +9,10 @@ class Lobby extends React.Component {
   render() {
     return (
       <section className="content row container-fluid">
-        <LobbyTop/>
-        <LobbyBody/>
+        <Action>
+          <LobbyTop/>
+          <LobbyBody/>
+        </Action>
       </section>
     )
   }
@@ -86,13 +90,13 @@ class Messages extends React.Component {
     this.renderMessage = this.renderMessage.bind(this);
     this.renderMessages = this.renderMessages.bind(this);
   }
-  renderMessage() {
-    return <Message/>;
+  renderMessage(key) {
+    return <Message key={ key }/>;
   }
   renderMessages() {
     let res = [];
     for (let i = 0; i < 10; i++)
-      res.push(this.renderMessage());
+      res.push(this.renderMessage(i));
     return res;
   }
   render() {
@@ -128,13 +132,13 @@ class CourseSheets extends React.Component {
     this.renderCourseSheets = this.renderCourseSheets.bind(this);
     this.renderCourseSheet = this.renderCourseSheet.bind(this);
   }
-  renderCourseSheet() {
-    return <CourseSheet/>;
+  renderCourseSheet(key) {
+    return <CourseSheet key={ key }/>;
   }
   renderCourseSheets() {
     let res = [];
     for (let i = 0; i < 10; i++)
-      res.push(this.renderCourseSheet());
+      res.push(this.renderCourseSheet(i));
     return res;
   }
   render() {
@@ -151,14 +155,14 @@ class CourseSheet extends React.Component {
     return (
       <div className="course-sheet-card row mt-5">
         <div className="col-lg-2 mt-lg-4 pl-lg-0 pr-lg-0">
-          <img className="course-sheet-image rounded" src={ exampleImage }/>
+          <img className="course-sheet-image rounded" src={ exampleImage } alt="Course sheet"/>
         </div>
         <div className="col-lg-10">
           <h3 className="text-left mt-lg-0">Titre de la fiche</h3>
           <div className="course-sheet-presentation ml-lg-1">
            <p className="course-sheet-description">Le Lorem Ipsum est simplement du faux texte employé dans la composition et la mise en page avant impression. Le Lorem Ipsum est le faux texte standard de l'imprimerie depuis les années 1500, quand un imprimeur anonyme assembla ensemble des morceaux de texte pour réaliser un livre spécimen de polices de texte.</p>
            <footer className="pl-lg-0">
-              <a href="#" className="col-lg-6 text-lg-left pl-lg-0 d-block mt-lg-2">Lien vers la fiche</a>
+              <Link to='/' content='Lien vers la fiche' className="col-lg-6 text-lg-left pl-lg-0 d-block mt-lg-2"/>
               <h4 className="col-lg-6 text-lg-right">Mathys</h4>
            </footer>
           </div>

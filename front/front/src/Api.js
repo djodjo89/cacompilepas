@@ -5,7 +5,7 @@ class Api extends React.Component {
 		super(props);
 		this.state = {
 			domain: 'localhost:80',
-			route: '' == this.props.route ? '/' : this.props.route,
+			route: '' === this.props.route ? '/' : this.props.route,
 			data: null
 		}
 		this.fetch = this.fetch.bind(this);

@@ -1,17 +1,23 @@
 import React from 'react';
 import Nav from './Nav';
 import Footer from './Footer';
-import logo from './logo.svg';
 import Lobby from './Lobby';
-import Api from './Api';
+import Router from './Router';
+import Route from './Route';
 import './App.css';
 
 function App() {
   return (
     <div className="App container-fluid ml-lg-4">
-      <Api route='/connexion'/>
       <Nav/>
-      <Lobby/>
+      <Router>
+        <Route path='/lobby'>
+          <Lobby/>
+        </Route>
+        <Route path='/connexion'>
+          <p>Connexion</p>
+        </Route>
+      </Router>
       <Footer/>
     </div>
   );
