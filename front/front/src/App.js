@@ -1,24 +1,35 @@
-import React from 'react';
+import React from "react";
+import {
+  BrowserRouter as Router,
+  Switch,
+  Route,
+  Link
+} from "react-router-dom";
 import Nav from './Nav';
 import Footer from './Footer';
-import Lobby from './Lobby';
-import Router from './Router';
-import Route from './Route';
+import Lobbys from './Lobby';
+import NotFound from './NotFound';
 import './App.css';
 
 function App() {
   return (
     <div className="App container-fluid ml-lg-4">
-      <Nav/>
+      <Nav />
       <Router>
-        <Route path='/lobby'>
-          <Lobby/>
-        </Route>
-        <Route path='/connexion'>
-          <p>Connexion</p>
-        </Route>
+        <Switch>
+          <Route exact path='/'>
+            <h2>Accueil</h2>
+          </Route>
+          <Route path='/lobby' component={ Lobbys } />
+          <Route path='/connexion'>
+            <h2>Connexion</h2>
+          </Route>
+          <Route path='*'>
+            <NotFound/>
+          </Route>
+        </Switch>
       </Router>
-      <Footer/>
+      <Footer />
     </div>
   );
 }

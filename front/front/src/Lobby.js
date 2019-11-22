@@ -1,21 +1,39 @@
 import React from 'react';
 import Divider from './Divider';
-import Link from './Link';
-import Action from './Action';
+import {
+  BrowserRouter as Router,
+  Switch,
+  Route,
+  Link,
+  useRouteMatch,
+  useParams
+} from "react-router-dom";
 import userIcon from './icon-female-user.svg';
 import exampleImage from './example.png';
 
-class Lobby extends React.Component {
-  render() {
+const Lobbys = () => {
+  const match = useRouteMatch();
     return (
-      <section className="content row container-fluid">
-        <Action>
-          <LobbyTop/>
-          <LobbyBody/>
-        </Action>
-      </section>
-    )
-  }
+        <Switch>
+          <Route path={`${match.path}/:lobbyId`}>
+            <Lobby/>
+          </Route>
+          <Route path={match.path}>
+            <h3>Veuillez choisir un lobby</h3>
+          </Route>
+        </Switch>
+    );
+}
+
+const Lobby = () => {
+  const { lobbyId } = useParams();
+  return (
+    <section className="content row container-fluid">
+      <h3>id du lobby : { lobbyId } </h3>
+      <LobbyTop/>
+      <LobbyBody/>
+    </section>
+  );
 }
 
 class LobbyTop extends React.Component {
@@ -162,7 +180,7 @@ class CourseSheet extends React.Component {
           <div className="course-sheet-presentation ml-lg-1">
            <p className="course-sheet-description">Le Lorem Ipsum est simplement du faux texte employé dans la composition et la mise en page avant impression. Le Lorem Ipsum est le faux texte standard de l'imprimerie depuis les années 1500, quand un imprimeur anonyme assembla ensemble des morceaux de texte pour réaliser un livre spécimen de polices de texte.</p>
            <footer className="pl-lg-0">
-              <Link to='/' content='Lien vers la fiche' className="col-lg-6 text-lg-left pl-lg-0 d-block mt-lg-2"/>
+              <a href='/' content='Lien vers la fiche' className="col-lg-6 text-lg-left pl-lg-0 d-block mt-lg-2"/>
               <h4 className="col-lg-6 text-lg-right">Mathys</h4>
            </footer>
           </div>
@@ -182,4 +200,4 @@ class WriteMessageZone extends React.Component {
   }
 }
 
-export default Lobby;
+export default Lobbys;
