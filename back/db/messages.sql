@@ -1,9 +1,4 @@
 #------------------------------------------------------------
-#        Script MySQL.
-#------------------------------------------------------------
-
-
-#------------------------------------------------------------
 # Table: _User
 #------------------------------------------------------------
 
@@ -12,8 +7,6 @@ CREATE TABLE _User(
         pseudo       Varchar (1024) NOT NULL ,
         name         Varchar (1024) NOT NULL ,
         first_name   Varchar (1024) NOT NULL ,
-        id_privilege Int  Auto_increment  NOT NULL ,
-        id_right     Int  Auto_increment  NOT NULL ,
         password     Varchar (64) NOT NULL
 	,CONSTRAINT _User_PK PRIMARY KEY (id_user)
 )ENGINE=InnoDB;
@@ -40,10 +33,8 @@ CREATE TABLE _Message(
         content    Varchar (1024) NOT NULL ,
         send_date  Date NOT NULL ,
         id_sender  Int  Auto_increment  NOT NULL ,
-        id_user    Int NOT NULL ,
         id_lobby   Int NOT NULL
 	,CONSTRAINT _Message_PK PRIMARY KEY (id_message)
-
 	,CONSTRAINT _Message__User_FK FOREIGN KEY (id_user) REFERENCES _User(id_user)
 	,CONSTRAINT _Message__Lobby0_FK FOREIGN KEY (id_lobby) REFERENCES _Lobby(id_lobby)
 )ENGINE=InnoDB;

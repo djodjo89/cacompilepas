@@ -1,0 +1,63 @@
+version: "3"
+
+services:
+    server:
+        image: nginx:latest
+        expose:
+            - ${APP_SERVER_PORT}
+        environment:
+            API_HOST: ${API_HOST}
+            API_SERVER_PORT: ${APP_SERVER_PORT}
+        ports: 
+            - ${APP_SERVER_PORT}:${APP_SERVER_PORT}
+        volumes:
+            - ./back:/var/www/html
+            - ./back/site-2.conf:/etc/nginx/conf.d/default.conf
+        links:
+            - php
+        restart: 'always'
+    php:
+        build: ./back
+        ports:
+            - "9000:9000"
+        volumes:
+            - ./back:/var/www/html
+        links:
+            - db
+        container_name: php
+        restart: 'always'
+    db:
+        image: mysql:5.7
+        volumes:
+            - ~/mysql:/var/lib/mysql
+        ports:
+            - "3306:3306"
+        environment:
+            MYSQL_DATABASE: cacompilepasdb
+            MYSQL_USER: root
+            MYSQL_PASSWORD: root
+            MYSQL_ROOT_PASSWORD: root
+        restart: 'always'
+    client:
+        build: ./front
+        environment:
+            - REACT_APP_PORT=${REACT_APP_PORT}
+        expose:
+            - ${REACT_APP_PORT}
+        ports:
+            - ${REACT_APP_PORT}:${REACT_APP_PORT}
+        volumes:
+            - ./front:/usr/src/app/client
+        links:
+            - server
+        command: npm run start
+        restart: 'always'
+    phpmyadmin:
+          image: phpmyadmin/phpmyadmin
+          links:
+              - db
+          ports:
+              - "8181:80"
+          environment:
+              MYSQL_USERNAME: root
+              MYSQL_ROOT_PASSWORD: root
