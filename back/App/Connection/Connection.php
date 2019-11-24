@@ -11,7 +11,7 @@ class Connection
     
     public static function init()
     {
-        self::$bdd = new \PDO("mysql:host=localhost;dbname=cacompilepasdb;port=3306;user=root;password=root)");
+        self::$bdd = new \PDO('mysql:host=db;dbname=cacompilepasdb;', 'root', 'root');
     }
 }
 
@@ -145,4 +145,5 @@ en effet
 La sécurité n'est pas au rdv regarde 
 oui
 non attend je laisse ça en commentaire pour le souvenir !
-*/
+ */
+
