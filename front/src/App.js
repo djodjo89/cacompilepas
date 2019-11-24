@@ -8,6 +8,7 @@ import {
 import Nav from './Nav';
 import Footer from './Footer';
 import Lobbys from './Lobby';
+import Connection from './Connection';
 import NotFound from './NotFound';
 import './App.css';
 
@@ -22,7 +23,7 @@ function App() {
           </Route>
           <Route path='/lobby' component={ Lobbys } />
           <Route path='/connexion'>
-            <h2>Connexion</h2>
+            <Connection/>
           </Route>
           <Route path='*'>
             <NotFound/>
