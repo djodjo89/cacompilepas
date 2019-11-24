@@ -1,17 +1,39 @@
 import React from 'react';
 import Divider from './Divider';
+import {
+  BrowserRouter as Router,
+  Switch,
+  Route,
+  Link,
+  useRouteMatch,
+  useParams
+} from "react-router-dom";
 import userIcon from './icon-female-user.svg';
 import exampleImage from './example.png';
 
-class Lobby extends React.Component {
-  render() {
+const Lobbys = () => {
+  const match = useRouteMatch();
     return (
-      <section className="content row container-fluid">
-        <LobbyTop/>
-        <LobbyBody/>
-      </section>
-    )
-  }
+        <Switch>
+          <Route path={`${match.path}/:lobbyId`}>
+            <Lobby/>
+          </Route>
+          <Route path={match.path}>
+            <h3>Veuillez choisir un lobby</h3>
+          </Route>
+        </Switch>
+    );
+}
+
+const Lobby = () => {
+  const { lobbyId } = useParams();
+  return (
+    <section className="content row container-fluid">
+      <h3>id du lobby : { lobbyId } </h3>
+      <LobbyTop/>
+      <LobbyBody/>
+    </section>
+  );
 }
 
 class LobbyTop extends React.Component {
@@ -86,13 +108,13 @@ class Messages extends React.Component {
     this.renderMessage = this.renderMessage.bind(this);
     this.renderMessages = this.renderMessages.bind(this);
   }
-  renderMessage() {
-    return <Message/>;
+  renderMessage(key) {
+    return <Message key={ key }/>;
   }
   renderMessages() {
     let res = [];
     for (let i = 0; i < 10; i++)
-      res.push(this.renderMessage());
+      res.push(this.renderMessage(i));
     return res;
   }
   render() {
@@ -128,13 +150,13 @@ class CourseSheets extends React.Component {
     this.renderCourseSheets = this.renderCourseSheets.bind(this);
     this.renderCourseSheet = this.renderCourseSheet.bind(this);
   }
-  renderCourseSheet() {
-    return <CourseSheet/>;
+  renderCourseSheet(key) {
+    return <CourseSheet key={ key }/>;
   }
   renderCourseSheets() {
     let res = [];
     for (let i = 0; i < 10; i++)
-      res.push(this.renderCourseSheet());
+      res.push(this.renderCourseSheet(i));
     return res;
   }
   render() {
@@ -151,7 +173,7 @@ class CourseSheet extends React.Component {
     return (
       <div className="course-sheet-card row mt-5">
         <div className="col-lg-2 mt-lg-4 pl-lg-0 pr-lg-0">
-          <img className="course-sheet-image rounded" src={ exampleImage } alt='cat'/>
+          <img className="course-sheet-image rounded" src={ exampleImage } alt="Course sheet"/>
         </div>
         <div className="col-lg-10">
           <h3 className="text-left mt-lg-0">Titre de la fiche</h3>
@@ -178,4 +200,4 @@ class WriteMessageZone extends React.Component {
   }
 }
 
-export default Lobby;
+export default Lobbys;
