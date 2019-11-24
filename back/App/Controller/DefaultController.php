@@ -15,21 +15,28 @@ class DefaultController
     }
 
     public function redirect() {
-        $params = fetchParamsFrom_GET();
-        switch($_GET['module']) {
+        $params = fetchParamsFromRequest($_GET + $_POST);
+        switch($params['module']) {
             case 'coursesheet':
-                $courseSheetModule = new CourseSheetModule($this->connexion, $params);
-                $courseSheetModule->getController()->run();
+                    $module = new CourseSheetModule($this->connexion, $params);
+                break;
+
+            case 'connection':
+                if (isset($params['pseudo']) && isset($params['password']))
+                    $module = new ConnectionModule($this->connexion, $params);
+                break;
+
+            default:
+                throw new \Exception('No valid module was provided');
                 break;
         }
+        $module->getController()->run();
     }
-    public function fetchParamsFrom_GET(): array
+    public function fetchParamsFromRequest(array $requestMethod): array
     {
         $params = [];
-        foreach ($_GET as $key => $value) {
-            if ('module' !== $key)
-                $params[$key] = $value;
-        }
+        foreach ($requestMethod as $key => $value)
+            $params[$key] = $value;
         return $params;
     }
 }
