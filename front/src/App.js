@@ -15,7 +15,7 @@ import './App.css';
 function App() {
   return (
     <div className="App container-fluid ml-lg-4">
-      <Nav />
+      <Nav/>
       <Router>
         <Switch>
           <Route exact path='/'>
@@ -30,7 +30,6 @@ function App() {
           </Route>
         </Switch>
       </Router>
-      <Footer />
     </div>
   );
 }

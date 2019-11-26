@@ -1,11 +1,12 @@
 import React from 'react';
+import icon from './new-logo.png';
 import Request from './Request';
 class Nav extends React.Component {
   render() {
     return (
       <nav className="row mt-3">
         <div className="col-lg-2 col-sm-4 mr-lg-0 mr-sm-0">
-          <a id='home-icon' href='/' content='' className='glyphicon glyphicon-home col-lg-1 col-sm-2 pl-lg-0 pl-lg-0 pf-sm-0 mr-lg-4 mr-sm-4'/>
+          <a id='home-icon' href='/' content='' className='glyphicon glyphicon-home col-lg-1 col-sm-2 pl-lg-0 pl-lg-0 pf-sm-0 mr-lg-4 mr-sm-4'></a>
           <a id="home-link" href='/' className="mt-1 col-lg-1 col-sm-2 pl-lg-1 pl-sm-2 ml-lg-0">caCompilePas</a>
         </div>
         <form className="form-inline my-2 my-lg-0 col-lg-5 col-sm-5 offset-lg-1 offset-sm-0">
