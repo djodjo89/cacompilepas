@@ -33,49 +33,56 @@ docker ps
 
 ## Git
 
-#### To fork a project
-1 Go on github project's page and click on "fork" in the top-right corner
-2 Then clone project somewhere
+#### Fork a project
+Go on github project's page and click on "fork" in the top-right corner
+Then clone project in a directory
 ```
 git clone [your_new_github_fork_address]
 ```
-3 Move to the project folder
+Move to the project folder
 ```
 cd cacompilepas
 ```
-4 Tell git to follow the official repository
+Tell git to follow the official remote repository
 ```
 git remote add upstream [official_github_project_address]
 ```
-5 That's it ! Now create, edit or delete files :clap:
-  When your feature is ready to be tested, you can make a PR (pull request) :wink:
+Create a branch with the name of your pr
+```
+git checkout -b [your_pr_reference]
+```
+Example
+```
+git checkout -b CCP-45
+```
+That's it ! Now create, edit or delete files :clap:
+When your feature is ready to be tested, you can make a PR (pull request) :wink:
 
-Don't forget to make a
+Don't forget to check your git's state sometimes with
 ```
 git status
 ```
-sometimes, to check your git's state at a given moment
 
-#### To update local code with master
-6 Fetch and merge data from your master
+#### Update local code with master
+Fetch and merge data from your master
 ```
 git pull origin master
 ```
-7 If necessary, resolve conflicts
+If necessary, resolve conflicts
 
 #### To make a PR, follow these steps
-8 Add changes that you want to stage (file or directory addition, modification or deletion)
+Add changes that you want to stage (file or directory addition, modification or deletion
 ```
 git add [file_or_directory]
 ```
 ***or***
-9 To see all modifications you did to those files (recommended)
+To see all modifications you did to those files (recommended)
   Press 'y' to accept, 'n' to deny
 ```
 git add -p
 ```
 ***or***
-**More risky**, add all files
+**More risky**, add all files (make a git add -p before)
 ```
 git add .
 ```
@@ -84,35 +91,39 @@ Then you can make a
 ```
 git checkout [file]
 ```
-10 Stage your changes
+Stage your changes
 ```
-git commit -m "[PR_reference] [PR_type]/[PR_epic]([PR_domain])
+git commit -m "[PR_reference] [PR_type]/[PR_epic]([PR_domain]): [pr_description]"
 ```
-11 Push your changes on your branche's origin to submit a pull request
-   **/!\ Never push on master ! /!\**
-   _Your branch name should be the PR_reference_
+Example
+```
+git commit -m "CCP-45 feat/front(homepage): change background color and font size"
+```
+Push your changes on your branche's origin to submit a pull request
+**/!\ Never push on master ! /!\**
+_Your branch name should be the PR_reference_
 ```
 git push origin [your_branch_name]
 ```
-12 Then on GitHub
+Then on GitHub
 
-13 Go on the project's repository if everything went good, you should will see a yellow section appeared
+Go on the project's repository if everything went good, you should will see a yellow section appeared
 
-14 Click on "Compare and pull request"
+Click on "Compare and pull request"
 
-15 Read carefully your entire commit code and compare it to the pre-commit one
+Read carefully your entire commit code and compare it to the pre-commit one
 
-16 If you see errors or strange behaviors, make necessary modifications and repeat steps 8 to 15
+If you see errors or strange behaviors, make necessary modifications, a new commit and push one more time
 
-17 If necessary, leave a comment with supplementary information
+If necessary, leave a comment with complementary information
 
-18 In the top-right corner, add some reviewers
+In the top-right corner, add some reviewers
 
-19 Assign yourself
+Assign yourself
 
-20 Choose a representative label
+Choose a representative label
 
-21 Click on "Create pull request"
+Click on "Create pull request"
 
-22 Check regularly reviewers' comments to see what you should or must correct or improve
+Check regularly reviewers' comments to see what you should or must correct or improve
 
