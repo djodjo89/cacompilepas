@@ -95,15 +95,24 @@ git commit -m "[PR_reference] [PR_type]/[PR_epic]([PR_domain])
 git push origin [your_branch_name]
 ```
 12 Then on GitHub
-13 Go on the project's repository
-   If everything went good, you should will see a yellow section appeared
+
+13 Go on the project's repository if everything went good, you should will see a yellow section appeared
+
 14 Click on "Compare and pull request"
+
 15 Read carefully your entire commit code and compare it to the pre-commit one
-16 If you see errors or strange behaviors, make necessary modifications and
-   Repeat steps 8 to 15
+
+16 If you see errors or strange behaviors, make necessary modifications and repeat steps 8 to 15
+
 17 If necessary, leave a comment with supplementary information
+
 18 In the top-right corner, add some reviewers
+
 19 Assign yourself
+
 20 Choose a representative label
+
 21 Click on "Create pull request"
+
 22 Check regularly reviewers' comments to see what you should or must correct or improve
+
