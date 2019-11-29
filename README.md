@@ -34,8 +34,7 @@ docker ps
 ## Git
 
 #### Fork a project
-Go on github project's page and click on "fork" in the top-right corner
-Then clone project in a directory
+Go on github project's page and click on "fork" in the top-right corner, then clone project in a directory
 ```
 git clone [your_new_github_fork_address]
 ```
@@ -100,7 +99,9 @@ Example
 git commit -m "CCP-45 feat/front(homepage): change background color and font size"
 ```
 Push your changes on your branche's origin to submit a pull request
-**/!\ Never push on master ! /!\**
+
+**/!\ Never push on master ! /!\ **
+
 _Your branch name should be the PR_reference_
 ```
 git push origin [your_branch_name]
