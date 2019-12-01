@@ -3,30 +3,42 @@ import Request from './Request';
 import logo from './new-logo.svg';
 import Svg from './Svg.tsx';
 
-let x = 0, y = 0;
 let count = 0;
+const maxLimit = 20;
+const minLimit = 0;
+let speed;
 let up = true;
-function draw() {
-  if (5 > count && true == up) {
-    document.getElementById('svg8').children[1].children[1].transform.baseVal[0].matrix.e += 0;
-    document.getElementById('svg8').children[1].children[1].transform.baseVal[0].matrix.f -= 1;
-    count++;
-    console.log(1);
+function moveSvg() {
+  speed = 0.5;
+  if (true === up) {
+    if (maxLimit > count) {
+      if (maxLimit - 5 < count) {
+        speed = 0.1;
+      }
+      document.getElementById('svg8').children[1].children[1].transform.baseVal[0].matrix.e += 0;
+      document.getElementById('svg8').children[1].children[1].transform.baseVal[0].matrix.f -= speed;
+      count++;
+    }
+    if (maxLimit === count) {
+      up = false;
+    }
   }
-  else if (5 == count) {
-    up = false;
+  else if (false === up) {
+    if (minLimit < count) {
+      if (minLimit + 5 > count) {
+        speed = 0.1;
+      }
+      document.getElementById('svg8').children[1].children[1].transform.baseVal[0].matrix.e += 0;
+      document.getElementById('svg8').children[1].children[1].transform.baseVal[0].matrix.f += speed;
+      count--;
+      
+    }
+    if (minLimit === count) {
+      up = true;
+    }
   }
-  else if (0 < count && false == up) {
-    console.log(2);
-    document.getElementById('svg8').children[1].children[1].transform.baseVal[0].matrix.e += 0;
-    document.getElementById('svg8').children[1].children[1].transform.baseVal[0].matrix.f -= 1;
-    count--;
-  }
-  else {
-    up = true;
-  } 
 }
-setInterval(draw, 1000);
+setInterval(moveSvg, 50);
 
 class Nav extends React.Component {
   render() {
