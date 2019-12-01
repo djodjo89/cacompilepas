@@ -1,5 +1,33 @@
 import React from 'react';
 import Request from './Request';
+import logo from './new-logo.svg';
+import Svg from './Svg.tsx';
+
+let x = 0, y = 0;
+let count = 0;
+let up = true;
+function draw() {
+  if (5 > count && true == up) {
+    document.getElementById('svg8').children[1].children[1].transform.baseVal[0].matrix.e += 0;
+    document.getElementById('svg8').children[1].children[1].transform.baseVal[0].matrix.f -= 1;
+    count++;
+    console.log(1);
+  }
+  else if (5 == count) {
+    up = false;
+  }
+  else if (0 < count && false == up) {
+    console.log(2);
+    document.getElementById('svg8').children[1].children[1].transform.baseVal[0].matrix.e += 0;
+    document.getElementById('svg8').children[1].children[1].transform.baseVal[0].matrix.f -= 1;
+    count--;
+  }
+  else {
+    up = true;
+  } 
+}
+setInterval(draw, 1000);
+
 class Nav extends React.Component {
   render() {
     return (
@@ -7,6 +35,8 @@ class Nav extends React.Component {
         <div className="col-lg-2 col-sm-4 mr-lg-0 mr-sm-0">
           <a id='home-icon' href='/' content='' className='glyphicon glyphicon-home col-lg-1 col-sm-2 pl-lg-0 pl-lg-0 pf-sm-0 mr-lg-4 mr-sm-4'/>
           <a id="home-link" href='/' className="mt-1 col-lg-1 col-sm-2 pl-lg-1 pl-sm-2 ml-lg-0">caCompilePas</a>
+          <img src={ logo } alt="Logo" style={{ width: '100px', height: '100px' }}/>
+          <Svg/>
         </div>
         <form className="form-inline my-2 my-lg-0 col-lg-5 col-sm-5 offset-lg-1 offset-sm-0">
           <label id="search-icon" htmlFor="search">
