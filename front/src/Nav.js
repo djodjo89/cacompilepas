@@ -1,5 +1,5 @@
 import React from 'react';
-import icon from './new-logo.png';
+import icon from './logos-2-usable.svg';
 import Request from './Request';
 class Nav extends React.Component {
   render() {
@@ -18,6 +18,7 @@ class Nav extends React.Component {
         </form>
         <Request method='POST' route='/connection/login' data={{ 'pseudo': 'toto', 'password': 'pass' }}/>
         <span id="user" className="glyphicon glyphicon-user col-lg-1 col-sm-2 mt-1 pr-lg-5 pr-sm-1 pl-lg-0 pl-sm-0"></span>
+        <img src={ icon } alt="Logo"/>
       </nav>
     )
   }
