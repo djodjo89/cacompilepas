@@ -1,6 +1,4 @@
 import React from 'react';
-import Divider from './Divider';
-
 
 class Connection extends React.Component {
     render(){
@@ -43,7 +41,7 @@ class PasswordInput extends React.Component {
 class ButtonConnection extends React.Component {
     render(){
         return(
-            <button type="button" class="btn btn-default btn-transparent mt-0 rounded-1 custom">Connexion </button>
+            <button type="button" className="btn btn-default btn-transparent mt-0 rounded-1 custom">Connexion </button>
         )
     }
 }

@@ -42,4 +42,21 @@
   margin-left: 50px;
   width: 100px;
   height: 100px;
+html {
+  position: relative;
+  min-height: 100%;
+}
+
+body {
+  margin: 0 0 15vh;
+}
+
+footer {
+  position: absolute;
+  padding-bottom: 10vh;
+  left: 0;
+  bottom: 0;
+  height: 15vh;
+  width: 100%;
+  overflow: hidden;
 }
