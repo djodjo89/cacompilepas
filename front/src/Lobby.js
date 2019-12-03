@@ -1,10 +1,8 @@
 import React from 'react';
 import Divider from './Divider';
 import {
-  BrowserRouter as Router,
   Switch,
   Route,
-  Link,
   useRouteMatch,
   useParams
 } from "react-router-dom";
