@@ -1,4 +1,5 @@
 import React from 'react';
+import icon from './logos-2-usable.svg';
 class Nav extends React.Component {
   render() {
     return (
@@ -15,6 +16,7 @@ class Nav extends React.Component {
           <input id="search" className="form-control col-lg-12 w-75 mr-sm-2" type="search" aria-label="Search" />
         </form>
         <span id="user" className="glyphicon glyphicon-user col-lg-1 col-sm-2 mt-1 pr-lg-5 pr-sm-1 pl-lg-0 pl-sm-0"></span>
+        <img src={ icon } alt="Logo"/>
       </nav>
     )
   }

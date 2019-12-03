@@ -37,3 +37,22 @@
   color: white;
   background-color: rgba(255,255,255,0.2);
 }
+
+html {
+  position: relative;
+  min-height: 100%;
+}
+
+body {
+  margin: 0 0 15vh;
+}
+
+footer {
+  position: absolute;
+  padding-bottom: 10vh;
+  left: 0;
+  bottom: 0;
+  height: 15vh;
+  width: 100%;
+  overflow: hidden;
+}
