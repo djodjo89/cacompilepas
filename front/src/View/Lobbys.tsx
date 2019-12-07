@@ -8,22 +8,14 @@ import userIcon from '../img/icon-female-user.svg';
 import exampleImage from '../img/example.png';
 
 class Lobbys extends React.Component {
-    private readonly param: number;
-    private readonly match: any;
-
-    public constructor(props: any) {
-        super(props);
-        this.param = parseInt(window.location.href.split(/\//)[4]);
-        this.match = '/' + window.location.href.split(/\//)[3];
-    }
 
     public render(): ReactNode {
         return (
             <Switch>
-                <Route path={`${this.match}/:lobbyId`}>
-                    <Lobby lobbyId={this.param}/>
+                <Route path={`${this.context.match.path}/:lobbyId`}>
+                    <Lobby/>
                 </Route>
-                <Route path={this.match}>
+                <Route path={this.context.match.path}>
                     <h3>Veuillez choisir un lobby</h3>
                 </Route>
             </Switch>
@@ -31,16 +23,12 @@ class Lobbys extends React.Component {
     }
 }
 
-interface LobbyProps {
-    lobbyId: number
-}
-
-class Lobby extends React.Component<LobbyProps, {}> {
+class Lobby extends React.Component<{}, {}> {
 
     public render(): ReactNode {
         return (
             <section className="content row container-fluid">
-                <h3>id du lobby : {this.props.lobbyId} </h3>
+                <h3>id du lobby : {this.context.params} </h3>
                 <LobbyTop/>
                 <LobbyBody/>
             </section>

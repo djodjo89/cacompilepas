@@ -3,7 +3,7 @@ import {
   Route,
   Redirect,
 } from 'react-router-dom';
-import Context from "../Global/Context";
+import AuthContext from "../Global/AuthContext";
 
 interface PrivateRouteProps {
   path: string,
@@ -21,12 +21,12 @@ class PrivateRoute extends React.PureComponent<PrivateRouteProps, {}> {
   }
 
   public handleStatus(): ReactNode {
-    return <Context.Consumer>
+    return <AuthContext.Consumer>
       {({token}) => {
         this.status = '' !== token ? 'connected' : 'not connected';
         return <h1>calu</h1>;
       }}
-    </Context.Consumer>
+    </AuthContext.Consumer>
   }
 
   public render(): ReactNode {

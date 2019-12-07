@@ -186,19 +186,20 @@ CREATE EVENT delete_token_event
 ON SCHEDULE EVERY 1 MINUTE ENABLE
         DO 
         DELETE FROM ccp_token
-        WHERE last_update_date < DATE_SUB(NOW(), INTERVAL 1 MINUTE);
+        WHERE last_update_date < DATE_SUB(NOW(), INTERVAL 20 MINUTE)
+        OR creation_date < DATE_SUB(NOW(), INTERVAL 1 DAY);
 
 /*************** TESTING DATA ************/
 
 
-/******   USER    ********/
+/******   ccp_user    ********/
 
 
 INSERT INTO ccp_user VALUES (1,'tomtom','Thomas','Bonnet','root', 'thomas@cacompilepas.com');
 INSERT INTO ccp_user VALUES (2,'nana','nabila','benattia','root', 'nabila@cacompilepas.com');
 
 
-/******   lobby    ********/
+/******   ccp_lobby    ********/
 
 INSERT INTO ccp_lobby VALUES (1,'JAVA 8','Découvrez les nouveautes de JAVA 8 , entre lambda , hmap et compagnie vous ne serez pas decu',TRUE);
 INSERT INTO ccp_lobby VALUES (2,'Bases de lassembleur','Plongez dans le monde infernal de lassembleur , un monde ou vous devez faire 10 lignes de codes juste pour faire un print',TRUE);
@@ -206,13 +207,13 @@ INSERT INTO ccp_lobby VALUES (3,'Vim est-il facile a apprendre ? ','Retrouver le
 INSERT INTO ccp_lobby VALUES (4,'JAVASCRIPT ','aucun commentaire',TRUE);
 
 
-/******   coursesheet    ********/
+/******   ccp_coursesheet    ********/
 
 INSERT INTO ccp_coursesheet VALUES (1,'Les Lambdas','2019-11-24','ftp://leslambdas.pdf',1);
 INSERT INTO ccp_coursesheet VALUES (2,'les registres','2042-12-24','ftp://assembleur.pdf',2);
 
 
-/******   MESSAGE    ********/
+/******   ccp_message    ********/
 
 INSERT INTO ccp_message VALUES (1,'hey les gars.. ca compile pas , vous pouvez maider ?','2019-11-24',1,2);
 

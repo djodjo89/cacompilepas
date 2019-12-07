@@ -1,8 +1,8 @@
-import React from 'react';
+import React, {ReactNode} from 'react';
 import Svg from './Svg';
 
 class Nav extends React.Component {
-  render() {
+  public render(): ReactNode {
     return (
       <nav className="row mt-3">
         <div className="col-lg-2 col-sm-4 mr-lg-0 mr-sm-0">

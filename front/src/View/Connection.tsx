@@ -1,28 +1,24 @@
 import React, {ChangeEvent, FormEvent, ReactNode} from 'react';
 import Request from '../API/Request';
-import Context from '../Global/Context';
+import AuthContext from '../Global/AuthContext';
 
-class Connection extends React.Component<{}, { status: string }> {
+class Connection extends React.Component<{}, { status: string, token: string }> {
     private email: string;
     private password: string;
-    private token: string;
 
     constructor(props: any) {
         super(props);
         this.email = '';
         this.password = '';
-        this.token = '';
         this.state = {
-            status: ''
-        };
-        React.createContext({
-            token: ''
-        });
+            status: '',
+            token: '',
+        }
+        Connection.contextType = AuthContext;
         this.handleEmailChange = this.handleEmailChange.bind(this);
         this.handlePasswordChange = this.handlePasswordChange.bind(this);
         this.submitForm = this.submitForm.bind(this);
         this.updateConnectStatus = this.updateConnectStatus.bind(this);
-        this.changeToken = this.changeToken.bind(this);
         this.setState = this.setState.bind(this);
     }
 
@@ -38,73 +34,70 @@ class Connection extends React.Component<{}, { status: string }> {
 
     public updateConnectStatus(data: any): void {
         this.setState({status: '' + data['connected']});
+        this.setState({token: data['token']});
+        localStorage.setItem('token', JSON.stringify(data['token']));
     }
 
-    public submitForm(event: FormEvent<HTMLFormElement>): ReactNode {
+    public submitForm(event: FormEvent<HTMLFormElement>): void {
         event.preventDefault();
-        console.log(this.token);
         new Request('/connection/login', 'POST', {
             email: this.email,
             password: this.password
         }, this.updateConnectStatus);
-        this.token = 'ieo867YI3Oh80RFY';
-        return <div>
-            <Context.Provider value={{
-                token: this.token
-            }}>
-            </Context.Provider>
-            <Context.Consumer>
-                {(context) => {
-                        this.changeToken(context);
-                        return <p>{context.token}</p>
-                }}
-            </Context.Consumer>
-        </div>;
     }
 
 
     // Commenter !!!
 
-    public changeToken(obj: any): void {
-        obj.token = 'TEI°93_R398YHIO3';
+
+
+
+
+
+
+
+
+    componentDidUpdate() {
+        this.context.setToken = this.context.setToken.bind(this);
+        this.context.setToken('mon token !!');
     }
 
     render(): ReactNode {
         return (
-                <section className="content row connection-bloc">
-                    <Context.Consumer>
-                        {
-                            (context) => {
-                                this.changeToken(context);
-                                return <h1 className={"col-lg-5 col-sm-5 offset-lg-4 offset-sm-2"}>{this.token}</h1>
-                            }
+            <section className="content row connection-bloc">
+                <AuthContext.Consumer>
+                    {
+                        (context) => {
+                            // context.setToken('mon token : "');
+                            return <h1 className={"col-lg-5 col-sm-5 offset-lg-4 offset-sm-2"}>{context.token}</h1>
                         }
-                    </Context.Consumer>
-                    <div className="container">
-                        <div className={"row"}>
-                            {(() => {
-                                if ('true' === this.state.status) {
-                                    // @ts-ignore
-                                    window.location = document.referrer;
-                                } else if ('false' === this.state.status) {
-                                    return <div
-                                        className="col-lg-3 col-sm-11 offset-lg-4 mt-0 mb-sm-3 rounded-1 connection-error">Identifiants
-                                        incorrects</div>;
-                                }
-                            })()}
-                        </div>
-                        <div className={"row"}>
-                            <form className="col-lg-4 col-lg-offset-4 col-sm" onSubmit={this.submitForm}>
-                                <ConnectionInput id={"InputMail"} inputType={"email"} placeholder={"Adresse email"}
-                                                 className={""} onChange={this.handleEmailChange}/>
-                                <ConnectionInput id={"InputPassword"} inputType={"password"}
-                                                 placeholder={"Mot de passe"}
-                                                 className={"custom"} onChange={this.handlePasswordChange}/>
-                                <ButtonConnection/>
-                            </form>
-                        </div>
+                    }
+                </AuthContext.Consumer>
+                <div className="container">
+                    <div className={"row"}>
+                        {(() => {
+                            if ('true' === this.state.status) {
+                                // @ts-ignore
+                                window.location = document.referrer;
+                            } else if ('false' === this.state.status) {
+                                return <div
+                                    className="col-lg-3 col-sm-11 offset-lg-4 mt-0 mb-sm-3 rounded-1 connection-error">Identifiants
+                                    incorrects</div>;
+                            }
+                        })()}
                     </div>
-                </section>
+                    <div className={"row"}>
+                        <form className="col-lg-4 col-lg-offset-4 col-sm" onSubmit={this.submitForm}>
+                            <ConnectionInput id={"InputMail"} inputType={"email"} placeholder={"Adresse email"}
+                                             className={""} onChange={this.handleEmailChange}/>
+                            <ConnectionInput id={"InputPassword"} inputType={"password"}
+                                             placeholder={"Mot de passe"}
+                                             className={"custom"} onChange={this.handlePasswordChange}/>
+                            <ButtonConnection/>
+                        </form>
+                    </div>
+                </div>
+            </section>
         )
     }
 }

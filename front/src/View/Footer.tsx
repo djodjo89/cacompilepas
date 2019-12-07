@@ -1,8 +1,8 @@
-import React from 'react';
+import React, {ReactNode} from 'react';
 import LargeDivider from './LargeDivider';
 
 class Footer extends React.Component {
-	render() {
+	public render(): ReactNode {
 		return (
 			<footer className="container-fluid">
 				<div className="row">

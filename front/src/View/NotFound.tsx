@@ -1,16 +1,22 @@
-import React from 'react';
-import { useLocation } from 'react-router-dom';
+import React, {ReactNode} from 'react';
 
-const NotFound = () => {
-  const location = useLocation();
+class NotFound extends React.Component {
+    private readonly match: string;
 
-  return (
-    <div>
-      <h3>
-        La page { location.pathname } n'existe pas, veuillez
-      </h3>
-    </div>
-  );
+    public constructor(props: any) {
+        super(props);
+        this.match = '/' + window.location.href.split(/\//)[3];
+    }
+
+    public render(): ReactNode {
+        return (
+            <div>
+                <h3>
+                    La page {this.match} n'existe pas, veuillez réessayer
+                </h3>
+            </div>
+        );
+    }
 }
 
 export default NotFound;

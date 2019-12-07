@@ -1,7 +1,7 @@
-import React from 'react';
+import React, {ReactNode} from 'react';
 
 class LargeDivider extends React.Component {
-	render() {
+	public render(): ReactNode {
 		return (
 			<div className="dropdown-divider col-lg-7 col-sm-12"></div>
 		)
