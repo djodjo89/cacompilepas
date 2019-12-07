@@ -27,15 +27,13 @@ services:
         container_name: php
         restart: 'always'
     db:
-        image: mysql:5.7
+        build: ./db
         volumes:
-            - ~/mysql:/var/lib/mysql
+            - ./db/scripts/init.sql:/docker-entrypoint-initdb.d/init.sql
         ports:
             - "3306:3306"
         environment:
             MYSQL_DATABASE: cacompilepasdb
-            MYSQL_USER: root
-            MYSQL_PASSWORD: root
             MYSQL_ROOT_PASSWORD: root
         restart: 'always'
     client:

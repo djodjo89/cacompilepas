@@ -2,16 +2,13 @@
 
 namespace App\Controller;
 
-require_once __DIR__ . '/../Connection/Connection.php';
-require_once __DIR__ . '/../ConnectionModule/ConnectionModule.php';
-
-use App\Connection;
-use App\ConnectionModule\ConnectionModule;
+use App\Connection\Connection;
+use App\Module\ConnectionModule\ConnectionModule;
 
 class DefaultController
 {
-    private $connection;
-    private $params = [];
+    private Connection $connection;
+    private array $params = [];
 
     public function __construct(Connection $connection)
     {
@@ -41,7 +38,7 @@ class DefaultController
                 case 'connection':
                     $module = new ConnectionModule($this->connection, $this->params);
                     $module->getController()->run();
-                    if (isset($this->params['pseudo']) && isset($this->params['password']))
+                    if (isset($this->params['email']) && isset($this->params['password']))
                         $module = new ConnectionModule($this->connection, $this->params);
                     break;
 
