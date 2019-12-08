@@ -36,6 +36,19 @@ class ConnectionController extends AbstractController
                         ]);
                     }
                     break;
+                // Check if a token is valid
+                case 'verification':
+                    $token = htmlspecialchars($this->getParams()['token']);
+                    $token_exists = $this->getModel()->checkToken($token);
+                    if ($token_exists) {
+                        echo json_encode([
+                            'token_exists' => true,
+                        ]);
+                    } else {
+                        echo json_encode([
+                            'token_exists' => false,
+                        ]);
+                    }
             }
         } else {
             throw new Exception('No action provided');

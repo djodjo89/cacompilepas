@@ -3,32 +3,34 @@ import Divider from './Divider';
 import {
     Switch,
     Route,
+    BrowserRouter as Router,
 } from "react-router-dom";
 import userIcon from '../img/icon-female-user.svg';
 import exampleImage from '../img/example.png';
 
-class Lobbys extends React.Component {
-
+class Lobbys extends React.Component<any, {}> {
     public render(): ReactNode {
         return (
+            <Router>
             <Switch>
-                <Route path={`${this.context.match.path}/:lobbyId`}>
-                    <Lobby/>
+                <Route path={this.props.pathname}>
+                    <Lobby param={this.props.location.pathname.split(/\//)[2]}/>
                 </Route>
-                <Route path={this.context.match.path}>
+                <Route path={this.props.path}>
                     <h3>Veuillez choisir un lobby</h3>
                 </Route>
             </Switch>
+            </Router>
         );
     }
 }
 
-class Lobby extends React.Component<{}, {}> {
+class Lobby extends React.Component<{param: any}, {}> {
 
     public render(): ReactNode {
         return (
             <section className="content row container-fluid">
-                <h3>id du lobby : {this.context.params} </h3>
+                <h3>id du lobby : {this.props.param} </h3>
                 <LobbyTop/>
                 <LobbyBody/>
             </section>

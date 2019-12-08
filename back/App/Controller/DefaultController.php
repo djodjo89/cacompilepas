@@ -38,7 +38,7 @@ class DefaultController
                 case 'connection':
                     $module = new ConnectionModule($this->connection, $this->params);
                     $module->getController()->run();
-                    if (isset($this->params['email']) && isset($this->params['password']))
+                    if (isset($this->params['email']) && isset($this->params['password']) || isset($this->params['token']))
                         $module = new ConnectionModule($this->connection, $this->params);
                     break;
 

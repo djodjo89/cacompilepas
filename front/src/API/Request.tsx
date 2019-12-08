@@ -83,10 +83,6 @@ class Request<T> {
             })
             .catch((networkError: Error) => console.log(networkError));
     }
-
-    public getJsonBody(): T | undefined {
-        return this.response.jsonBody;
-    }
 }
 
 export default Request;

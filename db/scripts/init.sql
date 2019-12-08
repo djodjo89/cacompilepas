@@ -172,7 +172,7 @@ CREATE TABLE ccp_message(
 #------------------------------------------------------------
 
 CREATE TABLE ccp_token(
-	token Varchar (256) NOT NULL UNIQUE ,
+	token Varchar (512) NOT NULL UNIQUE ,
 	creation_date DateTime NOT NULL ,
 	last_update_date DateTime NOT NULL ,
 	id_user Int NOT NULL UNIQUE
