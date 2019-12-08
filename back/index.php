@@ -6,10 +6,8 @@ ini_set('display_errors', 'On');
 set_error_handler("var_dump");
 define ('CONST_INCLUDE', NULL);
 
-require_once __DIR__ . '/App/Connection/Connection.php';
-require_once __DIR__ . '/App/Controller/DefaultController.php';
-
-use App\Connection;
+require_once __DIR__ . '/vendor/autoload.php';
+use App\Connection\Connection;
 use App\Controller\DefaultController;
 
 ($connection = new Connection())::init();

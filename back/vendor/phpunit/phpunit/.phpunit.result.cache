@@ -1,1 +1,0 @@
-C:37:"PHPUnit\Runner\DefaultTestResultCache":312:{a:2:{s:7:"defects";a:2:{s:52:"App\ConnectionModule\ConnectionModuleTest::testLogin";i:4;s:54:"App\ConnectionModule\ConnectionModuleTest::testGetById";i:4;}s:5:"times";a:2:{s:52:"App\ConnectionModule\ConnectionModuleTest::testLogin";d:0.069;s:54:"App\ConnectionModule\ConnectionModuleTest::testGetById";d:0.003;}}}
