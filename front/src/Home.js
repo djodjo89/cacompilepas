@@ -12,7 +12,7 @@ class Home extends React.Component {
                     <Description/>
                 </div>
                     <div class={"row buttonsZone"}>
-                        <MySpace/>
+                        <Buttons/>
                     </div>
             </section>
         )
@@ -32,17 +32,18 @@ class Title extends React.Component {
 class Description extends React.Component {
     render(){
         return (
-            <p class={"col-lg-6 description"}>"Concurent direct de StackOverflow, notre plateforme vous aidera à trouver des solutions à vos divers problèmes d'informaticiens !" </p>
-        )
+            <p class={"col-lg-6 description"}>"Concurrent direct de StackOverflow, notre plateforme vous aidera à trouver des solutions à vos divers problèmes d'informaticiens !" </p>
+
+    )
     }
 }
 
-class MySpace extends React.Component {
+class Buttons extends React.Component {
     render(){
         return (
             <div class={"row ml-xl-4 col-xl-5 col-lg-9 col-md-9 col-sm-9"}>
-                <a href={"#"}><button className={"pagePerso"}>Page Perso</button></a>
-                <a href={"#"}><button class={"offset-2 fichesPopulaire"}>Fiches Populaires</button></a>
+                <a href={"#"}><button className={"personalPage"}>Page Perso</button></a>
+                <a href={"#"}><button class={"offset-2 popularCoursheet"}>Fiches Populaires</button></a>
             </div>
         )
     }
