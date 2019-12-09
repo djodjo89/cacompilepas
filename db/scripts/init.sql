@@ -11,7 +11,7 @@ CREATE TABLE ccp_user(
         pseudo       Varchar (1024) NOT NULL ,
         name         Varchar (1024) NOT NULL ,
         first_name   Varchar (1024) NOT NULL ,
-        password     Varchar (64) NOT NULL,
+        password     Varchar (256) NOT NULL ,
         email        Varchar (64) NOT NULL
 	,CONSTRAINT ccp_user_PK PRIMARY KEY (id_user)
 );
@@ -39,6 +39,7 @@ CREATE TABLE ccp_coursesheet(
         title            Varchar (256) NOT NULL ,
         publication_date Date NOT NULL ,
         link             Varchar (1024) NOT NULL ,
+        description      Varchar (2056) NOT NULL,
         id_lobby_Contain Int NOT NULL
 	,CONSTRAINT ccp_coursesheet_PK PRIMARY KEY (id_course_sheet)
 	,CONSTRAINT ccp_coursesheet_ccp_lobby_FK FOREIGN KEY (id_lobby_Contain) REFERENCES ccp_lobby(id_lobby)
@@ -193,7 +194,6 @@ ON SCHEDULE EVERY 1 MINUTE ENABLE
 
 
 /******   ccp_user    ********/
-$2y$10$FU50osy63clx3YmMarOyvOLTxJvGHlJG787D2/fLs7vNp4fk7rI/K
 
 INSERT INTO ccp_user VALUES (1,'tomtom','Thomas','Bonnet','$2y$10$FU50osy63clx3YmMarOyvOLTxJvGHlJG787D2/fLs7vNp4fk7rI/K', 'thomas@cacompilepas.com');
 INSERT INTO ccp_user VALUES (2,'nana','nabila','benattia','$2y$10$FU50osy63clx3YmMarOyvOLTxJvGHlJG787D2/fLs7vNp4fk7rI/K', 'nabila@cacompilepas.com');

@@ -39,7 +39,7 @@ class ConnectionModel extends AbstractModel
                         ';
         $query = $this->getConnection()::$bdd->prepare($stringQuery);
         $query->execute([$token]);
-        if ($token_exists = $query->fetch()) {
+        if ($tokenExists = $query->fetch()) {
             // Update token last update date if it is valid
             $stringQuery = 'UPDATE ccp_token
                             SET last_update_date = NOW()

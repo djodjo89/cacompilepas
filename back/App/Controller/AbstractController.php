@@ -3,8 +3,6 @@
 
 namespace App\Controller;
 
-require_once __DIR__ . '/../Model/AbstractModel.php';
-
 use App\Model\AbstractModel;
 
 abstract class AbstractController

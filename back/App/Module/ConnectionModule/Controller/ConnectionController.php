@@ -2,8 +2,6 @@
 
 namespace App\Module\ConnectionModule\Controller;
 
-require_once __DIR__ . '/../../../Controller/AbstractController.php';
-
 use App\Controller\AbstractController;
 use App\Model\AbstractModel;
 
@@ -21,13 +19,16 @@ class ConnectionController extends AbstractController
         if (isset($this->getParams()['action'])) {
             switch ($this->getParams()['action']) {
                 case 'login':
+                    if (!isset($this->getParams()['email']) || !isset($this->getParams()['password'])) {
+                        throw new \Exception('Email or password missing');
+                    }
                     $email = htmlspecialchars($this->getParams()['email']);
                     $password = htmlspecialchars($this->getParams()['password']);
 
-                    $id_user = $this->getModel()->verifyIfUserExists($email, $password);
-                    if ($id_user) {
+                    $idUser = $this->getModel()->verifyIfUserExists($email, $password);
+                    if ($idUser) {
                         echo json_encode([
-                            'token' => $this->getModel()->generateToken($email, $password, $id_user),
+                            'token' => $this->getModel()->generateToken($email, $password, $idUser),
                             'connected' => true,
                         ]);
                     } else {
@@ -38,6 +39,9 @@ class ConnectionController extends AbstractController
                     break;
                 // Check if a token is valid
                 case 'verification':
+                    if (!isset($this->getParams()['token'])) {
+                        throw new \Exception('No token was provided for connection');
+                    }
                     $token = htmlspecialchars($this->getParams()['token']);
                     $token_exists = $this->getModel()->checkToken($token);
                     if ($token_exists) {

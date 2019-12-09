@@ -10,6 +10,7 @@ import Connection from './Connection';
 import NotFound from './NotFound';
 import PrivateRoute from "../Security/PrivateRoute";
 import '../css/App.css';
+import Home from "./Home";
 
 class App extends React.Component {
     public render(): ReactNode {
@@ -20,7 +21,7 @@ class App extends React.Component {
                 <Router>
                     <Switch>
                         <Route exact path='/'>
-                            <h2>Accueil</h2>
+                            <Home/>
                         </Route>
                         <PrivateRoute path={'/lobby'} component={Lobbys} rest={[]}/>
                         <Route path='/connexion'>

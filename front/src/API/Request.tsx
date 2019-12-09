@@ -13,7 +13,7 @@ class Request<T> {
     private route: string;
     private readonly method: string;
     private readonly data: string;
-    private readonly domain: string
+    private readonly domain: string;
     private beautifulRoute: string;
     private headers: HeadersInit;
     private body: BodyInit;
