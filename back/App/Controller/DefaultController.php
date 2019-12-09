@@ -4,6 +4,7 @@ namespace App\Controller;
 
 use App\Connection\Connection;
 use App\Module\ConnectionModule\ConnectionModule;
+use App\Module\LobbyModule\LobbyModule;
 
 class DefaultController
 {
@@ -30,8 +31,8 @@ class DefaultController
         $this->fetchParamsFromRequest(json_decode(file_get_contents('php://input'), true));
         if (isset($this->params['module'])) {
             switch ($this->params['module']) {
-                case 'coursesheet':
-                    $module = new CourseSheetModule($this->connection, $this->params);
+                case 'lobby':
+                    $module = new LobbyModule($this->connection, $this->params);
                     $module->getController()->run();
                     break;
 
@@ -41,7 +42,6 @@ class DefaultController
                     if (isset($this->params['email']) && isset($this->params['password']) || isset($this->params['token']))
                         $module = new ConnectionModule($this->connection, $this->params);
                     break;
-
 
                 default:
                     echo 'No valid module was provided';
