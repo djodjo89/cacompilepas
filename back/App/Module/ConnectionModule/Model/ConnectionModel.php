@@ -24,6 +24,8 @@ class ConnectionModel extends AbstractModel
         if ($result = $query->fetch()) {
             if (password_verify($password, $result['password'])) {
                 return $result['id_user'];
+            } else {
+                return 0;
             }
         } else {
             return 0;

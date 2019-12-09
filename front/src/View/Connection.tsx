@@ -34,14 +34,16 @@ class Connection extends React.Component<{}, ConnectionStates> {
 
     // Check if token is still valid
     public componentDidMount(): void {
-        new Request('/connection/verification', 'POST', {token: localStorage.getItem('token')}, this.checkIfAlreadyConnected);
+        if (undefined !== localStorage.getItem('token') && '' !== localStorage.getItem('token')) {
+            new Request('/connection/verification', 'POST', {token: localStorage.getItem('token')}, this.checkIfAlreadyConnected);
+        }
     }
 
     public checkIfAlreadyConnected(data: any): void {
-            this.setState({tokenExists: data['token_exists']});
-            if (false === this.state.tokenExists) {
-                localStorage.setItem('token', '');
-            }
+        this.setState({tokenExists: data['token_exists']});
+        if (false === this.state.tokenExists) {
+            localStorage.setItem('token', '');
+        }
     }
 
     // Check if referrer is not '/connexion/login' in order to prevent a redirecting infinite loop
@@ -88,15 +90,15 @@ class Connection extends React.Component<{}, ConnectionStates> {
                                     if (this.referrerIsNotConnection()) {
                                         // @ts-ignore
                                         window.location = document.referrer;
-                                    }
-                                    else {
+                                    } else {
                                         // @ts-ignore
                                         window.location = '/';
                                     }
                                 } else if ('false' === this.state.status && true === this.state.formWasSubmitted) {
-                                    return <div className="col-lg-3 col-sm-11 offset-lg-4 mt-0 mb-sm-3 rounded-1 connection-error">
-                                                Identifiants incorrects
-                                           </div>;
+                                    return <div
+                                        className="col-lg-3 col-sm-11 offset-lg-4 mt-0 mb-sm-3 rounded-1 connection-error">
+                                        Identifiants incorrects
+                                    </div>;
                                 }
                             }
                         })()}

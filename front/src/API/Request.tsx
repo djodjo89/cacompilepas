@@ -67,7 +67,7 @@ class Request<T> {
             method: this.method,
             body: JSON.stringify(this.data)
         }
-        
+
         fetch(this.domain + this.route, this.requestInit)
             .then((res: Response) => {
                 this.response = res;
