@@ -193,10 +193,10 @@ ON SCHEDULE EVERY 1 MINUTE ENABLE
 
 
 /******   ccp_user    ********/
+$2y$10$FU50osy63clx3YmMarOyvOLTxJvGHlJG787D2/fLs7vNp4fk7rI/K
 
-
-INSERT INTO ccp_user VALUES (1,'tomtom','Thomas','Bonnet','root', 'thomas@cacompilepas.com');
-INSERT INTO ccp_user VALUES (2,'nana','nabila','benattia','root', 'nabila@cacompilepas.com');
+INSERT INTO ccp_user VALUES (1,'tomtom','Thomas','Bonnet','$2y$10$FU50osy63clx3YmMarOyvOLTxJvGHlJG787D2/fLs7vNp4fk7rI/K', 'thomas@cacompilepas.com');
+INSERT INTO ccp_user VALUES (2,'nana','nabila','benattia','$2y$10$FU50osy63clx3YmMarOyvOLTxJvGHlJG787D2/fLs7vNp4fk7rI/K', 'nabila@cacompilepas.com');
 
 
 /******   ccp_lobby    ********/

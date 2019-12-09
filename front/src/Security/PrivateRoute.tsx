@@ -3,7 +3,7 @@ import {
     Route,
     Redirect,
 } from 'react-router-dom';
-import { ReactComponent as Loader } from '../img/loader.svg';
+import {ReactComponent as Loader} from '../img/loader.svg';
 import Request from "../API/Request";
 
 interface PrivateRouteProps {
@@ -13,7 +13,7 @@ interface PrivateRouteProps {
 }
 
 // Redirects to login page if token is not valid or doesn't exist
-class PrivateRoute extends React.PureComponent<PrivateRouteProps, {status: string}> {
+class PrivateRoute extends React.PureComponent<PrivateRouteProps, { status: string }> {
 
     public constructor(props: PrivateRouteProps) {
         super(props);
@@ -33,21 +33,19 @@ class PrivateRoute extends React.PureComponent<PrivateRouteProps, {status: strin
     public updateToken(data: any): void {
         if (data['token_exists']) {
             this.setState({status: 'true'});
-        }
-        else {
+        } else {
             this.setState({status: 'false'});
             localStorage.setItem('token', '');
         }
     }
 
     public checkToken(): void {
-        if (undefined !== localStorage.getItem('token')) {
+        if (undefined !== localStorage.getItem('token') && '' !== localStorage.getItem('token')) {
             // Check if token is valid
             new Request('/connection/verification', 'POST', {
                 token: localStorage.getItem('token')
             }, this.updateToken);
-        }
-        else {
+        } else {
             this.setState({status: 'false'});
         }
     }
@@ -61,8 +59,7 @@ class PrivateRoute extends React.PureComponent<PrivateRouteProps, {status: strin
                     return React.createElement(this.props.component, this.props);
                 } else if ('false' === this.state.status) {
                     return <Redirect to={'/connexion/login'}/>;
-                }
-                else {
+                } else {
                     return <div className={'mt-5'}><Loader/></div>;
                 }
             }
