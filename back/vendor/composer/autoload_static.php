@@ -28,10 +28,18 @@ class ComposerStaticInit2b17b5a84775aeabc2da799b99054cbf
         array (
             'Prophecy\\' => 9,
         ),
+        'F' => 
+        array (
+            'Firebase\\JWT\\' => 13,
+        ),
         'D' => 
         array (
             'Doctrine\\Instantiator\\' => 22,
             'DeepCopy\\' => 9,
+        ),
+        'A' => 
+        array (
+            'App\\' => 4,
         ),
     );
 
@@ -54,6 +62,10 @@ class ComposerStaticInit2b17b5a84775aeabc2da799b99054cbf
         array (
             0 => __DIR__ . '/..' . '/phpspec/prophecy/src/Prophecy',
         ),
+        'Firebase\\JWT\\' => 
+        array (
+            0 => __DIR__ . '/..' . '/firebase/php-jwt/src',
+        ),
         'Doctrine\\Instantiator\\' => 
         array (
             0 => __DIR__ . '/..' . '/doctrine/instantiator/src/Doctrine/Instantiator',
@@ -61,6 +73,10 @@ class ComposerStaticInit2b17b5a84775aeabc2da799b99054cbf
         'DeepCopy\\' => 
         array (
             0 => __DIR__ . '/..' . '/myclabs/deep-copy/src/DeepCopy',
+        ),
+        'App\\' => 
+        array (
+            0 => __DIR__ . '/../..' . '/App',
         ),
     );
 
@@ -115,6 +131,8 @@ class ComposerStaticInit2b17b5a84775aeabc2da799b99054cbf
         'PHPUnit\\Framework\\Constraint\\StringMatchesFormatDescription' => __DIR__ . '/..' . '/phpunit/phpunit/src/Framework/Constraint/StringMatchesFormatDescription.php',
         'PHPUnit\\Framework\\Constraint\\StringStartsWith' => __DIR__ . '/..' . '/phpunit/phpunit/src/Framework/Constraint/StringStartsWith.php',
         'PHPUnit\\Framework\\Constraint\\TraversableContains' => __DIR__ . '/..' . '/phpunit/phpunit/src/Framework/Constraint/TraversableContains.php',
+        'PHPUnit\\Framework\\Constraint\\TraversableContainsEqual' => __DIR__ . '/..' . '/phpunit/phpunit/src/Framework/Constraint/TraversableContainsEqual.php',
+        'PHPUnit\\Framework\\Constraint\\TraversableContainsIdentical' => __DIR__ . '/..' . '/phpunit/phpunit/src/Framework/Constraint/TraversableContainsIdentical.php',
         'PHPUnit\\Framework\\Constraint\\TraversableContainsOnly' => __DIR__ . '/..' . '/phpunit/phpunit/src/Framework/Constraint/TraversableContainsOnly.php',
         'PHPUnit\\Framework\\CoveredCodeNotExecutedException' => __DIR__ . '/..' . '/phpunit/phpunit/src/Framework/Exception/CoveredCodeNotExecutedException.php',
         'PHPUnit\\Framework\\DataProviderTestSuite' => __DIR__ . '/..' . '/phpunit/phpunit/src/Framework/DataProviderTestSuite.php',
@@ -185,6 +203,7 @@ class ComposerStaticInit2b17b5a84775aeabc2da799b99054cbf
         'PHPUnit\\Framework\\MockObject\\Stub\\Stub' => __DIR__ . '/..' . '/phpunit/phpunit/src/Framework/MockObject/Stub/Stub.php',
         'PHPUnit\\Framework\\MockObject\\UnmockedCloneMethod' => __DIR__ . '/..' . '/phpunit/phpunit/src/Framework/MockObject/Api/UnmockedCloneMethod.php',
         'PHPUnit\\Framework\\MockObject\\Verifiable' => __DIR__ . '/..' . '/phpunit/phpunit/src/Framework/MockObject/Verifiable.php',
+        'PHPUnit\\Framework\\NoChildTestSuiteException' => __DIR__ . '/..' . '/phpunit/phpunit/src/Framework/Exception/NoChildTestSuiteException.php',
         'PHPUnit\\Framework\\OutputError' => __DIR__ . '/..' . '/phpunit/phpunit/src/Framework/Exception/OutputError.php',
         'PHPUnit\\Framework\\PHPTAssertionFailedError' => __DIR__ . '/..' . '/phpunit/phpunit/src/Framework/Exception/PHPTAssertionFailedError.php',
         'PHPUnit\\Framework\\RiskyTestError' => __DIR__ . '/..' . '/phpunit/phpunit/src/Framework/Exception/RiskyTestError.php',
@@ -204,7 +223,6 @@ class ComposerStaticInit2b17b5a84775aeabc2da799b99054cbf
         'PHPUnit\\Framework\\TestResult' => __DIR__ . '/..' . '/phpunit/phpunit/src/Framework/TestResult.php',
         'PHPUnit\\Framework\\TestSuite' => __DIR__ . '/..' . '/phpunit/phpunit/src/Framework/TestSuite.php',
         'PHPUnit\\Framework\\TestSuiteIterator' => __DIR__ . '/..' . '/phpunit/phpunit/src/Framework/TestSuiteIterator.php',
-        'PHPUnit\\Framework\\UnexpectedValueException' => __DIR__ . '/..' . '/phpunit/phpunit/src/Framework/Exception/UnexpectedValueException.php',
         'PHPUnit\\Framework\\UnintentionallyCoveredCodeError' => __DIR__ . '/..' . '/phpunit/phpunit/src/Framework/Exception/UnintentionallyCoveredCodeError.php',
         'PHPUnit\\Framework\\Warning' => __DIR__ . '/..' . '/phpunit/phpunit/src/Framework/Exception/Warning.php',
         'PHPUnit\\Framework\\WarningTestCase' => __DIR__ . '/..' . '/phpunit/phpunit/src/Framework/WarningTestCase.php',
@@ -256,6 +274,7 @@ class ComposerStaticInit2b17b5a84775aeabc2da799b99054cbf
         'PHPUnit\\Util\\Filter' => __DIR__ . '/..' . '/phpunit/phpunit/src/Util/Filter.php',
         'PHPUnit\\Util\\Getopt' => __DIR__ . '/..' . '/phpunit/phpunit/src/Util/Getopt.php',
         'PHPUnit\\Util\\GlobalState' => __DIR__ . '/..' . '/phpunit/phpunit/src/Util/GlobalState.php',
+        'PHPUnit\\Util\\InvalidDataSetException' => __DIR__ . '/..' . '/phpunit/phpunit/src/Util/InvalidDataSetException.php',
         'PHPUnit\\Util\\Json' => __DIR__ . '/..' . '/phpunit/phpunit/src/Util/Json.php',
         'PHPUnit\\Util\\Log\\JUnit' => __DIR__ . '/..' . '/phpunit/phpunit/src/Util/Log/JUnit.php',
         'PHPUnit\\Util\\Log\\TeamCity' => __DIR__ . '/..' . '/phpunit/phpunit/src/Util/Log/TeamCity.php',
