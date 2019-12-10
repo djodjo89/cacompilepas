@@ -39,7 +39,7 @@ abstract class AbstractController
     public function checkToken(): void
     {
         // Throws an exception if no token was provided or if token is incorrect
-        if (!($connectionModel = new ConnectionModel($this->model->getConnection()))->checkToken($this->request->getToken())) {
+        if (!(new ConnectionModel($this->model->getConnection()))->checkToken($this->request->getToken())) {
             new JSONException('Incorrect or missing token');
         }
     }

@@ -10,11 +10,13 @@ import {
     Route,
     BrowserRouter as Router,
 } from "react-router-dom";
+import {ReactComponent as Loader} from "../../img/loader.svg";
 
-class Lobby extends React.Component<any, { courseSheets: [] }> {
+class Lobby extends React.Component<any, { right: string, courseSheets: [] }> {
     constructor(props: any) {
         super(props);
         this.state = {
+            right: '',
             courseSheets: [],
         }
         this.fillCourseSheets = this.fillCourseSheets.bind(this);
@@ -26,7 +28,12 @@ class Lobby extends React.Component<any, { courseSheets: [] }> {
     }
 
     public fillCourseSheets(data: any): void {
-        this.setState({courseSheets: data});
+        if (undefined === data['message']) {
+            this.setState({courseSheets: data});
+            this.setState({right: 'true'});
+        } else {
+            this.setState({right: 'false'});
+        }
     }
 
     public render(): ReactNode {
@@ -34,11 +41,20 @@ class Lobby extends React.Component<any, { courseSheets: [] }> {
             <Router>
                 <Switch>
                     <Route path={this.props.pathname}>
-                        <section className="content row container-fluid">
-                            <h3>id du lobby : {this.props.location.pathname.split(/\//)[2]} </h3>
-                            <LobbyTop id={this.props.location.pathname.split(/\//)[2]} courseSheets={this.state.courseSheets}/>
-                            <LobbyBody id={this.props.location.pathname.split(/\//)[2]} courseSheets={this.state.courseSheets}/>
-                        </section>
+                        {() => {
+                            if ('true' === this.state.right) {
+                                return <section className="content row container-fluid">
+                                    <LobbyTop id={this.props.location.pathname.split(/\//)[2]}
+                                              courseSheets={this.state.courseSheets}/>
+                                    <LobbyBody id={this.props.location.pathname.split(/\//)[2]}
+                                               courseSheets={this.state.courseSheets}/>
+                                </section>;
+                            } else if ('false' === this.state.right) {
+                                return <h2>Vous n'avez pas les droits nécessaires pour accéder à ce lobby</h2>
+                            } else {
+                                return <div className={'mt-5'}><Loader/></div>
+                            }
+                        }}
                     </Route>
                     <Route path={this.props.path}>
                         <h3>Veuillez choisir un lobby</h3>
@@ -88,7 +104,7 @@ class LobbySummary extends React.Component<{ courseSheets: [] }, {}> {
     }
 }
 
-class LobbyDescription extends React.Component<{id: string}, {lobby: any}> {
+class LobbyDescription extends React.Component<{ id: string }, { lobby: any }> {
     public constructor(props: any) {
         super(props);
         this.state = {
@@ -99,7 +115,7 @@ class LobbyDescription extends React.Component<{id: string}, {lobby: any}> {
     }
 
     public componentDidMount(): void {
-        new Request('/lobby/lobby/' + this.props.id, 'GET', null, this.fillDescription);
+        new Request('/lobby/consult/' + this.props.id, 'POST', {token: localStorage.getItem('token')}, this.fillDescription);
     }
 
     public fillDescription(data: any): void {
@@ -142,7 +158,7 @@ class Messages extends React.Component<{ id: string }, { messages: [] }> {
     }
 
     public componentDidMount(): void {
-        new Request('/lobby/messages/' + this.props.id, 'GET', null, this.fillMessages);
+        new Request('/lobby/messages/' + this.props.id, 'POST', {token: localStorage.getItem('token')}, this.fillMessages);
     }
 
     public fillMessages(data: any): void {
@@ -155,7 +171,7 @@ class Messages extends React.Component<{ id: string }, { messages: [] }> {
 
     public renderMessages(): ({} | null | undefined)[] {
         // @ts-ignore
-        if (undefined === this.state.messages['is_empty']) {
+        if (undefined === this.state.messages['message']) {
             let res = [], i = 0;
             for (let message of this.state.messages) {
                 res.push(this.renderMessage(i.toString(), message['content'], message['send_date'], message['pseudo']));

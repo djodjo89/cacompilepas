@@ -55,7 +55,7 @@ CREATE TABLE ccp_rights(
         read_right       Boolean NOT NULL ,
         write_right      Boolean NOT NULL ,
         id_lobby_Protect Int NOT NULL ,
-        id_user          Int NOT NULL ,
+        id_user          Int NOT NULL
 	,CONSTRAINT ccp_rights_PK PRIMARY KEY (id_right)
 	,CONSTRAINT ccp_rights_ccp_lobby_FK FOREIGN KEY (id_lobby_Protect) REFERENCES ccp_lobby(id_lobby)
         ,CONSTRAINT ccp_rights_ccp_user_FK FOREIGN KEY (id_user) REFERENCES ccp_user(id_user)

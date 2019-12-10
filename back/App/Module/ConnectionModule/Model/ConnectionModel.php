@@ -14,7 +14,7 @@ class ConnectionModel extends AbstractModel
         parent::setConnection($connection);
     }
 
-    public function verifyIfUserExists(string $email, string $password): int
+    public function verifyIfUserExists(string $email, string $password): array
     {
         $stringQuery = 'SELECT id_user, password FROM ccp_user
                         WHERE email = ?
@@ -22,10 +22,8 @@ class ConnectionModel extends AbstractModel
         $query = $this->getConnection()::$bdd->prepare($stringQuery);
         $query->execute([$email]);
         if ($result = $query->fetch()) {
-            if (password_verify($password, $result['password'])) {
-                return $result['id_user'];
-            } else {
-                return 0;
+            if ($password === $result['password'] || password_verify($password, $result['password'])) {
+                return $result;
             }
         } else {
             return 0;
@@ -65,11 +63,10 @@ class ConnectionModel extends AbstractModel
             return $userAlreadyHasAToken['token'];
         } else {
             $privateKey = file_get_contents(__DIR__ . '/../../../../keys/private_key.pem');
-            $publicKey = file_get_contents(__DIR__ . '/../../../../keys/public_key.pem');
 
             $payload = array(
                 'email' => $email,
-                'pass' => $password,
+                'password' => $this->verifyIfUserExists($email, $password)['password'],
                 'time' => new \DateTime('NOW')
             );
 

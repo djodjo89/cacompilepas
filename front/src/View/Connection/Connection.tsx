@@ -101,6 +101,8 @@ class Connection extends React.Component<{}, ConnectionStates> {
                                         Identifiants incorrects
                                     </div>;
                                 }
+                            } else {
+                                return
                             }
                         })()}
                     </div>
