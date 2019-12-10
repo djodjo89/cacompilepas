@@ -1,55 +1,40 @@
 <?php
 
-
 namespace App\Module\LobbyModule\Controller;
 
-use App\Exception\NoIdProvidedException;
+
 use App\Controller\AbstractController;
-use App\Model\AbstractModel;
+use App\Exception\JSONException;
+use App\Http\JSONResponse;
 
 class LobbyController extends AbstractController
 {
-
-    public function __construct(AbstractModel $model, array $params)
-    {
-        parent::setModel($model);
-        parent::setParams($params);
-    }
-
     public function run(): void
     {
-        try {
-
-            if (isset($this->getParams()['action'])) {
-                switch ($this->getParams()['action']) {
+        switch ($this->getRequest()->getAction()) {
+            case 'coursesheets' || 'messages' || 'lobby':
+                $this->checkToken();
+                $idLobby = (int)$this->getRequest()->getParam();
+                $result = [];
+                switch ($this->getRequest()->getAction()) {
                     case 'coursesheets':
-                        if (!isset($this->getParams()['param'])) {
-                            throw new NoIdProvidedException('lobby');
-                        }
-                        $idLobby = (int)htmlspecialchars($this->getParams()['param']);
-                        $courseSheets = $this->getModel()->getCourseSheets($idLobby);
-                        echo json_encode($courseSheets);
+                        $result = $this->getModel()->getCourseSheets($idLobby);
                         break;
+
                     case 'messages':
-                        if (!isset($this->getParams()['param'])) {
-                            throw new NoIdProvidedException('lobby');
-                        }
-                        $idLobby = (int)htmlspecialchars($this->getParams()['param']);
-                        $messages = $this->getModel()->getMessages($idLobby);
-                        echo json_encode($messages);
+                        $result = $this->getModel()->getMessages($idLobby);
                         break;
+
                     case 'lobby':
-                        if (!isset($this->getParams()['param'])) {
-                            throw new NoIdProvidedException('lobby');
-                        }
-                        $idLobby = (int)htmlspecialchars($this->getParams()['param']);
-                        $lobby = $this->getModel()->getLobbyById($idLobby);
-                        echo json_encode($lobby);
+                        $result = $this->getModel()->getLobbyById($idLobby);
                         break;
                 }
-            }
-        } catch (NoIdProvidedException $e) {
-            echo $e->getMessage();
+                new JSONResponse($result);
+                break;
+
+            default:
+                new JSONException($this->getRequest()->getAction() . ' action doesn\'t exists');
+                break;
         }
     }
 }

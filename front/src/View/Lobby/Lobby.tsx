@@ -22,7 +22,7 @@ class Lobby extends React.Component<any, { courseSheets: [] }> {
     }
 
     public componentDidMount(): void {
-        new Request('/lobby/coursesheets/' + this.props.location.pathname.split(/\//)[2], 'GET', null, this.fillCourseSheets);
+        new Request('/lobby/coursesheets/' + this.props.location.pathname.split(/\//)[2], 'POST', {token: localStorage.getItem('token')}, this.fillCourseSheets);
     }
 
     public fillCourseSheets(data: any): void {

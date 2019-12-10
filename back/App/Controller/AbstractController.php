@@ -3,14 +3,22 @@
 
 namespace App\Controller;
 
+use App\Exception\JSONException;
+use App\Http\Request;
 use App\Model\AbstractModel;
+use App\Module\ConnectionModule\Model\ConnectionModel;
 
 abstract class AbstractController
 {
-    private $model;
-    private $params;
+    private AbstractModel $model;
+    private Request $request;
 
-    abstract public function __construct(AbstractModel $model, array $params);
+    public function __construct(AbstractModel $model)
+    {
+        $this->setModel($model);
+        $this->request = new Request;
+    }
+
     abstract public function run(): void;
 
     public function getModel(): AbstractModel
@@ -23,13 +31,16 @@ abstract class AbstractController
         $this->model = $model;
     }
 
-    public function getParams(): array
+    public function getRequest(): Request
     {
-        return $this->params;
+        return $this->request;
     }
 
-    public function setParams(array $params): void
+    public function checkToken(): void
     {
-        $this->params = $params;
+        // Throws an exception if no token was provided or if token is incorrect
+        if (!($connectionModel = new ConnectionModel($this->model->getConnection()))->checkToken($this->request->getToken())) {
+            new JSONException('Incorrect or missing token');
+        }
     }
 }

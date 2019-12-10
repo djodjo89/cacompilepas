@@ -15,6 +15,15 @@ class LobbyModel extends AbstractModel
         parent::setConnection($connection);
     }
 
+    public function fetchData(array $data, array $tabIfNotFound): array
+    {
+        if ($result = $data) {
+            return $result;
+        } else {
+            return $tabIfNotFound;
+        }
+    }
+
     public function getLobbyById(int $idLobby): array
     {
         $stringQuery = 'SELECT label_lobby, description
@@ -24,15 +33,6 @@ class LobbyModel extends AbstractModel
         $query = $this->getConnection()::$bdd->prepare($stringQuery);
         $query->execute([$idLobby]);
         return $this->fetchData($query->fetch(), []);
-    }
-
-    public function fetchData(array $data, array $tabIfNotFound): array
-    {
-        if ($result = $data) {
-            return $result;
-        } else {
-            return $tabIfNotFound;
-        }
     }
 
     public function getCourseSheets(int $idLobby): array

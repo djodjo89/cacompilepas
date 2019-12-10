@@ -54,9 +54,11 @@ CREATE TABLE ccp_rights(
         id_right         Int  Auto_increment  NOT NULL ,
         read_right       Boolean NOT NULL ,
         write_right      Boolean NOT NULL ,
-        id_lobby_Protect Int NOT NULL
+        id_lobby_Protect Int NOT NULL ,
+        id_user          Int NOT NULL ,
 	,CONSTRAINT ccp_rights_PK PRIMARY KEY (id_right)
 	,CONSTRAINT ccp_rights_ccp_lobby_FK FOREIGN KEY (id_lobby_Protect) REFERENCES ccp_lobby(id_lobby)
+        ,CONSTRAINT ccp_rights_ccp_user_FK FOREIGN KEY (id_user) REFERENCES ccp_user(id_user)
 );
 
 
@@ -190,7 +192,7 @@ ON SCHEDULE EVERY 1 MINUTE ENABLE
         WHERE last_update_date < DATE_SUB(NOW(), INTERVAL 20 MINUTE)
         OR creation_date < DATE_SUB(NOW(), INTERVAL 1 DAY);
 
-/*************** TESTING DATA ************/
+/*************** FIXTURES ************/
 
 
 /******   ccp_user    ********/
@@ -219,3 +221,10 @@ INSERT INTO ccp_coursesheet (title,publication_date,link,description,id_lobby_co
 INSERT INTO ccp_message (content,send_date,id_user,id_lobby) VALUES ('hey les gars... ca compile pas , vous pouvez maider ?','2019-11-24',1,2);
 INSERT INTO ccp_message (content,send_date,id_user,id_lobby) VALUES ('tro nul se cite, sa vo clerement pa stakovèrflo !!!', '2019-12-09',1,1);
 INSERT INTO ccp_message (content,send_date,id_user,id_lobby) VALUES ('grâce à ces fiches de cours, j\'ai pu apprendre plein de choses malgré les grèves, merci beaucoup !', '2019-12-09',2,1);
+
+/******   ccp_rights     ********/
+
+INSERT INTO ccp_rights (read_right,write_right,id_lobby_Protect,id_user) VALUES (true,false,1,1);
+INSERT INTO ccp_rights (read_right,write_right,id_lobby_Protect,id_user) VALUES (false,false,1,2);
+INSERT INTO ccp_rights (read_right,write_right,id_lobby_Protect,id_user) VALUES (false,false,2,1);
+INSERT INTO ccp_rights (read_right,write_right,id_lobby_Protect,id_user) VALUES (true,true,2,2);
