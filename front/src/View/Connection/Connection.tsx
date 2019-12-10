@@ -1,5 +1,6 @@
 import React, {ChangeEvent, FormEvent, ReactNode} from 'react';
-import Request from '../API/Request';
+import Request from '../../API/Request';
+import '../../css/Connection.css';
 
 interface ConnectionStates {
     // Pending (''), connected ('true') or not connected ('false')
@@ -100,6 +101,8 @@ class Connection extends React.Component<{}, ConnectionStates> {
                                         Identifiants incorrects
                                     </div>;
                                 }
+                            } else {
+                                return
                             }
                         })()}
                     </div>

@@ -1,0 +1,17 @@
+.course-sheet-card {
+}
+
+.course-sheet-image {
+    height: 110px;
+    width: 80px;
+}
+
+.course-sheet-presentation {
+    overflow: scroll;
+    height: 100px;
+}
+
+.course-sheets-section {
+    overflow: scroll;
+    height: 350px;
+}

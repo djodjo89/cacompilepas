@@ -30,7 +30,7 @@ class Request<T> {
         this.initRoute();
         this.sendRequest();
         this.headers = {};
-        this.body = "";
+        this.body = '';
         this.requestInit = {};
         // @ts-ignore
         this.response = {jsonBody: null};
@@ -65,7 +65,7 @@ class Request<T> {
         this.requestInit = {
             headers: this.headers,
             method: this.method,
-            body: JSON.stringify(this.data)
+            body: null !== this.data ? JSON.stringify(this.data) : null,
         }
 
         fetch(this.domain + this.route, this.requestInit)
@@ -81,7 +81,8 @@ class Request<T> {
                     throw new Error('Bad response');
                 }
             })
-            .catch((networkError: Error) => console.log(networkError));
+            .catch((syntaxError: SyntaxError) => syntaxError)
+            .catch((networkError: Error) => networkError);
     }
 }
 

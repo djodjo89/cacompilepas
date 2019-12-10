@@ -8,10 +8,8 @@ define ('CONST_INCLUDE', NULL);
 
 require_once __DIR__ . '/vendor/autoload.php';
 use App\Connection\Connection;
-use App\Controller\DefaultController;
+use App\Http\Router;
 
 ($connection = new Connection())::init();
-$controller = new DefaultController($connection);
+$controller = new Router($connection);
 $controller->redirect();
-
-?>

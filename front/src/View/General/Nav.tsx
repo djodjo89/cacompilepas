@@ -1,5 +1,6 @@
 import React, {ReactNode} from 'react';
-import Svg from './Svg';
+import '../../css/Nav.css';
+import Svg from '../Assets/Svg';
 
 class Nav extends React.Component {
   public render(): ReactNode {

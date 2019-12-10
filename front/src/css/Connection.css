@@ -1,0 +1,27 @@
+.connection-bloc{
+    width : 97%;
+    margin-top: 12%;
+}
+
+.custom {
+    margin-top: 12% !important;
+}
+
+.btn-transparent {
+    width: 45% !important;
+    background: transparent;
+    color: #F2F2F2;
+    border-radius: 0px  white;
+}
+
+.btn-transparent:hover {
+    color: white;
+    background-color: rgba(255,255,255,0.2);
+}
+
+.connection-error {
+    background-color: red;
+    opacity: 0.6;
+    padding: 10px;
+    text-align: center;
+}
