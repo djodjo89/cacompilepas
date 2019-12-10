@@ -1,5 +1,5 @@
 import React, {ReactNode} from 'react';
-import '../css/Home.css';
+import '../../css/Home.css';
 
 class Home extends React.Component {
     public render(): ReactNode {
@@ -43,10 +43,10 @@ class Buttons extends React.Component {
     render() {
         return (
             <div className={"row ml-xl-4 col-xl-5 col-lg-9 col-md-9 col-sm-9"}>
-                <a href={"#"}>
+                <a href={'/'}>
                     <button className={"personalPage"}>Page Perso</button>
                 </a>
-                <a href={"#"}>
+                <a href={'/'}>
                     <button className={"offset-2 popularCoursheet"}>Fiches Populaires</button>
                 </a>
             </div>

@@ -46,72 +46,8 @@ li {
 	font-size: 14px;
 }
 
-.App {
-	padding-right: 0px !important;
-	margin-right: 0px !important;
-	text-align: left;
-}
-
-.App-logo {
-	width: 64px;
-	height: 48px !important;
-}
-
-.content {
-	margin-right: 0px !important;
-}
-
-#home-icon {
-	font-size: 24px;
-}
-
-#search {
-	position: absolute;
-	z-index: 0;
-	width: 250px;
-	text-indent: 16px;
-}
-
-#search-icon {
-	z-index: 1;
-	color: grey;
-	margin-left: 10px;
-}
-
-#search-placeholder {
-	margin-left: 5px;
-	font-size: 16px;
-}
-
-#user {
-	font-size: 28px;
-}
-
 input {
 	border-radius: 20px !important;
-}
-
-.course-sheet-card {
-}
-
-.course-sheet-image {
-	height: 110px;
-	width: 80px;
-}
-
-.course-sheet-presentation {
-	overflow: scroll;
-	height: 100px;
-}
-
-.top-section {
-	height: 200px;
-}
-
-.ccp-list {
-	font-size: 16px;
-	overflow: scroll;
-	height: 100px;
 }
 
 .separator {
@@ -120,33 +56,4 @@ input {
 	margin-top: 20px;
 	margin-bottom: 20px;
 	border: 1px solid white;
-}
-
-.message-body {
-	position: absolute;
-}
-
-.messages-list {
-	overflow: scroll;
-	height: 350px;
-}
-
-.divider  {
-	margin-top: 24px;
-}
-
-.course-sheets-section {
-	overflow: scroll;
-	height: 350px;
-}
-
-.write-message-zone {
-	height: 44px;
-	font-size: 16px;
-	background-color: #6669c8;
-}
-
-code {
-  font-family: source-code-pro, Menlo, Monaco, Consolas, "Courier New",
-    monospace;
 }

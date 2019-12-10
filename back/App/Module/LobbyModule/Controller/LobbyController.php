@@ -3,6 +3,7 @@
 
 namespace App\Module\LobbyModule\Controller;
 
+use App\Exception\NoIdProvidedException;
 use App\Controller\AbstractController;
 use App\Model\AbstractModel;
 
@@ -17,16 +18,38 @@ class LobbyController extends AbstractController
 
     public function run(): void
     {
-        if (isset($this->getParams()['action'])) {
-            switch ($this->getParams()['action']) {
-                case 'coursesheets':
-                    if (!isset($this->getParams()['id'])) {
-                        throw new \Exception('No id provided for lobby');
-                    }
-                    $idLobby = (int)htmlspecialchars($this->getParams()['id']);
-                    $courseSheets = $this->getModel()->getCourseSheets($idLobby);
-                    echo json_encode($courseSheets);
+        try {
+
+            if (isset($this->getParams()['action'])) {
+                switch ($this->getParams()['action']) {
+                    case 'coursesheets':
+                        if (!isset($this->getParams()['param'])) {
+                            throw new NoIdProvidedException('lobby');
+                        }
+                        $idLobby = (int)htmlspecialchars($this->getParams()['param']);
+                        $courseSheets = $this->getModel()->getCourseSheets($idLobby);
+                        echo json_encode($courseSheets);
+                        break;
+                    case 'messages':
+                        if (!isset($this->getParams()['param'])) {
+                            throw new NoIdProvidedException('lobby');
+                        }
+                        $idLobby = (int)htmlspecialchars($this->getParams()['param']);
+                        $messages = $this->getModel()->getMessages($idLobby);
+                        echo json_encode($messages);
+                        break;
+                    case 'lobby':
+                        if (!isset($this->getParams()['param'])) {
+                            throw new NoIdProvidedException('lobby');
+                        }
+                        $idLobby = (int)htmlspecialchars($this->getParams()['param']);
+                        $lobby = $this->getModel()->getLobbyById($idLobby);
+                        echo json_encode($lobby);
+                        break;
+                }
             }
+        } catch (NoIdProvidedException $e) {
+            echo $e->getMessage();
         }
     }
 }

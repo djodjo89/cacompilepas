@@ -28,7 +28,9 @@ class DefaultController
         $this->fetchParamsFromRequest($_GET);
         $this->fetchParamsFromRequest($_POST);
         $this->fetchParamsFromRequest($_REQUEST);
-        $this->fetchParamsFromRequest(json_decode(file_get_contents('php://input'), true));
+        if (!is_null(json_decode(file_get_contents('php://input')))) {
+            $this->fetchParamsFromRequest(json_decode(file_get_contents('php://input'), true));
+        }
         if (isset($this->params['module'])) {
             switch ($this->params['module']) {
                 case 'lobby':

@@ -1,0 +1,9 @@
+.top-section {
+    height: 200px;
+}
+
+.ccp-list {
+    font-size: 16px;
+    overflow: scroll;
+    height: 100px;
+}

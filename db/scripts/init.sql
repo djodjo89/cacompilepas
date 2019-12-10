@@ -40,9 +40,9 @@ CREATE TABLE ccp_coursesheet(
         publication_date Date NOT NULL ,
         link             Varchar (1024) NOT NULL ,
         description      Varchar (2056) NOT NULL,
-        id_lobby_Contain Int NOT NULL
+        id_lobby_contain Int NOT NULL
 	,CONSTRAINT ccp_coursesheet_PK PRIMARY KEY (id_course_sheet)
-	,CONSTRAINT ccp_coursesheet_ccp_lobby_FK FOREIGN KEY (id_lobby_Contain) REFERENCES ccp_lobby(id_lobby)
+	,CONSTRAINT ccp_coursesheet_ccp_lobby_FK FOREIGN KEY (id_lobby_contain) REFERENCES ccp_lobby(id_lobby)
 );
 
 
@@ -195,25 +195,27 @@ ON SCHEDULE EVERY 1 MINUTE ENABLE
 
 /******   ccp_user    ********/
 
-INSERT INTO ccp_user VALUES (1,'tomtom','Thomas','Bonnet','$2y$10$FU50osy63clx3YmMarOyvOLTxJvGHlJG787D2/fLs7vNp4fk7rI/K', 'thomas@cacompilepas.com');
-INSERT INTO ccp_user VALUES (2,'nana','nabila','benattia','$2y$10$FU50osy63clx3YmMarOyvOLTxJvGHlJG787D2/fLs7vNp4fk7rI/K', 'nabila@cacompilepas.com');
+INSERT INTO ccp_user (pseudo,name,first_name,password,email) VALUES ('tomtom','Thomas','Bonnet','$2y$10$FU50osy63clx3YmMarOyvOLTxJvGHlJG787D2/fLs7vNp4fk7rI/K', 'thomas@cacompilepas.com');
+INSERT INTO ccp_user (pseudo,name,first_name,password,email) VALUES ('nana','nabila','benattia','$2y$10$FU50osy63clx3YmMarOyvOLTxJvGHlJG787D2/fLs7vNp4fk7rI/K', 'nabila@cacompilepas.com');
 
 
 /******   ccp_lobby    ********/
 
-INSERT INTO ccp_lobby VALUES (1,'JAVA 8','Découvrez les nouveautes de JAVA 8 , entre lambda , hmap et compagnie vous ne serez pas decu',TRUE);
-INSERT INTO ccp_lobby VALUES (2,'Bases de lassembleur','Plongez dans le monde infernal de lassembleur , un monde ou vous devez faire 10 lignes de codes juste pour faire un print',TRUE);
-INSERT INTO ccp_lobby VALUES (3,'Vim est-il facile a apprendre ? ','Retrouver les arguments du perpetuel debat qui a dechiré plus dune familles ',TRUE);
-INSERT INTO ccp_lobby VALUES (4,'JAVASCRIPT ','aucun commentaire',TRUE);
+INSERT INTO ccp_lobby (label_lobby, description, private) VALUES ('JAVA 8','Découvrez les nouveautes de JAVA 8 , entre lambda , hmap et compagnie vous ne serez pas decu',TRUE);
+INSERT INTO ccp_lobby (label_lobby, description, private) VALUES ('Bases de lassembleur','Plongez dans le monde infernal de lassembleur , un monde ou vous devez faire 10 lignes de codes juste pour faire un print',TRUE);
+INSERT INTO ccp_lobby (label_lobby, description, private) VALUES ('Vim est-il facile a apprendre ? ','Retrouver les arguments du perpetuel debat qui a dechiré plus dune familles ',TRUE);
+INSERT INTO ccp_lobby (label_lobby, description, private) VALUES ('JAVASCRIPT ','aucun commentaire',TRUE);
 
 
 /******   ccp_coursesheet    ********/
 
-INSERT INTO ccp_coursesheet VALUES (1,'Les Lambdas','2019-11-24','ftp://leslambdas.pdf',1);
-INSERT INTO ccp_coursesheet VALUES (2,'les registres','2042-12-24','ftp://assembleur.pdf',2);
+INSERT INTO ccp_coursesheet (title,publication_date,link,description,id_lobby_contain) VALUES ('Les lambdas','2019-11-24','ftp://leslambdas.pdf','Découvrez l\'une des nouveautés les plus importantes de java 8. Les lambdas permettent une implémentation simple et efficace de la programmation fonctionnelle évitant.',1);
+INSERT INTO ccp_coursesheet (title,publication_date,link,description,id_lobby_contain) VALUES ('Les registres','2042-12-24','ftp://assembleur.pdf','Après ce cours vous aurez compris l\'origine de l\'univers',2);
+INSERT INTO ccp_coursesheet (title,publication_date,link,description,id_lobby_contain) VALUES ('Les design pattern','2019-12-09','ftp://design-pattern.pdf','Les design pattern sont des façons de programmer réutilisables permettant d\'apporter des réponses à des problèmes récurrents dans les programmes informatiques',2);
 
 
 /******   ccp_message    ********/
 
-INSERT INTO ccp_message VALUES (1,'hey les gars.. ca compile pas , vous pouvez maider ?','2019-11-24',1,2);
-
+INSERT INTO ccp_message (content,send_date,id_user,id_lobby) VALUES ('hey les gars... ca compile pas , vous pouvez maider ?','2019-11-24',1,2);
+INSERT INTO ccp_message (content,send_date,id_user,id_lobby) VALUES ('tro nul se cite, sa vo clerement pa stakovèrflo !!!', '2019-12-09',1,1);
+INSERT INTO ccp_message (content,send_date,id_user,id_lobby) VALUES ('grâce à ces fiches de cours, j\'ai pu apprendre plein de choses malgré les grèves, merci beaucoup !', '2019-12-09',2,1);

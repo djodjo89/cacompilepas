@@ -1,5 +1,5 @@
 import React from 'react';
-import { ReactComponent as Logo } from "../img/new-logo-2.svg";
+import { ReactComponent as Logo } from "../../img/new-logo-2.svg";
 
 interface SvgProps {
   id: string

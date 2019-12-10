@@ -4,17 +4,16 @@ import {
     Switch,
     Route
 } from "react-router-dom";
-import Nav from './Nav';
-import Lobbys from './Lobbys';
-import Connection from './Connection';
-import NotFound from './NotFound';
-import PrivateRoute from "../Security/PrivateRoute";
-import '../css/App.css';
-import Home from "./Home";
+import Nav from '../General/Nav';
+import Lobby from '../Lobby/Lobby';
+import Connection from '../Connection/Connection';
+import NotFound from '../Pages/NotFound';
+import PrivateRoute from "../../Security/PrivateRoute";
+import '../../css/App.css';
+import Home from "../Pages/Home";
 
 class App extends React.Component {
     public render(): ReactNode {
-        console.log(localStorage.getItem('token'));
         return (
             <div className="App container-fluid ml-lg-4">
                 <Nav/>
@@ -23,7 +22,7 @@ class App extends React.Component {
                         <Route exact path='/'>
                             <Home/>
                         </Route>
-                        <PrivateRoute path={'/lobby'} component={Lobbys} rest={[]}/>
+                        <PrivateRoute path={'/lobby'} component={Lobby} rest={[]}/>
                         <Route path='/connexion'>
                             <Connection/>
                         </Route>

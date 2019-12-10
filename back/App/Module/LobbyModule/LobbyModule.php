@@ -13,6 +13,6 @@ class LobbyModule extends AbstractModule
     public function __construct(Connection $connection, array $params)
     {
         parent::setModel(new LobbyModel($connection));
-        parent::setController(new LobbyController($this->getModel()), $params);
+        parent::setController(new LobbyController($this->getModel(), $params));
     }
 }
