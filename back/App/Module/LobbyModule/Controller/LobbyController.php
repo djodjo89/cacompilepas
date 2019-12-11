@@ -2,7 +2,6 @@
 
 namespace App\Module\LobbyModule\Controller;
 
-
 use App\Controller\AbstractController;
 use App\Exception\JSONException;
 use App\Http\JSONResponse;

@@ -32,7 +32,11 @@ class LobbyModel extends AbstractModel
         $query = $this->getConnection()::$bdd->prepare($stringQuery);
         $query->execute([$idUser, $idLobby]);
 
-        return $query->fetch()['read_right'] ? true : false;
+        if ($result = $query->fetch()) {
+            return $result['read_right'] ? true : false;
+        } else {
+            return false;
+        }
     }
 
     public function fetchData(array $data, array $tabIfNotFound): array

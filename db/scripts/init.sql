@@ -225,6 +225,4 @@ INSERT INTO ccp_message (content,send_date,id_user,id_lobby) VALUES ('grâce à 
 /******   ccp_rights     ********/
 
 INSERT INTO ccp_rights (read_right,write_right,id_lobby_Protect,id_user) VALUES (true,false,1,1);
-INSERT INTO ccp_rights (read_right,write_right,id_lobby_Protect,id_user) VALUES (false,false,1,2);
-INSERT INTO ccp_rights (read_right,write_right,id_lobby_Protect,id_user) VALUES (false,false,2,1);
 INSERT INTO ccp_rights (read_right,write_right,id_lobby_Protect,id_user) VALUES (true,true,2,2);
