@@ -11,7 +11,7 @@ class LobbyController extends AbstractController
     public function run(): void
     {
         switch ($this->getRequest()->getAction()) {
-            case 'coursesheets' || 'messages' || 'lobby':
+            case 'coursesheets' || 'messages' || 'lobby' || 'update':
                 $this->checkToken();
                 $idLobby = (int)$this->getRequest()->getParam();
                 $result = [];
@@ -27,6 +27,12 @@ class LobbyController extends AbstractController
 
                         case 'consult':
                             $result = $this->getModel()->getLobbyById($idLobby);
+                            break;
+
+                        case 'update':
+                            if (isset($this->getRequest()->label)) {
+                                $result = $this->getModel()->updateLabel($idLobby, $this->getRequest()->getLabel());
+                            }
                             break;
                     }
                 } else {

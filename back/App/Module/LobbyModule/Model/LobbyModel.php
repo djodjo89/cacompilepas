@@ -11,12 +11,6 @@ use Firebase\JWT\JWT;
 
 class LobbyModel extends AbstractModel
 {
-
-    public function __construct(Connection $connection)
-    {
-        parent::setConnection($connection);
-    }
-
     public function checkRights(int $idLobby, string $token): bool
     {
         $publicKey = file_get_contents(__DIR__ . '/../../../../keys/public_key.pem');
@@ -24,24 +18,23 @@ class LobbyModel extends AbstractModel
 
         $idUser = (new ConnectionModel($this->getConnection()))->verifyIfUserExists($decoded['email'], $decoded['password'])['id_user'];
 
-        $stringQuery = 'SELECT read_right
+        $this->send_query('SELECT read_right
                         FROM ccp_rights
                         WHERE id_user = ?
                         AND id_lobby_Protect = ?
-                        ';
-        $query = $this->getConnection()::$bdd->prepare($stringQuery);
-        $query->execute([$idUser, $idLobby]);
+                        ',
+                        [$idUser, $idLobby]);
 
-        if ($result = $query->fetch()) {
+        if ($result = $this->getQuery()->fetch()) {
             return $result['read_right'] ? true : false;
         } else {
             return false;
         }
     }
 
-    public function fetchData(array $data, array $tabIfNotFound): array
+    public function fetchData(array $tabIfNotFound): array
     {
-        if ($result = $data) {
+        if ($result = $this->getQuery()->fetchAll()) {
             return $result;
         } else {
             return $tabIfNotFound;
@@ -50,36 +43,53 @@ class LobbyModel extends AbstractModel
 
     public function getLobbyById(int $idLobby): array
     {
-        $stringQuery = 'SELECT label_lobby, description
+        $this->send_query('SELECT label_lobby, description
                         FROM ccp_lobby
                         WHERE id_lobby = ?
-                        ';
-        $query = $this->getConnection()::$bdd->prepare($stringQuery);
-        $query->execute([$idLobby]);
-        return $this->fetchData($query->fetch(), ['message' => 'Lobby ' . $idLobby . ' doesn\'t exist']);
+                        ',
+                        [$idLobby]);
+        return $this->fetchData(['message' => 'Lobby ' . $idLobby . ' doesn\'t exist']);
     }
 
     public function getCourseSheets(int $idLobby): array
     {
-        $stringQuery = 'SELECT title, publication_date, link, description
+        $this->send_query('SELECT title, publication_date, link, description
                         FROM ccp_coursesheet 
                         WHERE id_lobby_Contain = ?
-                        ';
-        $query = $this->getConnection()::$bdd->prepare($stringQuery);
-        $query->execute([$idLobby]);
-        return $this->fetchData($query->fetchAll(), ['message' => 'Lobby ' . $idLobby . ' doesn\'t contain any course sheet']);
+                        ',
+                        [$idLobby]);
+        return $this->fetchData(['message' => 'Lobby ' . $idLobby . ' doesn\'t contain any course sheet']);
     }
 
     public function getMessages(int $idLobby): array
     {
-        $stringQuery = 'SELECT content, send_date, pseudo
+        $this->send_query('SELECT content, send_date, pseudo
                         FROM ccp_message
                         INNER JOIN ccp_user
                         USING(id_user)
                         WHERE id_lobby = ?
-                        ';
-        $query = $this->getConnection()::$bdd->prepare($stringQuery);
-        $query->execute([$idLobby]);
-        return $this->fetchData($query->fetchAll(), ['message' => 'Lobby ' . $idLobby . ' doesn\'t contain any message']);
+                        ',
+                        [$idLobby]);
+        return $this->fetchData(['message' => 'Lobby ' . $idLobby . ' doesn\'t contain any message']);
+    }
+
+    public function updateLabel(int $idLobby, string $label): array
+    {
+        $oldLabel = $this->getLobbyById($idLobby);
+
+        $this->send_query('UPDATE ccp_lobby
+                        SET label_lobby = ?
+                        WHERE id_lobby = ?
+                        ',
+                        [$label, $idLobby]);
+
+        $newLabel = $this->getLobbyById($idLobby);
+
+        if ($oldLabel === $newLabel) {
+            return ['message' => 'Lobby label was not updated'];
+        }
+        else {
+            return ['message' => 'Lobby label was updated'];
+        }
     }
 }

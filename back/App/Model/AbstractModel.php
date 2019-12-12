@@ -6,8 +6,12 @@ use App\Connection\Connection;
 abstract class AbstractModel
 {
     private Connection $connection;
+    private \PDOStatement $query;
 
-    abstract public function __construct(Connection $connection);
+    public function __construct(Connection $connection)
+    {
+        $this->connection = $connection;
+    }
 
     public function getConnection(): Connection
     {
@@ -17,5 +21,16 @@ abstract class AbstractModel
     public function setConnection(Connection $connection): void
     {
         $this->connection = $connection;
+    }
+
+    public function send_query(string $stringQuery, array $parameters): void
+    {
+        $this->query = $this->connection::$bdd->prepare($stringQuery);
+        $this->query->execute($parameters);
+    }
+
+    public function getQuery(): \PDOStatement
+    {
+        return $this->query;
     }
 }
