@@ -49,7 +49,7 @@ class ConnectionModel extends AbstractModel
                         WHERE id_user = ?
                         ',
                         [$id_user]);
-        $userAlreadyHasAToken = $query->fetch();
+        $userAlreadyHasAToken = $this->getQuery()->fetch();
         if ($userAlreadyHasAToken) {
             return $userAlreadyHasAToken['token'];
         } else {

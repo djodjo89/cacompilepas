@@ -211,9 +211,9 @@ INSERT INTO ccp_lobby (label_lobby, description, private) VALUES ('JAVASCRIPT ',
 
 /******   ccp_coursesheet    ********/
 
-INSERT INTO ccp_coursesheet (title,publication_date,link,description,id_lobby_contain) VALUES ('Les lambdas','2019-11-24','ftp://leslambdas.pdf','Découvrez l\'une des nouveautés les plus importantes de java 8. Les lambdas permettent une implémentation simple et efficace de la programmation fonctionnelle évitant.',1);
-INSERT INTO ccp_coursesheet (title,publication_date,link,description,id_lobby_contain) VALUES ('Les registres','2042-12-24','ftp://assembleur.pdf','Après ce cours vous aurez compris l\'origine de l\'univers',2);
-INSERT INTO ccp_coursesheet (title,publication_date,link,description,id_lobby_contain) VALUES ('Les design pattern','2019-12-09','ftp://design-pattern.pdf','Les design pattern sont des façons de programmer réutilisables permettant d\'apporter des réponses à des problèmes récurrents dans les programmes informatiques',2);
+INSERT INTO ccp_coursesheet (title,publication_date,link,description,id_lobby_contain) VALUES ('Les lambdas','2019-11-24','ftp://localhost/coursesheets/les-lambdas.pdf','Découvrez l\'une des nouveautés les plus importantes de java 8. Les lambdas permettent une implémentation simple et efficace de la programmation fonctionnelle évitant.',1);
+INSERT INTO ccp_coursesheet (title,publication_date,link,description,id_lobby_contain) VALUES ('Les registres','2042-12-24','ftp://localhost/coursesheets/assembleur.pdf','Après ce cours vous aurez compris l\'origine de l\'univers',2);
+INSERT INTO ccp_coursesheet (title,publication_date,link,description,id_lobby_contain) VALUES ('Les design pattern','2019-12-09','ftp://localhost/coursesheets/design-patterns.pdf','Les design pattern sont des façons de programmer réutilisables permettant d\'apporter des réponses à des problèmes récurrents dans les programmes informatiques',2);
 
 
 /******   ccp_message    ********/

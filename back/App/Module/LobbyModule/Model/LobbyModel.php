@@ -73,23 +73,51 @@ class LobbyModel extends AbstractModel
         return $this->fetchData(['message' => 'Lobby ' . $idLobby . ' doesn\'t contain any message']);
     }
 
+    public function updateLobby(int $idLobby, array $newData): array
+    {
+        $count = 0;
+        $params = '';
+
+        foreach($newData as $key => $value) {
+            $params .= " " . $key ." = '" . $value . "'";
+            if ($count !== 0) {
+                $params .= ', ';
+            }
+            $count++;
+        }
+        var_dump($params);
+        echo '<br/><br/><br/>';
+        $this->send_query('UPDATE ccp_lobby
+                        SET ' . $params . '
+                        WHERE id_lobby = ?
+                        ',
+                        [$idLobby]);
+
+        return ['message' => 'Lobby label was updated'];
+    }
+/*
     public function updateLabel(int $idLobby, string $label): array
     {
-        $oldLabel = $this->getLobbyById($idLobby);
-
         $this->send_query('UPDATE ccp_lobby
                         SET label_lobby = ?
                         WHERE id_lobby = ?
                         ',
                         [$label, $idLobby]);
 
-        $newLabel = $this->getLobbyById($idLobby);
-
-        if ($oldLabel === $newLabel) {
-            return ['message' => 'Lobby label was not updated'];
-        }
-        else {
-            return ['message' => 'Lobby label was updated'];
-        }
+        return ['message' => 'Lobby label was updated'];
     }
+
+    public function updateDescription(int $idLobby, string $description): array
+    {
+        $oldDescription = $this->getLobbyById($idLobby);
+
+        $this->send_query('UPDATE ccp_lobby
+                        SET description = ?
+                        WHERE id_lobby = ?
+                            ',
+                        [$description, $idLobby]);
+
+        $newDescription = $this->
+    }
+*/
 }

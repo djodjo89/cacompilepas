@@ -31,7 +31,10 @@ class LobbyController extends AbstractController
 
                         case 'update':
                             if (isset($this->getRequest()->label)) {
-                                $result = $this->getModel()->updateLabel($idLobby, $this->getRequest()->getLabel());
+                                $result = $this->getModel()->updateLobby($idLobby, ['label_lobby' => $this->getRequest()->getLabel()]);
+                            }
+                            if (isset($this->getRequest()->description)) {
+                                $result = $this->getModel()->updateLobby($idLobby, ['description' =>$this->getRequest()->getDescription()]);
                             }
                             break;
                     }
