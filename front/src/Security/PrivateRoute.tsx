@@ -42,7 +42,7 @@ class PrivateRoute extends React.PureComponent<PrivateRouteProps, { status: stri
     public checkToken(): void {
         if (undefined !== localStorage.getItem('token') && '' !== localStorage.getItem('token')) {
             // Check if token is valid
-            new Request('/connection/verification', 'POST', {
+            new Request('/connection/verification', 'POST', 'json', {
                 token: localStorage.getItem('token')
             }, this.updateToken);
         } else {

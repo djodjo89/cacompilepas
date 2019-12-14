@@ -1,4 +1,5 @@
 import React, {ReactNode} from 'react';
+import Upload from './Upload';
 import {
     BrowserRouter as Router,
     Switch,
@@ -19,14 +20,17 @@ class App extends React.Component {
                 <Nav/>
                 <Router>
                     <Switch>
-                        <Route exact path='/'>
+                        <Route exact path={'/'}>
                             <Home/>
                         </Route>
                         <PrivateRoute path={'/lobby'} component={Lobby} rest={[]}/>
-                        <Route path='/connexion'>
+                        <Route path={'/connexion'}>
                             <Connection/>
                         </Route>
-                        <Route path='*'>
+                        <Route path={'/upload'}>
+                            <Upload/>
+                        </Route>
+                        <Route path={'*'}>
                             <NotFound/>
                         </Route>
                     </Switch>

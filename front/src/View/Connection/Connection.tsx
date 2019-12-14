@@ -36,7 +36,7 @@ class Connection extends React.Component<{}, ConnectionStates> {
     // Check if token is still valid
     public componentDidMount(): void {
         if (undefined !== localStorage.getItem('token') && '' !== localStorage.getItem('token')) {
-            new Request('/connection/verification', 'POST', {token: localStorage.getItem('token')}, this.checkIfAlreadyConnected);
+            new Request('/connection/verification', 'POST', 'json', {token: localStorage.getItem('token')}, this.checkIfAlreadyConnected);
         }
     }
 
@@ -70,7 +70,7 @@ class Connection extends React.Component<{}, ConnectionStates> {
 
     public submitForm(event: FormEvent<HTMLFormElement>): void {
         event.preventDefault();
-        new Request('/connection/login', 'POST', {
+        new Request('/connection/login', 'POST', 'json', {
             email: this.email,
             password: this.password
         }, this.updateConnectStatus);

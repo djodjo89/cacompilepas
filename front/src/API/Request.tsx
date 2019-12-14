@@ -12,6 +12,7 @@ interface IHttpResponse<T> extends Response {
 class Request<T> {
     private route: string;
     private readonly method: string;
+    private readonly type: string;
     private readonly data: string;
     private readonly domain: string;
     private beautifulRoute: string;
@@ -21,11 +22,12 @@ class Request<T> {
     private response: IHttpResponse<T>;
     private updateFunction: any;
 
-    constructor(beautifulRoute: string, method: string, data: any, updateFunction: any) {
+    constructor(beautifulRoute: string, method: string, type: string, data: any, updateFunction: any) {
         this.beautifulRoute = beautifulRoute;
         this.route = '/';
         this.method = method;
         this.domain = 'http://localhost:80';
+        this.type = type;
         this.data = data;
         this.initRoute();
         this.sendRequest();
@@ -56,16 +58,22 @@ class Request<T> {
             case 'POST':
                 this.headers =
                     {
-                        'Accept': 'application/json',
-                        'Content-Type': 'application/json'
+                        'Accept': this.type,
                     }
                 break;
+        }
+        let body: any;
+        if (null === this.data) {
+            body = null;
+        }
+        else {
+            this.type === 'json' ? body = JSON.stringify(this.data) : body = this.data;
         }
 
         this.requestInit = {
             headers: this.headers,
             method: this.method,
-            body: null !== this.data ? JSON.stringify(this.data) : null,
+            body: body,
         }
 
         fetch(this.domain + this.route, this.requestInit)

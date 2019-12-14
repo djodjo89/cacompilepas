@@ -6,12 +6,12 @@ use App\Exception\JSONException;
 
 class Request
 {
-    private static $IMPORTANT_PARAMETERS = ['module', 'action', 'param', 'token'];
 
     public function __construct()
     {
         $this->fetchParamsFromRequest($_GET);
         $this->fetchParamsFromRequest($_POST);
+        $this->fetchParamsFromRequest($_FILES);
         $this->fetchParamsFromRequest($_REQUEST);
         if (!is_null(json_decode(file_get_contents('php://input')))) {
             $this->fetchParamsFromRequest(json_decode(file_get_contents('php://input'), true));
@@ -21,7 +21,11 @@ class Request
     public function fetchParamsFromRequest(array $requestMethod): void
     {
         foreach ($requestMethod as $key => $value) {
-            $this->{$this->toCamelCase(htmlspecialchars($key))} = htmlspecialchars($value);
+            if (is_array($value)) {
+                $this->fetchParamsFromRequest($value);
+            } else {
+                $this->{$this->toCamelCase(htmlspecialchars($key))} = htmlspecialchars($value);
+            }
         }
     }
 
