@@ -4,6 +4,7 @@
 namespace App\Module\LobbyModule\Model;
 
 use App\Connection\Connection;
+use App\Exception\JSONException;
 use App\Model\AbstractModel;
 use App\Module\ConnectionModule\Model\ConnectionModel;
 use Firebase\JWT\JWT;
@@ -11,6 +12,7 @@ use Firebase\JWT\JWT;
 
 class LobbyModel extends AbstractModel
 {
+
     public function checkRights(int $idLobby, string $token): bool
     {
         $publicKey = file_get_contents(__DIR__ . '/../../../../keys/public_key.pem');
@@ -88,14 +90,19 @@ class LobbyModel extends AbstractModel
         }
     }
 
-    public function extension(string $fileName): string
+    public function backUpAndUpdateLogo(int $idLobby, string $fileName): string
     {
-        return explode('.', $fileName)[count(explode('.', $fileName)) - 1];
+        // Update logo in database
+        // But make a backup of old logo before to be able to update logo on ftp server
+        $oldLogo = $this->getLogo($idLobby);
+        $this->updateLobby($idLobby, ['logo' => $fileName]);
+        return $oldLogo;
     }
 
-    public function nameOnFTP(int $idLobby, string $fileName, string $extension): string
+    public function updateLogo(int $idLobby, string $fileName, string $tmpName): array
     {
-        return explode('.' . $extension, $fileName)[0] . "_$idLobby" . '.' . $extension;
+        $oldLogo = $this->backUpAndUpdateLogo($idLobby, $fileName);
+        return $this->updateOnFTP($idLobby, $fileName, $tmpName, AbstractModel::$IMG_EXTENSIONS, '/img/', $oldLogo);
     }
 
     // Update only fields that are needed
@@ -111,38 +118,17 @@ class LobbyModel extends AbstractModel
             }
             $count++;
         }
-        $this->send_query(
+        $successfulUpdate = $this->send_query(
             'UPDATE ccp_lobby
                         SET ' . $params . '
                         WHERE id_lobby = ?
                         ',
             [$idLobby]);
 
-        return ['message' => 'Lobby was updated'];
+        if ($successfulUpdate) {
+            return ['message' => 'Lobby was updated'];
+        } else {
+            return ['message' => 'An error occurred during lobby update'];
+        }
     }
-    /*
-        public function updateLabel(int $idLobby, string $label): array
-        {
-            $this->send_query('UPDATE ccp_lobby
-                            SET label_lobby = ?
-                            WHERE id_lobby = ?
-                            ',
-                            [$label, $idLobby]);
-
-            return ['message' => 'Lobby label was updated'];
-        }
-
-        public function updateDescription(int $idLobby, string $description): array
-        {
-            $oldDescription = $this->getLobbyById($idLobby);
-
-            $this->send_query('UPDATE ccp_lobby
-                            SET description = ?
-                            WHERE id_lobby = ?
-                                ',
-                            [$description, $idLobby]);
-
-            $newDescription = $this->
-        }
-    */
 }

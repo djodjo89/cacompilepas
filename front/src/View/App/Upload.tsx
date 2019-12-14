@@ -29,10 +29,10 @@ class Upload extends React.Component {
             let formData = new FormData();
             formData.append('file', this.file);
             formData.append('crocodile', 'yes');
-            formData.append('token', 'eyJ0eXAiOiJKV1QiLCJhbGciOiJSUzUxMiJ9.eyJlbWFpbCI6InRob21hc0BjYWNvbXBpbGVwYXMuY29tIiwicGFzc3dvcmQiOiIkMnkkMTAkRlU1MG9zeTYzY2x4M1ltTWFyT3l2T0xUeEp2R0hsSkc3ODdEMlwvZkxzN3ZOcDRmazdySVwvSyIsInRpbWUiOnsiZGF0ZSI6IjIwMTktMTItMTQgMTU6MTU6NTAuNTUyMjc1IiwidGltZXpvbmVfdHlwZSI6MywidGltZXpvbmUiOiJFdXJvcGVcL1BhcmlzIn19.D-Szd9yTTUz4hTZ-m0aht1x3bT1qh-cj9CswBaLc8A2lQHxki-TSjqRNwPTfE7A6xihqhKkKnqOaaUROIDGezcNbN4sKFq8qAg-Xi9VjOvoq7NA-9lLg7p3gHsTX2avWNebO6jY8eXK7KHawfp6_gPsV7BJaYhOAMl8mKjoVdaM');
-            formData.append('label', 'Tro bien le ftp');
+            formData.append('token', 'eyJ0eXAiOiJKV1QiLCJhbGciOiJSUzUxMiJ9.eyJlbWFpbCI6InRob21hc0BjYWNvbXBpbGVwYXMuY29tIiwicGFzc3dvcmQiOiIkMnkkMTAkRlU1MG9zeTYzY2x4M1ltTWFyT3l2T0xUeEp2R0hsSkc3ODdEMlwvZkxzN3ZOcDRmazdySVwvSyIsInRpbWUiOnsiZGF0ZSI6IjIwMTktMTItMTQgMTc6MDA6NTQuODkxODI1IiwidGltZXpvbmVfdHlwZSI6MywidGltZXpvbmUiOiJFdXJvcGVcL1BhcmlzIn19.OjOUMrqiJoxTJDKshVfZJbupcy7-y2M7mrL4V6OZlsPI1-qBDHioG_TOuaXL3Jsr6esFxjRRb8C3vsMYlOSwX_Lu_-GNbuIHlNqRSUJ6KCpCcyKRU7w6S_zOwtI1dVUo4Mmum4uxq3cC-GUR64P5T5Kao2XwoZRcrZ3-TPXWJmg');
+            formData.append('title', 'Tro bien le ftp');
             formData.append('description', 'Ici vous allez vous amuser :smile:');
-            new Request('/lobby/update/1', 'POST', this.file.type, formData, this.update);
+            new Request('/lobby/newCourseSheet/1', 'POST', this.file.type, formData, this.update);
         }
     }
 
