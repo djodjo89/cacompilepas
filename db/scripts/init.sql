@@ -12,7 +12,7 @@ CREATE TABLE ccp_user(
         name         Varchar (1024) NOT NULL ,
         first_name   Varchar (1024) NOT NULL ,
         password     Varchar (256) NOT NULL ,
-        email        Varchar (64) NOT NULL
+        email        Varchar (64) NOT NULL UNIQUE
 	,CONSTRAINT ccp_user_PK PRIMARY KEY (id_user)
 );
 
@@ -39,7 +39,7 @@ CREATE TABLE ccp_coursesheet(
         id_course_sheet  Int  Auto_increment  NOT NULL ,
         title            Varchar (256) NOT NULL ,
         publication_date Date NOT NULL ,
-        file_name             Varchar (1024) NOT NULL ,
+        file_name        Varchar (1024) NOT NULL ,
         description      Varchar (2056) NOT NULL,
         id_lobby_contain Int NOT NULL
 	,CONSTRAINT ccp_coursesheet_PK PRIMARY KEY (id_course_sheet)
@@ -55,10 +55,10 @@ CREATE TABLE ccp_rights(
         id_right         Int  Auto_increment  NOT NULL ,
         read_right       Boolean NOT NULL ,
         write_right      Boolean NOT NULL ,
-        id_lobby_Protect Int NOT NULL ,
+        id_lobby_protect Int NOT NULL ,
         id_user          Int NOT NULL
 	,CONSTRAINT ccp_rights_PK PRIMARY KEY (id_right)
-	,CONSTRAINT ccp_rights_ccp_lobby_FK FOREIGN KEY (id_lobby_Protect) REFERENCES ccp_lobby(id_lobby)
+	,CONSTRAINT ccp_rights_ccp_lobby_FK FOREIGN KEY (id_lobby_protect) REFERENCES ccp_lobby(id_lobby)
         ,CONSTRAINT ccp_rights_ccp_user_FK FOREIGN KEY (id_user) REFERENCES ccp_user(id_user)
 );
 
@@ -225,5 +225,9 @@ INSERT INTO ccp_message (content,send_date,id_user,id_lobby) VALUES ('grâce à 
 
 /******   ccp_rights     ********/
 
-INSERT INTO ccp_rights (read_right,write_right,id_lobby_Protect,id_user) VALUES (true,false,1,1);
-INSERT INTO ccp_rights (read_right,write_right,id_lobby_Protect,id_user) VALUES (true,true,2,2);
+INSERT INTO ccp_rights (read_right,write_right,id_lobby_protect,id_user) VALUES (true,false,1,1);
+INSERT INTO ccp_rights (read_right,write_right,id_lobby_protect,id_user) VALUES (true,true,2,2);
+
+/******   ccp_is_admin   ********/
+INSERT INTO ccp_is_admin (id_user, id_lobby) VALUES (1, 1);
+INSERT INTO ccp_is_admin (id_user, id_lobby) VALUES (2, 2);

@@ -9,9 +9,10 @@ use Firebase\JWT\JWT;
 class ConnectionModel extends AbstractModel
 {
 
-    public function verifyIfUserExists(string $email, string $password): array
+    public function checkIfUserExists(string $email, string $password): array
     {
-        $this->send_query('SELECT id_user, password FROM ccp_user
+        $this->send_query('
+                        SELECT id_user, password FROM ccp_user
                         WHERE email = ?
                         ',
                         [$email]);
@@ -20,7 +21,21 @@ class ConnectionModel extends AbstractModel
                 return $result;
             }
         } else {
-            return 0;
+            return [];
+        }
+    }
+
+    public function getUserByEmail(string $email): array
+    {
+        $this->send_query('
+            SELECT id_user FROM ccp_user
+            WHERE email = ?
+        ',[$email]);
+
+        if ($result = $this->getQuery()->fetch()) {
+            return $result;
+        } else {
+            return [];
         }
     }
 
@@ -57,7 +72,7 @@ class ConnectionModel extends AbstractModel
 
             $payload = array(
                 'email' => $email,
-                'password' => $this->verifyIfUserExists($email, $password)['password'],
+                'password' => $this->checkIfUserExists($email, $password)['password'],
                 'time' => new \DateTime('NOW')
             );
 

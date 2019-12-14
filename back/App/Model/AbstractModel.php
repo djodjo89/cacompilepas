@@ -22,11 +22,6 @@ abstract class AbstractModel
         return $this->connection;
     }
 
-    public function setConnection(Connection $connection): void
-    {
-        $this->connection = $connection;
-    }
-
     public function send_query(string $stringQuery, array $parameters): bool
     {
         $this->query = $this->connection::$bdd->prepare($stringQuery);

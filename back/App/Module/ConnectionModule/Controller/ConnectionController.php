@@ -13,7 +13,7 @@ class ConnectionController extends AbstractController
             case 'login':
                 $email = $this->getRequest()->getEmail();
                 $password = $this->getRequest()->getPassword();
-                $idUser = $this->getModel()->verifyIfUserExists($email, $password)['id_user'];
+                $idUser = $this->getModel()->checkIfUserExists($email, $password)['id_user'];
                 if ($idUser) {
                     new JSONResponse([
                         'token' => $this->getModel()->generateToken($email, $password, $idUser),
