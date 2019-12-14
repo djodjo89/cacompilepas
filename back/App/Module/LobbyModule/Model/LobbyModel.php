@@ -23,7 +23,7 @@ class LobbyModel extends AbstractModel
                         WHERE id_user = ?
                         AND id_lobby_Protect = ?
                         ',
-                        [$idUser, $idLobby]);
+            [$idUser, $idLobby]);
 
         if ($result = $this->getQuery()->fetch()) {
             return $result['read_right'] ? true : false;
@@ -47,7 +47,7 @@ class LobbyModel extends AbstractModel
                         FROM ccp_lobby
                         WHERE id_lobby = ?
                         ',
-                        [$idLobby]);
+            [$idLobby]);
         return $this->fetchData(['message' => 'Lobby ' . $idLobby . ' doesn\'t exist']);
     }
 
@@ -57,7 +57,7 @@ class LobbyModel extends AbstractModel
                         FROM ccp_coursesheet 
                         WHERE id_lobby_Contain = ?
                         ',
-                        [$idLobby]);
+            [$idLobby]);
         return $this->fetchData(['message' => 'Lobby ' . $idLobby . ' doesn\'t contain any course sheet']);
     }
 
@@ -69,55 +69,80 @@ class LobbyModel extends AbstractModel
                         USING(id_user)
                         WHERE id_lobby = ?
                         ',
-                        [$idLobby]);
+            [$idLobby]);
         return $this->fetchData(['message' => 'Lobby ' . $idLobby . ' doesn\'t contain any message']);
     }
 
+    public function getLogo(int $idLobby): string
+    {
+        $this->send_query(
+            'SELECT logo FROM ccp_lobby
+                        WHERE id_lobby = ?
+                        ',
+            [$idLobby]);
+
+        if ($result = $this->getQuery()->fetch()) {
+            return $result['logo'];
+        } else {
+            return '';
+        }
+    }
+
+    public function extension(string $fileName): string
+    {
+        return explode('.', $fileName)[count(explode('.', $fileName)) - 1];
+    }
+
+    public function nameOnFTP(int $idLobby, string $fileName, string $extension): string
+    {
+        return explode('.' . $extension, $fileName)[0] . "_$idLobby" . '.' . $extension;
+    }
+
+    // Update only fields that are needed
     public function updateLobby(int $idLobby, array $newData): array
     {
         $count = 0;
         $params = '';
 
-        foreach($newData as $key => $value) {
-            $params .= " " . $key ." = '" . $value . "'";
+        foreach ($newData as $key => $value) {
+            $params .= " " . $key . " = '" . $value . "'";
             if ($count !== 0) {
                 $params .= ', ';
             }
             $count++;
         }
-        var_dump($params);
-        echo '<br/><br/><br/>';
-        $this->send_query('UPDATE ccp_lobby
+        $this->send_query(
+            'UPDATE ccp_lobby
                         SET ' . $params . '
                         WHERE id_lobby = ?
                         ',
-                        [$idLobby]);
+            [$idLobby]);
 
-        return ['message' => 'Lobby label was updated'];
+        return ['message' => 'Lobby was updated'];
     }
-/*
-    public function updateLabel(int $idLobby, string $label): array
-    {
-        $this->send_query('UPDATE ccp_lobby
-                        SET label_lobby = ?
-                        WHERE id_lobby = ?
-                        ',
-                        [$label, $idLobby]);
-
-        return ['message' => 'Lobby label was updated'];
-    }
-
-    public function updateDescription(int $idLobby, string $description): array
-    {
-        $oldDescription = $this->getLobbyById($idLobby);
-
-        $this->send_query('UPDATE ccp_lobby
-                        SET description = ?
-                        WHERE id_lobby = ?
+    /*
+        public function updateLabel(int $idLobby, string $label): array
+        {
+            $this->send_query('UPDATE ccp_lobby
+                            SET label_lobby = ?
+                            WHERE id_lobby = ?
                             ',
-                        [$description, $idLobby]);
+                            [$label, $idLobby]);
 
-        $newDescription = $this->
-    }
-*/
+            return ['message' => 'Lobby label was updated'];
+        }
+
+        public function updateDescription(int $idLobby, string $description): array
+        {
+            $oldDescription = $this->getLobbyById($idLobby);
+
+            $this->send_query('UPDATE ccp_lobby
+                            SET description = ?
+                            WHERE id_lobby = ?
+                                ',
+                            [$description, $idLobby]);
+
+            $newDescription = $this->
+        }
+    */
 }

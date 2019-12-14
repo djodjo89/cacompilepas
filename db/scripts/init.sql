@@ -25,6 +25,7 @@ CREATE TABLE ccp_lobby(
         id_lobby    Int  Auto_increment  NOT NULL ,
         label_lobby Varchar (256) NOT NULL ,
         description Varchar (1024) NOT NULL,
+        logo        Varchar (1024) NOT NULL,
         private     Boolean NOT NULL
 	,CONSTRAINT ccp_lobby_PK PRIMARY KEY (id_lobby)
 );
@@ -203,17 +204,17 @@ INSERT INTO ccp_user (pseudo,name,first_name,password,email) VALUES ('nana','nab
 
 /******   ccp_lobby    ********/
 
-INSERT INTO ccp_lobby (label_lobby, description, private) VALUES ('JAVA 8','Découvrez les nouveautes de JAVA 8 , entre lambda , hmap et compagnie vous ne serez pas decu',TRUE);
-INSERT INTO ccp_lobby (label_lobby, description, private) VALUES ('Bases de lassembleur','Plongez dans le monde infernal de lassembleur , un monde ou vous devez faire 10 lignes de codes juste pour faire un print',TRUE);
-INSERT INTO ccp_lobby (label_lobby, description, private) VALUES ('Vim est-il facile a apprendre ? ','Retrouver les arguments du perpetuel debat qui a dechiré plus dune familles ',TRUE);
-INSERT INTO ccp_lobby (label_lobby, description, private) VALUES ('JAVASCRIPT ','aucun commentaire',TRUE);
+INSERT INTO ccp_lobby (label_lobby, description, logo, private) VALUES ('JAVA 8','Découvrez les nouveautes de JAVA 8 , entre lambda , hmap et compagnie vous ne serez pas decu', '/img/pink_pencil_case.jpg',TRUE);
+INSERT INTO ccp_lobby (label_lobby, description, logo, private) VALUES ('Bases de lassembleur','Plongez dans le monde infernal de lassembleur , un monde ou vous devez faire 10 lignes de codes juste pour faire un print','/img/Colors-Gucci-Logo.jpg',TRUE);
+INSERT INTO ccp_lobby (label_lobby, description, logo, private) VALUES ('Vim est-il facile a apprendre ? ','Retrouver les arguments du perpetuel debat qui a dechiré plus dune familles ','/img/Roi_Arthur_livre1.jpg',TRUE);
+INSERT INTO ccp_lobby (label_lobby, description, logo, private) VALUES ('JAVASCRIPT ','aucun commentaire','/img/Roi_Arthur_livre1.jpg',TRUE);
 
 
 /******   ccp_coursesheet    ********/
 
-INSERT INTO ccp_coursesheet (title,publication_date,link,description,id_lobby_contain) VALUES ('Les lambdas','2019-11-24','ftp://localhost/coursesheets/les-lambdas.pdf','Découvrez l\'une des nouveautés les plus importantes de java 8. Les lambdas permettent une implémentation simple et efficace de la programmation fonctionnelle évitant.',1);
-INSERT INTO ccp_coursesheet (title,publication_date,link,description,id_lobby_contain) VALUES ('Les registres','2042-12-24','ftp://localhost/coursesheets/assembleur.pdf','Après ce cours vous aurez compris l\'origine de l\'univers',2);
-INSERT INTO ccp_coursesheet (title,publication_date,link,description,id_lobby_contain) VALUES ('Les design pattern','2019-12-09','ftp://localhost/coursesheets/design-patterns.pdf','Les design pattern sont des façons de programmer réutilisables permettant d\'apporter des réponses à des problèmes récurrents dans les programmes informatiques',2);
+INSERT INTO ccp_coursesheet (title,publication_date,link,description,id_lobby_contain) VALUES ('Les lambdas','2019-11-24','/coursesheets/les-lambdas.pdf','Découvrez l\'une des nouveautés les plus importantes de java 8. Les lambdas permettent une implémentation simple et efficace de la programmation fonctionnelle évitant.',1);
+INSERT INTO ccp_coursesheet (title,publication_date,link,description,id_lobby_contain) VALUES ('Les registres','2042-12-24','/coursesheets/assembleur.pdf','Après ce cours vous aurez compris l\'origine de l\'univers',2);
+INSERT INTO ccp_coursesheet (title,publication_date,link,description,id_lobby_contain) VALUES ('Les design pattern','2019-12-09','/coursesheets/design-patterns.pdf','Les design pattern sont des façons de programmer réutilisables permettant d\'apporter des réponses à des problèmes récurrents dans les programmes informatiques',2);
 
 
 /******   ccp_message    ********/

@@ -40,7 +40,7 @@ services:
     ftp:
         image: bogem/ftp
         volumes:
-            - ./ftp/coursesheets:/home/vsftpd/coursesheets
+            - ./ftp/:/home/vsftpd/
         ports:
             - "20:20"
             - "21:21"
