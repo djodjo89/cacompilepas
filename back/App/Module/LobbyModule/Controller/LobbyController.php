@@ -43,17 +43,17 @@ class LobbyController extends AbstractController
 
                         case 'update':
                             if (isset($this->getRequest()->label)) {
-                                $result = $this->getModel()->updateLobby($idLobby, ['label_lobby' => $this->getRequest()->getLabel()]);
+                                $result['message_label'] = $this->getModel()->updateLobby($idLobby, ['label_lobby' => $this->getRequest()->getLabel()])['message'];
                             }
                             if (isset($this->getRequest()->description)) {
-                                $result = $this->getModel()->updateLobby($idLobby, ['description' => $this->getRequest()->getDescription()]);
+                                $result['message_description'] = $this->getModel()->updateLobby($idLobby, ['description' => $this->getRequest()->getDescription()])['message'];
                             }
                             if (isset($this->getRequest()->file)) {
-                                $result = $this->getModel()->updateLogo(
+                                $result['message_logo'] = $this->getModel()->updateLogo(
                                     $idLobby,
                                     $this->getRequest()->getFile()['name'],
                                     $this->getRequest()->getFile()['tmp_name'],
-                                );
+                                )['message'];
                             }
                             break;
                     }

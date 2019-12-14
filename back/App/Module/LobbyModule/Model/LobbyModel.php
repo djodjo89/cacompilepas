@@ -105,30 +105,8 @@ class LobbyModel extends AbstractModel
         return $this->updateOnFTP($idLobby, $fileName, $tmpName, AbstractModel::$IMG_EXTENSIONS, '/img/', $oldLogo);
     }
 
-    // Update only fields that are needed
     public function updateLobby(int $idLobby, array $newData): array
     {
-        $count = 0;
-        $params = '';
-
-        foreach ($newData as $key => $value) {
-            $params .= " " . $key . " = '" . $value . "'";
-            if ($count !== 0) {
-                $params .= ', ';
-            }
-            $count++;
-        }
-        $successfulUpdate = $this->send_query(
-            'UPDATE ccp_lobby
-                        SET ' . $params . '
-                        WHERE id_lobby = ?
-                        ',
-            [$idLobby]);
-
-        if ($successfulUpdate) {
-            return ['message' => 'Lobby was updated'];
-        } else {
-            return ['message' => 'An error occurred during lobby update'];
-        }
+        return $this->update($idLobby, 'Lobby', 'ccp_lobby', 'id_lobby', $newData);
     }
 }

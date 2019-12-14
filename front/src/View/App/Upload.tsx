@@ -30,9 +30,9 @@ class Upload extends React.Component {
             formData.append('file', this.file);
             formData.append('crocodile', 'yes');
             formData.append('token', 'eyJ0eXAiOiJKV1QiLCJhbGciOiJSUzUxMiJ9.eyJlbWFpbCI6InRob21hc0BjYWNvbXBpbGVwYXMuY29tIiwicGFzc3dvcmQiOiIkMnkkMTAkRlU1MG9zeTYzY2x4M1ltTWFyT3l2T0xUeEp2R0hsSkc3ODdEMlwvZkxzN3ZOcDRmazdySVwvSyIsInRpbWUiOnsiZGF0ZSI6IjIwMTktMTItMTQgMTc6MDA6NTQuODkxODI1IiwidGltZXpvbmVfdHlwZSI6MywidGltZXpvbmUiOiJFdXJvcGVcL1BhcmlzIn19.OjOUMrqiJoxTJDKshVfZJbupcy7-y2M7mrL4V6OZlsPI1-qBDHioG_TOuaXL3Jsr6esFxjRRb8C3vsMYlOSwX_Lu_-GNbuIHlNqRSUJ6KCpCcyKRU7w6S_zOwtI1dVUo4Mmum4uxq3cC-GUR64P5T5Kao2XwoZRcrZ3-TPXWJmg');
-            formData.append('title', 'Tro bien le ftp');
-            formData.append('description', 'Ici vous allez vous amuser :smile:');
-            new Request('/lobby/newCourseSheet/1', 'POST', this.file.type, formData, this.update);
+            formData.append('title', 'Tro bien le ftp, ouais !');
+            formData.append('description', 'Là, vous allez vous amuser :smile:');
+            new Request('/lobby/update/1', 'POST', this.file.type, formData, this.update);
         }
     }
 

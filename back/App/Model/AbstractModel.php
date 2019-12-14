@@ -85,6 +85,41 @@ abstract class AbstractModel
         $oldFileNameOnFTPServer = $uploadDirectory . $this->nameOnFTP($id, $oldFileName, $this->extension($oldFileName));
         $this->deleteOnFTP($oldFileNameOnFTPServer, $uploadDirectory);
 
-        return $this->uploadOnFTP($id, $fileName, $tmpName, $uploadDirectory);
+        return $this->uploadOnFTP($id, $fileName, $tmpName, $uploadDirectory, $allowedExtensions);
+    }
+
+    // Update only fields that are needed
+    public function update(int $id, string $model, string $table, string $idAttribute, array $newData): array
+    {
+        $count = 0;
+        $params = '';
+
+        foreach ($newData as $key => $value) {
+            $params .= ' ' . $key . " = '" . $value . "'";
+            if ($count !== 0) {
+                $params .= ', ';
+            }
+            $count++;
+        }
+
+        $successfulUpdate = $this->send_query('
+                        UPDATE ' . $table . '
+                        SET ' . $params . '
+                        WHERE ' . $idAttribute . ' = ?',
+            [$id]
+        );
+
+        if ($successfulUpdate) {
+            $count = 0;
+            $result = [];
+            foreach ($newData as $key => $value) {
+                $result['message_' . $count] = "$model was successfully updated with '$value'";
+                $count++;
+            }
+
+            return ['message' => $result];
+        } else {
+            return ['message' => "An error occurred during $model update"];
+        }
     }
 }
