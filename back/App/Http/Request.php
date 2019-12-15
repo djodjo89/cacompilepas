@@ -6,12 +6,12 @@ use App\Exception\JSONException;
 
 class Request
 {
-    private static $IMPORTANT_PARAMETERS = ['module', 'action', 'param', 'token'];
 
     public function __construct()
     {
         $this->fetchParamsFromRequest($_GET);
         $this->fetchParamsFromRequest($_POST);
+        $this->fetchParamsFromRequest($_FILES);
         $this->fetchParamsFromRequest($_REQUEST);
         if (!is_null(json_decode(file_get_contents('php://input')))) {
             $this->fetchParamsFromRequest(json_decode(file_get_contents('php://input'), true));
@@ -21,7 +21,14 @@ class Request
     public function fetchParamsFromRequest(array $requestMethod): void
     {
         foreach ($requestMethod as $key => $value) {
-            $this->{$this->toCamelCase(htmlspecialchars($key))} = htmlspecialchars($value);
+            if (is_array($value)) {
+                $this->{$this->toCamelCase(htmlspecialchars($key))} = [];
+                foreach ($value as $k => $val) {
+                    $this->{$this->toCamelCase(htmlspecialchars($key))}[$k] = $val;
+                }
+            } else {
+                $this->{$this->toCamelCase(htmlspecialchars($key))} = htmlspecialchars($value);
+            }
         }
     }
 
@@ -40,14 +47,18 @@ class Request
         return $finalParam;
     }
 
-    function __call($function, $parameters): string
+    function __call($function, $parameters)
     {
         if ('get' === substr($function, 0, 3)) {
             $attributeName = $this->toCamelCase(substr($function, 3, strlen($function)));
             if (isset($this->{$attributeName})) {
-                return $this->{$attributeName};
+                    return $this->{$attributeName};
             } else {
-                new JSONException($attributeName . ' wasn\'t provided');
+                if (is_array($this->{$attributeName})) {
+                    new JSONException($$attributeName . ' wasn\'t provided');
+                } else {
+                    new JSONException($attributeName . ' wasn\'t provided');
+                }
             }
         }
     }

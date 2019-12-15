@@ -1,2 +1,2 @@
 [mysqld]
-event_scheduler=on
+event_scheduler = on

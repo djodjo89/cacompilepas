@@ -9,42 +9,49 @@ use Firebase\JWT\JWT;
 class ConnectionModel extends AbstractModel
 {
 
-    public function __construct(Connection $connection)
+    public function checkIfUserExists(string $email, string $password): array
     {
-        parent::setConnection($connection);
-    }
-
-    public function verifyIfUserExists(string $email, string $password): array
-    {
-        $stringQuery = 'SELECT id_user, password FROM ccp_user
+        $this->send_query('
+                        SELECT id_user, password FROM ccp_user
                         WHERE email = ?
-                        ';
-        $query = $this->getConnection()::$bdd->prepare($stringQuery);
-        $query->execute([$email]);
-        if ($result = $query->fetch()) {
+                        ',
+                        [$email]);
+        if ($result = $this->getQuery()->fetch()) {
             if ($password === $result['password'] || password_verify($password, $result['password'])) {
                 return $result;
             }
         } else {
-            return 0;
+            return [];
+        }
+    }
+
+    public function getUserByEmail(string $email): array
+    {
+        $this->send_query('
+            SELECT id_user FROM ccp_user
+            WHERE email = ?
+        ',[$email]);
+
+        if ($result = $this->getQuery()->fetch()) {
+            return $result;
+        } else {
+            return [];
         }
     }
 
     public function checkToken(string $token): bool
     {
-        $stringQuery = 'SELECT token FROM ccp_token
+        $this->send_query('SELECT token FROM ccp_token
                         WHERE token = ?
-                        ';
-        $query = $this->getConnection()::$bdd->prepare($stringQuery);
-        $query->execute([$token]);
-        if ($tokenExists = $query->fetch()) {
+                        ',
+                        [$token]);
+        if ($tokenExists = $this->getQuery()->fetch()) {
             // Update token last update date if it is valid
-            $stringQuery = 'UPDATE ccp_token
+            $this->send_query('UPDATE ccp_token
                             SET last_update_date = NOW()
                             WHERE token = ?
-                            ';
-            $query = $this->getConnection()::$bdd->prepare($stringQuery);
-            $query->execute([$token]);
+                            ',
+                            [$token]);
             return true;
         } else {
             return false;
@@ -53,12 +60,11 @@ class ConnectionModel extends AbstractModel
 
     public function generateToken(string $email, string $password, int $id_user): string
     {
-        $stringQuery = 'SELECT token FROM ccp_token
+        $this->send_query('SELECT token FROM ccp_token
                         WHERE id_user = ?
-                        ';
-        $query = $this->getConnection()::$bdd->prepare($stringQuery);
-        $query->execute([$id_user]);
-        $userAlreadyHasAToken = $query->fetch();
+                        ',
+                        [$id_user]);
+        $userAlreadyHasAToken = $this->getQuery()->fetch();
         if ($userAlreadyHasAToken) {
             return $userAlreadyHasAToken['token'];
         } else {
@@ -66,20 +72,18 @@ class ConnectionModel extends AbstractModel
 
             $payload = array(
                 'email' => $email,
-                'password' => $this->verifyIfUserExists($email, $password)['password'],
+                'password' => $this->checkIfUserExists($email, $password)['password'],
                 'time' => new \DateTime('NOW')
             );
 
             $jwt = JWT::encode($payload, $privateKey, 'RS512');
 
-            $stringQuery = 'INSERT INTO ccp_token
+            $this->send_query('INSERT INTO ccp_token
                             (token, creation_date, last_update_date, id_user)
                             VALUES
                             (?, NOW(), NOW(), ?)
-                            ';
-
-            $query = $this->getConnection()::$bdd->prepare($stringQuery);
-            $query->execute([$jwt, $id_user]);
+                            ',
+                            [$jwt, $id_user]);
         }
 
         return $jwt;

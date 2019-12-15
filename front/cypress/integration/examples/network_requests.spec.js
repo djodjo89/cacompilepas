@@ -98,7 +98,7 @@ context('Network Requests', () => {
       .then((user) => {
         expect(user).property('id').to.be.a('number')
         // make a new post on behalf of the user
-        cy.request('POST', 'https://jsonplaceholder.cypress.io/posts', {
+        cy.request('POST', 'json', 'https://jsonplaceholder.cypress.io/posts', {
           userId: user.id,
           title: 'Cypress Test Runner',
           body: 'Fast, easy and reliable testing for anything that runs in a browser.',
@@ -130,7 +130,7 @@ context('Network Requests', () => {
         //  To access the test context we need to use
         //  the "function () { ... }" callback form,
         //  otherwise "this" points at a wrong or undefined object!
-        cy.request('POST', 'https://jsonplaceholder.cypress.io/posts', {
+        cy.request('POST', 'json', 'https://jsonplaceholder.cypress.io/posts', {
           userId: this.user.id,
           title: 'Cypress Test Runner',
           body: 'Fast, easy and reliable testing for anything that runs in a browser.',
@@ -163,7 +163,7 @@ context('Network Requests', () => {
     cy.wait('@getComment').its('status').should('eq', 200)
 
     // Listen to POST to comments
-    cy.route('POST', '/comments').as('postComment')
+    cy.route('POST', 'json', '/comments').as('postComment')
 
     // we have code that posts a comment when
     // the button is clicked in scripts.js

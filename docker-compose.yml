@@ -37,6 +37,19 @@ services:
             MYSQL_DATABASE: cacompilepasdb
             MYSQL_ROOT_PASSWORD: root
         restart: 'always'
+    ftp:
+        image: bogem/ftp
+        volumes:
+            - ./ftp/:/home/vsftpd/
+        ports:
+            - "20:20"
+            - "21:21"
+            - "47400-47470:47400-47470"
+        environment:
+            FTP_USER: cacompilepas
+            FTP_PASS: cacompilepas
+            PASV_ADDRESS: "127.0.0.1"
+        restart: 'always'
     client:
         build: ./front
         environment:
