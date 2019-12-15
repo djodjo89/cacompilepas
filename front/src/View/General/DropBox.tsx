@@ -7,7 +7,7 @@ const Heading = styled.p<{ active: boolean }>`
   text-align: center;
 `;
 
-class DropBoxBackground extends React.Component<any, any> {
+class DropBoxBackground extends React.Component<{label: string, className: string}, any> {
     public render(): ReactNode {
         return (
             <div
@@ -16,11 +16,11 @@ class DropBoxBackground extends React.Component<any, any> {
                     width: '220px',
                     height: '145px',
                 }}
-                className={'rounded pt-4 mt-4'}
+                className={'rounded pt-4 ' + this.props.className}
             >
                 {this.props.children}
                 <Heading active={false}>
-                    Glisse un logo par ici !
+                    {this.props.label}
                 </Heading>
             </div>
         );
@@ -30,6 +30,9 @@ class DropBoxBackground extends React.Component<any, any> {
 interface DropBoxProps {
     id: string,
     className: string,
+    label: string,
+    accept: string,
+    backgroundClassName: string,
     handleFileDrop: (event: React.DragEvent<HTMLDivElement>) => void,
     handleFileChange: (event: ChangeEvent<HTMLInputElement>) => void,
 }
@@ -61,13 +64,16 @@ class DropBox extends React.Component<DropBoxProps, { }> {
                 onDrop={this.props.handleFileDrop}
             >
                 <label>
-                    <DropBoxBackground>
+                    <DropBoxBackground
+                        label={this.props.label}
+                        className={this.props.backgroundClassName}
+                    >
                         <input
                             type={'file'}
                             id={this.props.id}
                             onChange={this.props.handleFileChange}
                             hidden
-                            accept={'image/*'}/>
+                            accept={this.props.accept}/>
                         <div
                             className={'rounded-1'}
                             style={{

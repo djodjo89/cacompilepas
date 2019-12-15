@@ -4,6 +4,7 @@ interface InputAreaProps {
     id: string,
     placeholder: string,
     className: string,
+    textAreaClassName: string,
     rows: number,
     onChange: (event: ChangeEvent<HTMLTextAreaElement>) => void,
     disabled: boolean
@@ -11,9 +12,9 @@ interface InputAreaProps {
 
 class InputArea extends React.Component<InputAreaProps, {}> {
     public render(): ReactNode {
-        return <div className={"form-group" + this.props.className}>
+        return <div className={'form-group ' + this.props.className}>
             <textarea
-                      className={'form-control mt-0 rounded-1'}
+                      className={'form-control mt-0 rounded-1 ' + this.props.textAreaClassName}
                       id={this.props.id}
                       placeholder={this.props.placeholder}
                       rows={this.props.rows}
