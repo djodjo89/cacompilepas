@@ -13,7 +13,7 @@ import {
 import {ReactComponent as Loader} from "../../img/loader.svg";
 
 class Lobby extends React.Component<any, { right: string, courseSheets: [] }> {
-    constructor(props: any) {
+    public constructor(props: any) {
         super(props);
         this.state = {
             right: '',
@@ -40,24 +40,26 @@ class Lobby extends React.Component<any, { right: string, courseSheets: [] }> {
         return (
             <Router>
                 <Switch>
-                    <Route path={this.props.pathname}>
+                    <Route exact path={this.props.path}>
+                        <h3>Veuillez choisir un lobby</h3>
+                    </Route>
+                    <Route path={this.props.location.pathname}>
                         {() => {
                             if ('true' === this.state.right) {
-                                return <section className="content row container-fluid">
-                                    <LobbyTop id={this.props.location.pathname.split(/\//)[2]}
-                                              courseSheets={this.state.courseSheets}/>
-                                    <LobbyBody id={this.props.location.pathname.split(/\//)[2]}
-                                               courseSheets={this.state.courseSheets}/>
-                                </section>;
+                                return (
+                                    <section className={"content row container-fluid"}>
+                                        <LobbyTop id={this.props.location.pathname.split(/\//)[2]}
+                                                  courseSheets={this.state.courseSheets}/>
+                                        <LobbyBody id={this.props.location.pathname.split(/\//)[2]}
+                                                   courseSheets={this.state.courseSheets}/>
+                                    </section>
+                                );
                             } else if ('false' === this.state.right) {
                                 return <h2>Vous n'avez pas les droits nécessaires pour accéder à ce lobby</h2>
                             } else {
                                 return <div className={'mt-5'}><Loader/></div>
                             }
                         }}
-                    </Route>
-                    <Route path={this.props.path}>
-                        <h3>Veuillez choisir un lobby</h3>
                     </Route>
                 </Switch>
             </Router>

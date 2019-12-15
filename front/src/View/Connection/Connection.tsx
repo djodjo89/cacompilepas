@@ -151,7 +151,6 @@ class ConnectionInput extends React.Component<ConnectionInputProps, {}> {
             />
         </div>
     }
-
 }
 
 class ButtonConnection extends React.Component<{}, {}> {

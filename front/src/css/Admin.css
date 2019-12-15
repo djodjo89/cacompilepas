@@ -1,0 +1,47 @@
+.admin-header {
+    width: 60%;
+    margin-left: auto;
+    margin-right: auto;
+}
+
+#dropbox-icon {
+    width: 80%;
+    height: 80%;
+    margin-left: auto;
+    margin-right: auto;
+}
+
+.custom-tab:hover {
+    color: #ffffff;
+    background-color:
+            #27276a !important;
+    border-color:
+            #27276a #27276a
+            #27276a !important;
+    height: 4.8vh;
+}
+
+.custom-tab {
+    text-decoration: none;
+    height: 4.8vh;
+    padding: 0 !important;
+    padding-top: 3px !important;
+    padding-bottom: 0px !important;
+    padding-right: 10px !important;
+    padding-left: 10px !important;
+}
+
+.custom-tab-active {
+    color: #ffffff !important;
+    background-color:
+            #27276a !important;
+    border-color:
+            #27276a #27276a
+            #27276a !important;
+    height: 4.8vh;
+}
+
+.custom-tab-nav {
+    padding: 0px !important;
+    height: 5vh;
+}
