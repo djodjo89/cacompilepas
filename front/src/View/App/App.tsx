@@ -1,5 +1,4 @@
 import React, {ReactNode} from 'react';
-import Upload from './Upload';
 import {
     BrowserRouter as Router,
     Switch,
@@ -12,6 +11,7 @@ import NotFound from '../Pages/NotFound';
 import PrivateRoute from "../../Security/PrivateRoute";
 import '../../css/App.css';
 import Home from "../Pages/Home";
+import Admin from '../Admin/Admin';
 
 class App extends React.Component {
     public render(): ReactNode {
@@ -27,9 +27,7 @@ class App extends React.Component {
                         <Route path={'/connexion'}>
                             <Connection/>
                         </Route>
-                        <Route path={'/upload'}>
-                            <Upload/>
-                        </Route>
+                        <PrivateRoute path={'/admin'} component={Admin} rest={[]}/>
                         <Route path={'*'}>
                             <NotFound/>
                         </Route>

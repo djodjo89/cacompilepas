@@ -71,7 +71,7 @@ class LobbyModel extends AbstractModel
     public function getCourseSheets(int $idLobby): array
     {
         $this->send_query('
-            SELECT title, publication_date, file_name, description
+            SELECT ccp_coursesheet.id_course_sheet, title, publication_date, file_name, description
             FROM ccp_coursesheet
             WHERE id_lobby_Contain = ?
         ',
@@ -175,10 +175,8 @@ class LobbyModel extends AbstractModel
         }
     }
 
-    public function removeUser(int $idLobby, string $email): array
+    public function removeUser(int $idLobby, int $idUser): array
     {
-        $idUser = $this->findUser($email);
-
         if ($this->verifyIfRightExists($idLobby, $idUser)) {
             $successfulRightDeletion = $this->send_query('
                 DELETE FROM ccp_rights
@@ -188,19 +186,17 @@ class LobbyModel extends AbstractModel
                 [$idLobby, $idUser]);
 
             if ($successfulRightDeletion) {
-                return ['message' => "Read right was successfully removed from $email"];
+                return ['message' => 'Read right was successfully removed '];
             } else {
-                return ['message' => "Read right could not be removed for $email"];
+                return ['message' => 'Read right could not be removed'];
             }
         } else {
-            return ['message' => "$email is already out of the lobby"];
+            return ['message' => 'User is already out of the lobby'];
         }
     }
 
-    public function addWriteRight(int $idLobby, string $email): array
+    public function addWriteRight(int $idLobby, int $idUser): array
     {
-        $idUser = $this->findUser($email);
-
         if ($this->verifyIfRightExists($idLobby, $idUser)) {
             $successfulWriteRightUpdate = $this->send_query('
                 UPDATE ccp_rights
@@ -211,19 +207,17 @@ class LobbyModel extends AbstractModel
                 [$idLobby, $idUser]);
 
             if ($successfulWriteRightUpdate) {
-                return ['message' => "Write right was successfully added to $email"];
+                return ['message' => 'Write right was successfully added'];
             } else {
-                return ['message' => "Write right could not be added to $email"];
+                return ['message' => 'Write right could not be added'];
             }
         } else {
-            return ['message' => "$email doesn't have access to the lobby"];
+            return ['message' => 'User doesn\'t have access to the lobby'];
         }
     }
 
-    public function removeWriteRight(int $idLobby, string $email): array
+    public function removeWriteRight(int $idLobby, int $idUser): array
     {
-        $idUser = $this->findUser($email);
-
         if ($this->verifyIfRightExists($idLobby, $idUser)) {
             $successfulWriteRightRemove = $this->send_query('
                 UPDATE ccp_rights
@@ -234,12 +228,12 @@ class LobbyModel extends AbstractModel
                 [$idLobby, $idUser]);
 
             if ($successfulWriteRightRemove) {
-                return ['message' => "Write right was successfully removed from $email"];
+                return ['message' => 'Write right was successfully removed'];
             } else {
-                return ['message' => "Write right could not be removed from $email"];
+                return ['message' => 'Write right could not be removed from'];
             }
         } else {
-            return ['message' => "$email doesn't have access to the lobby"];
+            return ['message' => 'User doesn\'t have access to the lobby'];
         }
     }
 
@@ -273,5 +267,35 @@ class LobbyModel extends AbstractModel
         } else {
             return ['message' => 'Lobby could not be made public'];
         }
+    }
+
+    public function getUsers($idLobby): array
+    {
+        $this->send_query('
+            SELECT id_user, pseudo, icon, write_right
+            FROM ccp_user
+            INNER JOIN ccp_rights
+            USING (id_user)
+            INNER JOIN ccp_is_admin
+            USING (id_user)
+            WHERE id_lobby_protect = ?
+            AND read_right = 1
+            AND id_lobby <> ?
+        ',
+            [$idLobby, $idLobby]);
+
+        return $this->fetchData(['message' => 'Lobby ' . $idLobby . ' does not contain any user']);
+    }
+
+    public function getVisibility($idLobby): array
+    {
+        $this->send_query('
+            SELECT private
+            FROM ccp_lobby
+            WHERE id_lobby = ?
+        ',
+            [$idLobby]);
+
+        return $this->fetchData(['message' => 'Lobby ' . $idLobby . 'does not exist']);
     }
 }

@@ -1,0 +1,11 @@
+.user-rights-checkbox {
+    width: 32px !important;
+}
+
+.user-rights-checkbox:hover {
+    cursor: pointer;
+}
+
+.lobby-write-right-label:hover {
+    cursor: pointer;
+}

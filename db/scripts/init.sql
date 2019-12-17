@@ -11,8 +11,9 @@ CREATE TABLE ccp_user(
         pseudo       Varchar (1024) NOT NULL ,
         name         Varchar (1024) NOT NULL ,
         first_name   Varchar (1024) NOT NULL ,
-        password     Varchar (256) NOT NULL ,
-        email        Varchar (64) NOT NULL UNIQUE
+        icon         Varchar (1024) NOT NULL ,
+        password     Varchar (256)  NOT NULL ,
+        email        Varchar (64)   NOT NULL UNIQUE
 	,CONSTRAINT ccp_user_PK PRIMARY KEY (id_user)
 );
 
@@ -24,8 +25,8 @@ CREATE TABLE ccp_user(
 CREATE TABLE ccp_lobby(
         id_lobby    Int  Auto_increment  NOT NULL ,
         label_lobby Varchar (256) NOT NULL ,
-        description Varchar (1024) NOT NULL,
-        logo        Varchar (1024) NOT NULL,
+        description Varchar (1024) NOT NULL ,
+        logo        Varchar (1024) NOT NULL ,
         private     Boolean NOT NULL
 	,CONSTRAINT ccp_lobby_PK PRIMARY KEY (id_lobby)
 );
@@ -198,8 +199,8 @@ ON SCHEDULE EVERY 1 MINUTE ENABLE
 
 /******   ccp_user    ********/
 
-INSERT INTO ccp_user (pseudo,name,first_name,password,email) VALUES ('tomtom','Thomas','Bonnet','$2y$10$FU50osy63clx3YmMarOyvOLTxJvGHlJG787D2/fLs7vNp4fk7rI/K', 'thomas@cacompilepas.com');
-INSERT INTO ccp_user (pseudo,name,first_name,password,email) VALUES ('nana','nabila','benattia','$2y$10$FU50osy63clx3YmMarOyvOLTxJvGHlJG787D2/fLs7vNp4fk7rI/K', 'nabila@cacompilepas.com');
+INSERT INTO ccp_user (pseudo,name,first_name,icon,password,email) VALUES ('tomtom','Thomas','Bonnet','pink_pencil_case.jpg','$2y$10$FU50osy63clx3YmMarOyvOLTxJvGHlJG787D2/fLs7vNp4fk7rI/K', 'thomas@cacompilepas.com');
+INSERT INTO ccp_user (pseudo,name,first_name,icon,password,email) VALUES ('nana','nabila','benattia','pink_pencil_case.jpg','$2y$10$FU50osy63clx3YmMarOyvOLTxJvGHlJG787D2/fLs7vNp4fk7rI/K', 'nabila@cacompilepas.com');
 
 
 /******   ccp_lobby    ********/
