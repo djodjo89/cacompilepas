@@ -35,7 +35,9 @@ class CourseSheetModel extends AbstractModel
         ',
             [$idLobby, $idCourseSheet]);
         if ($successfulDelete) {
-            return ['message' => 'Course sheet was successfully deleted'];
+            return [
+                'message' => 'Course sheet was successfully deleted',
+            ];
         } else {
             return ['message' => 'Course sheet could not be deleted'];
         }

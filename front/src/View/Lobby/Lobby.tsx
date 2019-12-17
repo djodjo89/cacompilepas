@@ -121,7 +121,7 @@ class LobbyDescription extends React.Component<{ id: string }, { lobby: any }> {
     }
 
     public fillDescription(data: any): void {
-        this.setState({lobby: data});
+        this.setState({lobby: data[0]});
     }
 
     public render(): ReactNode {
@@ -140,7 +140,13 @@ class LobbyBody extends React.Component<{ id: string, courseSheets: [] }, {}> {
         return (
             <div className={"col-lg-12 col-md-12 col-sm-12 col-xs-12"}>
                 <Messages id={this.props.id}/>
-                <CourseSheets id={this.props.id} courseSheets={this.props.courseSheets} className={'col-lg-6 col-sm-12 mt-lg-3'}/>
+                <CourseSheets
+                    id={this.props.id}
+                    courseSheets={this.props.courseSheets}
+                    className={'col-lg-6 col-sm-12 mt-lg-3'}
+                    activeRemoveButton={false}
+                    delete={undefined}
+                />
                 <WriteMessageZone/>
             </div>
         )

@@ -15,3 +15,9 @@
     overflow: scroll;
     height: 350px;
 }
+
+.course-sheet-link:hover {
+    color: #27276a !important;
+    text-decoration: none !important;
+    cursor: pointer;
+}

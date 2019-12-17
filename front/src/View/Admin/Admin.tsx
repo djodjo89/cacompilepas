@@ -6,7 +6,7 @@ import {
     Route,
 } from "react-router-dom";
 import {ReactComponent as Loader} from "../../img/loader.svg";
-import PlusIcon from '../../img/plus-icon.png';
+import plusIcon from '../../img/plus-icon.png';
 import Input from "../General/Input";
 import InputArea from "../General/InputArea";
 import DropBox from "../General/DropBox";
@@ -14,6 +14,7 @@ import '../../css/Admin.css';
 import CourseSheets from "../Lobby/CourseSheets";
 
 interface AdminState {
+    id: number,
     isAdmin: string,
     currentTab: string,
     currentLabel: string,
@@ -23,6 +24,9 @@ interface AdminState {
     newDescription: string,
     newLogo: File | null,
     courseSheets: [],
+    newCourseSheetTitle: string,
+    newCourseSheetDescription: string,
+    newCourseSheetDocument: File | null,
 }
 
 class Admin extends React.Component<any, AdminState> {
@@ -30,6 +34,7 @@ class Admin extends React.Component<any, AdminState> {
     public constructor(props: any) {
         super(props);
         this.state = {
+            id: this.props.location.pathname.split(/\//)[2],
             isAdmin: '',
             currentTab: 'presentation',
             currentLabel: '',
@@ -39,16 +44,32 @@ class Admin extends React.Component<any, AdminState> {
             newDescription: '',
             newLogo: null,
             courseSheets: [],
+            newCourseSheetTitle: '',
+            newCourseSheetDescription: '',
+            newCourseSheetDocument: null,
         }
+        this.init = this.init.bind(this);
+        this.init();
+    }
+
+    public init(): void {
         this.checkIfAdmin = this.checkIfAdmin.bind(this);
         this.handleLabelChange = this.handleLabelChange.bind(this);
         this.handleDescriptionChange = this.handleDescriptionChange.bind(this);
-        this.handleFileDrop = this.handleFileDrop.bind(this);
-        this.handleFileChange = this.handleFileChange.bind(this);
+        this.handleLogoDrop = this.handleLogoDrop.bind(this);
+        this.handleLogoChange = this.handleLogoChange.bind(this);
         this.updateLobbby = this.updateLobbby.bind(this);
         this.update = this.update.bind(this);
         this.navigateToCourseSheets = this.navigateToCourseSheets.bind(this);
         this.fillCourseSheets = this.fillCourseSheets.bind(this);
+        this.removeCourseSheetFromLobby = this.removeCourseSheetFromLobby.bind(this);
+        this.fetchCourseSheets = this.fetchCourseSheets.bind(this);
+        this.refreshCourseSheets = this.refreshCourseSheets.bind(this);
+        this.handleCourseSheetDocumentDrop = this.handleCourseSheetDocumentDrop.bind(this);
+        this.handleCourseSheetDocumentChange = this.handleCourseSheetDocumentChange.bind(this);
+        this.handleCourseSheetTitleChange = this.handleCourseSheetTitleChange.bind(this);
+        this.handleCourseSheetDescriptionChange = this.handleCourseSheetDescriptionChange.bind(this);
+        this.addCourseSheet = this.addCourseSheet.bind(this);
     }
 
     public checkIfAdmin(data: any): void {
@@ -62,13 +83,15 @@ class Admin extends React.Component<any, AdminState> {
     }
 
     public componentDidMount(): void {
-        new Request('/lobby/consult/' + this.props.location.pathname.split(/\//)[2], 'POST', 'json', {token: localStorage.getItem('token')}, this.checkIfAdmin);
-        new Request('/lobby/coursesheets/' + this.props.location.pathname.split(/\//)[2], 'POST', 'json', {token: localStorage.getItem('token')}, this.fillCourseSheets);
+        new Request('/lobby/consult/' + this.state.id, 'POST', 'json', {token: localStorage.getItem('token')}, this.checkIfAdmin);
+        this.refreshCourseSheets();
     }
 
     public fillCourseSheets(data: any): void {
         if (undefined === data['message']) {
             this.setState({courseSheets: data});
+        } else {
+            this.setState({courseSheets: []});
         }
     }
 
@@ -76,18 +99,38 @@ class Admin extends React.Component<any, AdminState> {
         this.setState({newLabel: event.target.value});
     }
 
+    public handleCourseSheetTitleChange(event: ChangeEvent<HTMLInputElement>): void {
+        this.setState({newCourseSheetTitle: event.target.value});
+    }
+
     public handleDescriptionChange(event: ChangeEvent<HTMLTextAreaElement>): void {
         this.setState({newDescription: event.target.value});
     }
 
-    public handleFileDrop(event: React.DragEvent<HTMLDivElement>): void {
+    public handleCourseSheetDescriptionChange(event: ChangeEvent<HTMLTextAreaElement>): void {
+        this.setState({newCourseSheetDescription: event.target.value});
+    }
+
+    public handleLogoDrop(event: React.DragEvent<HTMLDivElement>): void {
         event.preventDefault();
         this.setState({newLogo: event.dataTransfer.files[0]});
     }
 
-    public handleFileChange(event: ChangeEvent<HTMLInputElement>): void {
+    public handleLogoChange(event: ChangeEvent<HTMLInputElement>): void {
         // @ts-ignore
         this.setState({newLogo: event.target.files[0]});
+    }
+
+    public handleCourseSheetDocumentDrop(event: React.DragEvent<HTMLDivElement>): void {
+        event.preventDefault();
+        this.setState({newCourseSheetDocument: event.dataTransfer.files[0]});
+        console.log(this.state.newCourseSheetDocument);
+    }
+
+    public handleCourseSheetDocumentChange(event: ChangeEvent<HTMLInputElement>): void {
+        // @ts-ignore
+        this.setState({newCourseSheetDocument: event.target.files[0]});
+        console.log(this.state.newCourseSheetDocument);
     }
 
     public update(data: any): void {
@@ -124,10 +167,45 @@ class Admin extends React.Component<any, AdminState> {
         }
         if (null !== this.state.newLogo) {
             formData.append('file', this.state.newLogo);
-            new Request('/lobby/update/' + this.props.location.pathname.split(/\//)[2], 'POST', this.state.newLogo.type, formData, this.update);
+            new Request('/lobby/update/' + this.state.id, 'POST', this.state.newLogo.type, formData, this.update);
         } else {
-            new Request('/lobby/update/' + this.props.location.pathname.split(/\//)[2], 'POST', '', formData, this.update);
+            new Request('/lobby/update/' + this.state.id, 'POST', '', formData, this.update);
         }
+    }
+
+    public addCourseSheet(event: React.MouseEvent<HTMLButtonElement, MouseEvent>): void {
+        let formData = new FormData();
+        // @ts-ignore
+        formData.append('token', localStorage.getItem('token'));
+        console.log(this.state.newCourseSheetTitle);
+        console.log(this.state.newCourseSheetDescription);
+        console.log(this.state.newCourseSheetDocument);
+        if (
+            '' !== this.state.newCourseSheetTitle &&
+            '' !== this.state.newCourseSheetDescription &&
+            null !== this.state.newCourseSheetDocument
+        ) {
+            formData.append('title', this.state.newCourseSheetTitle);
+            formData.append('description', this.state.newCourseSheetDescription);
+            formData.append('file', this.state.newCourseSheetDocument);
+            new Request('/lobby/newCourseSheet/' + this.state.id, 'POST', this.state.newCourseSheetDocument.type, formData, this.refreshCourseSheets);
+        }
+    }
+
+    public refreshCourseSheets(): void {
+        new Request('/lobby/coursesheets/' + this.state.id, 'POST', 'json', {token: localStorage.getItem('token')}, this.fillCourseSheets);
+    }
+
+    public fetchCourseSheets(data: any): void {
+        if (data['message'].includes('successfully')) {
+            this.refreshCourseSheets();
+        }
+    }
+
+    public removeCourseSheetFromLobby(event: React.MouseEvent<HTMLImageElement, MouseEvent>): void {
+        let removeButton: any = event.target;
+        console.log(removeButton);
+        new Request('/lobby/deleteCourseSheet/' + this.state.id, 'POST', 'json', {token: localStorage.getItem('token'), id: removeButton.id.split(/-/)[2]}, this.fetchCourseSheets);
     }
 
     public render(): ReactNode {
@@ -144,7 +222,7 @@ class Admin extends React.Component<any, AdminState> {
                                 switch (this.state.currentTab) {
                                     case 'presentation':
                                         tab = (
-                                            <div className={'container-fluid col-lg-6'}>
+                                            <div className={'container-fluid col-lg-8 col-md-12 col-sm-12 col-xs-12'}>
                                                 <h2>Informations visibles par les visiteurs</h2>
                                                 <Input id={'labelInput'} inputType={'text'}
                                                        placeholder={'Titre du lobby (n\'en mets pas un trop long)'}
@@ -172,8 +250,8 @@ class Admin extends React.Component<any, AdminState> {
                                                          label={'Glisse un logo par ici !'}
                                                          accept={'image/*'}
                                                          backgroundClassName={'mt-4'}
-                                                         handleFileDrop={this.handleFileDrop}
-                                                         handleFileChange={this.handleFileChange}/>
+                                                         handleFileDrop={this.handleLogoDrop}
+                                                         handleFileChange={this.handleLogoChange}/>
                                                 <SubmitButton
                                                     text={'Mettre à jour le lobby'}
                                                     onClick={this.updateLobbby}
@@ -184,43 +262,51 @@ class Admin extends React.Component<any, AdminState> {
 
                                     case 'coursesheets':
                                         tab = (
-                                            <div className={'container-fluid col-lg-6'}>
+                                            <div className={'container-fluid  col-lg-8 col-md-12 col-sm-12 col-xs-12'}>
                                                 <h2>Informations visibles par les visiteurs</h2>
                                                 <div className={'row mt-5'}>
-                                                    <div className={'col-sm-4'}>
-                                                        <Input id={'titleInput'} inputType={'text'}
-                                                               placeholder={'Titre'}
-                                                               className={''}
-                                                               onChange={this.handleLabelChange}/>
-                                                        <DropBox id={'courseSheetInput'}
-                                                                 className={'text-sm-left'}
-                                                                 backgroundClassName={'mt-1'}
-                                                                 label={'Glisse une fiche par ici !'}
-                                                                 accept={'.docx,.pdf,.html,.htm,.odp,txt,md'}
-                                                                 handleFileDrop={this.handleFileDrop}
-                                                                 handleFileChange={this.handleFileChange}/>
+                                                    <div className={'col-lg-4 col-md-4 col-sm-4 col-xs-4 pr-lg-0 pl-sm-4'}>
+                                                        <div className={'centered-80'}>
+                                                            <Input id={'titleInput'} inputType={'text'}
+                                                                   placeholder={'Titre'}
+                                                                   className={'no-mb'}
+                                                                   onChange={this.handleCourseSheetTitleChange}/>
+                                                            <DropBox id={'courseSheetInput'}
+                                                                     className={'text-sm-left'}
+                                                                     backgroundClassName={'mt-1'}
+                                                                     label={'Glisse une fiche par ici !'}
+                                                                     accept={'.docx,.pdf,.html,.htm,.odp,txt,md'}
+                                                                     handleFileDrop={this.handleCourseSheetDocumentDrop}
+                                                                     handleFileChange={this.handleCourseSheetDocumentChange}/>
+                                                        </div>
                                                     </div>
-                                                    <div className={'col-sm-8'}>
+                                                    <div className={'col-lg-8 col-md-8 col-sm-8 col-xs-8 pl-lg-0'}>
                                                         <div className={'row container-fluid'}>
                                                             <InputArea id={'descriptionInput'}
-                                                                       placeholder={'Nouvelle description du lobby\nRacontes-y ce que tu veux, du moment que ça reste dans le thème de ton lobby'}
+                                                                       placeholder={'Description de la fiche\nFais-en un bref résumé permettant de savoir à quoi s\'attendre en la lisant'}
                                                                        className={'col-lg-12 col-md-12 col-sm-12 col-xs-12 course-sheet-textarea'}
                                                                        textAreaClassName={'course-sheet-textarea'}
                                                                        rows={6}
-                                                                       onChange={this.handleDescriptionChange}
+                                                                       onChange={this.handleCourseSheetDescriptionChange}
                                                                        disabled={false}
                                                             />
                                                         </div>
                                                         <div className={'row container-fluid'}>
                                                             <SubmitButton
                                                                 text={'Une nouvelle fiche ? Ajoute-la !'}
-                                                                onClick={this.updateLobbby}
+                                                                onClick={this.addCourseSheet}
                                                                 className={'col-sm-12 container-fluid add-coursesheet-button'}/>
                                                         </div>
                                                     </div>
                                                 </div>
                                                 <div className={'row mt-5'}>
-                                                    <CourseSheets id={this.props.location.pathname.split(/\//)[2]} courseSheets={this.state.courseSheets} className={'col-lg-12 col-sm-12 mt-lg-3'}/>
+                                                    <CourseSheets
+                                                        id={this.state.id.toString()}
+                                                        courseSheets={this.state.courseSheets}
+                                                        className={'col-lg-12 col-sm-12 mt-lg-3'}
+                                                        activeRemoveButton={true}
+                                                        delete={this.removeCourseSheetFromLobby}
+                                                    />
                                                 </div>
                                             </div>
                                         );
@@ -281,7 +367,7 @@ class SubmitButton extends React.Component<{ text: string, onClick: (event: Reac
     public render() {
         return (
             <button className={"btn btn-default btn-transparent mt-5 rounded-1" + this.props.className}
-                    onClick={this.props.onClick}><img id={'plus-icon'} className={''} src={PlusIcon}/>{this.props.text}
+                    onClick={this.props.onClick}><img className={'plus-icon'} src={plusIcon} alt={'Plus Icon'}/>{this.props.text}
             </button>
         )
     }

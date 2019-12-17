@@ -71,7 +71,7 @@ class LobbyModel extends AbstractModel
     public function getCourseSheets(int $idLobby): array
     {
         $this->send_query('
-            SELECT title, publication_date, file_name, description
+            SELECT ccp_coursesheet.id_course_sheet, title, publication_date, file_name, description
             FROM ccp_coursesheet
             WHERE id_lobby_Contain = ?
         ',
