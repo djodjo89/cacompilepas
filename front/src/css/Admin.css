@@ -63,17 +63,6 @@
     margin-bottom: 13px;
 }
 
-.plus-icon {
-    height: 25px;
-    width: 25px;
-    margin-left: -35px;
-    margin-right: 25px;
-}
-
-.remove-button:hover {
-    cursor: pointer;
-}
-
 @media screen and (min-width: 1080px) {
     .centered-80 {
         width: 80%;
@@ -82,3 +71,19 @@
     }
 }
 
+.add-usr-input {
+    height: 40px;
+    border-bottom-left-radius: 0 !important;
+    border-bottom-right-radius: 0 !important;
+}
+
+.add-usr-button {
+    height: 40px;
+    border-top-left-radius: 0 !important;
+    border-top-right-radius: 0 !important;
+    width: 100% !important;
+}
+
+.no-ml {
+    margin-left: 0px;
+}

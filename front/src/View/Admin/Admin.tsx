@@ -1,17 +1,18 @@
 import React, {ChangeEvent, ReactNode} from 'react';
-import Request from "../../API/Request";
+import Request from '../../API/Request';
 import {
     BrowserRouter as Router,
     Switch,
     Route,
-} from "react-router-dom";
-import {ReactComponent as Loader} from "../../img/loader.svg";
+} from 'react-router-dom';
+import {ReactComponent as Loader} from '../../img/loader.svg';
 import plusIcon from '../../img/plus-icon.png';
-import Input from "../General/Input";
-import InputArea from "../General/InputArea";
-import DropBox from "../General/DropBox";
+import Input from '../General/Input';
+import InputArea from '../General/InputArea';
+import DropBox from '../General/DropBox';
 import '../../css/Admin.css';
-import CourseSheets from "../Lobby/CourseSheets";
+import CourseSheets from '../Lobby/CourseSheets';
+import Users from './Users';
 
 interface AdminState {
     id: number,
@@ -26,7 +27,10 @@ interface AdminState {
     courseSheets: [],
     newCourseSheetTitle: string,
     newCourseSheetDescription: string,
-    newCourseSheetDocument: File | null,
+    newCourseSheetDocument: File | null,
+    users: [],
+    newUserEmail: string,
+    private: string,
 }
 
 class Admin extends React.Component<any, AdminState> {
@@ -47,6 +51,9 @@ class Admin extends React.Component<any, AdminState> {
             newCourseSheetTitle: '',
             newCourseSheetDescription: '',
             newCourseSheetDocument: null,
+            users: [],
+            newUserEmail: '',
+            private: '',
         }
         this.init = this.init.bind(this);
         this.init();
@@ -63,13 +70,31 @@ class Admin extends React.Component<any, AdminState> {
         this.navigateToCourseSheets = this.navigateToCourseSheets.bind(this);
         this.fillCourseSheets = this.fillCourseSheets.bind(this);
         this.removeCourseSheetFromLobby = this.removeCourseSheetFromLobby.bind(this);
+        this.removeUserFromLobby = this.removeUserFromLobby.bind(this);
         this.fetchCourseSheets = this.fetchCourseSheets.bind(this);
+        this.fetchUsers = this.fetchUsers.bind(this);
+        this.refreshPresentation = this.refreshPresentation.bind(this);
         this.refreshCourseSheets = this.refreshCourseSheets.bind(this);
         this.handleCourseSheetDocumentDrop = this.handleCourseSheetDocumentDrop.bind(this);
         this.handleCourseSheetDocumentChange = this.handleCourseSheetDocumentChange.bind(this);
         this.handleCourseSheetTitleChange = this.handleCourseSheetTitleChange.bind(this);
         this.handleCourseSheetDescriptionChange = this.handleCourseSheetDescriptionChange.bind(this);
         this.addCourseSheet = this.addCourseSheet.bind(this);
+        this.refreshUsers = this.refreshUsers.bind(this);
+        this.fillUsers = this.fillUsers.bind(this);
+        this.toggleWriteRights = this.toggleWriteRights.bind(this);
+        this.addUser = this.addUser.bind(this);
+        this.handleUserEmailChange = this.handleUserEmailChange.bind(this);
+        this.refreshVisibility = this.refreshVisibility.bind(this);
+        this.updateVisibility = this.updateVisibility.bind(this);
+        this.toggleVisibility = this.toggleVisibility.bind(this);
+        this.checkVisibilityBox = this.checkVisibilityBox.bind(this);
+    }
+
+    public componentDidMount(): void {
+        this.refreshPresentation();
+        this.refreshCourseSheets();
+        this.refreshUsers();
     }
 
     public checkIfAdmin(data: any): void {
@@ -82,17 +107,36 @@ class Admin extends React.Component<any, AdminState> {
         }
     }
 
-    public componentDidMount(): void {
-        new Request('/lobby/consult/' + this.state.id, 'POST', 'json', {token: localStorage.getItem('token')}, this.checkIfAdmin);
-        this.refreshCourseSheets();
-    }
-
     public fillCourseSheets(data: any): void {
         if (undefined === data['message']) {
             this.setState({courseSheets: data});
         } else {
             this.setState({courseSheets: []});
         }
+    }
+
+    public fillUsers(data: any): void {
+        if (undefined === data['message']) {
+            this.setState({users: data});
+        } else {
+            this.setState({users: []});
+        }
+    }
+
+    public updateVisibility(data: any): void {
+        if (undefined === data['message']) {
+            '1' === data[0]['private'] ? this.setState({private: 'true'}) : this.setState({private: 'false'});
+        }
+    }
+
+    public refreshVisibility(): void {
+        new Request(
+            '/lobby/visibility/' + this.state.id,
+            'POST',
+            'json',
+            {token: localStorage.getItem('token')},
+            this.updateVisibility
+        );
     }
 
     public handleLabelChange(event: ChangeEvent<HTMLInputElement>): void {
@@ -192,8 +236,16 @@ class Admin extends React.Component<any, AdminState> {
         }
     }
 
+    public refreshPresentation(): void {
+        new Request('/lobby/consult/' + this.state.id, 'POST', 'json', {token: localStorage.getItem('token')}, this.checkIfAdmin);
+    }
+
     public refreshCourseSheets(): void {
         new Request('/lobby/coursesheets/' + this.state.id, 'POST', 'json', {token: localStorage.getItem('token')}, this.fillCourseSheets);
+    }
+
+    public refreshUsers(): void {
+        new Request('/lobby/users/' + this.state.id, 'POST', 'json', {token: localStorage.getItem('token')}, this.fillUsers);
     }
 
     public fetchCourseSheets(data: any): void {
@@ -202,10 +254,75 @@ class Admin extends React.Component<any, AdminState> {
         }
     }
 
+    public fetchUsers(data: any): void {
+        if (data['message'].includes('successfully')) {
+            this.refreshUsers();
+        }
+    }
+
     public removeCourseSheetFromLobby(event: React.MouseEvent<HTMLImageElement, MouseEvent>): void {
         let removeButton: any = event.target;
-        console.log(removeButton);
-        new Request('/lobby/deleteCourseSheet/' + this.state.id, 'POST', 'json', {token: localStorage.getItem('token'), id: removeButton.id.split(/-/)[2]}, this.fetchCourseSheets);
+        new Request('/lobby/deleteCourseSheet/' + this.state.id,
+            'POST',
+            'json',
+            {
+                token: localStorage.getItem('token'),
+                id: removeButton.id.split(/-/)[2]
+            }, this.fetchCourseSheets);
+    }
+
+    public removeUserFromLobby(event: React.MouseEvent<HTMLImageElement, MouseEvent>): void {
+        let removeButton: any = event.target;
+        new Request('/lobby/removeUser/' + this.state.id,
+            'POST',
+            'json',
+            {
+                token: localStorage.getItem('token'),
+                id: removeButton.id.split(/-/)[2]
+            }, this.fetchUsers);
+    }
+
+    public toggleWriteRights(event: React.ChangeEvent<HTMLInputElement>): void {
+        let action: string = true === event.target.checked ?
+            'addWriteRight/' :
+            'removeWriteRight/';
+        new Request('/lobby/' + action + this.state.id,
+            'POST',
+            'json',
+            {
+                token: localStorage.getItem('token'),
+                id: event.target.id,
+            },
+            this.fetchUsers);
+    }
+
+    public addUser(event: React.MouseEvent<HTMLButtonElement, MouseEvent>): void {
+        new Request('/lobby/addUser/' + this.state.id, 'POST', 'json', {
+            token: localStorage.getItem('token'),
+            email: this.state.newUserEmail
+        }, this.refreshUsers);
+    }
+
+    public handleUserEmailChange(event: ChangeEvent<HTMLInputElement>): void {
+        this.setState({newUserEmail: event.target.value});
+    }
+
+    public toggleVisibility(event: ChangeEvent<HTMLInputElement>): void {
+        let action: string;
+
+        action = 'true' === this.state.private ?
+            'makePublic/' : 'makePrivate/';
+        new Request(
+            '/lobby/' + action + this.state.id,
+            'POST',
+            'json',
+            {token: localStorage.getItem('token')},
+            this.refreshVisibility
+        );
+    }
+
+    public checkVisibilityBox(event: React.MouseEvent<HTMLHeadElement, MouseEvent>): void {
+        console.log(event.target);
     }
 
     public render(): ReactNode {
@@ -224,8 +341,10 @@ class Admin extends React.Component<any, AdminState> {
                                         tab = (
                                             <div className={'container-fluid col-lg-8 col-md-12 col-sm-12 col-xs-12'}>
                                                 <h2>Informations visibles par les visiteurs</h2>
-                                                <Input id={'labelInput'} inputType={'text'}
+                                                <Input id={'labelInput'}
+                                                       inputType={'text'}
                                                        placeholder={'Titre du lobby (n\'en mets pas un trop long)'}
+                                                       checked={false}
                                                        className={'mt-5'} onChange={this.handleLabelChange}/>
                                                 <div className={'row mt-5'}>
                                                     <InputArea id={'descriptionInput'}
@@ -255,7 +374,7 @@ class Admin extends React.Component<any, AdminState> {
                                                 <SubmitButton
                                                     text={'Mettre à jour le lobby'}
                                                     onClick={this.updateLobbby}
-                                                    className={''}/>
+                                                    className={'mt-5'}/>
                                             </div>
                                         );
                                         break;
@@ -265,11 +384,13 @@ class Admin extends React.Component<any, AdminState> {
                                             <div className={'container-fluid  col-lg-8 col-md-12 col-sm-12 col-xs-12'}>
                                                 <h2>Informations visibles par les visiteurs</h2>
                                                 <div className={'row mt-5'}>
-                                                    <div className={'col-lg-4 col-md-4 col-sm-4 col-xs-4 pr-lg-0 pl-sm-4'}>
+                                                    <div
+                                                        className={'col-lg-4 col-md-4 col-sm-4 col-xs-4 pr-lg-0 pl-sm-4'}>
                                                         <div className={'centered-80'}>
                                                             <Input id={'titleInput'} inputType={'text'}
                                                                    placeholder={'Titre'}
                                                                    className={'no-mb'}
+                                                                   checked={false}
                                                                    onChange={this.handleCourseSheetTitleChange}/>
                                                             <DropBox id={'courseSheetInput'}
                                                                      className={'text-sm-left'}
@@ -295,7 +416,7 @@ class Admin extends React.Component<any, AdminState> {
                                                             <SubmitButton
                                                                 text={'Une nouvelle fiche ? Ajoute-la !'}
                                                                 onClick={this.addCourseSheet}
-                                                                className={'col-sm-12 container-fluid add-coursesheet-button'}/>
+                                                                className={'col-sm-12 container-fluid add-coursesheet-button mt-5'}/>
                                                         </div>
                                                     </div>
                                                 </div>
@@ -313,7 +434,62 @@ class Admin extends React.Component<any, AdminState> {
                                         break;
 
                                     case 'rights':
-                                        tab = <h2>Utilisateurs autorisés à consulter le lobby</h2>;
+                                        tab = (
+                                            <div className={'container-fluid  col-lg-8 col-md-12 col-sm-12 col-xs-12'}>
+                                                <h2>Utilisateurs autorisés à consulter le lobby</h2>
+                                                <div className={'row'}>
+                                                    <Users
+                                                        id={this.state.id.toString()}
+                                                        users={this.state.users}
+                                                        className={'col-lg-12 col-sm-12 mt-lg-3 mt-md-0 mt-sm-0 mt-xs-0'}
+                                                        toggleWriteRights={this.toggleWriteRights}
+                                                        delete={this.removeUserFromLobby}
+                                                    />
+                                                </div>
+                                                <div className={'container col-lg-8 col-md-8 col-sm-10 col-xs-12 mt-5'}>
+                                                    <div className={'row'}>
+                                                        <div className={'col-12 pl-0 add-usr-button'}>
+                                                            <Input
+                                                                id={'friendInput'}
+                                                                inputType={'email'}
+                                                                placeholder={'Un ami veut voir ton lobby ? Alors saisis son adresse email ici'}
+                                                                checked={false}
+                                                                className={'add-usr-input'}
+                                                                onChange={this.handleUserEmailChange}
+                                                            />
+                                                        </div>
+                                                    </div>
+                                                    <div className={'row'}>
+                                                        <div className={'col-12 pl-0 '}>
+                                                            <SubmitButton
+                                                                text={'Ca y est ? Alors c\'est parti, ajoute-le !'}
+                                                                onClick={this.addUser}
+                                                                className={'mt-0 col-12 add-usr-button'}
+                                                            />
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                                <div className={'row col-12 pt-5'}>
+                                                    <div className={'col-1 pt-2 pl-0 pr-0'}>
+                                                        <Input
+                                                            id={'visibilitInput'}
+                                                            inputType={'checkbox'}
+                                                            checked={'true' === this.state.private ? true : false}
+                                                            placeholder={''}
+                                                            className={'user-rights-checkbox'}
+                                                            onChange={this.toggleVisibility}
+                                                        />
+                                                    </div>
+                                                    <h4
+                                                        className={'col-11 pl-0 pt-1 text-left lobby-write-right-label'}
+                                                        onClick={this.checkVisibilityBox}
+                                                    >
+                                                        Lobby privé (seules les personnes autorisées pourront le
+                                                        consulter
+                                                    </h4>
+                                                </div>
+                                            </div>
+                                        );
                                         break;
 
                                     default:
@@ -366,8 +542,9 @@ class Admin extends React.Component<any, AdminState> {
 class SubmitButton extends React.Component<{ text: string, onClick: (event: React.MouseEvent<HTMLButtonElement, MouseEvent>) => void, className: string }, {}> {
     public render() {
         return (
-            <button className={"btn btn-default btn-transparent mt-5 rounded-1" + this.props.className}
-                    onClick={this.props.onClick}><img className={'plus-icon'} src={plusIcon} alt={'Plus Icon'}/>{this.props.text}
+            <button className={'btn btn-default btn-transparent rounded-1 ' + this.props.className}
+                    onClick={this.props.onClick}><img className={'plus-icon'} src={plusIcon}
+                                                      alt={'Plus Icon'}/>{this.props.text}
             </button>
         )
     }

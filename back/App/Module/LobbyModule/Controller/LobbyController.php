@@ -23,6 +23,8 @@ class LobbyController extends AbstractController
         'makePublic',
         'update',
         'checkIfAdmin',
+        'users',
+        'visibility',
     ];
 
     public function run(): void
@@ -53,6 +55,7 @@ class LobbyController extends AbstractController
                         case 'checkIfAdmin':
                             $result = ['isAdmin' => true];
                             break;
+
                         case 'newCourseSheet':
                             $result = (new CourseSheetModel($this->getModel()->getConnection()))->addCourseSheet(
                                 $idLobby,
@@ -72,15 +75,15 @@ class LobbyController extends AbstractController
                             break;
 
                         case 'removeUser':
-                            $result = $this->getModel()->removeUser($idLobby, $this->getRequest()->getEmail());
+                            $result = $this->getModel()->removeUser($idLobby, $this->getRequest()->getId());
                             break;
 
                         case 'addWriteRight':
-                            $result = $this->getModel()->addWriteRight($idLobby, $this->getRequest()->getEmail());
+                            $result = $this->getModel()->addWriteRight($idLobby, $this->getRequest()->getId());
                             break;
 
                         case 'removeWriteRight':
-                            $result = $this->getModel()->removeWriteRight($idLobby, $this->getRequest()->getEmail());
+                            $result = $this->getModel()->removeWriteRight($idLobby, $this->getRequest()->getId());
                             break;
 
                         case 'makePrivate':
@@ -105,6 +108,14 @@ class LobbyController extends AbstractController
                                     $this->getRequest()->getFile()['tmp_name'],
                                     )['message'];
                             }
+                            break;
+
+                        case 'users':
+                            $result = $this->getModel()->getUsers($idLobby);
+                            break;
+
+                        case 'visibility':
+                            $result = $this->getModel()->getVisibility($idLobby);
                             break;
                     }
                 } else {

@@ -19,8 +19,7 @@ class CourseSheets extends React.Component<CourseSheetsProps, { courseSheets: []
     public renderCourseSheets(): ({} | null | undefined)[] {
         // @ts-ignore
         if (undefined === this.props.courseSheets['is_empty']) {
-            // @ts-ignore
-            let res = this.props.courseSheets.map((courseSheet) =>
+            let res = this.props.courseSheets.map((courseSheet: any) =>
                 <CourseSheet
                     id={courseSheet['id_course_sheet']}
                     key={courseSheet['id_course_sheet']}
