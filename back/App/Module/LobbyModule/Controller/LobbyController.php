@@ -25,7 +25,7 @@ class LobbyController extends AbstractController
         'checkIfAdmin',
         'users',
         'visibility',
-        'logo',
+        'coursesheet',
     ];
 
     public function run(): void
@@ -119,20 +119,9 @@ class LobbyController extends AbstractController
                             $result = $this->getModel()->getVisibility($idLobby);
                             break;
 
-                        case 'logo':
-                            $file = $this->getModel()->getLogoFile($idLobby, $this->getRequest()->getPath());
-                            if (file_exists($file)) {
-                                header('Content-Description: File Transfer');
-                                header('Content-Type: application/octet-stream');
-                                header('Content-Disposition: attachment; filename="'.basename($file).'"');
-                                header('Expires: 0');
-                                header('Cache-Control: must-revalidate');
-                                header('Pragma: public');
-                                header('Content-Length: ' . filesize($file));
-                                readfile($file);
-                                exit;
-                            }
-                            // $result = $this->getModel()->
+                        case 'coursesheet':
+                            $file = $this->getModel()->getFile($idLobby, $this->getRequest()->getPath(), '/coursesheets/');
+                            $this->downloadFile($file);
                             break;
                     }
                 } else {

@@ -299,7 +299,7 @@ class LobbyModel extends AbstractModel
         return $this->fetchData(['message' => 'Lobby ' . $idLobby . 'does not exist']);
     }
 
-    public function getLogoFile(int $idLobby, string $path) {
-        return $this->getOnFTP($idLobby, $path, '/coursesheets/');
+    public function getFile(int $idLobby, string $path, string $uploadDirectory) {
+        return $this->getOnFTP($idLobby, $path, $uploadDirectory);
     }
 }

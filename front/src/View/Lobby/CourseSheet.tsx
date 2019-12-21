@@ -19,33 +19,31 @@ class CourseSheet extends React.Component<CourseSheetProps, {src: string}> {
     public constructor(props: CourseSheetProps) {
         super(props);
         this.getFile = this.getFile.bind(this);
-        this.redirect = this.redirect.bind(this);
+        this.openFile = this.openFile.bind(this);
     }
 
-    public redirect(data: any): void {
+    public openFile(data: Blob): void {
+        const link = document.createElement('a');
+        const blob = new Blob([data], { type: "application/pdf" });
+        link.href = URL.createObjectURL(blob);
         // @ts-ignore
-        window.location = document.referrer;
-        this.setState({src: atob(data)});
-        const anchor = document.createElement('a');
-        anchor.href = window.URL.createObjectURL(new Blob([data], { type: 'text/plain' }));
-        anchor.download = 'file';
-        anchor.click();
-        console.log(this.state.src);
-        console.log('redirect');
-        console.log(data);
+        window.open(document.location);
+        window.open(link.href, '_blank');
+        window.close();
     }
 
     public getFile(event: React.MouseEvent<HTMLAnchorElement, MouseEvent>): void {
         event.preventDefault();
-        let link: any = event.target;
         new Request(
-            '/lobby/logo/' + this.props.idLobby,
-            this.redirect,
+            '/lobby/coursesheet/' + this.props.idLobby,
+            this.openFile,
             'POST',
             {
-                path: link.href.split(/\//)[link.href.split(/\//).length - 1]
+                path: this.props.link
             },
-            );
+            'json',
+            'blob',
+        );
     }
 
     public render(): ReactNode {
@@ -73,7 +71,8 @@ class CourseSheet extends React.Component<CourseSheetProps, {src: string}> {
                     <div className={'course-sheet-presentation ml-lg-1 ml-md-1 ml-sm-1 ml-xs-1'}>
                         <p className={'course-sheet-description'}>{this.props.description}</p>
                         <footer className={'pl-lg-0'}>
-                            <a href={this.props.link}
+                            <a
+                                href={'' + document.location}
                                className={'course-sheet-link col-lg-6 col-md-6 col-sm-6 col-xs-6 text-lg-left text-md-left text-sm-left text-xs-left pl-lg-0 pl-md-0 pl-sm-0 pl-xs-0 d-block mt-lg-2 mt-md-2 mt-sm-2 mt-xs-2'}
                                onClick={this.getFile}
                             >Lien vers la fiche</a>
