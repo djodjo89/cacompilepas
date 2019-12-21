@@ -1,10 +1,12 @@
 import React, {ReactNode} from 'react';
+import Request from "../../API/Request";
 import '../../css/CourseSheet.css';
 import exampleImage from '../../img/example.png';
 import minusIcon from '../../img/minus-icon-red-t.png';
 
 interface CourseSheetProps {
     id: string,
+    idLobby: string,
     title: string,
     publication_date: string,
     link: string,
@@ -13,9 +15,37 @@ interface CourseSheetProps {
     delete: ((event: React.MouseEvent<HTMLImageElement, MouseEvent>) => void) | undefined,
 }
 
-class CourseSheet extends React.Component<CourseSheetProps, {}> {
+class CourseSheet extends React.Component<CourseSheetProps, {src: string}> {
     public constructor(props: CourseSheetProps) {
         super(props);
+        this.getFile = this.getFile.bind(this);
+        this.redirect = this.redirect.bind(this);
+    }
+
+    public redirect(data: any): void {
+        // @ts-ignore
+        window.location = document.referrer;
+        this.setState({src: atob(data)});
+        const anchor = document.createElement('a');
+        anchor.href = window.URL.createObjectURL(new Blob([data], { type: 'text/plain' }));
+        anchor.download = 'file';
+        anchor.click();
+        console.log(this.state.src);
+        console.log('redirect');
+        console.log(data);
+    }
+
+    public getFile(event: React.MouseEvent<HTMLAnchorElement, MouseEvent>): void {
+        event.preventDefault();
+        let link: any = event.target;
+        new Request(
+            '/lobby/logo/' + this.props.idLobby,
+            this.redirect,
+            'POST',
+            {
+                path: link.href.split(/\//)[link.href.split(/\//).length - 1]
+            },
+            );
     }
 
     public render(): ReactNode {
@@ -44,8 +74,9 @@ class CourseSheet extends React.Component<CourseSheetProps, {}> {
                         <p className={'course-sheet-description'}>{this.props.description}</p>
                         <footer className={'pl-lg-0'}>
                             <a href={this.props.link}
-                               className={'course-sheet-link col-lg-6 col-md-6 col-sm-6 col-xs-6 text-lg-left text-md-left text-sm-left text-xs-left pl-lg-0 pl-md-0 pl-sm-0 pl-xs-0 d-block mt-lg-2 mt-md-2 mt-sm-2 mt-xs-2'}>Lien
-                                vers la fiche</a>
+                               className={'course-sheet-link col-lg-6 col-md-6 col-sm-6 col-xs-6 text-lg-left text-md-left text-sm-left text-xs-left pl-lg-0 pl-md-0 pl-sm-0 pl-xs-0 d-block mt-lg-2 mt-md-2 mt-sm-2 mt-xs-2'}
+                               onClick={this.getFile}
+                            >Lien vers la fiche</a>
                             <h4 className={'col-lg-6 col-md-6 col-sm-6 col-xs-6 text-lg-right text-md-right text-sm-right text-xs-right'}>Mathys</h4>
                         </footer>
                     </div>

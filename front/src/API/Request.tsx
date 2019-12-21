@@ -22,7 +22,7 @@ class Request<T> {
     private response: IHttpResponse<T>;
     private updateFunction: any;
 
-    constructor(beautifulRoute: string, method: string, type: string, data: any, updateFunction: any) {
+    constructor(beautifulRoute: string, updateFunction: any = (result: any) => console.log(result), method: string = 'GET', data: any = {}, type: string = 'json') {
         this.beautifulRoute = beautifulRoute;
         this.route = '/';
         this.method = method;
@@ -56,24 +56,35 @@ class Request<T> {
 
         switch (this.method) {
             case 'POST':
-                this.headers =
+            case 'GET':
+                this.headers = undefined !== localStorage.getItem('token') &&
+                '' !== localStorage.getItem('token') ?
+                    {
+                        'Accept': this.type,
+                        'Authorization': 'Bearer ' + localStorage.getItem('token'),
+                    } :
                     {
                         'Accept': this.type,
                     }
                 break;
         }
         let body: any;
-        if (null === this.data) {
-            body = null;
-        }
-        else {
-            this.type === 'json' ? body = JSON.stringify(this.data) : body = this.data;
-        }
-
-        this.requestInit = {
-            headers: this.headers,
-            method: this.method,
-            body: body,
+        if ('GET' !== this.method) {
+            if (null === this.data) {
+                body = null;
+            } else {
+                this.type === 'json' ? body = JSON.stringify(this.data) : body = this.data;
+            }
+            this.requestInit = {
+                headers: this.headers,
+                method: this.method,
+                body: body,
+            }
+        } else {
+            this.requestInit = {
+                headers: this.headers,
+                method: this.method,
+            }
         }
 
         fetch(this.domain + this.route, this.requestInit)

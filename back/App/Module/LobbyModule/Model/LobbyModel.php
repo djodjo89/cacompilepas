@@ -237,7 +237,7 @@ class LobbyModel extends AbstractModel
         }
     }
 
-    public function makePrivate($idLobby): array
+    public function makePrivate(int $idLobby): array
     {
         $successfullyMadePublic = $this->send_query('
             UPDATE ccp_lobby
@@ -253,7 +253,7 @@ class LobbyModel extends AbstractModel
         }
     }
 
-    public function makePublic($idLobby): array
+    public function makePublic(int $idLobby): array
     {
         $successfullyMadePublic = $this->send_query('
             UPDATE ccp_lobby
@@ -269,7 +269,7 @@ class LobbyModel extends AbstractModel
         }
     }
 
-    public function getUsers($idLobby): array
+    public function getUsers(int $idLobby): array
     {
         $this->send_query('
             SELECT id_user, pseudo, icon, write_right
@@ -287,7 +287,7 @@ class LobbyModel extends AbstractModel
         return $this->fetchData(['message' => 'Lobby ' . $idLobby . ' does not contain any user']);
     }
 
-    public function getVisibility($idLobby): array
+    public function getVisibility(int $idLobby): array
     {
         $this->send_query('
             SELECT private
@@ -297,5 +297,9 @@ class LobbyModel extends AbstractModel
             [$idLobby]);
 
         return $this->fetchData(['message' => 'Lobby ' . $idLobby . 'does not exist']);
+    }
+
+    public function getLogoFile(int $idLobby, string $path) {
+        return $this->getOnFTP($idLobby, $path, '/coursesheets/');
     }
 }

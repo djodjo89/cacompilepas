@@ -117,4 +117,19 @@ abstract class AbstractModel
             return ['message' => "An error occurred during $model update"];
         }
     }
+
+    public function getOnFTP(int $id, string $fileName, string $uploadDirectory) {
+        $file = $this->nameOnFTP($id, $fileName, $this->extension($fileName));
+        if (ftp_get($this->connection::$ftp, '/tmp/' . $fileName, $uploadDirectory . $file, FTP_BINARY)) {
+            return '/tmp/' . $fileName;
+        } else {
+            echo scandir('/tmp');
+            echo '<pre>';
+            var_dump('/tmp/' . $fileName);
+            echo '</pre>';
+            echo '<pre>';
+            var_dump($uploadDirectory . $file);
+            echo '</pre>';
+        }
+    }
 }

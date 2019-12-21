@@ -17,7 +17,8 @@ services:
             - php
         restart: 'always'
     php:
-        build: ./back
+        build: 
+            context: ./back
         ports:
             - "9000:9000"
         volumes:
@@ -27,7 +28,8 @@ services:
         container_name: php
         restart: 'always'
     db:
-        build: ./db
+        build: 
+            context: ./db
         volumes:
             - ./db/scripts/init.sql:/docker-entrypoint-initdb.d/init.sql
             - ./db/conf/:/etc/mysql/conf.d
@@ -51,7 +53,8 @@ services:
             PASV_ADDRESS: "127.0.0.1"
         restart: 'always'
     client:
-        build: ./front
+        build: 
+            context: ./front
         environment:
             - REACT_APP_PORT=${REACT_APP_PORT}
         expose:
