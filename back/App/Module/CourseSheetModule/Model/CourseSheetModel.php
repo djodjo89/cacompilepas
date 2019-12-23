@@ -2,7 +2,6 @@
 
 namespace App\Module\CourseSheetModule\Model;
 
-use App\Exception\JSONException;
 use App\Model\AbstractModel;
 
 class CourseSheetModel extends AbstractModel
@@ -40,6 +39,35 @@ class CourseSheetModel extends AbstractModel
             ];
         } else {
             return ['message' => 'Course sheet could not be deleted'];
+        }
+    }
+
+    public function addHashtags(int $idCourseSheet, array $hashtags): array
+    {
+        foreach ($hashtags as $key => $value) {
+            $successfullyAdded = $this->send_query("
+                INSERT INTO ccp_hashtag
+                (label_hashtag, id_course_sheet) VALUES (?, ?)
+            ",
+                [$value, $idCourseSheet]);
+            if (!$successfullyAdded) {
+                return ['message' => 'Hashtags could not be added'];
+            }
+        }
+        return ['message' => 'Successfully added hashtags'];
+    }
+
+    public function removeHashtag(string $hashtag): array
+    {
+        $successfullyRemoved = $this->send_query('
+            DELETE FROM ccp_hashtag
+            WHERE label_hashtag = ?
+        ',
+            [$hashtag]);
+        if (!$successfullyRemoved) {
+            return ['message' => 'Hashtag could not be removed'];
+        } else {
+            return ['message' => 'Hashtag was successfully removed'];
         }
     }
 }

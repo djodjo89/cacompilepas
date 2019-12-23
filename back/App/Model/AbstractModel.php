@@ -117,4 +117,18 @@ abstract class AbstractModel
             return ['message' => "An error occurred during $model update"];
         }
     }
+
+    public function fetchData(array $tabIfNotFound): array
+    {
+        if ($result = $this->getQuery()->fetchAll()) {
+            return $result;
+        } else {
+            return $tabIfNotFound;
+        }
+    }
+
+    public function arrayToIN(array $tab): array
+    {
+        return "'" . implode('\',\'', $tab) . "'";
+    }
 }
