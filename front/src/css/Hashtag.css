@@ -1,0 +1,16 @@
+#search {
+    font-size: 1.1em;
+}
+
+.hashtag {
+    font-size: 1.1em;
+}
+
+.cross {
+    width: 10px;
+    height: 10px;
+}
+
+.cross:hover {
+    cursor: pointer;
+}

@@ -22,7 +22,7 @@ abstract class AbstractModel
         return $this->connection;
     }
 
-    public function send_query(string $stringQuery, array $parameters): bool
+    public function send_query(string $stringQuery, array $parameters = []): bool
     {
         $this->query = $this->connection::$bdd->prepare($stringQuery);
         return $this->query->execute($parameters);
