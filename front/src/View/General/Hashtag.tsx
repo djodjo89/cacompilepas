@@ -2,7 +2,14 @@ import React, {ReactNode, Ref} from 'react';
 import {ReactComponent as Cross} from "../../img/cross.svg";
 import '../../css/Hashtag.css';
 
-class Hashtag extends React.Component<{ text: string, updateWidth: any, remove: any }, { width: number }> {
+interface HashtagProps {
+    text: string,
+    updateWidth: any,
+    remove: any,
+    className: string,
+}
+
+class Hashtag extends React.Component<HashtagProps, { width: number }> {
     private hashtagBox: Ref<HTMLDivElement>;
 
     public constructor(props: any) {
@@ -39,22 +46,11 @@ class Hashtag extends React.Component<{ text: string, updateWidth: any, remove: 
     public render(): ReactNode {
         let div = (
             <div key={this.props.text}
-                 style={{
-                     backgroundColor: 'black',
-                     opacity: 0.3,
-                     zIndex: 1,
-                 }}
-                 className={'rounded p-1 pl-2 pr-2 m-1'}
+                 className={'rounded p-1 pl-2 pr-2 m-1 hashtagBox ' + this.props.className}
                  ref={this.hashtagBox}
             >
-                        <span
-                            style={{
-                                color: 'white',
-                                fontWeight: 'bold',
-                            }}
-                            className={'hashtag'}
-                        >
-                            #{this.props.text}
+                        <span className={'hashtag'}>
+                            {this.props.text}
                         </span>
                 <span style={{paddingLeft: '6px', paddingRight: '2px',}} onClick={this.props.remove}><Cross/></span>
             </div>

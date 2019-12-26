@@ -19,6 +19,7 @@ class CourseSheets extends React.Component<CourseSheetsProps, { courseSheets: []
     public renderCourseSheets(): ({} | null | undefined)[] {
         // @ts-ignore
         if (undefined === this.props.courseSheets['is_empty']) {
+            console.log(this.props.courseSheets);
             let res = this.props.courseSheets.map((courseSheet: any) =>
                 <CourseSheet
                     id={courseSheet['id_course_sheet']}
@@ -29,6 +30,7 @@ class CourseSheets extends React.Component<CourseSheetsProps, { courseSheets: []
                     description={courseSheet['description']}
                     activeRemoveButton={this.props.activeRemoveButton}
                     delete={this.props.delete}
+                    hashtags={courseSheet['hashtags']}
                 />
             );
             return res;

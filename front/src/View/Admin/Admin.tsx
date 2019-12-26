@@ -13,6 +13,7 @@ import DropBox from '../General/DropBox';
 import '../../css/Admin.css';
 import CourseSheets from '../Lobby/CourseSheets';
 import Users from './Users';
+import HashtagInput from "../General/HashtagInput";
 
 interface AdminState {
     id: number,
@@ -31,6 +32,8 @@ interface AdminState {
     users: [],
     newUserEmail: string,
     private: string,
+    hashtagInputIsNotEmpty: boolean,
+    hashtags: ReactNode,
 }
 
 class Admin extends React.Component<any, AdminState> {
@@ -54,6 +57,8 @@ class Admin extends React.Component<any, AdminState> {
             users: [],
             newUserEmail: '',
             private: '',
+            hashtagInputIsNotEmpty: true,
+            hashtags: <div></div>,
         }
         this.init = this.init.bind(this);
         this.init();
@@ -88,7 +93,8 @@ class Admin extends React.Component<any, AdminState> {
         this.refreshVisibility = this.refreshVisibility.bind(this);
         this.updateVisibility = this.updateVisibility.bind(this);
         this.toggleVisibility = this.toggleVisibility.bind(this);
-        this.checkVisibilityBox = this.checkVisibilityBox.bind(this);
+        this.emptyInput = this.emptyInput.bind(this);
+        this.updateHashtags = this.updateHashtags.bind(this);
     }
 
     public componentDidMount(): void {
@@ -168,13 +174,11 @@ class Admin extends React.Component<any, AdminState> {
     public handleCourseSheetDocumentDrop(event: React.DragEvent<HTMLDivElement>): void {
         event.preventDefault();
         this.setState({newCourseSheetDocument: event.dataTransfer.files[0]});
-        console.log(this.state.newCourseSheetDocument);
     }
 
     public handleCourseSheetDocumentChange(event: ChangeEvent<HTMLInputElement>): void {
         // @ts-ignore
         this.setState({newCourseSheetDocument: event.target.files[0]});
-        console.log(this.state.newCourseSheetDocument);
     }
 
     public update(data: any): void {
@@ -221,9 +225,6 @@ class Admin extends React.Component<any, AdminState> {
         let formData = new FormData();
         // @ts-ignore
         formData.append('token', localStorage.getItem('token'));
-        console.log(this.state.newCourseSheetTitle);
-        console.log(this.state.newCourseSheetDescription);
-        console.log(this.state.newCourseSheetDocument);
         if (
             '' !== this.state.newCourseSheetTitle &&
             '' !== this.state.newCourseSheetDescription &&
@@ -321,8 +322,12 @@ class Admin extends React.Component<any, AdminState> {
         );
     }
 
-    public checkVisibilityBox(event: React.MouseEvent<HTMLHeadElement, MouseEvent>): void {
-        console.log(event.target);
+    public emptyInput(isEmpty: boolean): void {
+        this.setState({hashtagInputIsNotEmpty: isEmpty});
+    }
+
+    public updateHashtags(hashtags: ReactNode): void {
+        this.setState({hashtags: hashtags});
     }
 
     public render(): ReactNode {
@@ -402,7 +407,8 @@ class Admin extends React.Component<any, AdminState> {
                                                         </div>
                                                     </div>
                                                     <div className={'col-lg-8 col-md-8 col-sm-8 col-xs-8 pl-lg-0'}>
-                                                        <div className={'row container-fluid'}>
+                                                        <div
+                                                            className={'row container-fluid course-sheet-textarea-container'}>
                                                             <InputArea id={'descriptionInput'}
                                                                        placeholder={'Description de la fiche\nFais-en un bref résumé permettant de savoir à quoi s\'attendre en la lisant'}
                                                                        className={'col-lg-12 col-md-12 col-sm-12 col-xs-12 course-sheet-textarea'}
@@ -412,11 +418,34 @@ class Admin extends React.Component<any, AdminState> {
                                                                        disabled={false}
                                                             />
                                                         </div>
+                                                        <div className={'row container-fluid pr-0 mb-4'}>
+                                                            <div
+                                                                className={'col-lg-12 col-md-12 col-sm-12 col-xs-12 ml-0 pr-0 pt-1'}>
+                                                                <div className={'form-inline'}>
+                                                                    <label id="hashtag-label" htmlFor="addHashtags">
+                                                                        <span
+                                                                            id="hashtag-placeholder">{this.state.hashtagInputIsNotEmpty ? 'Entre des hashtags pour cette fiche' : ''}</span>
+                                                                    </label>
+                                                                    {this.state.hashtags}
+                                                                    <div className={'col-lg-12 col-md-12 col-sm-12 col-xs-12 pl-0 pr-0'}>
+                                                                        <HashtagInput
+                                                                            id={'addHashtags'}
+                                                                            className={'form-control w-100 mt-0 rounded hashtagInput col-lg-12 col-md-12 col-sm-12 col-xs-12'}
+                                                                            type={'text'}
+                                                                            baseIndent={-3}
+                                                                            onUpdate={this.emptyInput}
+                                                                            updateHashtags={this.updateHashtags}
+                                                                            hashtagClassName={'hashtagInputBox'}
+                                                                        />
+                                                                    </div>
+                                                                </div>
+                                                            </div>
+                                                        </div>
                                                         <div className={'row container-fluid'}>
                                                             <SubmitButton
                                                                 text={'Une nouvelle fiche ? Ajoute-la !'}
                                                                 onClick={this.addCourseSheet}
-                                                                className={'col-sm-12 container-fluid add-coursesheet-button mt-5'}/>
+                                                                className={'mt-1px col-sm-12 container-fluid add-coursesheet-button mt-5'}/>
                                                         </div>
                                                     </div>
                                                 </div>
@@ -482,7 +511,6 @@ class Admin extends React.Component<any, AdminState> {
                                                     </div>
                                                     <h4
                                                         className={'col-11 pl-0 pt-1 text-left lobby-write-right-label'}
-                                                        onClick={this.checkVisibilityBox}
                                                     >
                                                         Lobby privé (seules les personnes autorisées pourront le
                                                         consulter
@@ -540,7 +568,7 @@ class Admin extends React.Component<any, AdminState> {
 }
 
 class SubmitButton extends React.Component<{ text: string, onClick: (event: React.MouseEvent<HTMLButtonElement, MouseEvent>) => void, className: string }, {}> {
-    public render() {
+    public render(): ReactNode {
         return (
             <button className={'btn btn-default btn-transparent rounded-1 ' + this.props.className}
                     onClick={this.props.onClick}><img className={'plus-icon'} src={plusIcon}

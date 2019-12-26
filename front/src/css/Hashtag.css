@@ -1,9 +1,13 @@
-#search {
-    font-size: 1.1em;
-}
-
 .hashtag {
     font-size: 1.1em;
+    color: #ffffff;
+    font-weight: bold;
+}
+
+.hashtagBox {
+    background-color: #3c3ca0;
+    opacity: 0.9;
+    z-index: 1;
 }
 
 .cross {
