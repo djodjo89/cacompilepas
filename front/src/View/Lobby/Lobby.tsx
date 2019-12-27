@@ -24,7 +24,11 @@ class Lobby extends React.Component<any, { right: string, courseSheets: [] }> {
     }
 
     public componentDidMount(): void {
-        new Request('/lobby/coursesheets/' + this.props.location.pathname.split(/\//)[2], 'POST', 'json', {token: localStorage.getItem('token')}, this.fillCourseSheets);
+        new Request(
+            '/lobby/coursesheets/' +
+            this.props.location.pathname.split(/\//)[2],
+            this.fillCourseSheets
+        );
     }
 
     public fillCourseSheets(data: any): void {
@@ -117,7 +121,7 @@ class LobbyDescription extends React.Component<{ id: string }, { lobby: any }> {
     }
 
     public componentDidMount(): void {
-        new Request('/lobby/consult/' + this.props.id, 'POST', 'json', {token: localStorage.getItem('token')}, this.fillDescription);
+        new Request('/lobby/consult/' + this.props.id, this.fillDescription);
     }
 
     public fillDescription(data: any): void {

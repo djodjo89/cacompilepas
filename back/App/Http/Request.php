@@ -13,8 +13,18 @@ class Request
         $this->fetchParamsFromRequest($_POST);
         $this->fetchParamsFromRequest($_FILES);
         $this->fetchParamsFromRequest($_REQUEST);
+        $this->fetchParamsFromRequest(getallheaders());
         if (!is_null(json_decode(file_get_contents('php://input')))) {
             $this->fetchParamsFromRequest(json_decode(file_get_contents('php://input'), true));
+        }
+    }
+
+    public function getToken(): string
+    {
+        if (isset($this->authorization)) {
+            return explode(' ', $this->getAuthorization())[1];
+        } else {
+            return '';
         }
     }
 

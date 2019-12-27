@@ -113,7 +113,7 @@ class LobbyController extends AbstractController
                                 $idLobby,
                                 $this->getRequest()->getFile()['name'],
                                 $this->getRequest()->getFile()['tmp_name'],
-                                )['message'];
+                            )['message'];
                         }
                         break;
 
@@ -125,10 +125,14 @@ class LobbyController extends AbstractController
                         $result = $this->getModel()->getVisibility($idLobby);
                         break;
 
+                    case 'coursesheet':
+                        $file = $this->getModel()->getFile($idLobby, $this->getRequest()->getPath(), '/coursesheets/');
+                        $this->downloadFile($file);
+                        break;
                     case 'getByHashtag':
                         $result = $this->getModel()->getByHashtags($this->getRequest()->getHashtags());
                         break;
-                }
+                    }
             } else {
                 new JSONException('You don\'t have the right to access this lobby');
             }
