@@ -15,7 +15,7 @@ class Messages extends React.Component<{ id: string }, { messages: [] }> {
     }
 
     public componentDidMount(): void {
-        new Request('/lobby/messages/' + this.props.id, 'POST', 'json', {token: localStorage.getItem('token')}, this.fillMessages);
+        new Request('/lobby/messages/' + this.props.id, this.fillMessages);
     }
 
     public fillMessages(data: any): void {

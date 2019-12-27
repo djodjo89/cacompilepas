@@ -22,6 +22,7 @@ class CourseSheets extends React.Component<CourseSheetsProps, { courseSheets: []
             let res = this.props.courseSheets.map((courseSheet: any) =>
                 <CourseSheet
                     id={courseSheet['id_course_sheet']}
+                    idLobby={this.props.id}
                     key={courseSheet['id_course_sheet']}
                     title={ courseSheet['title']}
                     publication_date={courseSheet['publication_date']}

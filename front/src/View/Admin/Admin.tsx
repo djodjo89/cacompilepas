@@ -130,13 +130,7 @@ class Admin extends React.Component<any, AdminState> {
     }
 
     public refreshVisibility(): void {
-        new Request(
-            '/lobby/visibility/' + this.state.id,
-            'POST',
-            'json',
-            {token: localStorage.getItem('token')},
-            this.updateVisibility
-        );
+        new Request('/lobby/visibility/' + this.state.id, this.updateVisibility);
     }
 
     public handleLabelChange(event: ChangeEvent<HTMLInputElement>): void {
@@ -211,9 +205,21 @@ class Admin extends React.Component<any, AdminState> {
         }
         if (null !== this.state.newLogo) {
             formData.append('file', this.state.newLogo);
-            new Request('/lobby/update/' + this.state.id, 'POST', this.state.newLogo.type, formData, this.update);
+            new Request(
+                '/lobby/update/' + this.state.id,
+                this.update,
+                'POST',
+                formData,
+                this.state.newLogo.type,
+            );
         } else {
-            new Request('/lobby/update/' + this.state.id, 'POST', '', formData, this.update);
+            new Request(
+                '/lobby/update/' + this.state.id,
+                this.update,
+                'POST',
+                formData,
+                '',
+            );
         }
     }
 
@@ -232,20 +238,26 @@ class Admin extends React.Component<any, AdminState> {
             formData.append('title', this.state.newCourseSheetTitle);
             formData.append('description', this.state.newCourseSheetDescription);
             formData.append('file', this.state.newCourseSheetDocument);
-            new Request('/lobby/newCourseSheet/' + this.state.id, 'POST', this.state.newCourseSheetDocument.type, formData, this.refreshCourseSheets);
+            new Request(
+                '/lobby/newCourseSheet/' + this.state.id,
+                this.refreshCourseSheets,
+                'POST',
+                formData,
+                this.state.newCourseSheetDocument.type,
+            );
         }
     }
 
     public refreshPresentation(): void {
-        new Request('/lobby/consult/' + this.state.id, 'POST', 'json', {token: localStorage.getItem('token')}, this.checkIfAdmin);
+        new Request('/lobby/consult/' + this.state.id, this.checkIfAdmin);
     }
 
     public refreshCourseSheets(): void {
-        new Request('/lobby/coursesheets/' + this.state.id, 'POST', 'json', {token: localStorage.getItem('token')}, this.fillCourseSheets);
+        new Request('/lobby/coursesheets/' + this.state.id, this.fillCourseSheets);
     }
 
     public refreshUsers(): void {
-        new Request('/lobby/users/' + this.state.id, 'POST', 'json', {token: localStorage.getItem('token')}, this.fillUsers);
+        new Request('/lobby/users/' + this.state.id, this.fillUsers);
     }
 
     public fetchCourseSheets(data: any): void {
@@ -263,44 +275,46 @@ class Admin extends React.Component<any, AdminState> {
     public removeCourseSheetFromLobby(event: React.MouseEvent<HTMLImageElement, MouseEvent>): void {
         let removeButton: any = event.target;
         new Request('/lobby/deleteCourseSheet/' + this.state.id,
+            this.fetchCourseSheets,
             'POST',
-            'json',
             {
-                token: localStorage.getItem('token'),
-                id: removeButton.id.split(/-/)[2]
-            }, this.fetchCourseSheets);
+                id: removeButton.id.split(/-/)[2],
+            });
     }
 
     public removeUserFromLobby(event: React.MouseEvent<HTMLImageElement, MouseEvent>): void {
         let removeButton: any = event.target;
         new Request('/lobby/removeUser/' + this.state.id,
+            this.fetchUsers,
             'POST',
-            'json',
             {
-                token: localStorage.getItem('token'),
-                id: removeButton.id.split(/-/)[2]
-            }, this.fetchUsers);
+                id: removeButton.id.split(/-/)[2],
+            });
     }
 
     public toggleWriteRights(event: React.ChangeEvent<HTMLInputElement>): void {
         let action: string = true === event.target.checked ?
             'addWriteRight/' :
             'removeWriteRight/';
-        new Request('/lobby/' + action + this.state.id,
+        new Request(
+            '/lobby/' + action + this.state.id,
+            this.fetchUsers,
             'POST',
-            'json',
             {
-                token: localStorage.getItem('token'),
                 id: event.target.id,
             },
-            this.fetchUsers);
+        );
     }
 
     public addUser(event: React.MouseEvent<HTMLButtonElement, MouseEvent>): void {
-        new Request('/lobby/addUser/' + this.state.id, 'POST', 'json', {
-            token: localStorage.getItem('token'),
-            email: this.state.newUserEmail
-        }, this.refreshUsers);
+        new Request(
+            '/lobby/addUser/' + this.state.id,
+            this.refreshUsers,
+            'POST',
+            {
+                email: this.state.newUserEmail,
+            },
+        );
     }
 
     public handleUserEmailChange(event: ChangeEvent<HTMLInputElement>): void {
@@ -312,13 +326,7 @@ class Admin extends React.Component<any, AdminState> {
 
         action = 'true' === this.state.private ?
             'makePublic/' : 'makePrivate/';
-        new Request(
-            '/lobby/' + action + this.state.id,
-            'POST',
-            'json',
-            {token: localStorage.getItem('token')},
-            this.refreshVisibility
-        );
+        new Request('/lobby/' + action + this.state.id, this.refreshVisibility);
     }
 
     public checkVisibilityBox(event: React.MouseEvent<HTMLHeadElement, MouseEvent>): void {

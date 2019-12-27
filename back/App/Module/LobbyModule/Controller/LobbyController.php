@@ -9,7 +9,7 @@ use App\Module\CourseSheetModule\Model\CourseSheetModel;
 
 class LobbyController extends AbstractController
 {
-    static $ACTIONS = [
+    static array $ACTIONS = [
         'coursesheets',
         'messages',
         'consult',
@@ -25,6 +25,7 @@ class LobbyController extends AbstractController
         'checkIfAdmin',
         'users',
         'visibility',
+        'coursesheet',
     ];
 
     public function run(): void
@@ -116,6 +117,11 @@ class LobbyController extends AbstractController
 
                         case 'visibility':
                             $result = $this->getModel()->getVisibility($idLobby);
+                            break;
+
+                        case 'coursesheet':
+                            $file = $this->getModel()->getFile($idLobby, $this->getRequest()->getPath(), '/coursesheets/');
+                            $this->downloadFile($file);
                             break;
                     }
                 } else {

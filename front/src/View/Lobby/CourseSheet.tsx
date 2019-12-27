@@ -1,10 +1,12 @@
 import React, {ReactNode} from 'react';
+import Request from "../../API/Request";
 import '../../css/CourseSheet.css';
 import exampleImage from '../../img/example.png';
 import minusIcon from '../../img/minus-icon-red-t.png';
 
 interface CourseSheetProps {
     id: string,
+    idLobby: string,
     title: string,
     publication_date: string,
     link: string,
@@ -13,9 +15,35 @@ interface CourseSheetProps {
     delete: ((event: React.MouseEvent<HTMLImageElement, MouseEvent>) => void) | undefined,
 }
 
-class CourseSheet extends React.Component<CourseSheetProps, {}> {
+class CourseSheet extends React.Component<CourseSheetProps, {src: string}> {
     public constructor(props: CourseSheetProps) {
         super(props);
+        this.getFile = this.getFile.bind(this);
+        this.openFile = this.openFile.bind(this);
+    }
+
+    public openFile(data: Blob): void {
+        const link = document.createElement('a');
+        const blob = new Blob([data], { type: "application/pdf" });
+        link.href = URL.createObjectURL(blob);
+        // @ts-ignore
+        window.open(document.location);
+        window.open(link.href, '_blank');
+        window.close();
+    }
+
+    public getFile(event: React.MouseEvent<HTMLAnchorElement, MouseEvent>): void {
+        event.preventDefault();
+        new Request(
+            '/lobby/coursesheet/' + this.props.idLobby,
+            this.openFile,
+            'POST',
+            {
+                path: this.props.link
+            },
+            'json',
+            'blob',
+        );
     }
 
     public render(): ReactNode {
@@ -43,9 +71,11 @@ class CourseSheet extends React.Component<CourseSheetProps, {}> {
                     <div className={'course-sheet-presentation ml-lg-1 ml-md-1 ml-sm-1 ml-xs-1'}>
                         <p className={'course-sheet-description'}>{this.props.description}</p>
                         <footer className={'pl-lg-0'}>
-                            <a href={this.props.link}
-                               className={'course-sheet-link col-lg-6 col-md-6 col-sm-6 col-xs-6 text-lg-left text-md-left text-sm-left text-xs-left pl-lg-0 pl-md-0 pl-sm-0 pl-xs-0 d-block mt-lg-2 mt-md-2 mt-sm-2 mt-xs-2'}>Lien
-                                vers la fiche</a>
+                            <a
+                                href={'' + document.location}
+                               className={'course-sheet-link col-lg-6 col-md-6 col-sm-6 col-xs-6 text-lg-left text-md-left text-sm-left text-xs-left pl-lg-0 pl-md-0 pl-sm-0 pl-xs-0 d-block mt-lg-2 mt-md-2 mt-sm-2 mt-xs-2'}
+                               onClick={this.getFile}
+                            >Lien vers la fiche</a>
                             <h4 className={'col-lg-6 col-md-6 col-sm-6 col-xs-6 text-lg-right text-md-right text-sm-right text-xs-right'}>Mathys</h4>
                         </footer>
                     </div>
