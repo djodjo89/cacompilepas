@@ -30,7 +30,6 @@ class CourseSheet extends React.Component<CourseSheetProps, { currentHashtagInde
         this.getFile = this.getFile.bind(this);
         this.openFile = this.openFile.bind(this);
         this.fillHashtags = this.fillHashtags.bind(this);
-        this.deleteHashtag = this.deleteHashtag.bind(this);
         this.fetchHashtags = this.fetchHashtags.bind(this);
     }
 
@@ -55,12 +54,6 @@ class CourseSheet extends React.Component<CourseSheetProps, { currentHashtagInde
 
     }
 
-    public deleteHashtag(data: any): void {
-        if (data['message'].includes('successfully')) {
-            this.fetchHashtags();
-        }
-    }
-
     public remove(event: React.MouseEvent<HTMLOrSVGElement>): void {
         let content: string;
         let target: any = event.target;
@@ -82,12 +75,10 @@ class CourseSheet extends React.Component<CourseSheetProps, { currentHashtagInde
                 if (-1 !== this.state.currentHashtagIndex) {
                     new Request(
                         '/coursesheet/removeHashtag/' + this.props.id,
-                        this.deleteHashtag,
+                        this.fetchHashtags,
                         'POST',
                         {hashtag: content},
                     )
-                    this.state.hashtags.splice(this.state.currentHashtagIndex, 1);
-                    this.forceUpdate(() => this.render());
                 }
             });
     }
