@@ -32,7 +32,6 @@ class CourseSheets extends React.Component<CourseSheetsProps, { courseSheets: []
                     activeRemoveButton={this.props.activeRemoveButton}
                     removableHashtags={this.props.removableHashtags}
                     delete={this.props.delete}
-                    hashtagsView={courseSheet['hashtags']}
                 />
             );
             return res;

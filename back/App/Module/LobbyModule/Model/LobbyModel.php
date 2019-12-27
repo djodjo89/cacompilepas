@@ -67,22 +67,7 @@ class LobbyModel extends AbstractModel
             WHERE id_lobby_Contain = ?
         ',
             [$idLobby]);
-        $coursesheets = $this->fetchData(['message' => 'Lobby ' . $idLobby . ' doesn\'t contain any course sheet']);
-
-        if (!isset($coursesheets['message'])) {
-            foreach ($coursesheets as $key => $value) {
-                $this->send_query('
-                        SELECT label_hashtag
-                        FROM ccp_hashtag
-                        WHERE id_course_sheet = ?
-                    ',
-                    [[$value][0]['id_course_sheet']]);
-                $hashtags = $this->fetchData([]);
-                $coursesheets[$key]['hashtags'] = $hashtags;
-            }
-        }
-
-        return $coursesheets;
+        return $this->fetchData(['message' => 'Lobby ' . $idLobby . ' doesn\'t contain any course sheet']);
     }
 
     public function getMessages(int $idLobby): array

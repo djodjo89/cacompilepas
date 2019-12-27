@@ -15,7 +15,6 @@ interface CourseSheetProps {
     activeRemoveButton: boolean,
     removableHashtags: boolean,
     delete: ((event: React.MouseEvent<HTMLImageElement, MouseEvent>) => void) | undefined,
-    hashtagsView: string[],
 }
 
 class CourseSheet extends React.Component<CourseSheetProps, { currentHashtagIndex: number, hashtags: string[] }> {
