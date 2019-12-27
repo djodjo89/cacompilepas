@@ -50,7 +50,7 @@ class Hashtag extends React.Component<HashtagProps, { width: number }> {
                  ref={this.hashtagBox}
             >
                         <span className={'hashtag'}>
-                            {this.props.text}
+                            #{this.props.text}
                         </span>
                 <span style={{paddingLeft: '6px', paddingRight: '2px',}} onClick={this.props.remove}><Cross/></span>
             </div>

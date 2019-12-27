@@ -2,6 +2,7 @@ import React, {ReactNode} from 'react';
 import '../../css/CourseSheet.css';
 import exampleImage from '../../img/example.png';
 import minusIcon from '../../img/minus-icon-red-t.png';
+import Hashtag from "../General/Hashtag";
 
 interface CourseSheetProps {
     id: string,
@@ -11,22 +12,44 @@ interface CourseSheetProps {
     description: string,
     activeRemoveButton: boolean,
     delete: ((event: React.MouseEvent<HTMLImageElement, MouseEvent>) => void) | undefined,
-    hashtags: string[],
+    hashtagsView: string[],
 }
 
 class CourseSheet extends React.Component<CourseSheetProps, {}> {
     public constructor(props: CourseSheetProps) {
         super(props);
+        this.updateWidth = this.updateWidth.bind(this);
+        this.remove = this.remove.bind(this);
+    }
+
+    public updateWidth(): void {
+
+    }
+
+    public remove(): void {
+
     }
 
     public renderHashtags(): ReactNode {
         let res: ReactNode[] = [];
 
-        for (let hashtag of this.props.hashtags) {
-            res.push('#' + hashtag[0] + ' ');
+        for (let hashtag of this.props.hashtagsView) {
+            res.push(
+                <Hashtag
+                    key={hashtag[0]}
+                    text={hashtag[0]}
+                    updateWidth={this.updateWidth}
+                    remove={this.remove}
+                    className={''}
+                />
+            )
         }
 
-        return res;
+        return <div style={{
+            display: 'flex',
+            flexFlow: 'row wrap',
+            alignItems: 'center',
+        }}>{res}</div>;
     }
 
     public render(): ReactNode {

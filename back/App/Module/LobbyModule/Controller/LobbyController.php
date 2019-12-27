@@ -64,12 +64,20 @@ class LobbyController extends AbstractController
                         break;
 
                     case 'newCourseSheet':
+                        $requestHashtags = explode('&quot;', $this->getRequest()->getHashtags());
+                        $hashtags = [];
+                        foreach ($requestHashtags as $key => $value) {
+                            if (ctype_alnum($value)) {
+                                array_push($hashtags, $value);
+                            }
+                        }
                         $result = (new CourseSheetModel($this->getModel()->getConnection()))->addCourseSheet(
                             $idLobby,
                             $this->getRequest()->getTitle(),
                             $this->getRequest()->getFile()['name'],
                             $this->getRequest()->getFile()['tmp_name'],
                             $this->getRequest()->getDescription(),
+                            $hashtags,
                             );
                         break;
 

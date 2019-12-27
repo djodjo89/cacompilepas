@@ -76,8 +76,8 @@ class LobbyModel extends AbstractModel
                         FROM ccp_hashtag
                         WHERE id_course_sheet = ?
                     ',
-                    [(int)$value]);
-                $hashtags = $this->fetchData(['message' => 'Course sheet doesn\'t have any hashtag']);
+                    [[$value][0]['id_course_sheet']]);
+                $hashtags = $this->fetchData([]);
                 $coursesheets[$key]['hashtags'] = $hashtags;
             }
         }

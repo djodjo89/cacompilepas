@@ -7,6 +7,7 @@ interface HashtagInputProps {
     type: string,
     baseIndent: number,
     onUpdate: any,
+    updateHashtagsView: any,
     updateHashtags: any,
     hashtagClassName: string,
 }
@@ -53,7 +54,8 @@ class HashtagInput extends React.Component<HashtagInputProps, HashTagInputState>
         } else {
             this.props.onUpdate(false);
         }
-        this.props.updateHashtags(this.renderHashtags());
+        this.props.updateHashtagsView(this.renderHashtags());
+        this.props.updateHashtags(this.state.hashtags);
     }
 
     public componentDidMount(): void {
@@ -93,7 +95,7 @@ class HashtagInput extends React.Component<HashtagInputProps, HashTagInputState>
             return {totalWidth: 0 === state.widths.length ? 0 : state.widths.map((width: number) => width).reduce((width: number, nextWidth: number) => width + nextWidth)};
         });
         this.updateIndent();
-        this.props.updateHashtags(this.renderHashtags());
+        this.props.updateHashtagsView(this.renderHashtags());
     }
 
     public deleteHashtagByClick(event: React.MouseEvent<HTMLOrSVGElement>): void {

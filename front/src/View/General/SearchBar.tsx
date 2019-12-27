@@ -1,9 +1,9 @@
-import React, {ChangeEvent, ReactNode, Ref} from 'react';
+import React, {ReactNode} from 'react';
 import HashtagInput from "./HashtagInput";
 
 interface SearchBarState {
     inputIsNotEmpty: boolean,
-    hashtags: ReactNode,
+    hashtagsView: ReactNode,
 }
 
 class SearchBar extends React.Component<any, SearchBarState> {
@@ -12,18 +12,21 @@ class SearchBar extends React.Component<any, SearchBarState> {
         super(props);
         this.state = {
             inputIsNotEmpty: true,
-            hashtags: <div></div>,
+            hashtagsView: <div></div>,
         }
         this.emptyInput = this.emptyInput.bind(this);
-        this.updateHashtags = this.updateHashtags.bind(this);
+        this.updateHashtagsView = this.updateHashtagsView.bind(this);
     }
 
     public emptyInput(isEmpty: boolean): void {
         this.setState({inputIsNotEmpty: isEmpty});
     }
 
-    public updateHashtags(hashtags: ReactNode): void {
-        this.setState({hashtags: hashtags});
+    public updateHashtagsView(hashtags: ReactNode): void {
+        this.setState({hashtagsView: hashtags});
+    }
+
+    public updateHashtags(hashtags: string[]): void {
     }
 
     public render(): ReactNode {
@@ -35,13 +38,14 @@ class SearchBar extends React.Component<any, SearchBarState> {
                     <span
                         id="search-placeholder">{this.state.inputIsNotEmpty ? 'Rechercher...' : ''}</span>
                 </label>
-                {this.state.hashtags}
+                {this.state.hashtagsView}
                 <HashtagInput
                     id={'search'}
                     className={'form-control col-lg-12 w-75 mr-sm-2'}
                     type={'search'}
                     baseIndent={14}
                     onUpdate={this.emptyInput}
+                    updateHashtagsView={this.updateHashtagsView}
                     updateHashtags={this.updateHashtags}
                     hashtagClassName={''}
                 />

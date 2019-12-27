@@ -6,7 +6,19 @@ use App\Model\AbstractModel;
 
 class CourseSheetModel extends AbstractModel
 {
-    public function addCourseSheet(int $idLobby, string $title, string $fileName, string $tmpName, string $description): array
+    public function getLobby(int $idCourseSheet): array
+    {
+        $this->send_query('
+            SELECT id_lobby_contain
+            FROM ccp_coursesheet
+            WHERE id_course_sheet = ?
+        ',
+            [$idCourseSheet]);
+
+        return $this->fetchData(['message' => 'An error occurred when trying to get containing lobby']);
+    }
+
+    public function addCourseSheet(int $idLobby, string $title, string $fileName, string $tmpName, string $description, array $hashtags): array
     {
         $this->uploadOnFTP($idLobby, $fileName, $tmpName, '/coursesheets/', AbstractModel::$COURSE_SHEET_EXTENSIONS);
 
@@ -17,6 +29,28 @@ class CourseSheetModel extends AbstractModel
             (?, NOW(), ?, ?, ?)
         ',
             [$title, $fileName, $description, $idLobby]);
+
+        $this->send_query('
+            SELECT id_course_sheet
+            FROM ccp_coursesheet
+            ORDER BY id_course_sheet DESC
+            LIMIT 1
+        ',
+            []);
+
+        $idCourseSheet = $this->getQuery()->fetch();
+
+        foreach ($hashtags as $key => $value) {
+            if ($successfulInsert) {
+                $successfulInsert = $this->send_query('
+                INSERT INTO ccp_hashtag
+                (label_hashtag, id_course_sheet) 
+                VALUES 
+                (?, ?)
+            ',
+                    [$value, $idCourseSheet[0]]);
+            }
+        }
 
         if ($successfulInsert) {
             return ['message' => 'Course sheet was successfully added'];
