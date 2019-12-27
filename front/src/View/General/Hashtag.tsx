@@ -5,6 +5,7 @@ import '../../css/Hashtag.css';
 interface HashtagProps {
     text: string,
     updateWidth: any,
+    isRemovable: boolean
     remove: any,
     className: string,
 }
@@ -52,7 +53,11 @@ class Hashtag extends React.Component<HashtagProps, { width: number }> {
                         <span className={'hashtag'}>
                             #{this.props.text}
                         </span>
-                <span style={{paddingLeft: '6px', paddingRight: '2px',}} onClick={this.props.remove}><Cross/></span>
+                {this.props.isRemovable ?
+                    <span style={{paddingLeft: '6px', paddingRight: '2px',}} onClick={this.props.remove}><Cross/></span>
+                    :
+                    <span></span>
+                }
             </div>
         );
         return div;

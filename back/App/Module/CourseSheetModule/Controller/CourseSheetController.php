@@ -17,6 +17,7 @@ class CourseSheetController extends AbstractController
             'getLobbiesByHashtag',
             'addHashtags',
             'removeHashtag',
+            'getHashtags',
         ]);
     }
 
@@ -25,15 +26,23 @@ class CourseSheetController extends AbstractController
         $this->checkAction();
         $this->checkToken();
         $result = [];
-        $rightsOnCourseSheet = (new LobbyModel($this->getModel()->getConnection()))->checkRights($this->getModel()->getLobby($this->getRequest()->getParam(), $this->getRequest()->getToken()));
-        if ('admin' !== $rightsOnCourseSheet) {
+
+        $rightsOnCourseSheet = (new LobbyModel($this->getModel()->getConnection()))->checkRights(
+            $this->getModel()->getLobbyId($this->getRequest()->getParam()),
+            $this->getRequest()->getToken()
+        );
+        if ('admin' === $rightsOnCourseSheet) {
             switch ($this->getRequest()->getAction()) {
                 case 'addHashtags':
                     $result = $this->getModel()->addHashtags($this->getRequest()->getParam(), $this->getRequest()->getHashtags());
                     break;
 
                 case 'removeHashtag':
-                    $result = $this->getModel()->removeHashtag($this->getRequest()->getParam());
+                    $result = $this->getModel()->removeHashtag($this->getRequest()->getParam(), $this->getRequest()->getHashtag());
+                    break;
+
+                case 'getHashtags':
+                    $result = $this->getModel()->getHashtags($this->getRequest()->getParam());
                     break;
             }
         } else {

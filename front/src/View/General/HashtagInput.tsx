@@ -157,6 +157,7 @@ class HashtagInput extends React.Component<HashtagInputProps, HashTagInputState>
                     key={hashtag}
                     text={hashtag}
                     updateWidth={this.updateTotalWidth}
+                    isRemovable={true}
                     remove={this.deleteHashtagByClick}
                     className={this.props.hashtagClassName}
                 />

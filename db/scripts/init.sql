@@ -82,7 +82,7 @@ CREATE TABLE ccp_privilege(
 CREATE TABLE ccp_hashtag(
         label_hashtag   Varchar (64) NOT NULL ,
         id_course_sheet Int  NOT NULL
-	,CONSTRAINT ccp_hashtag_PK PRIMARY KEY (label_hashtag)
+	,CONSTRAINT ccp_hashtag_PK PRIMARY KEY (label_hashtag, id_course_sheet)
 );
 
 

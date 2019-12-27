@@ -21,8 +21,9 @@ class Request<T> {
     private requestInit: RequestInit;
     private response: IHttpResponse<T>;
     private updateFunction: any;
+    private returnType: string;
 
-    constructor(beautifulRoute: string, method: string, type: string, data: any, updateFunction: any) {
+    constructor(beautifulRoute: string, updateFunction: any = (result: any) => console.log(result), method: string = 'GET', data: any = {}, type: string = 'json', returnType: string = 'json') {
         this.beautifulRoute = beautifulRoute;
         this.route = '/';
         this.method = method;
@@ -37,6 +38,7 @@ class Request<T> {
         // @ts-ignore
         this.response = {jsonBody: null};
         this.updateFunction = updateFunction;
+        this.returnType = returnType;
         this.updateFunction = this.updateFunction.bind(this);
     }
 
@@ -56,30 +58,48 @@ class Request<T> {
 
         switch (this.method) {
             case 'POST':
-                this.headers =
+            case 'GET':
+                this.headers = undefined !== localStorage.getItem('token') &&
+                '' !== localStorage.getItem('token') ?
+                    {
+                        'Accept': this.type,
+                        'Authorization': 'Bearer ' + localStorage.getItem('token'),
+                    } :
                     {
                         'Accept': this.type,
                     }
                 break;
         }
         let body: any;
-        if (null === this.data) {
-            body = null;
-        }
-        else {
-            this.type === 'json' ? body = JSON.stringify(this.data) : body = this.data;
-        }
-
-        this.requestInit = {
-            headers: this.headers,
-            method: this.method,
-            body: body,
+        if ('GET' !== this.method) {
+            if (null === this.data) {
+                body = null;
+            } else {
+                body = this.type === 'json' ? JSON.stringify(this.data) : this.data;
+            }
+            this.requestInit = {
+                headers: this.headers,
+                method: this.method,
+                body: body,
+            }
+        } else {
+            this.requestInit = {
+                headers: this.headers,
+                method: this.method,
+            }
         }
 
         fetch(this.domain + this.route, this.requestInit)
             .then((res: Response) => {
                 this.response = res;
-                return res.json();
+                switch (this.returnType) {
+                    case 'json':
+                        return res.json();
+                    case 'blob':
+                        return res.blob();
+                    default:
+                        return res.json();
+                }
             })
             .then((jsonResponse: any) => {
                 if (this.response.ok) {

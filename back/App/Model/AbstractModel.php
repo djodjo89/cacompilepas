@@ -131,4 +131,13 @@ abstract class AbstractModel
     {
         return "'" . implode('\',\'', $tab) . "'";
     }
+  
+    public function getOnFTP(int $id, string $fileName, string $uploadDirectory) {
+        $file = $this->nameOnFTP($id, $fileName, $this->extension($fileName));
+        if (ftp_get($this->connection::$ftp, '/tmp/' . $fileName, $uploadDirectory . $file, FTP_BINARY)) {
+            return '/tmp/' . $fileName;
+        } else {
+            new JSONException(['message' => 'File could not be fetched']);
+        }
+    }
 }
