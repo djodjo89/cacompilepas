@@ -9,6 +9,9 @@ use App\Http\Request;
 use App\Module\ConnectionModule\ConnectionModule;
 use App\Module\ConnectionModule\Controller\ConnectionController;
 use App\Module\ConnectionModule\Model\ConnectionModel;
+use App\Module\CourseSheetModule\Controller\CourseSheetController;
+use App\Module\CourseSheetModule\CourseSheetModule;
+use App\Module\CourseSheetModule\Model\CourseSheetModel;
 use App\Module\LobbyModule\Controller\LobbyController;
 use App\Module\LobbyModule\LobbyModule;
 use App\Module\LobbyModule\Model\LobbyModel;
@@ -34,6 +37,10 @@ class Router
 
             case 'connection':
                 $module = new ConnectionModule(new ConnectionController(new ConnectionModel($this->connection)));
+                break;
+
+            case 'coursesheet':
+                $module = new CourseSheetModule(new CourseSheetController((new CourseSheetModel($this->connection))));
                 break;
 
             default:

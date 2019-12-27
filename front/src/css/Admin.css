@@ -59,8 +59,13 @@
 }
 
 .course-sheet-textarea {
-    height: 142px !important;
+    height: 93px !important;
     margin-bottom: 13px;
+    padding-right: 0;
+}
+
+.course-sheet-textarea-container {
+    padding-right: 0;
 }
 
 @media screen and (min-width: 1080px) {
@@ -86,4 +91,44 @@
 
 .no-ml {
     margin-left: 0px;
+}
+
+.mt-1px {
+    margin-top: 1px !important;
+}
+
+#addHashtags {
+    position: relative;
+    z-index: 0;
+    text-indent: 16px;
+    font-size: 14px;
+    color: #a6a6a6;
+}
+
+#addHashtags:active {
+    position: relative;
+    z-index: 0;
+    text-indent: 16px;
+    font-size: 14px;
+    color: #a6a6a6;
+}
+
+#hashtag-label {
+    z-index: 1;
+    color: #a6a6a6;
+    margin-left: 10px;
+}
+
+#hashtag-placeholder {
+    position: absolute;
+    left: 23px;
+    top: 9px;
+    margin-left: 5px;
+    font-weight: normal;
+    font-size: 14px;
+    min-height: 20px;
+}
+
+.hashtagInputBox {
+    margin-bottom: -31px !important;
 }

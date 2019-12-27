@@ -49,15 +49,6 @@ class LobbyModel extends AbstractModel
         }
     }
 
-    public function fetchData(array $tabIfNotFound): array
-    {
-        if ($result = $this->getQuery()->fetchAll()) {
-            return $result;
-        } else {
-            return $tabIfNotFound;
-        }
-    }
-
     public function getLobbyById(int $idLobby): array
     {
         $this->send_query('SELECT label_lobby, description
@@ -76,7 +67,22 @@ class LobbyModel extends AbstractModel
             WHERE id_lobby_Contain = ?
         ',
             [$idLobby]);
-        return $this->fetchData(['message' => 'Lobby ' . $idLobby . ' doesn\'t contain any course sheet']);
+        $coursesheets = $this->fetchData(['message' => 'Lobby ' . $idLobby . ' doesn\'t contain any course sheet']);
+
+        if (!isset($coursesheets['message'])) {
+            foreach ($coursesheets as $key => $value) {
+                $this->send_query('
+                        SELECT label_hashtag
+                        FROM ccp_hashtag
+                        WHERE id_course_sheet = ?
+                    ',
+                    [(int)$value]);
+                $hashtags = $this->fetchData(['message' => 'Course sheet doesn\'t have any hashtag']);
+                $coursesheets[$key]['hashtags'] = $hashtags;
+            }
+        }
+
+        return $coursesheets;
     }
 
     public function getMessages(int $idLobby): array
@@ -298,7 +304,18 @@ class LobbyModel extends AbstractModel
 
         return $this->fetchData(['message' => 'Lobby ' . $idLobby . 'does not exist']);
     }
-
+  
+    public function getByHashtags(array $hashtags): array
+    {
+        $this->send_query("
+            SELECT id_lobby, label_lobby, ccp_lobby.description, logo FROM 
+            ccp_lobby INNER JOIN ccp_coursesheet cc on ccp_lobby.id_lobby = cc.id_lobby_Contain
+            INNER JOIN ccp_hashtag ch on cc.id_course_sheet = ch.id_course_sheet
+            WHERE label_hashtag IN (?)
+        ",
+            [$this->arrayToIN($hashtags)]);
+        return $this->fetchData([]);
+      
     public function getFile(int $idLobby, string $path, string $uploadDirectory) {
         return $this->getOnFTP($idLobby, $path, $uploadDirectory);
     }

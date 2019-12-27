@@ -61,7 +61,7 @@ class Request
     {
         if ('get' === substr($function, 0, 3)) {
             $attributeName = $this->toCamelCase(substr($function, 3, strlen($function)));
-            if (isset($this->{$attributeName})) {
+            if (isset($this->{$attributeName}) || defined($this->{$attributeName})) {
                     return $this->{$attributeName};
             } else {
                 if (is_array($this->{$attributeName})) {

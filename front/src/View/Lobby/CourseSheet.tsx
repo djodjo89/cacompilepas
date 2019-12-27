@@ -13,6 +13,7 @@ interface CourseSheetProps {
     description: string,
     activeRemoveButton: boolean,
     delete: ((event: React.MouseEvent<HTMLImageElement, MouseEvent>) => void) | undefined,
+    hashtags: string[],
 }
 
 class CourseSheet extends React.Component<CourseSheetProps, {src: string}> {
@@ -46,6 +47,16 @@ class CourseSheet extends React.Component<CourseSheetProps, {src: string}> {
         );
     }
 
+    public renderHashtags(): ReactNode {
+        let res: ReactNode[] = [];
+
+        for (let hashtag of this.props.hashtags) {
+            res.push('#' + hashtag[0] + ' ');
+        }
+
+        return res;
+    }
+
     public render(): ReactNode {
         return (
             <div id={'coursesheet-' + this.props.id} className={'row mt-5 col-lg-12 col-md-12 col-sm-12 col-xs-12'}>
@@ -67,6 +78,9 @@ class CourseSheet extends React.Component<CourseSheetProps, {src: string}> {
                             />
                             </div> :
                             <div></div>}
+                    </div>
+                    <div className={'col-lg-12 col-md-12 col-sm-12 col-xs-12 mb-2 text-left pl-1 float-none'}>
+                        {this.renderHashtags()}
                     </div>
                     <div className={'course-sheet-presentation ml-lg-1 ml-md-1 ml-sm-1 ml-xs-1'}>
                         <p className={'course-sheet-description'}>{this.props.description}</p>

@@ -12,11 +12,12 @@ abstract class AbstractController
 {
     private AbstractModel $model;
     private Request $request;
+    private array $actions;
 
     public function __construct(AbstractModel $model)
     {
         $this->setModel($model);
-        $this->request = new Request;
+        $this->request = new Request();
     }
 
     abstract public function run(): void;
@@ -43,6 +44,19 @@ abstract class AbstractController
             new JSONException('Incorrect or missing token');
         }
     }
+
+    public function setActions(array $actions): void
+    {
+        $this->actions = $actions;
+    }
+
+    public function checkAction(): void
+    {
+        if (!in_array($this->request->getAction(), $this->actions)) {
+            new JSONException($this->getRequest()->getAction() . ' action doesn\'t exists');
+        }
+    }
+}
 
     public function downloadFile(string $file): void {
         if (file_exists($file)) {

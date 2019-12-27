@@ -22,7 +22,7 @@ abstract class AbstractModel
         return $this->connection;
     }
 
-    public function send_query(string $stringQuery, array $parameters): bool
+    public function send_query(string $stringQuery, array $parameters = []): bool
     {
         $this->query = $this->connection::$bdd->prepare($stringQuery);
         return $this->query->execute($parameters);
@@ -118,6 +118,20 @@ abstract class AbstractModel
         }
     }
 
+    public function fetchData(array $tabIfNotFound): array
+    {
+        if ($result = $this->getQuery()->fetchAll()) {
+            return $result;
+        } else {
+            return $tabIfNotFound;
+        }
+    }
+
+    public function arrayToIN(array $tab): array
+    {
+        return "'" . implode('\',\'', $tab) . "'";
+    }
+  
     public function getOnFTP(int $id, string $fileName, string $uploadDirectory) {
         $file = $this->nameOnFTP($id, $fileName, $this->extension($fileName));
         if (ftp_get($this->connection::$ftp, '/tmp/' . $fileName, $uploadDirectory . $file, FTP_BINARY)) {
