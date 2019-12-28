@@ -53,7 +53,7 @@ class Lobby extends React.Component<any, { right: string, courseSheets: [] }> {
                         {() => {
                             if ('true' === this.state.right) {
                                 return (
-                                    <section className={"content row container-fluid"}>
+                                    <section className={"content row container-fluid pr-sm-0"}>
                                         <LobbyTop id={this.props.location.pathname.split(/\//)[2]}
                                                   courseSheets={this.state.courseSheets}/>
                                         <LobbyBody id={this.props.location.pathname.split(/\//)[2]}
@@ -76,9 +76,9 @@ class Lobby extends React.Component<any, { right: string, courseSheets: [] }> {
 class LobbyTop extends React.Component<{ id: string, courseSheets: [] }, {}> {
     public render(): ReactNode {
         return (
-            <div className="row col-lg-12 col-sm-12 mt-lg-5 mt-sm-5 mr-lg-0 mr-sm-0">
-                <LobbySummary courseSheets={this.props.courseSheets}/>
+            <div className="row container-fluid">
                 <LobbyDescription id={this.props.id}/>
+                <LobbySummary courseSheets={this.props.courseSheets}/>
             </div>
         )
     }
@@ -93,7 +93,7 @@ class LobbySummary extends React.Component<{ courseSheets: [] }, {}> {
     public renderList(): ReactNode {
         let res = [], i = 0;
         for (let courseSheet of this.props.courseSheets) {
-            res.push(<li key={i}>{courseSheet['title']}</li>);
+            res.push(<li key={i}><p className={'mb-0'}>{courseSheet['title']}</p></li>);
             i++;
         }
         return res;
@@ -101,12 +101,13 @@ class LobbySummary extends React.Component<{ courseSheets: [] }, {}> {
 
     public render(): ReactNode {
         return (
-            <section className="col-lg-6 col-sm-6 ml-lg-0 ml-sm-0 pl-lg-0 pl-sm-0 top-section">
-                <h2 className="text-left mb-0">Sommaire</h2>
-                <ul className="ccp-list list-unstyled text-left ml-1 mt-3">
+            <section className="col-lg-12 col-sm-12 mt-sm-2 pr-sm-0 pr-xs-0">
+                <h2 className="text-left mb-0 mt-0">Sommaire</h2>
+                <ul className="lobby-summary-list list-unstyled text-left ml-1 mt-3">
                     {this.renderList()}
                 </ul>
-                <Divider/>
+                <Divider
+                    className={'offset-lg-3 col-lg-6 offset-md-2 col-md-8 col-sm-6 col-xs-6 mt-5 mb-2'}/>
             </section>
         )
     }
@@ -132,10 +133,21 @@ class LobbyDescription extends React.Component<{ id: string }, { lobby: any }> {
 
     public render(): ReactNode {
         return (
-            <section className="col-lg-6 col-sm-6 pr-sm-0 top-section">
-                <h2 className="ml-lg-0 text-left">{this.state.lobby['label_lobby']}</h2>
-                <p className="ml-lg-2 ml-sm-1 course-sheet-presentation w-100">{this.state.lobby['description']}</p>
-                <Divider/>
+            <section className="col-lg-12 col-sm-12 pr-lg-0 pr-md-0 pr-sm-0 pr-xs-0">
+                <div className={'row container-fluid pl-lg-0 pl-md-0 pl-sm-0 pl-xs-0 pr-sm-0 pr-xs-0'}>
+                    <div className={'col-lg-10 col-md-10 col-sm-10 col-xs-12 pt-lg-1'}>
+                        <h1 className="text-left">{this.state.lobby['label_lobby']}</h1>
+                    </div>
+                    <div className={'col-lg-2 col-md-2 col-sm-2 col-xs-4 pt-lg-5 pt-md-2 pt-sm-5 pt-xs-2 text-sm-left ml-0 pl-0 pr-sm-0'}>
+                        <a href={'/'}>
+                            <button className="btn btn-default btn-block edit-lobby-button mt-lg-2 rounded-1">Modifier</button>
+                        </a>
+                    </div>
+                </div>
+                <div className={'row ml-lg-1 ml-sm-1 w-100'}>
+                    <p className="lobby-description">{this.state.lobby['description']}</p>
+                </div>
+                <Divider className={'col-lg-3 col-md-6 col-sm-6 col-xs-6 mt-5 mb-5'}/>
             </section>
         )
     }
@@ -144,17 +156,25 @@ class LobbyDescription extends React.Component<{ id: string }, { lobby: any }> {
 class LobbyBody extends React.Component<{ id: string, courseSheets: [] }, {}> {
     public render(): ReactNode {
         return (
-            <div className={"col-lg-12 col-md-12 col-sm-12 col-xs-12"}>
-                <Messages id={this.props.id}/>
-                <CourseSheets
-                    id={this.props.id}
-                    courseSheets={this.props.courseSheets}
-                    className={'col-lg-6 col-sm-12 mt-lg-3'}
-                    activeRemoveButton={false}
-                    removableHashtags={false}
-                    delete={undefined}
-                />
-                <WriteMessageZone/>
+            <div className={'col-lg-12 col-md-12 col-sm-12 col-xs-12'}>
+                <div className={'col-lg-6 col-md-6 col-sm-12 col-xs-12 container-fluid'}>
+                    <CourseSheets
+                        id={this.props.id}
+                        courseSheets={this.props.courseSheets}
+                        className={'mt-lg-3'}
+                        activeRemoveButton={false}
+                        removableHashtags={false}
+                        delete={undefined}
+                    />
+                </div>
+                <div className={'col-lg-6 col-md-6 col-sm-12 col-xs-12 container-fluid'}>
+                    <div className={'row'}>
+                        <Messages id={this.props.id}/>
+                    </div>
+                    <div className={'row'}>
+                        <WriteMessageZone/>
+                    </div>
+                </div>
             </div>
         )
     }
