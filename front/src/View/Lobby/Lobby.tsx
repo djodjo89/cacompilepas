@@ -35,8 +35,10 @@ class Lobby extends React.Component<any, { right: string, courseSheets: [] }> {
         if (undefined === data['message']) {
             this.setState({courseSheets: data});
             this.setState({right: 'true'});
-        } else {
+        } else if (data['message'].includes('right')) {
             this.setState({right: 'false'});
+        } else {
+            this.setState({right: 'true'});
         }
     }
 
