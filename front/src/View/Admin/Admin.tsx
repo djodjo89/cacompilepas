@@ -33,7 +33,8 @@ interface AdminState {
     newUserEmail: string,
     private: string,
     hashtagInputIsNotEmpty: boolean,
-    hashtags: ReactNode,
+    hashtagsView: ReactNode,
+    hashtags: string[],
 }
 
 class Admin extends React.Component<any, AdminState> {
@@ -58,7 +59,8 @@ class Admin extends React.Component<any, AdminState> {
             newUserEmail: '',
             private: '',
             hashtagInputIsNotEmpty: true,
-            hashtags: <div></div>,
+            hashtagsView: <div></div>,
+            hashtags: [],
         }
         this.init = this.init.bind(this);
         this.init();
@@ -94,6 +96,7 @@ class Admin extends React.Component<any, AdminState> {
         this.updateVisibility = this.updateVisibility.bind(this);
         this.toggleVisibility = this.toggleVisibility.bind(this);
         this.emptyInput = this.emptyInput.bind(this);
+        this.updateHashtagsView = this.updateHashtagsView.bind(this);
         this.updateHashtags = this.updateHashtags.bind(this);
     }
 
@@ -115,9 +118,14 @@ class Admin extends React.Component<any, AdminState> {
 
     public fillCourseSheets(data: any): void {
         if (undefined === data['message']) {
-            this.setState({courseSheets: data});
+            this.setState(
+                {courseSheets: data},
+                () => this.forceUpdate(() => this.render())
+                );
         } else {
-            this.setState({courseSheets: []});
+            this.setState({courseSheets: []},
+                () => this.forceUpdate(() => this.render())
+                );
         }
     }
 
@@ -234,10 +242,12 @@ class Admin extends React.Component<any, AdminState> {
         if (
             '' !== this.state.newCourseSheetTitle &&
             '' !== this.state.newCourseSheetDescription &&
+            0 !== this.state.hashtags.length &&
             null !== this.state.newCourseSheetDocument
         ) {
             formData.append('title', this.state.newCourseSheetTitle);
             formData.append('description', this.state.newCourseSheetDescription);
+            formData.append('hashtags', JSON.stringify(this.state.hashtags));
             formData.append('file', this.state.newCourseSheetDocument);
             new Request(
                 '/lobby/newCourseSheet/' + this.state.id,
@@ -334,7 +344,11 @@ class Admin extends React.Component<any, AdminState> {
         this.setState({hashtagInputIsNotEmpty: isEmpty});
     }
 
-    public updateHashtags(hashtags: ReactNode): void {
+    public updateHashtagsView(hashtagsView: ReactNode): void {
+        this.setState({hashtagsView: hashtagsView});
+    }
+
+    public updateHashtags(hashtags: string[]): void {
         this.setState({hashtags: hashtags});
     }
 
@@ -434,7 +448,7 @@ class Admin extends React.Component<any, AdminState> {
                                                                         <span
                                                                             id="hashtag-placeholder">{this.state.hashtagInputIsNotEmpty ? 'Entre des hashtags pour cette fiche' : ''}</span>
                                                                     </label>
-                                                                    {this.state.hashtags}
+                                                                    {this.state.hashtagsView}
                                                                     <div className={'col-lg-12 col-md-12 col-sm-12 col-xs-12 pl-0 pr-0'}>
                                                                         <HashtagInput
                                                                             id={'addHashtags'}
@@ -442,6 +456,7 @@ class Admin extends React.Component<any, AdminState> {
                                                                             type={'text'}
                                                                             baseIndent={-3}
                                                                             onUpdate={this.emptyInput}
+                                                                            updateHashtagsView={this.updateHashtagsView}
                                                                             updateHashtags={this.updateHashtags}
                                                                             hashtagClassName={'hashtagInputBox'}
                                                                         />
@@ -463,6 +478,7 @@ class Admin extends React.Component<any, AdminState> {
                                                         courseSheets={this.state.courseSheets}
                                                         className={'col-lg-12 col-sm-12 mt-lg-3'}
                                                         activeRemoveButton={true}
+                                                        removableHashtags={true}
                                                         delete={this.removeCourseSheetFromLobby}
                                                     />
                                                 </div>

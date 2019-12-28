@@ -149,6 +149,7 @@ class LobbyBody extends React.Component<{ id: string, courseSheets: [] }, {}> {
                     courseSheets={this.props.courseSheets}
                     className={'col-lg-6 col-sm-12 mt-lg-3'}
                     activeRemoveButton={false}
+                    removableHashtags={false}
                     delete={undefined}
                 />
                 <WriteMessageZone/>

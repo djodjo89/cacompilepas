@@ -6,7 +6,19 @@ use App\Model\AbstractModel;
 
 class CourseSheetModel extends AbstractModel
 {
-    public function addCourseSheet(int $idLobby, string $title, string $fileName, string $tmpName, string $description): array
+    public function getLobbyId(int $idCourseSheet): int
+    {
+        $this->send_query('
+            SELECT id_lobby_contain
+            FROM ccp_coursesheet
+            WHERE id_course_sheet = ?
+        ',
+            [$idCourseSheet]);
+
+        return $this->fetchData(['message' => 'An error occurred when trying to get containing lobby'])[0]['id_lobby_contain'];
+    }
+
+    public function addCourseSheet(int $idLobby, string $title, string $fileName, string $tmpName, string $description, array $hashtags): array
     {
         $this->uploadOnFTP($idLobby, $fileName, $tmpName, '/coursesheets/', AbstractModel::$COURSE_SHEET_EXTENSIONS);
 
@@ -17,6 +29,28 @@ class CourseSheetModel extends AbstractModel
             (?, NOW(), ?, ?, ?)
         ',
             [$title, $fileName, $description, $idLobby]);
+
+        $this->send_query('
+            SELECT id_course_sheet
+            FROM ccp_coursesheet
+            ORDER BY id_course_sheet DESC
+            LIMIT 1
+        ',
+            []);
+
+        $idCourseSheet = (int)$this->getQuery()->fetch()[0];
+
+        foreach ($hashtags as $key => $value) {
+            if ($successfulInsert) {
+                $successfulInsert = $this->send_query('
+                INSERT INTO ccp_hashtag
+                (label_hashtag, id_course_sheet) 
+                VALUES 
+                (?, ?)
+            ',
+                    [$value, $idCourseSheet]);
+            }
+        }
 
         if ($successfulInsert) {
             return ['message' => 'Course sheet was successfully added'];
@@ -57,17 +91,31 @@ class CourseSheetModel extends AbstractModel
         return ['message' => 'Successfully added hashtags'];
     }
 
-    public function removeHashtag(string $hashtag): array
+    public function removeHashtag(int $idCourseSheet, string $hashtag): array
     {
         $successfullyRemoved = $this->send_query('
             DELETE FROM ccp_hashtag
             WHERE label_hashtag = ?
+            AND id_course_sheet = ?
         ',
-            [$hashtag]);
+            [$hashtag, $idCourseSheet]);
         if (!$successfullyRemoved) {
             return ['message' => 'Hashtag could not be removed'];
         } else {
             return ['message' => 'Hashtag was successfully removed'];
         }
+    }
+
+    public function getHashtags(int $idCourseSheet): array
+    {
+        $this->send_query('
+            SELECT label_hashtag
+            FROM ccp_hashtag
+            INNER JOIN ccp_coursesheet cc on ccp_hashtag.id_course_sheet = cc.id_course_sheet
+            WHERE cc.id_course_sheet = ?
+        ',
+            [$idCourseSheet]);
+
+        return $this->fetchData(['message' => 'Course sheet doesn\'t have any hashtag']);
     }
 }

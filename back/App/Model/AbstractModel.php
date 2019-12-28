@@ -137,13 +137,7 @@ abstract class AbstractModel
         if (ftp_get($this->connection::$ftp, '/tmp/' . $fileName, $uploadDirectory . $file, FTP_BINARY)) {
             return '/tmp/' . $fileName;
         } else {
-            echo scandir('/tmp');
-            echo '<pre>';
-            var_dump('/tmp/' . $fileName);
-            echo '</pre>';
-            echo '<pre>';
-            var_dump($uploadDirectory . $file);
-            echo '</pre>';
+            new JSONException(['message' => 'File could not be fetched']);
         }
     }
 }

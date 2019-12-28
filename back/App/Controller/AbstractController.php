@@ -56,7 +56,6 @@ abstract class AbstractController
             new JSONException($this->getRequest()->getAction() . ' action doesn\'t exists');
         }
     }
-}
 
     public function downloadFile(string $file): void {
         if (file_exists($file)) {
