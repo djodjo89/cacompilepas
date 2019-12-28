@@ -122,7 +122,7 @@ class LobbyController extends AbstractController
                                 $idLobby,
                                 $this->getRequest()->getFile()['name'],
                                 $this->getRequest()->getFile()['tmp_name'],
-                            )['message'];
+                                )['message'];
                         }
                         break;
 
@@ -141,9 +141,7 @@ class LobbyController extends AbstractController
                     case 'getByHashtag':
                         $result = $this->getModel()->getByHashtags($this->getRequest()->getHashtags());
                         break;
-                    }
-            } else {
-                new JSONException('You don\'t have the right to access this lobby');
+                }
             }
             new JSONResponse($result);
         } else {

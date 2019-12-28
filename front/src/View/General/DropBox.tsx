@@ -37,12 +37,23 @@ interface DropBoxProps {
     handleFileChange: (event: ChangeEvent<HTMLInputElement>) => void,
 }
 
-class DropBox extends React.Component<DropBoxProps, { }> {
+interface DropBoxState {
+    draggingState: string,
+    dragged: boolean,
+    label: string
+}
+
+class DropBox extends React.Component<DropBoxProps, DropBoxState> {
     private file: File | null;
 
     constructor(props: any) {
         super(props);
         this.file = null;
+        this.state = {
+            draggingState: '',
+            dragged: false,
+            label: this.props.label,
+        }
         this.handleDragOver = this.handleDragOver.bind(this);
         this.handleDrop = this.handleDrop.bind(this);
     }
@@ -53,7 +64,6 @@ class DropBox extends React.Component<DropBoxProps, { }> {
 
     public handleDrop(event: React.DragEvent<HTMLDivElement>): void {
         event.preventDefault();
-        this.file = event.dataTransfer.files[0];
     }
 
     public render(): ReactNode {
@@ -62,10 +72,14 @@ class DropBox extends React.Component<DropBoxProps, { }> {
                 className={this.props.className}
                 onDragOver={this.handleDragOver}
                 onDrop={this.props.handleFileDrop}
+                style={{
+                    opacity: this.state.draggingState === 'dragging' ? 0.5 : 1,
+                    transform: this.state.draggingState === 'dragging' ? 'rotate(-2deg) translateY(-10px)' : 'rotate(0)',
+                }}
             >
                 <label>
                     <DropBoxBackground
-                        label={this.props.label}
+                        label={this.state.label}
                         className={this.props.backgroundClassName}
                     >
                         <input

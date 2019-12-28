@@ -242,7 +242,6 @@ class Admin extends React.Component<any, AdminState> {
         if (
             '' !== this.state.newCourseSheetTitle &&
             '' !== this.state.newCourseSheetDescription &&
-            0 !== this.state.hashtags.length &&
             null !== this.state.newCourseSheetDocument
         ) {
             formData.append('title', this.state.newCourseSheetTitle);
