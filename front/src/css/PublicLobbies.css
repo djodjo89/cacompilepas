@@ -1,0 +1,11 @@
+.lobby-logo {
+    width: 64px;
+    height: 64px;
+    border-radius: 40px;
+}
+
+.lobby-description {
+    height: 50px;
+    overflow: scroll;
+    margin-left: -45px;
+}

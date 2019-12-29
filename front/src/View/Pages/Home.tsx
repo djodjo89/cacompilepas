@@ -46,8 +46,8 @@ class Buttons extends React.Component {
                 <a href={'/'}>
                     <button className={"personalPage"}>Page Perso</button>
                 </a>
-                <a href={'/popular'}>
-                    <button className={"offset-2 popularCoursheet"}>Fiches Populaires</button>
+                <a href={'/public'}>
+                    <button className={"offset-2 publicLobbies"}>Lobbies publics</button>
                 </a>
             </div>
         )
