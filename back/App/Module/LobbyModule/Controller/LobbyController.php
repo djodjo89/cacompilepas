@@ -32,6 +32,8 @@ class LobbyController extends AbstractController
             'visibility',
             'coursesheet',
             'getByHashtag',
+            'getLobbies',
+            'getLogo',
         ]);
     }
 
@@ -41,7 +43,11 @@ class LobbyController extends AbstractController
         $this->checkToken();
         $idLobby = (int)$this->getRequest()->getParam();
         $result = [];
-        $rightsOnLobby = $this->getModel()->checkRights($idLobby, $this->getRequest()->getToken());
+        if ($idLobby !== 0) {
+            $rightsOnLobby = $this->getModel()->checkRights($idLobby, $this->getRequest()->getToken());
+        } else {
+            $rightsOnLobby = 'none';
+        }
         if ('none' !== $rightsOnLobby) {
             if ('admin' === $rightsOnLobby || 'user' === $rightsOnLobby) {
                 switch ($this->getRequest()->getAction()) {
@@ -138,14 +144,28 @@ class LobbyController extends AbstractController
                         $file = $this->getModel()->getFile($idLobby, $this->getRequest()->getPath(), '/coursesheets/');
                         $this->downloadFile($file);
                         break;
+
                     case 'getByHashtag':
                         $result = $this->getModel()->getByHashtags($this->getRequest()->getHashtags());
                         break;
                 }
             }
-            new JSONResponse($result);
         } else {
-            new JSONException('You don\'t have the right to access this lobby');
+            switch ($this->getRequest()->getAction()) {
+                case 'getLobbies':
+                    $result = $this->getModel()->getLobbies();
+                    break;
+
+                case 'getLogo':
+                    $logo = $this->getModel()->getFile($this->getRequest()->getIdLobby(), $this->getRequest()->getPath(), '/img/');
+                    $this->downloadFile($logo);
+                    break;
+
+                default:
+                    new JSONException('You don\'t have the right to access this lobby');
+                break;
+            }
         }
+        new JSONResponse($result);
     }
 }
