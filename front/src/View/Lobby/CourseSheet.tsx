@@ -84,7 +84,7 @@ class CourseSheet extends React.Component<CourseSheetProps, { currentHashtagInde
 
     public openFile(data: Blob): void {
         const link = document.createElement('a');
-        const blob = new Blob([data], {type: "application/pdf"});
+        const blob = new Blob([data], {type: 'application/pdf'});
         link.href = URL.createObjectURL(blob);
         // @ts-ignore
         window.open(document.location);
