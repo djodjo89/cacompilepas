@@ -51,7 +51,7 @@ class PrivateRoute extends React.PureComponent<PrivateRouteProps, { status: stri
     public render(): ReactNode {
         return <Route
             {...this.props.rest}
-            render={(props) => {
+            render={() => {
                 // If there is a token and user is connected, render element
                 if (undefined !== localStorage.getItem('token') && '' !== localStorage.getItem('token') && 'true' === this.state.status) {
                     return React.createElement(this.props.component, this.props);
@@ -60,8 +60,7 @@ class PrivateRoute extends React.PureComponent<PrivateRouteProps, { status: stri
                 } else {
                     return <div className={'mt-5'}><Loader/></div>;
                 }
-            }
-            }
+            }}
         />
     }
 }
