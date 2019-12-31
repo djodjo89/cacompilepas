@@ -292,17 +292,39 @@ class LobbyModel extends AbstractModel
   
     public function getByHashtags(array $hashtags): array
     {
-        $this->send_query("
+        $this->send_query('
             SELECT id_lobby, label_lobby, ccp_lobby.description, logo FROM 
-            ccp_lobby INNER JOIN ccp_coursesheet cc on ccp_lobby.id_lobby = cc.id_lobby_Contain
+            ccp_lobby INNER JOIN ccp_coursesheet cc on ccp_lobby.id_lobby = cc.id_lobby_contain
             INNER JOIN ccp_hashtag ch on cc.id_course_sheet = ch.id_course_sheet
             WHERE label_hashtag IN (?)
-        ",
+        ',
             [$this->arrayToIN($hashtags)]);
         return $this->fetchData([]);
     }
       
     public function getFile(int $idLobby, string $path, string $uploadDirectory) {
         return $this->getOnFTP($idLobby, $path, $uploadDirectory);
+    }
+
+    public function getByKeyWords(array $search): array
+    {
+        $count = 0;
+        $params = '';
+
+        foreach ($search as $key => $value) {
+            $params .= " UPPER(label_lobby) LIKE UPPER('%" . $value . "%')";
+            if ($count !== 0) {
+                $params .= ' OR';
+            }
+            $count++;
+        }
+
+        $this->send_query('
+            SELECT id_lobby, label_lobby, ccp_lobby.description, logo FROM
+            ccp_lobby INNER JOIN ccp_coursesheet cc on ccp_lobby.id_lobby = cc.id_lobby_contain
+            WHERE ?
+        ',
+            [$params]);
+        return $this->fetchData([]);
     }
 }

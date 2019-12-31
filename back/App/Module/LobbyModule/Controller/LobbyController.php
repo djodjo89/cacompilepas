@@ -32,6 +32,7 @@ class LobbyController extends AbstractController
             'visibility',
             'coursesheet',
             'getByHashtag',
+            'getByKeyWords',
         ]);
     }
 
@@ -140,6 +141,9 @@ class LobbyController extends AbstractController
                         break;
                     case 'getByHashtag':
                         $result = $this->getModel()->getByHashtags($this->getRequest()->getHashtags());
+                        break;
+                    case 'getByKeyWords':
+                        $result = $this->getModel()->getByKeyWords($this->getRequest()->getSearch());
                         break;
                 }
             }
