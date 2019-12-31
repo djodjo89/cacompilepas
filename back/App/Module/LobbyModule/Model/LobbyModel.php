@@ -308,4 +308,16 @@ class LobbyModel extends AbstractModel
     public function getFile(int $idLobby, string $path, string $uploadDirectory) {
         return $this->getOnFTP($idLobby, $path, $uploadDirectory);
     }
+
+    public function getLobbies(): array {
+        $this->send_query('
+            SELECT id_lobby, label_lobby, description, logo, pseudo
+            FROM ccp_lobby
+            INNER JOIN ccp_is_admin USING(id_lobby)
+            INNER JOIN ccp_user USING(id_user)
+            WHERE private = 0
+        ');
+
+        return $this->fetchData(['message' => 'There is no public lobby']);
+    }
 }
