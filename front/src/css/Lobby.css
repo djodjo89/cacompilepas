@@ -1,9 +1,21 @@
-.top-section {
-    height: 200px;
+.lobby-summary-list {
+    overflow: scroll;
+    max-height: 100px;
 }
 
-.ccp-list {
-    font-size: 16px;
+.lobby-description {
     overflow: scroll;
-    height: 100px;
+    max-height: 100px;
+}
+
+.edit-lobby-button {
+    color: white;
+    background: transparent;
+    border-color: #ffffff;
+}
+
+.edit-lobby-button:hover {
+    color: white;
+    background: rgba(255, 255, 255, 0.2);
+    border-color: #ffffff;
 }

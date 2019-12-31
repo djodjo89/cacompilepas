@@ -32,9 +32,12 @@ class LobbyModel extends AbstractModel
                 return 'admin';
             } else {
                 $this->send_query('
-                    SELECT read_right
+                    SELECT read_right, id_lobby
                     FROM ccp_rights
-                    WHERE id_user = ?
+                    INNER JOIN ccp_lobby cl on ccp_rights.id_lobby_Protect = cl.id_lobby
+                    WHERE 
+                    private = 0 OR
+                    id_user = ?
                     AND id_lobby_protect = ?
                 ',
                     [(int)$idUser, $idLobby]);

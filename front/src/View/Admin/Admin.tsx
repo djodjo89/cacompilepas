@@ -98,21 +98,30 @@ class Admin extends React.Component<any, AdminState> {
         this.emptyInput = this.emptyInput.bind(this);
         this.updateHashtagsView = this.updateHashtagsView.bind(this);
         this.updateHashtags = this.updateHashtags.bind(this);
+        this.fillPresentation = this.fillPresentation.bind(this);
+        this.refreshAdmin = this.refreshAdmin.bind(this);
     }
 
     public componentDidMount(): void {
+        this.refreshAdmin();
         this.refreshPresentation();
         this.refreshCourseSheets();
         this.refreshUsers();
+        this.refreshVisibility();
     }
 
     public checkIfAdmin(data: any): void {
         if (undefined === data['message']) {
             this.setState({isAdmin: 'true'});
-            this.setState({currentLabel: data[0]['label_lobby']});
-            this.setState({currentDescription: data[0]['description']});
         } else {
             this.setState({isAdmin: 'false'});
+        }
+    }
+
+    public fillPresentation(data: any): void {
+        if (undefined === data['message']) {
+            this.setState({currentLabel: data[0]['label_lobby']});
+            this.setState({currentDescription: data[0]['description']});
         }
     }
 
@@ -258,8 +267,12 @@ class Admin extends React.Component<any, AdminState> {
         }
     }
 
+    public refreshAdmin(): void {
+        new Request('/lobby/checkIfAdmin/' + this.state.id, this.checkIfAdmin);
+    }
+
     public refreshPresentation(): void {
-        new Request('/lobby/consult/' + this.state.id, this.checkIfAdmin);
+        new Request('/lobby/consult/' + this.state.id, this.fillPresentation);
     }
 
     public refreshCourseSheets(): void {
@@ -392,7 +405,8 @@ class Admin extends React.Component<any, AdminState> {
                                                 </div>
                                                 <DropBox id={'logoInput'}
                                                          className={'mt-4'}
-                                                         label={'Glisse un logo par ici !'}
+                                                         labelNotDragged={'Glisse un logo par ici !'}
+                                                         labelDragged={'Logo déposé !'}
                                                          accept={'image/*'}
                                                          backgroundClassName={'mt-4'}
                                                          handleFileDrop={this.handleLogoDrop}
@@ -421,7 +435,8 @@ class Admin extends React.Component<any, AdminState> {
                                                             <DropBox id={'courseSheetInput'}
                                                                      className={'text-sm-left'}
                                                                      backgroundClassName={'mt-1'}
-                                                                     label={'Glisse une fiche par ici !'}
+                                                                     labelNotDragged={'Glisse une fiche par ici !'}
+                                                                     labelDragged={'Fiche déposée !'}
                                                                      accept={'.docx,.pdf,.html,.htm,.odp,txt,md'}
                                                                      handleFileDrop={this.handleCourseSheetDocumentDrop}
                                                                      handleFileChange={this.handleCourseSheetDocumentChange}/>
