@@ -12,6 +12,7 @@ import PrivateRoute from "../../Security/PrivateRoute";
 import '../../css/App.css';
 import Home from "../Pages/Home";
 import Admin from '../Admin/Admin';
+import PublicLobbies from "../Public/PublicLobbies";
 
 class App extends React.Component {
     public render(): ReactNode {
@@ -28,6 +29,9 @@ class App extends React.Component {
                             <Connection/>
                         </Route>
                         <PrivateRoute path={'/admin'} component={Admin} rest={[]}/>
+                        <Route path={'/public'}>
+                            <PublicLobbies/>
+                        </Route>
                         <Route path={'*'}>
                             <NotFound/>
                         </Route>

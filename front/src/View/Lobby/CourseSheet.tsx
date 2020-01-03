@@ -84,7 +84,7 @@ class CourseSheet extends React.Component<CourseSheetProps, { currentHashtagInde
 
     public openFile(data: Blob): void {
         const link = document.createElement('a');
-        const blob = new Blob([data], {type: "application/pdf"});
+        const blob = new Blob([data], {type: 'application/pdf'});
         link.href = URL.createObjectURL(blob);
         // @ts-ignore
         window.open(document.location);
@@ -136,7 +136,7 @@ class CourseSheet extends React.Component<CourseSheetProps, { currentHashtagInde
                     className={'col-lg-2 col-md-2 col-sm-2 col-xs-2 mt-lg-4 mt-md-4 mt-sm-4 mt-xs-4 pl-lg-0 pl-md-0 pl-sm-0 pl-xs-0 pr-lg-0 pr-md-0 pr-sm-0 pr-xs-0'}>
                     <img className={'course-sheet-image rounded'} src={exampleImage} alt={'Course sheet'}/>
                 </div>
-                <div className={'col-lg-10 col-md-10 col-sm-10 col-xs-10'}>
+                <div className={'col-lg-10 col-md-10 col-sm-10 col-xs-10 pr-sm-0 pr-0'}>
                     <div className={'container-fluid row pl-0'}>
                         <h3 className={'col-lg-11 col-md-11 col-sm-11 col-xs-11 text-left mt-lg-0 mt-md-0 mt-sm-0 mt-xs-0'}>{this.props.title}</h3>
                         {this.props.activeRemoveButton ?

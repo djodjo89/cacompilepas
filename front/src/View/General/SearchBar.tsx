@@ -32,7 +32,7 @@ class SearchBar extends React.Component<any, SearchBarState> {
     public render(): ReactNode {
         return (
             <form
-                className="form-inline my-lg-0 my-md-0 my-sm-2 my-xs-2 col-lg-5 col-md-5 col-sm-5 col-xs-6 offset-lg-1 offset-md-1 offset-sm-0 offset-xs-0">
+                className="form-inline my-lg-0 my-md-0 my-sm-2 my-xs-2 col-lg-8 col-md-8 col-sm-6 col-xs-6 offset-lg-1 offset-md-1 offset-sm-0 offset-xs-0">
                 <label id="search-icon" htmlFor="search">
                     <span className="glyphicon glyphicon-search search-icon"></span>
                     <span

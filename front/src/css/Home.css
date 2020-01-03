@@ -30,13 +30,13 @@ p{
     transition-duration: 0.5s;
 }
 
-.popularCoursheet:hover{
+.publicLobbies:hover{
     background-color: #6669c8;
     color: #F2F2F2;
     transition-duration: 0.5s;
 }
 
-.popularCoursheet{
+.publicLobbies{
     width: 190px;
     background-color: #F2F2F2;
     color: #5757e7;

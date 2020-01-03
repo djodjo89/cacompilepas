@@ -16,7 +16,7 @@ class Nav extends React.Component {
                 </div>
                 <SearchBar/>
                 <a id="user" href="/connexion/login"
-                   className="col-lg-1 col-sm-2 mt-lg-1 mt-md-1 mt-sm-3 pr-lg-5 pr-sm-1 pl-lg-0 pl-sm-0">
+                   className="col-lg-1 col-sm-2 mt-lg-1 mt-md-1 mt-sm-3 pt-lg-2 pr-lg-5 pr-sm-1 pl-lg-3 pl-sm-4 text-left">
                     <span
                         className={"glyphicon glyphicon-user"}></span>
                 </a>
