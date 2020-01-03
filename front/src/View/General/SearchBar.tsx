@@ -1,7 +1,10 @@
 import React, {ReactNode} from 'react';
+import Request from "../../API/Request";
 import HashtagInput from "./HashtagInput";
 
 interface SearchBarState {
+    query: string,
+    proposals: [],
     inputIsNotEmpty: boolean,
     hashtagsView: ReactNode,
 }
@@ -11,11 +14,27 @@ class SearchBar extends React.Component<any, SearchBarState> {
     public constructor(props: any) {
         super(props);
         this.state = {
+            query: '',
+            proposals: [],
             inputIsNotEmpty: true,
             hashtagsView: <div></div>,
         }
         this.emptyInput = this.emptyInput.bind(this);
         this.updateHashtagsView = this.updateHashtagsView.bind(this);
+        this.refreshProposals = this.refreshProposals.bind(this);
+    }
+
+    public componentDidUpdate(): void {
+        new Request(
+            '/lobby/search/0',
+            this.refreshProposals,
+            'POST',
+            {search: this.state.query.split(/ /)},
+        );
+    }
+
+    public refreshProposals(data: any): void {
+        this.setState({proposals: undefined === data['message'] ? data : []});
     }
 
     public emptyInput(isEmpty: boolean): void {
