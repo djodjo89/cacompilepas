@@ -1,0 +1,50 @@
+.TitleDescription{
+    color: black;
+    width: 500px;
+    text-align: center;
+    margin-top: 30px;
+
+}
+
+.DescriptionInput{
+    color: black;
+    width: 700px;
+    height: 200px;
+    text-align: center;
+    margin-top: 30px;
+    border-radius: 7px;
+}
+
+.buttonsZone{
+    margin-left: 35%;
+    text-align: center;
+
+}
+
+.uploadPDF{
+
+    margin-top: 30px;
+    width: 100px;
+}
+
+.uploadLogo{
+
+    margin-top: 30px;
+    margin-left: 200px;
+    width: 100px;
+}
+
+#privateButton{
+    margin-top: 70px;
+
+}
+
+.CreationLobby{
+    border: 1px solid white;
+    text-align: center;
+    margin-top: 40px;
+    width: 170px;
+    background-color: #5757e7;
+    height: 35px;
+    border-radius: 7px;
+}
