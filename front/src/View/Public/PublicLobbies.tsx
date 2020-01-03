@@ -41,8 +41,9 @@ class PublicLobbies extends React.Component<any, PublicLobbiesState> {
             );
         }
         else {
-            return <h4 className={'text-center col-12 mt-5'}>Il n'y a pas de lobby public pour le moment</h4>;
+            res = <h4 className={'text-center col-12 mt-5'}>Il n'y a pas de lobby public pour le moment</h4>;
         }
+        return res;
     }
 
     public refreshLobbies(): void {

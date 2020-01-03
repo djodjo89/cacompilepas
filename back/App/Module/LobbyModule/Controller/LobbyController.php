@@ -32,7 +32,7 @@ class LobbyController extends AbstractController
             'visibility',
             'coursesheet',
             'getByHashtag',
-            'getByKeyWords',
+            'search',
             'getLobbies',
             'getLogo',
         ]);
@@ -163,8 +163,8 @@ class LobbyController extends AbstractController
                     $this->downloadFile($logo);
                     break;
 
-                case 'getByKeyWords':
-                    $result = $this->getModel()->getByKeyWords($this->getRequest()->getSearch());
+                case 'search':
+                    $result = $this->getModel()->getLobbiesByKeyWords($this->getRequest()->getSearch());
                     break;
 
                 default:

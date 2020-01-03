@@ -320,23 +320,24 @@ class LobbyModel extends AbstractModel
         return $this->fetchData(['message' => 'There is no public lobby']);
     }
 
-    public function getByKeyWords(array $search): array
+    public function getLobbiesByKeyWords(array $search): array
     {
         $count = 0;
+        $length = count($search);
         $params = '';
 
         foreach ($search as $key => $value) {
             $params .= " UPPER(label_lobby) LIKE UPPER('%" . $value . "%')";
-            if ($count !== 0) {
-                $params .= ' OR';
+            if ($count !== $length - 1) {
+                $params .= ' AND';
             }
             $count++;
         }
 
         $this->send_query('
-            SELECT id_lobby, label_lobby, ccp_lobby.description, logo FROM
-            ccp_lobby INNER JOIN ccp_coursesheet cc on ccp_lobby.id_lobby = cc.id_lobby_contain
-            WHERE ' . $params,
+            SELECT id_lobby, label_lobby, ccp_lobby.description, logo 
+            FROM ccp_lobby 
+            WHERE ' . $params . ' AND private = 0',
             []);
         return $this->fetchData([]);
     }
