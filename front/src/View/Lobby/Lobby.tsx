@@ -12,15 +12,24 @@ import {
 } from "react-router-dom";
 import {ReactComponent as Loader} from "../../img/loader.svg";
 
-class Lobby extends React.Component<any, { right: string, courseSheets: [] }> {
+interface LobbyState {
+    right: string,
+    courseSheets: [],
+    message: string,
+}
+
+class Lobby extends React.Component<any, LobbyState> {
+
     public constructor(props: any) {
         super(props);
         this.state = {
             right: '',
             courseSheets: [],
+            message: '',
         }
         this.fillCourseSheets = this.fillCourseSheets.bind(this);
         this.setState = this.setState.bind(this);
+        this.refreshMessages =this.refreshMessages.bind(this);
     }
 
     public componentDidMount(): void {
@@ -29,6 +38,19 @@ class Lobby extends React.Component<any, { right: string, courseSheets: [] }> {
             this.props.location.pathname.split(/\//)[2],
             this.fillCourseSheets
         );
+    }
+
+    public sendMessage(): void {
+        new Request(
+            '/lobby/addMessage/' + this.props.location.pathname.split(/\//)[2],
+            this.refreshMessages,
+            'POST',
+            {content: this.state.message}
+        );
+    }
+
+    public refreshMessages(data: any): void {
+        this.forceUpdate();
     }
 
     public fillCourseSheets(data: any): void {
