@@ -15,8 +15,7 @@ class LobbyModel extends AbstractModel
 
     public function checkRights(int $idLobby, string $token): string
     {
-        $publicKey = file_get_contents(__DIR__ . '/../../../../keys/public_key.pem');
-        $decoded = (array)JWT::decode($token, $publicKey, array('RS512'));
+        $decoded = $this->getUserFromToken($token);
 
         if ($result = (new ConnectionModel($this->getConnection()))->checkIfUserExists($decoded['email'], $decoded['password'])) {
             $idUser = $result['id_user'];
