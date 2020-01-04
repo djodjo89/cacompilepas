@@ -320,4 +320,21 @@ class LobbyModel extends AbstractModel
 
         return $this->fetchData(['message' => 'There is no public lobby']);
     }
+
+    public function addMessage(int $idLobby, int $idUser, string $content): array
+    {
+        $successfulInsert = $this->send_query('
+            INSERT INTO ccp_message
+            (content, send_date, id_user, id_lobby)
+            VALUES 
+            (?, NOW(), ?, ?)
+        ',
+            [$content, $idUser, $idLobby]);
+
+        if ($successfulInsert) {
+            return ['message' => 'Message was successfully added'];
+        } else {
+            return ['message' => 'Message could not be added'];
+        }
+    }
 }
