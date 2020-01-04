@@ -111,7 +111,7 @@ class LobbyModel extends AbstractModel
     public function updateLogo(int $idLobby, string $fileName, string $tmpName): array
     {
         $oldLogo = $this->backUpAndUpdateLogo($idLobby, $fileName);
-        return $this->updateOnFTP($idLobby, $fileName, $tmpName, AbstractModel::$IMG_EXTENSIONS, '/img/', $oldLogo);
+        return $this->updateOnFTP($idLobby, $fileName, $tmpName, AbstractModel::$IMG_EXTENSIONS, '/logo/', $oldLogo);
     }
 
     public function updateLobby(int $idLobby, array $newData): array
@@ -304,11 +304,13 @@ class LobbyModel extends AbstractModel
         return $this->fetchData([]);
     }
       
-    public function getFile(int $idLobby, string $path, string $uploadDirectory) {
+    public function getFile(int $idLobby, string $path, string $uploadDirectory): string
+    {
         return $this->getOnFTP($idLobby, $path, $uploadDirectory);
     }
 
-    public function getLobbies(): array {
+    public function getLobbies(): array
+    {
         $this->send_query('
             SELECT id_lobby, label_lobby, description, logo, pseudo
             FROM ccp_lobby

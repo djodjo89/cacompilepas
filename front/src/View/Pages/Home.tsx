@@ -42,12 +42,12 @@ class Description extends React.Component {
 class Buttons extends React.Component {
     render() {
         return (
-            <div className={"row ml-xl-4 col-xl-5 col-lg-9 col-md-9 col-sm-9"}>
-                <a href={'/'}>
-                    <button className={"personalPage"}>Page Perso</button>
+            <div className={'row ml-xl-4 col-xl-5 col-lg-9 col-md-9 col-sm-9'}>
+                <a href={'/perso'}>
+                    <button className={'personalPage'}>Page Perso</button>
                 </a>
                 <a href={'/public'}>
-                    <button className={"offset-2 publicLobbies"}>Lobbies publics</button>
+                    <button className={'offset-2 publicLobbies'}>Lobbies publics</button>
                 </a>
             </div>
         )

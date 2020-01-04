@@ -89,10 +89,15 @@ class ConnectionModel extends AbstractModel
         return $jwt;
     }
 
+    public function getIcon(int $idUser, string $path, string $uploadDirectory): string
+    {
+        return $this->getOnFTP($idUser, $path, $uploadDirectory);
+    }
+
     public function getPersonalInformation(string $email): array
     {
         $this->send_query('
-            SELECT first_name, icon
+            SELECT id_user, first_name, icon
             FROM ccp_user
             WHERE email LIKE ?
         ',

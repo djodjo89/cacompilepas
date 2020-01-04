@@ -26,6 +26,7 @@ class ConnectionController extends AbstractController
                     ];
                 }
                 break;
+
             // Check if a token is valid
             case 'verification':
                 $token_exists = $this->getModel()->checkToken($this->getRequest()->getToken());
@@ -33,11 +34,18 @@ class ConnectionController extends AbstractController
                     'token_exists' => $token_exists ? true : false,
                 ];
                 break;
+
             case 'personal':
                 $this->checkToken();
                 $email = $this->getModel()->getUserFromToken($this->getRequest()->getToken())['email'];
                 $result = $this->getModel()->getPersonalInformation($email);
                 array_push($result, $this->getModel()->getPersonalLobbies($email));
+                break;
+
+            case 'getIcon':
+                $this->checkToken();
+                $icon = $this->getModel()->getIcon($this->getRequest()->getParam(), $this->getRequest()->getPath(), '/icon/');
+                $this->downloadFile($icon);
                 break;
         }
         new JSONResponse($result);
