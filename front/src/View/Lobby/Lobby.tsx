@@ -15,7 +15,8 @@ import {ReactComponent as Loader} from "../../img/loader.svg";
 interface LobbyState {
     right: string,
     courseSheets: [],
-    message: string,
+    messages: [],
+    lobbyInformation: any,
 }
 
 class Lobby extends React.Component<any, LobbyState> {
@@ -25,14 +26,47 @@ class Lobby extends React.Component<any, LobbyState> {
         this.state = {
             right: '',
             courseSheets: [],
-            message: '',
+            messages: [],
+            lobbyInformation: [],
         }
-        this.fillCourseSheets = this.fillCourseSheets.bind(this);
         this.setState = this.setState.bind(this);
-        this.refreshMessages =this.refreshMessages.bind(this);
+        this.sendMessage = this.sendMessage.bind(this);
+        this.fillCourseSheets = this.fillCourseSheets.bind(this);
+        this.fillDescription = this.fillDescription.bind(this);
+        this.fillMessages = this.fillMessages.bind(this);
+        this.refreshCourseSheets = this.refreshCourseSheets.bind(this);
+        this.refreshDescription = this.refreshDescription.bind(this);
+        this.refreshMessages = this.refreshMessages.bind(this);
     }
 
     public componentDidMount(): void {
+        this.refreshCourseSheets();
+        this.refreshDescription();
+        this.refreshMessages();
+    }
+
+    public sendMessage(event: React.KeyboardEvent<HTMLDivElement>): void {
+        if (13 === event.keyCode) {
+            let content: any = event.target;
+            new Request(
+                '/lobby/addMessage/' + this.props.location.pathname.split(/\//)[2],
+                this.refreshMessages,
+                'POST',
+                {content: content.value}
+            );
+            content.value = '';
+        }
+    }
+
+    public fillDescription(data: any): void {
+        this.setState({lobbyInformation: data[0]});
+    }
+
+    public fillMessages(data: any): void {
+        this.setState({messages: data});
+    }
+
+    public refreshCourseSheets(): void {
         new Request(
             '/lobby/coursesheets/' +
             this.props.location.pathname.split(/\//)[2],
@@ -40,17 +74,12 @@ class Lobby extends React.Component<any, LobbyState> {
         );
     }
 
-    public sendMessage(): void {
-        new Request(
-            '/lobby/addMessage/' + this.props.location.pathname.split(/\//)[2],
-            this.refreshMessages,
-            'POST',
-            {content: this.state.message}
-        );
+    public refreshMessages(): void {
+        new Request('/lobby/messages/' + this.props.location.pathname.split(/\//)[2], this.fillMessages);
     }
 
-    public refreshMessages(data: any): void {
-        this.forceUpdate();
+    public refreshDescription(): void {
+        new Request('/lobby/consult/' + this.props.location.pathname.split(/\//)[2], this.fillDescription);
     }
 
     public fillCourseSheets(data: any): void {
@@ -76,10 +105,16 @@ class Lobby extends React.Component<any, LobbyState> {
                             if ('true' === this.state.right) {
                                 return (
                                     <section className={"content row container-fluid pr-sm-0"}>
-                                        <LobbyTop id={this.props.location.pathname.split(/\//)[2]}
-                                                  courseSheets={this.state.courseSheets}/>
+                                        <LobbyTop
+                                            lobbyInformation={this.state.lobbyInformation}
+                                            courseSheets={this.state.courseSheets}
+                                        />
                                         <LobbyBody id={this.props.location.pathname.split(/\//)[2]}
-                                                   courseSheets={this.state.courseSheets}/>
+                                                   labelLobby={this.state.lobbyInformation['label_lobby']}
+                                                   courseSheets={this.state.courseSheets}
+                                                   onEnter={this.sendMessage}
+                                                   messages={this.state.messages}
+                                        />
                                     </section>
                                 );
                             } else if ('false' === this.state.right) {
@@ -95,11 +130,13 @@ class Lobby extends React.Component<any, LobbyState> {
     }
 }
 
-class LobbyTop extends React.Component<{ id: string, courseSheets: [] }, {}> {
+class LobbyTop extends React.Component<{ lobbyInformation: any, courseSheets: [] }, {}> {
     public render(): ReactNode {
         return (
             <div className="row container-fluid">
-                <LobbyDescription id={this.props.id}/>
+                <LobbyDescription
+                    lobby={this.props.lobbyInformation}
+                />
                 <LobbySummary courseSheets={this.props.courseSheets}/>
             </div>
         )
@@ -135,39 +172,25 @@ class LobbySummary extends React.Component<{ courseSheets: [] }, {}> {
     }
 }
 
-class LobbyDescription extends React.Component<{ id: string }, { lobby: any }> {
-    public constructor(props: any) {
-        super(props);
-        this.state = {
-            lobby: []
-        };
-        this.fillDescription = this.fillDescription.bind(this);
-        this.setState = this.setState.bind(this);
-    }
-
-    public componentDidMount(): void {
-        new Request('/lobby/consult/' + this.props.id, this.fillDescription);
-    }
-
-    public fillDescription(data: any): void {
-        this.setState({lobby: data[0]});
-    }
+class LobbyDescription extends React.Component<{ lobby: any }, any> {
 
     public render(): ReactNode {
         return (
             <section className="col-lg-12 col-sm-12 pr-lg-0 pr-md-0 pr-sm-0 pr-xs-0">
                 <div className={'row container-fluid pl-lg-0 pl-md-0 pl-sm-0 pl-xs-0 pr-sm-0 pr-xs-0'}>
                     <div className={'col-lg-10 col-md-10 col-sm-10 col-xs-12 pt-lg-1'}>
-                        <h1 className="text-left">{this.state.lobby['label_lobby']}</h1>
+                        <h1 className="text-left">{this.props.lobby['label_lobby']}</h1>
                     </div>
-                    <div className={'col-lg-2 col-md-2 col-sm-2 col-xs-4 pt-lg-5 pt-md-2 pt-sm-5 pt-xs-2 text-sm-left ml-0 pl-0 pr-sm-0'}>
+                    <div
+                        className={'col-lg-2 col-md-2 col-sm-2 col-xs-4 pt-lg-5 pt-md-2 pt-sm-5 pt-xs-2 text-sm-left ml-0 pl-0 pr-sm-0'}>
                         <a href={'/'}>
-                            <button className="btn btn-default btn-block edit-lobby-button mt-lg-2 rounded-1">Modifier</button>
+                            <button className="btn btn-default btn-block edit-lobby-button mt-lg-2 rounded-1">Modifier
+                            </button>
                         </a>
                     </div>
                 </div>
                 <div className={'row ml-lg-1 ml-sm-1 w-100'}>
-                    <p className="lobby-description">{this.state.lobby['description']}</p>
+                    <p className="lobby-description">{this.props.lobby['description']}</p>
                 </div>
                 <Divider className={'col-lg-3 col-md-6 col-sm-6 col-xs-6 mt-5 mb-5'}/>
             </section>
@@ -175,7 +198,15 @@ class LobbyDescription extends React.Component<{ id: string }, { lobby: any }> {
     }
 }
 
-class LobbyBody extends React.Component<{ id: string, courseSheets: [] }, {}> {
+interface LobbyBodyProps {
+    id: string,
+    labelLobby: string,
+    courseSheets: [],
+    onEnter: (event: React.KeyboardEvent<HTMLDivElement>) => void,
+    messages: any,
+}
+
+class LobbyBody extends React.Component<LobbyBodyProps, any> {
     public render(): ReactNode {
         return (
             <div className={'col-lg-12 col-md-12 col-sm-12 col-xs-12'}>
@@ -191,10 +222,16 @@ class LobbyBody extends React.Component<{ id: string, courseSheets: [] }, {}> {
                 </div>
                 <div className={'col-lg-6 col-md-6 col-sm-12 col-xs-12 container-fluid'}>
                     <div className={'row'}>
-                        <Messages id={this.props.id}/>
+                        <Messages
+                            id={this.props.id}
+                            messages={this.props.messages}
+                        />
                     </div>
                     <div className={'row'}>
-                        <WriteMessageZone/>
+                        <WriteMessageZone
+                            labelLobby={this.props.labelLobby}
+                            onEnter={this.props.onEnter}
+                        />
                     </div>
                 </div>
             </div>
