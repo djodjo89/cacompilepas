@@ -7,8 +7,10 @@ interface PublicLobbyProps {
     label: string,
     description: string,
     logo: string,
-    pseudo: string
+    pseudo: string,
 }
+
+
 class PublicLobby extends React.Component<PublicLobbyProps, any> {
     public constructor(props: PublicLobbyProps) {
         super(props);
