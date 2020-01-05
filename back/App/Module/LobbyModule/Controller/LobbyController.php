@@ -159,7 +159,7 @@ class LobbyController extends AbstractController
                     break;
 
                 case 'getLogo':
-                    $logo = $this->getModel()->getFile($this->getRequest()->getIdLobby(), $this->getRequest()->getPath(), '/img/');
+                    $logo = $this->getModel()->getFile($this->getRequest()->getIdLobby(), $this->getRequest()->getPath(), '/logo/');
                     $this->downloadFile($logo);
                     break;
 

@@ -133,7 +133,8 @@ abstract class AbstractModel
         return "'" . implode('\',\'', $tab) . "'";
     }
   
-    public function getOnFTP(int $id, string $fileName, string $uploadDirectory) {
+    public function getOnFTP(int $id, string $fileName, string $uploadDirectory): string
+    {
         $file = $this->nameOnFTP($id, $fileName, $this->extension($fileName));
         if (ftp_get($this->connection::$ftp, '/tmp/' . $fileName, $uploadDirectory . $file, FTP_BINARY)) {
             return '/tmp/' . $fileName;
