@@ -4,6 +4,7 @@ namespace App\Model;
 
 use App\Connection\Connection;
 use App\Exception\JSONException;
+use Firebase\JWT\JWT;
 
 abstract class AbstractModel
 {
@@ -139,5 +140,11 @@ abstract class AbstractModel
         } else {
             new JSONException(['message' => 'File could not be fetched']);
         }
+    }
+
+    public function getUserFromToken(string $token): array
+    {
+        $publicKey = file_get_contents(__DIR__ . '/../../keys/public_key.pem');
+        return (array)JWT::decode($token, $publicKey, array('RS512'));
     }
 }
