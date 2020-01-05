@@ -1,10 +1,12 @@
 import React, {ReactNode} from 'react';
 import '../../css/Personal.css';
 import Request from "../../API/Request";
+import Divider from "../General/Divider";
+import PublicLobby from "../Public/PublicLobby";
 
 interface PersonalState {
     personalInformation: any,
-    ownedLobbies: [],
+    lobbies: [],
 }
 
 class Personal extends React.Component<any, PersonalState> {
@@ -12,18 +14,32 @@ class Personal extends React.Component<any, PersonalState> {
         super(props);
         this.state = {
             personalInformation: [],
-            ownedLobbies: [],
+            lobbies: [],
         }
         this.fetchData = this.fetchData.bind(this);
-        this.renderPersonalInformation = this.renderPersonalInformation.bind(this);
         this.fillIcon = this.fillIcon.bind(this);
         this.getIcon = this.getIcon.bind(this);
+        this.renderLobbies = this.renderLobbies.bind(this);
     }
 
     public componentDidMount(): void {
         new Request(
             '/connection/personal/0',
             this.fetchData,
+        );
+    }
+
+    public renderLobbies(): ReactNode {
+        return this.state.lobbies.map(
+            lobby =>
+                <PublicLobby
+                    key={lobby['id_lobby']}
+                    id={lobby['id_lobby']}
+                    label={lobby['label_lobby']}
+                    description={lobby['description']}
+                    logo={lobby['logo']}
+                    pseudo={lobby['pseudo']}
+                />
         );
     }
 
@@ -48,26 +64,46 @@ class Personal extends React.Component<any, PersonalState> {
 
     public fetchData(data: any) {
         this.setState({
-            personalInformation: data[0],
-            ownedLobbies: data[1],
-        },
+                personalInformation: data[0],
+                lobbies: data[1],
+            },
             this.getIcon);
-    }
-
-    public renderPersonalInformation(): ReactNode {
-        return <p>{undefined !== this.state.personalInformation ? this.state.personalInformation['first_name'] : 'rien'}</p>
     }
 
     public render(): ReactNode {
         return (
-            <div>
-                Page perso
-                {this.renderPersonalInformation()}
-                <img
-                    id={'personal-icon-' + this.state.personalInformation['id_user']}
-                    className={'personal-icon'}
-                    alt={'Personal icon'}
+            <div className={'container-fluid mt-5'}>
+                <div className={'row container-fluid'}>
+                    <div className={'row container-fluid'}>
+                        <div className={'col-12'}>
+                            <img
+                                id={'personal-icon-' + this.state.personalInformation['id_user']}
+                                className={'personal-icon'}
+                                alt={'Personal icon'}
+                            />
+                        </div>
+                    </div>
+                    <div className={'row container-fluid mt-5'}>
+                        <div className={'col-12 text-center'}>
+                            <h3>{this.state.personalInformation['first_name']}</h3>
+                        </div>
+                    </div>
+                </div>
+                <Divider
+                    className={'mt-5 offset-lg-2 col-lg-8'}
                 />
+                <div className={'row container-fluid mt-5'}>
+                    <div className={'row container-fluid'}>
+                        <div className={'col-12 text-center'}>
+                            <h2>Mes lobbies</h2>
+                        </div>
+                    </div>
+                    <div className={'container-fluid ml-lg-5 ml-sm-5 pl-lg-5'}>
+                        <div className={'col-lg-12 offset-lg-1'}>
+                            {this.renderLobbies()}
+                        </div>
+                    </div>
+                </div>
             </div>
         );
     }
