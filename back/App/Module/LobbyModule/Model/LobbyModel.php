@@ -135,16 +135,6 @@ class LobbyModel extends AbstractModel
         }
     }
 
-    public function findUser(string $email): int
-    {
-        $user = (new ConnectionModel($this->getConnection()))->getUserByEmail($email);
-        if ($user) {
-            return $user['id_user'];
-        } else {
-            new JSONException("No user was found with address $email");
-        }
-    }
-
     public function addUser(int $idLobby, string $email): array
     {
         $idUser = $this->findUser($email);
