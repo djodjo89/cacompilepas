@@ -199,7 +199,6 @@ class LobbyDescription extends React.Component<{ id: string }, { lobby: any }> {
     }
 
     public getLogo(): void {
-        console.log(this.state.lobby['logo']);
         new Request(
             '/lobby/getLogo/0',
             this.fillLogo,

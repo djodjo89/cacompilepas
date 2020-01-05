@@ -13,6 +13,7 @@ import '../../css/App.css';
 import Home from "../Pages/Home";
 import Admin from '../Admin/Admin';
 import PublicLobbies from "../Public/PublicLobbies";
+import CourseSheetPage from "../Pages/CourseSheetPage";
 import Personal from "../Pages/Personal";
 
 class App extends React.Component {
@@ -26,6 +27,7 @@ class App extends React.Component {
                             <Home/>
                         </Route>
                         <PrivateRoute path={'/lobby'} component={Lobby} rest={[]}/>
+                        <PrivateRoute path={'/coursesheet'} component={CourseSheetPage} rest={[]}/>
                         <Route path={'/connexion'}>
                             <Connection/>
                         </Route>
