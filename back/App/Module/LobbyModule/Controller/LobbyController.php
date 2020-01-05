@@ -6,6 +6,7 @@ use App\Controller\AbstractController;
 use App\Exception\JSONException;
 use App\Http\JSONResponse;
 use App\Model\AbstractModel;
+use App\Module\ConnectionModule\Model\ConnectionModel;
 use App\Module\CourseSheetModule\Model\CourseSheetModel;
 use App\Module\LobbyModule\Model\LobbyModel;
 
@@ -35,6 +36,7 @@ class LobbyController extends AbstractController
             'search',
             'getLobbies',
             'getLogo',
+            'addMessage',
         ]);
     }
 
@@ -61,6 +63,12 @@ class LobbyController extends AbstractController
 
                 case 'consult':
                     $result = $this->getModel()->getLobbyById($idLobby);
+                    break;
+
+                case 'addMessage':
+                    $decoded = $this->getModel()->getUserFromToken($this->getRequest()->getToken());
+                    $idUser = $this->getModel()->findUser($decoded['email']);
+                    $result = $this->getModel()->addMessage($idLobby, $idUser, $this->getRequest()->getContent());
                     break;
 
                 default:
