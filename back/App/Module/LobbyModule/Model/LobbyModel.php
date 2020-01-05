@@ -54,7 +54,7 @@ class LobbyModel extends AbstractModel
 
     public function getLobbyById(int $idLobby): array
     {
-        $this->send_query('SELECT label_lobby, description
+        $this->send_query('SELECT label_lobby, description, logo
                         FROM ccp_lobby
                         WHERE id_lobby = ?
                         ',

@@ -120,15 +120,44 @@ class LobbyDescription extends React.Component<{ id: string }, { lobby: any }> {
             lobby: []
         };
         this.fillDescription = this.fillDescription.bind(this);
-        this.setState = this.setState.bind(this);
+        this.getLogo = this.getLogo.bind(this);
+        this.fillLogo = this.fillLogo.bind(this);
+        this.refreshDescription = this.refreshDescription.bind(this);
     }
 
     public componentDidMount(): void {
+        this.refreshDescription();
+    }
+
+    public refreshDescription(): void {
         new Request('/lobby/consult/' + this.props.id, this.fillDescription);
     }
 
     public fillDescription(data: any): void {
-        this.setState({lobby: data[0]});
+        this.setState(
+            {lobby: data[0]},
+            this.getLogo);
+    }
+
+    public getLogo(): void {
+        console.log(this.state.lobby['logo']);
+        new Request(
+            '/lobby/getLogo/0',
+            this.fillLogo,
+            'POST',
+            {
+                idLobby: this.props.id,
+                path: this.state.lobby['logo'],
+            },
+            'json',
+            'blob',
+        );
+    }
+
+    public fillLogo(data: Blob): void {
+        const img: any = document.getElementById('lobby-logo' + this.props.id);
+        const blob = new Blob([data], {type: 'image/jpg'});
+        img.src = URL.createObjectURL(blob);
     }
 
     public render(): ReactNode {
@@ -138,14 +167,25 @@ class LobbyDescription extends React.Component<{ id: string }, { lobby: any }> {
                     <div className={'col-lg-10 col-md-10 col-sm-10 col-xs-12 pt-lg-1'}>
                         <h1 className="text-left">{this.state.lobby['label_lobby']}</h1>
                     </div>
-                    <div className={'col-lg-2 col-md-2 col-sm-2 col-xs-4 pt-lg-5 pt-md-2 pt-sm-5 pt-xs-2 text-sm-left ml-0 pl-0 pr-sm-0'}>
+                    <div
+                        className={'col-lg-2 col-md-2 col-sm-2 col-xs-4 pt-lg-5 pt-md-2 pt-sm-5 pt-xs-2 text-sm-left ml-0 pl-0 pr-sm-0'}>
                         <a href={'/'}>
-                            <button className="btn btn-default btn-block edit-lobby-button mt-lg-2 rounded-1">Modifier</button>
+                            <button className="btn btn-default btn-block edit-lobby-button mt-lg-2 rounded-1">Modifier
+                            </button>
                         </a>
                     </div>
                 </div>
-                <div className={'row ml-lg-1 ml-sm-1 w-100'}>
-                    <p className="lobby-description">{this.state.lobby['description']}</p>
+                <div className={'row container-fluid mt-5 p-0'}>
+                    <div className={'col-lg-2 col-md-2 col-sm-3 col-xs-4 text-left pr-lg-0'}>
+                        <img
+                            id={'lobby-logo' + this.props.id}
+                            className={'lobby-logo'}
+                            alt={'Lobby logo'}
+                        />
+                    </div>
+                    <div className={'col-lg-10 col-md-10 col-sm-9 col-xs-8 pr-0'}>
+                        <p className="lobby-page-description">{this.state.lobby['description']}</p>
+                    </div>
                 </div>
                 <Divider className={'col-lg-3 col-md-6 col-sm-6 col-xs-6 mt-5 mb-5'}/>
             </section>
