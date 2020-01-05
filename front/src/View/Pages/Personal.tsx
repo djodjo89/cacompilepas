@@ -98,8 +98,8 @@ class Personal extends React.Component<any, PersonalState> {
                             <h2>Mes lobbies</h2>
                         </div>
                     </div>
-                    <div className={'container-fluid ml-lg-5 ml-sm-5 pl-lg-5'}>
-                        <div className={'col-lg-12 offset-lg-1'}>
+                    <div className={'container-fluid ml-lg-5 pl-lg-5'}>
+                        <div className={'col-lg-12 offset-lg-1 pr-0'}>
                             {this.renderLobbies()}
                         </div>
                     </div>

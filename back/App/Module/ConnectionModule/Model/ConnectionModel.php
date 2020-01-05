@@ -118,4 +118,19 @@ class ConnectionModel extends AbstractModel
             [$email]);
         return $this->fetchData(['message' => 'User does not own any lobby']);
     }
+
+    public function disconnect(string $email): array
+    {
+        $successfulDelete = $this->send_query('
+            DELETE FROM ccp_token
+            WHERE id_user = ?
+        ',
+            [(int)$this->getUserByEmail($email)['id_user']]);
+
+        if ($successfulDelete) {
+            return ['message' => 'Session was successfully closed'];
+        } else {
+            return ['message' => 'Session could not be closed'];
+        }
+    }
 }

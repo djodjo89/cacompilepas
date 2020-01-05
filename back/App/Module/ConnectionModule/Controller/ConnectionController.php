@@ -47,6 +47,12 @@ class ConnectionController extends AbstractController
                 $icon = $this->getModel()->getIcon($this->getRequest()->getParam(), $this->getRequest()->getPath(), '/icon/');
                 $this->downloadFile($icon);
                 break;
+
+            case 'disconnect':
+                $this->checkToken();
+                $email = $this->getModel()->getUserFromToken($this->getRequest()->getToken())['email'];
+                $result = $this->getModel()->disconnect($email);
+                break;
         }
         new JSONResponse($result);
     }
