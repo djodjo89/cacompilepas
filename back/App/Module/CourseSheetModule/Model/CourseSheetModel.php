@@ -20,8 +20,6 @@ class CourseSheetModel extends AbstractModel
 
     public function addCourseSheet(int $idLobby, string $title, string $fileName, string $tmpName, string $description, array $hashtags): array
     {
-        $this->uploadOnFTP($idLobby, $fileName, $tmpName, '/coursesheets/', AbstractModel::$COURSE_SHEET_EXTENSIONS);
-
         $successfulInsert = $this->send_query('
             INSERT INTO ccp_coursesheet
             (title, publication_date, file_name, description, id_lobby_contain)
@@ -39,6 +37,8 @@ class CourseSheetModel extends AbstractModel
             []);
 
         $idCourseSheet = (int)$this->getQuery()->fetch()[0];
+
+        $this->uploadOnFTP($idCourseSheet, $fileName, $tmpName, '/coursesheets/', AbstractModel::$COURSE_SHEET_EXTENSIONS);
 
         foreach ($hashtags as $key => $value) {
             if ($successfulInsert) {
@@ -61,6 +61,14 @@ class CourseSheetModel extends AbstractModel
 
     public function deleteCourseSheet(int $idLobby, $idCourseSheet): array
     {
+        $this->send_query('
+                SELECT file_name
+                FROM ccp_coursesheet
+                WHERE id_course_sheet = ?
+            ',
+            [$idCourseSheet]);
+        $fileName = $this->getQuery()->fetch()['file_name'];
+
         $successfulDelete = $this->send_query('
             DELETE FROM ccp_coursesheet
             WHERE id_lobby_contain = ?
@@ -68,6 +76,16 @@ class CourseSheetModel extends AbstractModel
         ',
             [$idLobby, $idCourseSheet]);
         if ($successfulDelete) {
+            $this->send_query('
+                SELECT file_name
+                FROM ccp_coursesheet
+                WHERE id_course_sheet = ?
+            ',
+                [$idCourseSheet]);
+
+            $oldFileNameOnFTPServer = '/coursesheets/' . $this->nameOnFTP($idCourseSheet, $fileName, $this->extension($fileName));
+            $this->deleteOnFTP($oldFileNameOnFTPServer, '/coursesheets/');
+
             return [
                 'message' => 'Course sheet was successfully deleted',
             ];
