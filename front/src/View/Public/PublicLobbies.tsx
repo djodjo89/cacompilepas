@@ -26,17 +26,24 @@ class PublicLobbies extends React.Component<any, PublicLobbiesState> {
     }
 
     public renderLobbies(): ReactNode {
-        return this.state.lobbies.map(
-            lobby =>
-                <PublicLobby
-                    key={lobby['id_lobby']}
-                    id={lobby['id_lobby']}
-                    label={lobby['label_lobby']}
-                    description={lobby['description']}
-                    logo={lobby['logo']}
-                    pseudo={lobby['pseudo']}
-                />
-        );
+        let res;
+        if (0 !== this.state.lobbies.length && undefined !== this.state.lobbies[0]) {
+            res = this.state.lobbies.map(
+                lobby =>
+                    <PublicLobby
+                        key={lobby['id_lobby']}
+                        id={lobby['id_lobby']}
+                        label={lobby['label_lobby']}
+                        description={lobby['description']}
+                        logo={lobby['logo']}
+                        pseudo={lobby['pseudo']}
+                    />
+            );
+        }
+        else {
+            res = <h4 className={'text-center col-12 mt-5'}>Il n'y a pas de lobby public pour le moment</h4>;
+        }
+        return res;
     }
 
     public refreshLobbies(): void {

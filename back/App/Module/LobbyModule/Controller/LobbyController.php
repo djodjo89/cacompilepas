@@ -33,6 +33,7 @@ class LobbyController extends AbstractController
             'visibility',
             'coursesheet',
             'getByHashtag',
+            'search',
             'getLobbies',
             'getLogo',
             'addMessage',
@@ -42,10 +43,10 @@ class LobbyController extends AbstractController
     public function run(): void
     {
         $this->checkAction();
-        $this->checkToken();
         $idLobby = (int)$this->getRequest()->getParam();
         $result = [];
         if ($idLobby !== 0) {
+            $this->checkToken();
             $rightsOnLobby = $this->getModel()->checkRights($idLobby, $this->getRequest()->getToken());
         } else {
             $rightsOnLobby = 'none';
@@ -156,8 +157,6 @@ class LobbyController extends AbstractController
                                 $result = $this->getModel()->getByHashtags($this->getRequest()->getHashtags());
                                 break;
                         }
-                    } else {
-                        new JSONException('You don\'t have the right to access this lobby');
                     }
                     break;
             }
@@ -168,8 +167,12 @@ class LobbyController extends AbstractController
                     break;
 
                 case 'getLogo':
-                    $logo = $this->getModel()->getFile($this->getRequest()->getIdLobby(), $this->getRequest()->getPath(), '/img/');
+                    $logo = $this->getModel()->getFile($this->getRequest()->getIdLobby(), $this->getRequest()->getPath(), '/logo/');
                     $this->downloadFile($logo);
+                    break;
+
+                case 'search':
+                    $result = $this->getModel()->getLobbiesByKeyWords($this->getRequest()->getSearch());
                     break;
 
                 default:
