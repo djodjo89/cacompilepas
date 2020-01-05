@@ -19,8 +19,7 @@ class Messages extends React.Component<{ id: string, messages: [] }, any> {
     public renderMessages(): ({} | null | undefined)[] {
         // @ts-ignore
         if (undefined === this.props.messages['message']) {
-            console.log(this.props.messages.sort());
-            let res = this.props.messages.map(
+            return this.props.messages.map(
                 (message: any) => this.renderMessage(message['id_message'], message['content'], message['send_date'], message['pseudo'])
             )
                 .sort((message1: any, message2: any): number => {
@@ -33,7 +32,6 @@ class Messages extends React.Component<{ id: string, messages: [] }, any> {
                         }
                     }
                 );
-            return res;
         } else {
             return [];
         }

@@ -68,6 +68,7 @@ class LobbyController extends AbstractController
                 case 'coursesheet':
                     $file = $this->getModel()->getFile($idLobby, $this->getRequest()->getPath(), '/coursesheets/');
                     $this->downloadFile($file);
+                    break;
                 
                 case 'addMessage':
                     $decoded = $this->getModel()->getUserFromToken($this->getRequest()->getToken());
@@ -176,7 +177,7 @@ class LobbyController extends AbstractController
                     break;
 
                 default:
-                    new JSONException('You don\'t have the right to access this lobby');
+                    new JSONException('You do not have the right to access this lobby');
                 break;
             }
         }
