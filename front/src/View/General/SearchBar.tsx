@@ -67,7 +67,7 @@ class SearchBar extends React.Component<any, SearchBarState> {
                     {this.state.hashtagsView}
                     <HashtagInput
                         id={'search'}
-                        className={'form-control mr-sm-2'}
+                        className={'form-control mr-sm-2 col-12 w-100'}
                         type={'search'}
                         baseIndent={14}
                         onUpdate={this.emptyInput}
