@@ -62,6 +62,11 @@ class LobbyController extends AbstractController
                     $result = $this->getModel()->getLobbyById($idLobby);
                     break;
 
+                case 'coursesheet':
+                    $file = $this->getModel()->getFile($idLobby, $this->getRequest()->getPath(), '/coursesheets/');
+                    $this->downloadFile($file);
+                    break;
+
                 default:
                     if ('admin' === $rightsOnLobby) {
                         switch ($this->getRequest()->getAction()) {
@@ -137,11 +142,6 @@ class LobbyController extends AbstractController
 
                             case 'visibility':
                                 $result = $this->getModel()->getVisibility($idLobby);
-                                break;
-
-                            case 'coursesheet':
-                                $file = $this->getModel()->getFile($idLobby, $this->getRequest()->getPath(), '/coursesheets/');
-                                $this->downloadFile($file);
                                 break;
 
                             case 'getByHashtag':
