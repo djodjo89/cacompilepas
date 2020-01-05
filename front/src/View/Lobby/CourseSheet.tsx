@@ -26,6 +26,7 @@ interface CourseSheetState {
 }
 
 class CourseSheet extends React.Component<CourseSheetProps, CourseSheetState> {
+
     public constructor(props: CourseSheetProps) {
         super(props);
         this.state = {
@@ -36,8 +37,6 @@ class CourseSheet extends React.Component<CourseSheetProps, CourseSheetState> {
         }
         this.updateWidth = this.updateWidth.bind(this);
         this.remove = this.remove.bind(this);
-        this.getFile = this.getFile.bind(this);
-        this.openFile = this.openFile.bind(this);
         this.fillHashtags = this.fillHashtags.bind(this);
         this.fetchHashtags = this.fetchHashtags.bind(this);
         this.refreshPreview = this.refreshPreview.bind(this);
@@ -55,7 +54,9 @@ class CourseSheet extends React.Component<CourseSheetProps, CourseSheetState> {
             '/lobby/coursesheet/' + this.props.idLobby,
             this.fillPreview,
             'POST',
-            {path: this.props.link},
+            {
+                path: this.props.link
+            },
             'json',
             'blob',
         );
@@ -64,7 +65,8 @@ class CourseSheet extends React.Component<CourseSheetProps, CourseSheetState> {
     public fillPreview(data: any): void {
         this.setState(
             {file: data},
-            () => pdfjs.GlobalWorkerOptions.workerSrc = `//cdnjs.cloudflare.com/ajax/libs/pdf.js/${pdfjs.version}/pdf.worker.js`);
+            () => pdfjs.GlobalWorkerOptions.workerSrc = `//cdnjs.cloudflare.com/ajax/libs/pdf.js/${pdfjs.version}/pdf.worker.js`
+        );
     }
 
     public onDocumentLoadSuccess(): void {
@@ -115,30 +117,6 @@ class CourseSheet extends React.Component<CourseSheetProps, CourseSheetState> {
                     )
                 }
             });
-    }
-
-    public openFile(data: Blob): void {
-        const link = document.createElement('a');
-        const blob = new Blob([data], {type: 'application/pdf'});
-        link.href = URL.createObjectURL(blob);
-        // @ts-ignore
-        window.open(document.location);
-        window.open(link.href, '_blank');
-        window.close();
-    }
-
-    public getFile(event: React.MouseEvent<HTMLAnchorElement, MouseEvent>): void {
-        event.preventDefault();
-        new Request(
-            '/lobby/coursesheet/' + this.props.idLobby,
-            this.openFile,
-            'POST',
-            {
-                path: this.props.link
-            },
-            'json',
-            'blob',
-        );
     }
 
     public renderHashtags(): ReactNode {
@@ -201,10 +179,11 @@ class CourseSheet extends React.Component<CourseSheetProps, CourseSheetState> {
                         <p className={'course-sheet-description'}>{this.props.description}</p>
                         <footer className={'pl-lg-0'}>
                             <a
-                                href={'' + document.location}
+                                href={'/coursesheet/' + this.props.id + '/' + this.props.title + '/' + this.props.link}
                                 className={'course-sheet-link col-lg-6 col-md-6 col-sm-6 col-xs-6 text-lg-left text-md-left text-sm-left text-xs-left pl-lg-0 pl-md-0 pl-sm-0 pl-xs-0 d-block mt-lg-2 mt-md-2 mt-sm-2 mt-xs-2'}
-                                onClick={this.getFile}
-                            >Lien vers la fiche</a>
+                            >
+                                Lien vers la fiche
+                            </a>
                             <h4 className={'col-lg-6 col-md-6 col-sm-6 col-xs-6 text-lg-right text-md-right text-sm-right text-xs-right'}>Mathys</h4>
                         </footer>
                     </div>
