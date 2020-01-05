@@ -104,6 +104,7 @@ class Admin extends React.Component<any, AdminState> {
         this.refreshAdmin = this.refreshAdmin.bind(this);
         this.getLogo = this.getLogo.bind(this);
         this.fillLogo = this.fillLogo.bind(this);
+        this.updateText = this.updateText.bind(this);
     }
 
     public componentDidMount(): void {
@@ -405,6 +406,10 @@ class Admin extends React.Component<any, AdminState> {
         const blob = new Blob([data], {type: 'image/jpg'});
         img.src = URL.createObjectURL(blob);
         console.log(img);
+    }
+
+    public updateText(): void {
+
     }
 
     public render(): ReactNode {

@@ -236,6 +236,7 @@ class LobbyDescription extends React.Component<{ id: string }, { lobby: any }> {
                     <p className="lobby-description">{this.props.lobby['description']}</p>
                 </div>
                 <Divider className={'col-lg-3 col-md-6 col-sm-6 col-xs-6 mt-5 mb-5'}/>
+                </div>
             </section>
         )
     }
