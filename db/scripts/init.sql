@@ -163,7 +163,7 @@ CREATE TABLE ccp_is_admin(
 CREATE TABLE ccp_message(
         id_message Int  Auto_increment  NOT NULL ,
         content    Varchar (1024) NOT NULL ,
-        send_date  Date NOT NULL ,
+        send_date  DateTime NOT NULL ,
         id_user  Int  NOT NULL ,
         id_lobby   Int NOT NULL
 	,CONSTRAINT ccp_message_PK PRIMARY KEY (id_message)

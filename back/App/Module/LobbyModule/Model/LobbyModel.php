@@ -74,7 +74,7 @@ class LobbyModel extends AbstractModel
 
     public function getMessages(int $idLobby): array
     {
-        $this->send_query('SELECT content, send_date, pseudo
+        $this->send_query('SELECT id_message, content, send_date, pseudo
                         FROM ccp_message
                         INNER JOIN ccp_user
                         USING(id_user)
