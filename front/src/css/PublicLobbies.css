@@ -4,7 +4,7 @@
     border-radius: 40px;
 }
 
-.lobby-description {
+.public-lobby-description {
     height: 50px;
     overflow: scroll;
     margin-left: -45px;

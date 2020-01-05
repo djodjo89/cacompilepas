@@ -19,7 +19,8 @@ class Input extends React.Component<InputProps, {}> {
     }
 
     public render(): ReactNode {
-        return <div className={'form-group'}>
+        return (
+        <div className={'form-group'}>
             <input type={this.props.inputType}
                    className={this.className}
                    checked={this.props.checked}
@@ -30,6 +31,7 @@ class Input extends React.Component<InputProps, {}> {
                    onChange={this.props.onChange}
             />
         </div>
+        );
     }
 }
 

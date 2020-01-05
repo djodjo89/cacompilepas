@@ -15,8 +15,7 @@ class LobbyModel extends AbstractModel
 
     public function checkRights(int $idLobby, string $token): string
     {
-        $publicKey = file_get_contents(__DIR__ . '/../../../../keys/public_key.pem');
-        $decoded = (array)JWT::decode($token, $publicKey, array('RS512'));
+        $decoded = $this->getUserFromToken($token);
 
         if ($result = (new ConnectionModel($this->getConnection()))->checkIfUserExists($decoded['email'], $decoded['password'])) {
             $idUser = $result['id_user'];
@@ -75,7 +74,7 @@ class LobbyModel extends AbstractModel
 
     public function getMessages(int $idLobby): array
     {
-        $this->send_query('SELECT content, send_date, pseudo
+        $this->send_query('SELECT id_message, content, send_date, pseudo
                         FROM ccp_message
                         INNER JOIN ccp_user
                         USING(id_user)
@@ -112,7 +111,7 @@ class LobbyModel extends AbstractModel
     public function updateLogo(int $idLobby, string $fileName, string $tmpName): array
     {
         $oldLogo = $this->backUpAndUpdateLogo($idLobby, $fileName);
-        return $this->updateOnFTP($idLobby, $fileName, $tmpName, AbstractModel::$IMG_EXTENSIONS, '/img/', $oldLogo);
+        return $this->updateOnFTP($idLobby, $fileName, $tmpName, AbstractModel::$IMG_EXTENSIONS, '/logo/', $oldLogo);
     }
 
     public function updateLobby(int $idLobby, array $newData): array
@@ -295,21 +294,23 @@ class LobbyModel extends AbstractModel
   
     public function getByHashtags(array $hashtags): array
     {
-        $this->send_query("
+        $this->send_query('
             SELECT id_lobby, label_lobby, ccp_lobby.description, logo FROM 
-            ccp_lobby INNER JOIN ccp_coursesheet cc on ccp_lobby.id_lobby = cc.id_lobby_Contain
+            ccp_lobby INNER JOIN ccp_coursesheet cc on ccp_lobby.id_lobby = cc.id_lobby_contain
             INNER JOIN ccp_hashtag ch on cc.id_course_sheet = ch.id_course_sheet
             WHERE label_hashtag IN (?)
-        ",
+        ',
             [$this->arrayToIN($hashtags)]);
         return $this->fetchData([]);
     }
       
-    public function getFile(int $idLobby, string $path, string $uploadDirectory) {
+    public function getFile(int $idLobby, string $path, string $uploadDirectory): string
+    {
         return $this->getOnFTP($idLobby, $path, $uploadDirectory);
     }
 
-    public function getLobbies(): array {
+    public function getLobbies(): array
+    {
         $this->send_query('
             SELECT id_lobby, label_lobby, description, logo, pseudo
             FROM ccp_lobby
@@ -317,7 +318,44 @@ class LobbyModel extends AbstractModel
             INNER JOIN ccp_user USING(id_user)
             WHERE private = 0
         ');
-
         return $this->fetchData(['message' => 'There is no public lobby']);
+    }
+
+    public function addMessage(int $idLobby, int $idUser, string $content): array
+    {
+        $successfulInsert = $this->send_query('
+            INSERT INTO ccp_message
+            (content, send_date, id_user, id_lobby)
+            VALUES 
+            (?, NOW(), ?, ?)
+        ',
+            [$content, $idUser, $idLobby]);
+
+        if ($successfulInsert) {
+            return ['message' => 'Message was successfully added'];
+        } else {
+            return ['message' => 'Message could not be added'];
+        }
+  
+    public function getLobbiesByKeyWords(array $search): array
+    {
+        $count = 0;
+        $length = count($search);
+        $params = '';
+
+        foreach ($search as $key => $value) {
+            $params .= " UPPER(label_lobby) LIKE UPPER('%" . $value . "%')";
+            if ($count !== $length - 1) {
+                $params .= ' AND';
+            }
+            $count++;
+        }
+
+        $this->send_query('
+            SELECT id_lobby, label_lobby, ccp_lobby.description, logo 
+            FROM ccp_lobby 
+            WHERE ' . $params . ' AND private = 0',
+            []);
+        return $this->fetchData([]);
     }
 }
