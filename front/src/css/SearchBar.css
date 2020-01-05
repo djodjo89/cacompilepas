@@ -1,0 +1,14 @@
+.proposal-section {
+    z-index: 1;
+}
+
+.proposal-list {
+    z-index: 0;
+    max-height: 100px;
+    background-color: #ffffff;
+}
+
+.proposal {
+    font-size: 16px;
+    color: #5757e7;
+}

@@ -88,4 +88,34 @@ class ConnectionModel extends AbstractModel
 
         return $jwt;
     }
+
+    public function getIcon(int $idUser, string $path, string $uploadDirectory): string
+    {
+        return $this->getOnFTP($idUser, $path, $uploadDirectory);
+    }
+
+    public function getPersonalInformation(string $email): array
+    {
+        $this->send_query('
+            SELECT id_user, first_name, icon
+            FROM ccp_user
+            WHERE email LIKE ?
+        ',
+            [$email]);
+
+        return $this->fetchData(['message' => 'User does not exist']);
+    }
+
+    public function getPersonalLobbies(string $email): array
+    {
+        $this->send_query('
+            SELECT id_lobby, label_lobby, description, logo
+            FROM ccp_lobby 
+            NATURAL JOIN ccp_is_admin cia
+            INNER JOIN ccp_user cu on cia.id_user = cu.id_user
+            WHERE email = ?
+        ',
+            [$email]);
+        return $this->fetchData(['message' => 'User does not own any lobby']);
+    }
 }

@@ -13,6 +13,7 @@ import '../../css/App.css';
 import Home from "../Pages/Home";
 import Admin from '../Admin/Admin';
 import PublicLobbies from "../Public/PublicLobbies";
+import Personal from "../Pages/Personal";
 
 class App extends React.Component {
     public render(): ReactNode {
@@ -32,6 +33,7 @@ class App extends React.Component {
                         <Route path={'/public'}>
                             <PublicLobbies/>
                         </Route>
+                        <PrivateRoute path={'/perso'} component={Personal} rest={[]}/>
                         <Route path={'*'}>
                             <NotFound/>
                         </Route>

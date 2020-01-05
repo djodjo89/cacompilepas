@@ -8,12 +8,14 @@
     width: 250px;
     text-indent: 16px;
     font-size: 1.1em;
+    top: -5.5555567px;
 }
 
 #search-icon {
     z-index: 1;
     color: grey;
     margin-left: 10px;
+    height: 22.85px;
 }
 
 #search-placeholder {

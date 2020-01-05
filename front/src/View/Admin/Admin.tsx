@@ -100,6 +100,7 @@ class Admin extends React.Component<any, AdminState> {
         this.updateHashtags = this.updateHashtags.bind(this);
         this.fillPresentation = this.fillPresentation.bind(this);
         this.refreshAdmin = this.refreshAdmin.bind(this);
+        this.updateText = this.updateText.bind(this);
     }
 
     public componentDidMount(): void {
@@ -364,6 +365,10 @@ class Admin extends React.Component<any, AdminState> {
         this.setState({hashtags: hashtags});
     }
 
+    public updateText(text: string): void {
+
+    }
+
     public render(): ReactNode {
         return (
             <Router>
@@ -472,6 +477,7 @@ class Admin extends React.Component<any, AdminState> {
                                                                             onUpdate={this.emptyInput}
                                                                             updateHashtagsView={this.updateHashtagsView}
                                                                             updateHashtags={this.updateHashtags}
+                                                                            updateText={this.updateText}
                                                                             hashtagClassName={'hashtagInputBox'}
                                                                         />
                                                                     </div>
