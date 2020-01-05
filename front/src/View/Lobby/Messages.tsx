@@ -1,8 +1,7 @@
 import React, {ReactNode} from 'react';
-import Request from "../../API/Request";
 import Message from "./Message";
 
-class Messages extends React.Component<{ id: string }, { messages: [] }> {
+class Messages extends React.Component<{ id: string, messages: [] }, any> {
     public constructor(props: any) {
         super(props);
         this.state = {
@@ -10,16 +9,7 @@ class Messages extends React.Component<{ id: string }, { messages: [] }> {
         }
         this.renderMessage = this.renderMessage.bind(this);
         this.renderMessages = this.renderMessages.bind(this);
-        this.fillMessages = this.fillMessages.bind(this);
         this.setState = this.setState.bind(this);
-    }
-
-    public componentDidMount(): void {
-        new Request('/lobby/messages/' + this.props.id, this.fillMessages);
-    }
-
-    public fillMessages(data: any): void {
-        this.setState({messages: data});
     }
 
     public renderMessage(key: string, content: string, send_date: string, pseudo: string): ReactNode {
@@ -28,12 +18,21 @@ class Messages extends React.Component<{ id: string }, { messages: [] }> {
 
     public renderMessages(): ({} | null | undefined)[] {
         // @ts-ignore
-        if (undefined === this.state.messages['message']) {
-            let res = [], i = 0;
-            for (let message of this.state.messages) {
-                res.push(this.renderMessage(i.toString(), message['content'], message['send_date'], message['pseudo']));
-                i++;
-            }
+        if (undefined === this.props.messages['message']) {
+            console.log(this.props.messages.sort());
+            let res = this.props.messages.map(
+                (message: any) => this.renderMessage(message['id_message'], message['content'], message['send_date'], message['pseudo'])
+            )
+                .sort((message1: any, message2: any): number => {
+                        if (message1.props.send_date < message2.props.send_date) {
+                            return 1;
+                        } else if (message1.props.send_date > message2.props.send_date) {
+                            return -1;
+                        } else {
+                            return 0;
+                        }
+                    }
+                );
             return res;
         } else {
             return [];
