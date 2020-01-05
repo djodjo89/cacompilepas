@@ -57,7 +57,7 @@ class PublicLobby extends React.Component<PublicLobbyProps, any> {
                     <div className={'row'}>
                         <h3 className={'m-0'}>{this.props.label}</h3>
                     </div>
-                    <div className={'row lobby-description mt-0 align-top d-inline-block mt-2 col-12 pl-0 pr-0'}>
+                    <div className={'row public-lobby-description mt-0 align-top d-inline-block mt-2 col-12 pl-0 pr-0'}>
                         <p>{this.props.description}</p>
                     </div>
                     <div className={'row mt-lg-3 mt-md-3 mt-sm-3 mt-xs-3'}>
