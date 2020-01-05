@@ -35,6 +35,7 @@ interface AdminState {
     hashtagInputIsNotEmpty: boolean,
     hashtagsView: ReactNode,
     hashtags: string[],
+    logoPath: string,
 }
 
 class Admin extends React.Component<any, AdminState> {
@@ -61,6 +62,7 @@ class Admin extends React.Component<any, AdminState> {
             hashtagInputIsNotEmpty: true,
             hashtagsView: <div></div>,
             hashtags: [],
+            logoPath: '',
         }
         this.init = this.init.bind(this);
         this.init();
@@ -100,7 +102,8 @@ class Admin extends React.Component<any, AdminState> {
         this.updateHashtags = this.updateHashtags.bind(this);
         this.fillPresentation = this.fillPresentation.bind(this);
         this.refreshAdmin = this.refreshAdmin.bind(this);
-        this.updateText = this.updateText.bind(this);
+        this.getLogo = this.getLogo.bind(this);
+        this.fillLogo = this.fillLogo.bind(this);
     }
 
     public componentDidMount(): void {
@@ -123,6 +126,10 @@ class Admin extends React.Component<any, AdminState> {
         if (undefined === data['message']) {
             this.setState({currentLabel: data[0]['label_lobby']});
             this.setState({currentDescription: data[0]['description']});
+            this.setState(
+                {logoPath: data[0]['logo']},
+                this.getLogo
+            );
         }
     }
 
@@ -131,11 +138,11 @@ class Admin extends React.Component<any, AdminState> {
             this.setState(
                 {courseSheets: data},
                 () => this.forceUpdate(() => this.render())
-                );
+            );
         } else {
             this.setState({courseSheets: []},
                 () => this.forceUpdate(() => this.render())
-                );
+            );
         }
     }
 
@@ -175,12 +182,19 @@ class Admin extends React.Component<any, AdminState> {
 
     public handleLogoDrop(event: React.DragEvent<HTMLDivElement>): void {
         event.preventDefault();
-        this.setState({newLogo: event.dataTransfer.files[0]});
+        this.setState(
+            {newLogo: event.dataTransfer.files[0]},
+            this.getLogo
+            );
     }
 
     public handleLogoChange(event: ChangeEvent<HTMLInputElement>): void {
         // @ts-ignore
-        this.setState({newLogo: event.target.files[0]});
+        this.setState(
+            // @ts-ignore
+            {newLogo: event.target.files[0]},
+            this.getLogo
+            );
     }
 
     public handleCourseSheetDocumentDrop(event: React.DragEvent<HTMLDivElement>): void {
@@ -201,7 +215,14 @@ class Admin extends React.Component<any, AdminState> {
             this.setState({currentDescription: this.state.newDescription});
         }
         if (undefined !== data['message_logo']) {
-            this.setState({currentLogo: this.state.newLogo});
+            this.setState(
+                {logoPath: data['path']},
+                this.getLogo
+            );
+            this.setState(
+                {currentLogo: this.state.newLogo},
+                this.getLogo
+                );
         }
     }
 
@@ -365,8 +386,25 @@ class Admin extends React.Component<any, AdminState> {
         this.setState({hashtags: hashtags});
     }
 
-    public updateText(text: string): void {
+    public getLogo(): void {
+        new Request(
+            '/lobby/getLogo/0',
+            this.fillLogo,
+            'POST',
+            {
+                idLobby: this.state.id,
+                path: this.state.logoPath,
+            },
+            'json',
+            'blob',
+        );
+    }
 
+    public fillLogo(data: Blob): void {
+        const img: any = document.getElementById('lobby-logo' + this.state.id);
+        const blob = new Blob([data], {type: 'image/jpg'});
+        img.src = URL.createObjectURL(blob);
+        console.log(img);
     }
 
     public render(): ReactNode {
@@ -408,14 +446,28 @@ class Admin extends React.Component<any, AdminState> {
                                                                disabled={true}
                                                     />
                                                 </div>
-                                                <DropBox id={'logoInput'}
-                                                         className={'mt-4'}
-                                                         labelNotDragged={'Glisse un logo par ici !'}
-                                                         labelDragged={'Logo déposé !'}
-                                                         accept={'image/*'}
-                                                         backgroundClassName={'mt-4'}
-                                                         handleFileDrop={this.handleLogoDrop}
-                                                         handleFileChange={this.handleLogoChange}/>
+                                                <div className={'row container-fluid'}>
+                                                    <div className={'col-6'}>
+                                                        <h3>Logo actuel</h3>
+                                                        <img
+                                                            id={'lobby-logo' + this.state.id}
+                                                            className={'lobby-logo'}
+                                                            src={this.state.logoPath}
+                                                            alt={'Lobby logo'}
+                                                        />
+                                                    </div>
+                                                    <div className={'col-5 offset-1'}>
+                                                        <DropBox id={'logoInput'}
+                                                                 className={'mt-5'}
+                                                                 labelNotDragged={'Glisse un logo par ici !'}
+                                                                 labelDragged={'Logo déposé !'}
+                                                                 accept={'image/*'}
+                                                                 backgroundClassName={'mt-4'}
+                                                                 handleFileDrop={this.handleLogoDrop}
+                                                                 handleFileChange={this.handleLogoChange}
+                                                        />
+                                                    </div>
+                                                </div>
                                                 <SubmitButton
                                                     text={'Mettre à jour le lobby'}
                                                     onClick={this.updateLobbby}
@@ -468,7 +520,8 @@ class Admin extends React.Component<any, AdminState> {
                                                                             id="hashtag-placeholder">{this.state.hashtagInputIsNotEmpty ? 'Entre des hashtags pour cette fiche' : ''}</span>
                                                                     </label>
                                                                     {this.state.hashtagsView}
-                                                                    <div className={'col-lg-12 col-md-12 col-sm-12 col-xs-12 pl-0 pr-0'}>
+                                                                    <div
+                                                                        className={'col-lg-12 col-md-12 col-sm-12 col-xs-12 pl-0 pr-0'}>
                                                                         <HashtagInput
                                                                             id={'addHashtags'}
                                                                             className={'form-control w-100 mt-0 rounded hashtagInput col-lg-12 col-md-12 col-sm-12 col-xs-12'}

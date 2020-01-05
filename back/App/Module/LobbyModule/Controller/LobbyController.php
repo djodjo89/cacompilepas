@@ -141,6 +141,7 @@ class LobbyController extends AbstractController
                                         $this->getRequest()->getFile()['name'],
                                         $this->getRequest()->getFile()['tmp_name'],
                                         )['message'];
+                                    $result['path'] = $this->getRequest()->getFile()['name'];
                                 }
                                 break;
 

@@ -135,6 +135,7 @@ class DropBox extends React.Component<DropBoxProps, DropBoxState> {
                         alt={'Logo'}
                         style={{
                             width: '100px',
+                            height: '100px',
                             borderRadius: '50px',
                         }}
                     />
