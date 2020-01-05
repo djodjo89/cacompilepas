@@ -1,9 +1,20 @@
 import React, {ReactNode} from 'react';
 import SearchBar from './SearchBar';
+import SubmitButton from "./SubmitButton";
 import '../../css/Nav.css';
 import Svg from '../Assets/Svg';
 
 class Nav extends React.Component {
+    public constructor(props: any) {
+        super(props);
+        this.disconnect = this.disconnect.bind(this);
+    }
+
+    public disconnect(): void {
+        localStorage.setItem('token', '');
+        // @ts-ignore
+        document.location = '/';
+    }
     public render(): ReactNode {
         return (
             <nav className={'row mt-3'}>
@@ -16,10 +27,16 @@ class Nav extends React.Component {
                 </div>
                 <SearchBar/>
                 <a id={'user'} href={'/connexion/login'}
-                   className={'col-lg-1 col-sm-2 mt-lg-1 mt-md-1 mt-sm-3 pt-lg-2 pr-lg-5 pr-sm-1 pl-lg-3 pl-sm-4 text-left'}>
+                   className={'col-lg-1 col-sm-1 mt-lg-1 mt-md-1 mt-sm-3 pt-lg-2 pr-lg-5 pr-sm-1 pl-lg-3 pl-sm-4 text-left'}>
                     <span
                         className={'glyphicon glyphicon-user'}></span>
                 </a>
+                <SubmitButton
+                    text={''}
+                    onClick={this.disconnect}
+                    className={'mt-1px col-lg-1 col-md-1 col-sm-1 col-xs-1 container-fluid mt-5 disconnect-button'}
+                    disconnectButton={true}
+                />
             </nav>
         )
     }

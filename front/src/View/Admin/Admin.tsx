@@ -6,7 +6,6 @@ import {
     Route,
 } from 'react-router-dom';
 import {ReactComponent as Loader} from '../../img/loader.svg';
-import plusIcon from '../../img/plus-icon.png';
 import Input from '../General/Input';
 import InputArea from '../General/InputArea';
 import DropBox from '../General/DropBox';
@@ -14,6 +13,7 @@ import '../../css/Admin.css';
 import CourseSheets from '../Lobby/CourseSheets';
 import Users from './Users';
 import HashtagInput from "../General/HashtagInput";
+import SubmitButton from "../General/SubmitButton";
 
 interface AdminState {
     id: number,
@@ -116,7 +116,7 @@ class Admin extends React.Component<any, AdminState> {
     }
 
     public checkIfAdmin(data: any): void {
-        if (undefined === data['message']) {
+        if (true === data['isAdmin']) {
             this.setState({isAdmin: 'true'});
         } else {
             this.setState({isAdmin: 'false'});
@@ -475,7 +475,9 @@ class Admin extends React.Component<any, AdminState> {
                                                 <SubmitButton
                                                     text={'Mettre à jour le lobby'}
                                                     onClick={this.updateLobbby}
-                                                    className={'mt-5'}/>
+                                                    className={'mt-5'}
+                                                    disconnectButton={false}
+                                                />
                                             </div>
                                         );
                                         break;
@@ -545,7 +547,9 @@ class Admin extends React.Component<any, AdminState> {
                                                             <SubmitButton
                                                                 text={'Une nouvelle fiche ? Ajoute-la !'}
                                                                 onClick={this.addCourseSheet}
-                                                                className={'mt-1px col-sm-12 container-fluid add-coursesheet-button mt-5'}/>
+                                                                className={'mt-1px col-sm-12 container-fluid add-coursesheet-button mt-5'}
+                                                                disconnectButton={false}
+                                                            />
                                                         </div>
                                                     </div>
                                                 </div>
@@ -595,6 +599,7 @@ class Admin extends React.Component<any, AdminState> {
                                                                 text={'Ca y est ? Alors c\'est parti, ajoute-le !'}
                                                                 onClick={this.addUser}
                                                                 className={'mt-0 col-12 add-usr-button'}
+                                                                disconnectButton={false}
                                                             />
                                                         </div>
                                                     </div>
@@ -665,17 +670,6 @@ class Admin extends React.Component<any, AdminState> {
                 </Switch>
             </Router>
         );
-    }
-}
-
-class SubmitButton extends React.Component<{ text: string, onClick: (event: React.MouseEvent<HTMLButtonElement, MouseEvent>) => void, className: string }, {}> {
-    public render(): ReactNode {
-        return (
-            <button className={'btn btn-default btn-transparent rounded-1 ' + this.props.className}
-                    onClick={this.props.onClick}><img className={'plus-icon'} src={plusIcon}
-                                                      alt={'Plus Icon'}/>{this.props.text}
-            </button>
-        )
     }
 }
 

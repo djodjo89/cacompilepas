@@ -62,6 +62,32 @@ input {
 	margin-right: 25px;
 }
 
+.disconnect-icon {
+	height: 35px;
+	width: 35px;
+}
+
+.disconnect-button {
+	border-color: transparent;
+}
+
+.disconnect-button:hover {
+	border-color: transparent;
+	background-color: transparent !important;
+}
+
+.disconnect-button:focus {
+	border-color: transparent;
+	background-color: transparent !important;
+	box-shadow: 0 0 0 0rem rgba(0,0,0,0) !important;
+}
+
+.disconnect-button:active {
+	border-color: transparent !important;
+	background-color: transparent !important;
+	box-shadow: 0 0 0 0rem rgba(0,0,0,0) !important;
+}
+
 .remove-button:hover {
 	cursor: pointer;
 }
