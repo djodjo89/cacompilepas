@@ -65,6 +65,10 @@ class LobbyController extends AbstractController
                     $result = $this->getModel()->getLobbyById($idLobby);
                     break;
 
+                case 'coursesheet':
+                    $file = $this->getModel()->getFile($idLobby, $this->getRequest()->getPath(), '/coursesheets/');
+                    $this->downloadFile($file);
+                
                 case 'addMessage':
                     $decoded = $this->getModel()->getUserFromToken($this->getRequest()->getToken());
                     $idUser = $this->getModel()->findUser($decoded['email']);
@@ -146,11 +150,6 @@ class LobbyController extends AbstractController
 
                             case 'visibility':
                                 $result = $this->getModel()->getVisibility($idLobby);
-                                break;
-
-                            case 'coursesheet':
-                                $file = $this->getModel()->getFile($idLobby, $this->getRequest()->getPath(), '/coursesheets/');
-                                $this->downloadFile($file);
                                 break;
 
                             case 'getByHashtag':

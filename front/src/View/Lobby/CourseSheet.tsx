@@ -1,9 +1,10 @@
 import React, {ReactNode} from 'react';
-import Request from "../../API/Request";
+import Request from '../../API/Request';
 import '../../css/CourseSheet.css';
 import exampleImage from '../../img/example.png';
 import minusIcon from '../../img/minus-icon-red-t.png';
-import Hashtag from "../General/Hashtag";
+import Hashtag from '../General/Hashtag';
+import {pdfjs, Document, Page} from 'react-pdf';
 
 interface CourseSheetProps {
     id: string,
@@ -17,12 +18,21 @@ interface CourseSheetProps {
     delete: ((event: React.MouseEvent<HTMLImageElement, MouseEvent>) => void) | undefined,
 }
 
-class CourseSheet extends React.Component<CourseSheetProps, { currentHashtagIndex: number, hashtags: string[] }> {
+interface CourseSheetState {
+    currentHashtagIndex: number,
+    hashtags: string[],
+    file: File | null,
+    previewSrc: string,
+}
+
+class CourseSheet extends React.Component<CourseSheetProps, CourseSheetState> {
     public constructor(props: CourseSheetProps) {
         super(props);
         this.state = {
             currentHashtagIndex: -1,
             hashtags: [],
+            file: null,
+            previewSrc: '',
         }
         this.updateWidth = this.updateWidth.bind(this);
         this.remove = this.remove.bind(this);
@@ -30,6 +40,35 @@ class CourseSheet extends React.Component<CourseSheetProps, { currentHashtagInde
         this.openFile = this.openFile.bind(this);
         this.fillHashtags = this.fillHashtags.bind(this);
         this.fetchHashtags = this.fetchHashtags.bind(this);
+        this.refreshPreview = this.refreshPreview.bind(this);
+        this.fillPreview = this.fillPreview.bind(this);
+        this.onDocumentLoadSuccess = this.onDocumentLoadSuccess.bind(this);
+    }
+
+    public componentDidMount(): void {
+        this.refreshPreview();
+        this.fetchHashtags();
+    }
+
+    public refreshPreview(): void {
+        new Request(
+            '/lobby/coursesheet/' + this.props.idLobby,
+            this.fillPreview,
+            'POST',
+            {path: this.props.link},
+            'json',
+            'blob',
+        );
+    }
+
+    public fillPreview(data: any): void {
+        this.setState(
+            {file: data},
+            () => pdfjs.GlobalWorkerOptions.workerSrc = `//cdnjs.cloudflare.com/ajax/libs/pdf.js/${pdfjs.version}/pdf.worker.js`);
+    }
+
+    public onDocumentLoadSuccess(): void {
+
     }
 
     public fillHashtags(data: any): void {
@@ -43,10 +82,6 @@ class CourseSheet extends React.Component<CourseSheetProps, { currentHashtagInde
             '/coursesheet/getHashtags/' + this.props.id,
             this.fillHashtags,
         )
-    }
-
-    public componentDidMount(): void {
-        this.fetchHashtags();
     }
 
     public updateWidth(): void {
@@ -133,10 +168,18 @@ class CourseSheet extends React.Component<CourseSheetProps, { currentHashtagInde
         return (
             <div id={'coursesheet-' + this.props.id} className={'row mt-5 col-lg-12 col-md-12 col-sm-12 col-xs-12'}>
                 <div
-                    className={'col-lg-2 col-md-2 col-sm-2 col-xs-2 mt-lg-4 mt-md-4 mt-sm-4 mt-xs-4 pl-lg-0 pl-md-0 pl-sm-0 pl-xs-0 pr-lg-0 pr-md-0 pr-sm-0 pr-xs-0'}>
-                    <img className={'course-sheet-image rounded'} src={exampleImage} alt={'Course sheet'}/>
+                    className={'col-lg-2 col-md-2 col-sm-2 col-xs-2 mt-lg-2 mt-md-2 mt-sm-2 mt-xs-2 pl-lg-0 pl-md-0 pl-sm-0 pl-xs-0 pr-lg-0 pr-md-0 pr-sm-0 pr-xs-0'}>
+                    <div className={'mt-0'}>
+                        <Document
+                            file={this.state.file}
+                            onLoadSuccess={this.onDocumentLoadSuccess}
+                            noData={<h4>Glisse un fichier</h4>}
+                        >
+                            <Page height={155} scale={1} pageNumber={1}/>
+                        </Document>
+                    </div>
                 </div>
-                <div className={'col-lg-10 col-md-10 col-sm-10 col-xs-10 pr-sm-0 pr-0'}>
+                <div className={'col-lg-10 col-md-10 col-sm-10 col-xs-10 pr-sm-0 pr-0 pl-lg-4 pl-lg-md-4 pl-sm-5 pl-xs-5'}>
                     <div className={'container-fluid row pl-0'}>
                         <h3 className={'col-lg-11 col-md-11 col-sm-11 col-xs-11 text-left mt-lg-0 mt-md-0 mt-sm-0 mt-xs-0'}>{this.props.title}</h3>
                         {this.props.activeRemoveButton ?

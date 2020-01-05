@@ -22,3 +22,11 @@
 .course-sheet-link:active {
     text-decoration: none !important;
 }
+
+.react-pdf__Document {
+    width: 100% !important;
+}
+
+.react-pdf__Page {
+    width: 100% !important;
+}
