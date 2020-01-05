@@ -9,6 +9,7 @@ interface HashtagInputProps {
     onUpdate: any,
     updateHashtagsView: any,
     updateHashtags: any,
+    updateText: any,
     hashtagClassName: string,
 }
 
@@ -48,6 +49,7 @@ class HashtagInput extends React.Component<HashtagInputProps, HashTagInputState>
 
     public write(event: ChangeEvent<HTMLInputElement>): void {
         this.setState({text: event.target.value});
+        this.props.updateText(event.target.value);
         // @ts-ignore
         if ('' === this.input.current.value && 0 === this.state.hashtags.length) {
             this.props.onUpdate(true);

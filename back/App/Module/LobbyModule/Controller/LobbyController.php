@@ -6,6 +6,7 @@ use App\Controller\AbstractController;
 use App\Exception\JSONException;
 use App\Http\JSONResponse;
 use App\Model\AbstractModel;
+use App\Module\ConnectionModule\Model\ConnectionModel;
 use App\Module\CourseSheetModule\Model\CourseSheetModel;
 use App\Module\LobbyModule\Model\LobbyModel;
 
@@ -32,18 +33,20 @@ class LobbyController extends AbstractController
             'visibility',
             'coursesheet',
             'getByHashtag',
+            'search',
             'getLobbies',
             'getLogo',
+            'addMessage',
         ]);
     }
 
     public function run(): void
     {
         $this->checkAction();
-        $this->checkToken();
         $idLobby = (int)$this->getRequest()->getParam();
         $result = [];
         if ($idLobby !== 0) {
+            $this->checkToken();
             $rightsOnLobby = $this->getModel()->checkRights($idLobby, $this->getRequest()->getToken());
         } else {
             $rightsOnLobby = 'none';
@@ -65,6 +68,11 @@ class LobbyController extends AbstractController
                 case 'coursesheet':
                     $file = $this->getModel()->getFile($idLobby, $this->getRequest()->getPath(), '/coursesheets/');
                     $this->downloadFile($file);
+                
+                case 'addMessage':
+                    $decoded = $this->getModel()->getUserFromToken($this->getRequest()->getToken());
+                    $idUser = $this->getModel()->findUser($decoded['email']);
+                    $result = $this->getModel()->addMessage($idLobby, $idUser, $this->getRequest()->getContent());
                     break;
 
                 default:
@@ -149,9 +157,8 @@ class LobbyController extends AbstractController
                                 $result = $this->getModel()->getByHashtags($this->getRequest()->getHashtags());
                                 break;
                         }
-                    } else {
-                        new JSONException('You don\'t have the right to access this lobby');
                     }
+                    break;
             }
         } else {
             switch ($this->getRequest()->getAction()) {
@@ -162,6 +169,10 @@ class LobbyController extends AbstractController
                 case 'getLogo':
                     $logo = $this->getModel()->getFile($this->getRequest()->getIdLobby(), $this->getRequest()->getPath(), '/logo/');
                     $this->downloadFile($logo);
+                    break;
+
+                case 'search':
+                    $result = $this->getModel()->getLobbiesByKeyWords($this->getRequest()->getSearch());
                     break;
 
                 default:

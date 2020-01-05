@@ -530,6 +530,7 @@ class Admin extends React.Component<any, AdminState> {
                                                                             onUpdate={this.emptyInput}
                                                                             updateHashtagsView={this.updateHashtagsView}
                                                                             updateHashtags={this.updateHashtags}
+                                                                            updateText={this.updateText}
                                                                             hashtagClassName={'hashtagInputBox'}
                                                                         />
                                                                     </div>
