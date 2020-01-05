@@ -5,6 +5,7 @@ namespace App\Module\ConnectionModule\Model;
 use App\Connection\Connection;
 use App\Model\AbstractModel;
 use Firebase\JWT\JWT;
+use phpDocumentor\Reflection\Types\String_;
 
 class ConnectionModel extends AbstractModel
 {
@@ -117,5 +118,12 @@ class ConnectionModel extends AbstractModel
         ',
             [$email]);
         return $this->fetchData(['message' => 'User does not own any lobby']);
+    }
+
+    public function newInscription($prenom , $nom , $pseudo , $email , $mdp): string_
+    {
+        // pas encore de vérification pour l'instant
+        $this->send_query('INSERT INTO ccp_user VALUES (?,?,?,?,?)', [$prenom,$nom,$pseudo,$email,$mdp]);
+        return $this->fetchData(['message' => 'inscription effectué']);
     }
 }

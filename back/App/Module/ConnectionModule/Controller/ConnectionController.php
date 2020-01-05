@@ -4,6 +4,7 @@ namespace App\Module\ConnectionModule\Controller;
 
 use App\Controller\AbstractController;
 use App\Http\JSONResponse;
+use App\Module\ConnectionModule\Model\ConnectionModel;
 
 class ConnectionController extends AbstractController
 {
@@ -47,7 +48,19 @@ class ConnectionController extends AbstractController
                 $icon = $this->getModel()->getIcon($this->getRequest()->getParam(), $this->getRequest()->getPath(), '/icon/');
                 $this->downloadFile($icon);
                 break;
+
+            case 'inscription' :
+                $prenom = $this->getRequest()->getPrenom();
+                $nom = $this->getRequest()->getNom();
+                $pseudo = $this->getRequest()->getPseudo();
+                $email = $this->getRequest()->getEmail();
+                $password = $this->getRequest()->getPassword();
+
+               $modelConnection = new ConnectionModel();
+               $result = $modelConnection->newInscription($prenom,$nom,$pseudo,$email,$password);
+                break;
         }
+
         new JSONResponse($result);
     }
 }
