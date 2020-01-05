@@ -405,7 +405,6 @@ class Admin extends React.Component<any, AdminState> {
         const img: any = document.getElementById('lobby-logo' + this.state.id);
         const blob = new Blob([data], {type: 'image/jpg'});
         img.src = URL.createObjectURL(blob);
-        console.log(img);
     }
 
     public updateText(): void {

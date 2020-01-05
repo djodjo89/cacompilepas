@@ -53,7 +53,7 @@ class LobbyModel extends AbstractModel
 
     public function getLobbyById(int $idLobby): array
     {
-        $this->send_query('SELECT label_lobby, description, logo
+        $this->send_query('SELECT id_lobby, label_lobby, description, logo
                         FROM ccp_lobby
                         WHERE id_lobby = ?
                         ',
@@ -336,6 +336,7 @@ class LobbyModel extends AbstractModel
         } else {
             return ['message' => 'Message could not be added'];
         }
+    }
   
     public function getLobbiesByKeyWords(array $search): array
     {

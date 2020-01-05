@@ -106,6 +106,7 @@ class Lobby extends React.Component<any, LobbyState> {
                                 return (
                                     <section className={"content row container-fluid pr-sm-0"}>
                                         <LobbyTop
+                                            id={this.props.location.pathname.split(/\//)[2]}
                                             lobbyInformation={this.state.lobbyInformation}
                                             courseSheets={this.state.courseSheets}
                                         />
@@ -130,12 +131,13 @@ class Lobby extends React.Component<any, LobbyState> {
     }
 }
 
-class LobbyTop extends React.Component<{ lobbyInformation: any, courseSheets: [] }, {}> {
+class LobbyTop extends React.Component<{ id: string, lobbyInformation: any, courseSheets: [] }, {}> {
+
     public render(): ReactNode {
         return (
             <div className="row container-fluid">
                 <LobbyDescription
-                    lobby={this.props.lobbyInformation}
+                    id={this.props.id}
                 />
                 <LobbySummary courseSheets={this.props.courseSheets}/>
             </div>
@@ -176,7 +178,7 @@ class LobbyDescription extends React.Component<{ id: string }, { lobby: any }> {
     public constructor(props: any) {
         super(props);
         this.state = {
-            lobby: []
+            lobby: [],
         };
         this.fillDescription = this.fillDescription.bind(this);
         this.getLogo = this.getLogo.bind(this);
@@ -217,7 +219,7 @@ class LobbyDescription extends React.Component<{ id: string }, { lobby: any }> {
         const blob = new Blob([data], {type: 'image/jpg'});
         img.src = URL.createObjectURL(blob);
     }
-    
+
     public render(): ReactNode {
         return (
             <section className="col-lg-12 col-sm-12 pr-lg-0 pr-md-0 pr-sm-0 pr-xs-0">
@@ -232,10 +234,7 @@ class LobbyDescription extends React.Component<{ id: string }, { lobby: any }> {
                     <div className={'col-lg-10 col-md-10 col-sm-9 col-xs-8 pr-0'}>
                         <p className="lobby-page-description">{this.state.lobby['description']}</p>
                     </div>
-                <div className={'row ml-lg-1 ml-sm-1 w-100'}>
-                    <p className="lobby-description">{this.props.lobby['description']}</p>
-                </div>
-                <Divider className={'col-lg-3 col-md-6 col-sm-6 col-xs-6 mt-5 mb-5'}/>
+                    <Divider className={'col-lg-3 col-md-6 col-sm-6 col-xs-6 mt-5 mb-5'}/>
                 </div>
             </section>
         )
