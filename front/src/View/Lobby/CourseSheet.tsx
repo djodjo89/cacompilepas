@@ -1,7 +1,6 @@
 import React, {ReactNode} from 'react';
 import Request from '../../API/Request';
 import '../../css/CourseSheet.css';
-import exampleImage from '../../img/example.png';
 import minusIcon from '../../img/minus-icon-red-t.png';
 import Hashtag from '../General/Hashtag';
 import {pdfjs, Document, Page} from 'react-pdf';
