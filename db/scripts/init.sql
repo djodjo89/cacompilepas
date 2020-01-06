@@ -44,7 +44,7 @@ CREATE TABLE ccp_coursesheet(
         description      Varchar (2056) NOT NULL,
         id_lobby_contain Int NOT NULL
 	,CONSTRAINT ccp_coursesheet_PK PRIMARY KEY (id_course_sheet)
-	,CONSTRAINT ccp_coursesheet_ccp_lobby_FK FOREIGN KEY (id_lobby_contain) REFERENCES ccp_lobby(id_lobby)
+	,CONSTRAINT ccp_coursesheet_ccp_lobby_FK FOREIGN KEY (id_lobby_contain) REFERENCES ccp_lobby(id_lobby) ON DELETE CASCADE
 );
 
 
@@ -59,8 +59,8 @@ CREATE TABLE ccp_rights(
         id_lobby_protect Int NOT NULL ,
         id_user          Int NOT NULL
 	,CONSTRAINT ccp_rights_PK PRIMARY KEY (id_right)
-	,CONSTRAINT ccp_rights_ccp_lobby_FK FOREIGN KEY (id_lobby_protect) REFERENCES ccp_lobby(id_lobby)
-        ,CONSTRAINT ccp_rights_ccp_user_FK FOREIGN KEY (id_user) REFERENCES ccp_user(id_user)
+	,CONSTRAINT ccp_rights_ccp_lobby_FK FOREIGN KEY (id_lobby_protect) REFERENCES ccp_lobby(id_lobby) ON DELETE CASCADE
+        ,CONSTRAINT ccp_rights_ccp_user_FK FOREIGN KEY (id_user) REFERENCES ccp_user(id_user) ON DELETE CASCADE
 );
 
 
@@ -95,8 +95,8 @@ CREATE TABLE ccp_write(
         id_course_sheet Int NOT NULL
 	,CONSTRAINT ccp_write_PK PRIMARY KEY (id_user,id_course_sheet)
 
-	,CONSTRAINT ccp_write_ccp_user_FK FOREIGN KEY (id_user) REFERENCES ccp_user(id_user)
-	,CONSTRAINT ccp_write_ccp_coursesheet_FK FOREIGN KEY (id_course_sheet) REFERENCES ccp_coursesheet(id_course_sheet)
+	,CONSTRAINT ccp_write_ccp_user_FK FOREIGN KEY (id_user) REFERENCES ccp_user(id_user) ON DELETE CASCADE
+	,CONSTRAINT ccp_write_ccp_coursesheet_FK FOREIGN KEY (id_course_sheet) REFERENCES ccp_coursesheet(id_course_sheet) ON DELETE CASCADE
 );
 
 
@@ -109,8 +109,8 @@ CREATE TABLE ccp_have(
         id_user  Int NOT NULL
 	,CONSTRAINT ccp_have_PK PRIMARY KEY (id_right,id_user)
 
-	,CONSTRAINT ccp_have_ccp_rights_FK FOREIGN KEY (id_right) REFERENCES ccp_rights(id_right)
-	,CONSTRAINT ccp_have_ccp_user_FK FOREIGN KEY (id_user) REFERENCES ccp_user(id_user)
+	,CONSTRAINT ccp_have_ccp_rights_FK FOREIGN KEY (id_right) REFERENCES ccp_rights(id_right) ON DELETE CASCADE
+	,CONSTRAINT ccp_have_ccp_user_FK FOREIGN KEY (id_user) REFERENCES ccp_user(id_user) ON DELETE CASCADE
 );
 
 
@@ -123,8 +123,8 @@ CREATE TABLE ccp_own(
         id_user      Int NOT NULL
 	,CONSTRAINT ccp_own_PK PRIMARY KEY (id_privilege,id_user)
 
-	,CONSTRAINT ccp_own_ccp_privilege_FK FOREIGN KEY (id_privilege) REFERENCES ccp_privilege(id_privilege)
-	,CONSTRAINT ccp_own_ccp_user_FK FOREIGN KEY (id_user) REFERENCES ccp_user(id_user)
+	,CONSTRAINT ccp_own_ccp_privilege_FK FOREIGN KEY (id_privilege) REFERENCES ccp_privilege(id_privilege) ON DELETE CASCADE
+	,CONSTRAINT ccp_own_ccp_user_FK FOREIGN KEY (id_user) REFERENCES ccp_user(id_user) ON DELETE CASCADE
 );
 
 
@@ -137,8 +137,8 @@ CREATE TABLE ccp_identify(
         label_hashtag   Varchar (64) NOT NULL
 	,CONSTRAINT identify_PK PRIMARY KEY (id_course_sheet,label_hashtag)
 
-	,CONSTRAINT ccp_identify_ccp_coursesheet_FK FOREIGN KEY (id_course_sheet) REFERENCES ccp_coursesheet(id_course_sheet)
-	,CONSTRAINT ccp_identify_ccp_hashtag_FK FOREIGN KEY (label_hashtag) REFERENCES ccp_hashtag(label_hashtag)
+	,CONSTRAINT ccp_identify_ccp_coursesheet_FK FOREIGN KEY (id_course_sheet) REFERENCES ccp_coursesheet(id_course_sheet) ON DELETE CASCADE
+	,CONSTRAINT ccp_identify_ccp_hashtag_FK FOREIGN KEY (label_hashtag) REFERENCES ccp_hashtag(label_hashtag) ON DELETE CASCADE
 );
 
 
@@ -151,8 +151,8 @@ CREATE TABLE ccp_is_admin(
         id_lobby Int NOT NULL
 	,CONSTRAINT ccp_is_admin_PK PRIMARY KEY (id_user,id_lobby)
 
-	,CONSTRAINT ccp_is_admin_ccp_user_FK FOREIGN KEY (id_user) REFERENCES ccp_user(id_user)
-	,CONSTRAINT ccp_is_admin_ccp_lobby_FK FOREIGN KEY (id_lobby) REFERENCES ccp_lobby(id_lobby)
+	,CONSTRAINT ccp_is_admin_ccp_user_FK FOREIGN KEY (id_user) REFERENCES ccp_user(id_user) ON DELETE CASCADE
+	,CONSTRAINT ccp_is_admin_ccp_lobby_FK FOREIGN KEY (id_lobby) REFERENCES ccp_lobby(id_lobby) ON DELETE CASCADE
 );
 
 
@@ -167,8 +167,8 @@ CREATE TABLE ccp_message(
         id_user  Int  NOT NULL ,
         id_lobby   Int NOT NULL
 	,CONSTRAINT ccp_message_PK PRIMARY KEY (id_message)
-	,CONSTRAINT ccp_message_ccp_user_FK FOREIGN KEY (id_user) REFERENCES ccp_user(id_user)
-	,CONSTRAINT ccp_message_ccp_lobby_FK FOREIGN KEY (id_lobby) REFERENCES ccp_lobby(id_lobby)
+	,CONSTRAINT ccp_message_ccp_user_FK FOREIGN KEY (id_user) REFERENCES ccp_user(id_user) ON DELETE CASCADE
+	,CONSTRAINT ccp_message_ccp_lobby_FK FOREIGN KEY (id_lobby) REFERENCES ccp_lobby(id_lobby) ON DELETE CASCADE
 );
 
 
@@ -182,7 +182,7 @@ CREATE TABLE ccp_token(
 	last_update_date DateTime NOT NULL ,
 	id_user Int NOT NULL UNIQUE
         ,CONSTRAINT ccp_token_PK PRIMARY KEY (token)
-	,CONSTRAINT ccp_token_ccp_user_FK FOREIGN KEY (id_user) references ccp_user (id_user)
+	,CONSTRAINT ccp_token_ccp_user_FK FOREIGN KEY (id_user) REFERENCES ccp_user (id_user) ON DELETE CASCADE
 );
 
 SET GLOBAL event_scheduler ="ON";

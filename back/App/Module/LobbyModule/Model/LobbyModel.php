@@ -359,4 +359,19 @@ class LobbyModel extends AbstractModel
             []);
         return $this->fetchData([]);
     }
+
+    public function delete(int $idLobby): array
+    {
+        $successfullDelete = $this->send_query('
+            DELETE FROM ccp_lobby
+            WHERE id_lobby = ?
+        ',
+            [$idLobby]);
+
+        if ($successfullDelete) {
+            return ['message' => 'Lobby was successfully deleted'];
+        } else {
+            return ['message' => 'Lobby could not be deleted'];
+        }
+    }
 }
