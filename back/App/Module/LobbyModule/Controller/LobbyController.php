@@ -37,6 +37,7 @@ class LobbyController extends AbstractController
             'getLobbies',
             'getLogo',
             'addMessage',
+            'delete',
         ]);
     }
 
@@ -156,6 +157,10 @@ class LobbyController extends AbstractController
 
                             case 'getByHashtag':
                                 $result = $this->getModel()->getByHashtags($this->getRequest()->getHashtags());
+                                break;
+
+                            case 'delete':
+                                $result = $this->getModel()->delete((int)$this->getRequest()->getParam());
                                 break;
                         }
                     }
