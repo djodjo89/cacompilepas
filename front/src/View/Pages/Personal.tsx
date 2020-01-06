@@ -6,7 +6,7 @@ import PublicLobby from "../Public/PublicLobby";
 
 interface PersonalState {
     personalInformation: any,
-    lobbies: [],
+    lobbies: any,
 }
 
 class Personal extends React.Component<any, PersonalState> {
@@ -20,9 +20,28 @@ class Personal extends React.Component<any, PersonalState> {
         this.fillIcon = this.fillIcon.bind(this);
         this.getIcon = this.getIcon.bind(this);
         this.renderLobbies = this.renderLobbies.bind(this);
+        this.delete = this.delete.bind(this);
+        this.deleteLobby = this.deleteLobby.bind(this);
+        this.refreshData = this.refreshData.bind(this);
     }
 
     public componentDidMount(): void {
+        this.refreshData();
+    }
+
+    public delete(data: any): void {
+        this.refreshData();
+    }
+
+    public deleteLobby(event: React.MouseEvent<HTMLDivElement, MouseEvent>): void {
+        let removeButton: any = event.target;
+        new Request(
+            '/lobby/delete/' + removeButton.id.split(/-/)[1],
+            this.delete,
+        );
+    }
+
+    public refreshData(): void {
         new Request(
             '/connection/personal/0',
             this.fetchData,
@@ -30,17 +49,22 @@ class Personal extends React.Component<any, PersonalState> {
     }
 
     public renderLobbies(): ReactNode {
-        return this.state.lobbies.map(
-            lobby =>
-                <PublicLobby
-                    key={lobby['id_lobby']}
-                    id={lobby['id_lobby']}
-                    label={lobby['label_lobby']}
-                    description={lobby['description']}
-                    logo={lobby['logo']}
-                    pseudo={lobby['pseudo']}
-                />
-        );
+        if (undefined === this.state.lobbies['message']) {
+            return this.state.lobbies.map(
+                (lobby: any) =>
+                    <PublicLobby
+                        key={lobby['id_lobby']}
+                        id={lobby['id_lobby']}
+                        label={lobby['label_lobby']}
+                        description={lobby['description']}
+                        logo={lobby['logo']}
+                        pseudo={lobby['pseudo']}
+                    />
+            );
+        }
+        else {
+            return <div></div>;
+        }
     }
 
     public getIcon(): void {
