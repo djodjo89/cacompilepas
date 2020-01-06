@@ -56,12 +56,20 @@ class Nav extends React.Component<any, { tokenExists: boolean }> {
                 </div>
                 <SearchBar/>
                 {this.state.tokenExists ?
-                    <SubmitButton
-                        text={''}
-                        onClick={this.disconnect}
-                        className={'col-lg-1 col-md-1 col-sm-1 col-xs-1 container-fluid mt-lg-2 mt-md-2 mt-sm-1 mt-xs-1 disconnect-button pl-0'}
-                        disconnectButton={true}
-                    />
+                    <div className={'container-fluid col-1'}>
+                        <div className={'row'}>
+                            <SubmitButton
+                                text={''}
+                                onClick={this.disconnect}
+                                className={'col-lg-1 col-md-1 col-sm-1 col-xs-1 container-fluid mt-lg-2 mt-md-2 mt-sm-1 mt-xs-1 disconnect-button pl-0 ml-3'}
+                                disconnectButton={true}
+                            />
+                        </div>
+                        <div className={'row'}>
+                            Connecté
+                        </div>
+                    </div>
+
                     :
                     <a id={'user'} href={'/connexion/login'}
                        className={'col-lg-1 col-sm-1 mt-lg-3 mt-md-3 mt-sm-3 mt-xs-3 pt-lg-2 pr-lg-5 pr-sm-1 pl-lg-3 pl-sm-4 text-left'}>
