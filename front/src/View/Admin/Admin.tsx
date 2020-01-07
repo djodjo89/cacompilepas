@@ -461,7 +461,7 @@ class Admin extends React.Component<any, AdminState> {
                                                         />
                                                     </div>
                                                     <div className={'col-5 offset-1'}>
-                                                        <DropBox id={'logoInput'}
+                                                        <DropBox id={'logo-input'}
                                                                  className={'mt-5'}
                                                                  labelNotDragged={'Glisse un logo par ici !'}
                                                                  labelDragged={'Logo déposé !'}

@@ -405,7 +405,8 @@ class LobbyModel extends AbstractModel
                 [$idAdmin, $idLobby]);
 
             return ['message' => 'Lobby was successfully uploaded',
-                    'id_lobby' => $idLobby
+                    'id_lobby' => $idLobby,
+                    'logoPath' => $logoName,
                 ];
         } else {
             return ['message' => 'Lobby could not be created'];

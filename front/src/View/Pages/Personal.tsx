@@ -49,22 +49,30 @@ class Personal extends React.Component<any, PersonalState> {
     }
 
     public renderLobbies(): ReactNode {
-        if (undefined === this.state.lobbies['message']) {
-            return this.state.lobbies.map(
-                (lobby: any) =>
-                    <PublicLobby
-                        key={lobby['id_lobby']}
-                        id={lobby['id_lobby']}
-                        label={lobby['label_lobby']}
-                        description={lobby['description']}
-                        logo={lobby['logo']}
-                        pseudo={lobby['pseudo']}
-                    />
+        let res;
+        let i: number = 0;
+        if (0 !== this.state.lobbies.length && undefined !== this.state.lobbies[0]) {
+            res = this.state.lobbies.map(
+                (lobby: any) => {
+                    i++;
+                    return (
+                        <PublicLobby
+                            key={lobby['id_lobby']}
+                            id={lobby['id_lobby']}
+                            label={lobby['label_lobby']}
+                            description={lobby['description']}
+                            logo={lobby['logo']}
+                            pseudo={lobby['pseudo']}
+                            onTheRight={0 === i % 2}
+                        />
+                    );
+                }
             );
         }
         else {
-            return <div></div>;
+            res = <h4 className={'text-center col-12 mt-5'}>Il n'y a pas de lobby public pour le moment</h4>;
         }
+        return res;
     }
 
     public getIcon(): void {
