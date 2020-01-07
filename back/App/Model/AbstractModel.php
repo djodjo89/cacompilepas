@@ -67,6 +67,7 @@ abstract class AbstractModel
         // files with the same name
         $file = $this->nameOnFTP($id, $fileName, $this->extension($fileName));
         $newFileOnFTP = $uploadDirectory . $file;
+
         if (ftp_put($this->connection::$ftp, $newFileOnFTP, $tmpName, FTP_BINARY)) {
             return ['message' => "Successfully uploaded $fileName."];
         } else {

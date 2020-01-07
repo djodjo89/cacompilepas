@@ -23,6 +23,7 @@ services:
             - "9000:9000"
         volumes:
             - ./back:/var/www/html
+            - ./back/uploads.ini:/usr/local/etc/php/conf.d/uploads.ini
         links:
             - db
         container_name: php
