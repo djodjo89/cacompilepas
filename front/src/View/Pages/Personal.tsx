@@ -1,4 +1,5 @@
 import React, {ReactNode} from 'react';
+import swal from 'sweetalert';
 import '../../css/Personal.css';
 import Request from "../../API/Request";
 import Divider from "../General/Divider";
@@ -7,6 +8,7 @@ import PublicLobby from "../Public/PublicLobby";
 interface PersonalState {
     personalInformation: any,
     lobbies: any,
+    lobbyToDeleteId: number,
 }
 
 class Personal extends React.Component<any, PersonalState> {
@@ -15,6 +17,7 @@ class Personal extends React.Component<any, PersonalState> {
         this.state = {
             personalInformation: [],
             lobbies: [],
+            lobbyToDeleteId: -1,
         }
         this.fetchData = this.fetchData.bind(this);
         this.fillIcon = this.fillIcon.bind(this);
@@ -29,15 +32,36 @@ class Personal extends React.Component<any, PersonalState> {
         this.refreshData();
     }
 
-    public delete(data: any): void {
-        this.refreshData();
+    public delete(): void {
+        new Request(
+            '/lobby/delete/' + this.state.lobbyToDeleteId,
+            this.refreshData,
+        );
     }
 
     public deleteLobby(event: React.MouseEvent<HTMLDivElement, MouseEvent>): void {
         let removeButton: any = event.target;
-        new Request(
-            '/lobby/delete/' + removeButton.id.split(/-/)[1],
-            this.delete,
+        let id: number = removeButton.id.split(/-/)[2];
+        this.setState(
+            {lobbyToDeleteId: id},
+            () =>
+                swal({
+                    title: 'Es-tu sûr.e de vouloir supprimer ce lobby ?',
+                    text: 'Toutes les fiches et les messages du lobby seront irrécupérables !',
+                    buttons: ['Non, merci', 'Oui !'],
+                    icon: 'warning',
+                    dangerMode: true,
+                })
+                    .then((willDelete) => {
+                        if (willDelete) {
+                            this.delete();
+                            swal('Ca y est, le lobby a été supprimé !', {
+                                icon: 'success',
+                            })
+                        } else {
+                            swal('Rassure-toi, le lobby n\'a pas été supprimé !');
+                        }
+                    })
         );
     }
 

@@ -41,6 +41,8 @@ class PublicLobbies extends React.Component<any, PublicLobbiesState> {
                         logo={lobby['logo']}
                         pseudo={lobby['pseudo']}
                         onTheRight={0 === i % 2}
+                        activeRemoveButton={false}
+                        delete={null}
                     />
                     );
                 }
