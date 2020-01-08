@@ -232,9 +232,18 @@ class LobbyDescription extends React.Component<{ id: string }, { lobby: any }> {
                         />
                     </div>
                     <div className={'col-lg-10 col-md-10 col-sm-9 col-xs-8 pr-0'}>
-                        <p className="lobby-page-description">{this.state.lobby['description']}</p>
+                        <div className={'row'}>
+                            <div className={'col-12 text-left'}>
+                                <h1>{this.state.lobby['label_lobby']}</h1>
+                            </div>
+                        </div>
+                        <div className={'row'}>
+                            <div className={'col-12'}>
+                                <p className="lobby-page-description">{this.state.lobby['description']}</p>
+                            </div>
+                        </div>
                     </div>
-                    <Divider className={'col-lg-3 col-md-6 col-sm-6 col-xs-6 mt-5 mb-5'}/>
+                    <Divider className={'col-lg-3 col-md-6 col-sm-6 col-xs-6 mt-5 ml-5 mb-5'}/>
                 </div>
             </section>
         )
