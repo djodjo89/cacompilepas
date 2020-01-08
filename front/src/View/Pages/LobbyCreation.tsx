@@ -113,48 +113,78 @@ class LobbyCreation extends React.Component<any, LobbyCreationState> {
 
     public render(): ReactNode {
         return (
-            <div>
-                Lobby creation
-                <InputArea id={'descriptionInput'}
-                           placeholder={'Nouvelle description du lobby\nRacontes-y ce que tu veux, du moment que ça reste dans le thème de ton lobby'}
-                           className={'col-lg-6 col-md-6 col-sm-6 col-xs-6'}
-                           textAreaClassName={''}
-                           rows={5}
-                           onChange={this.handleDescriptionChange}
-                           disabled={false}
-                />
-                <Input id={'labelInput'}
-                       inputType={'text'}
-                       placeholder={'Titre du lobby (n\'en mets pas un trop long)'}
-                       checked={false}
-                       className={'mt-5'} onChange={this.handleLabelChange}/>
-                <div>
-                    <DropBox
-                        id={'logo-upload-input'}
-                        className={''}
-                        labelNotDragged={'Glisse un logo par ici !'}
-                        labelDragged={'Logo déposé !'}
-                        accept={'image/*'}
-                        backgroundClassName={''}
-                        handleFileDrop={this.handleLogoDrop}
-                        handleFileChange={this.handleLogoChange}
-                    />
+            <div className={'container-fluid'}>
+                <div className={'row'}>
+                    <div className={'col-12 text-left'}>
+                        <h1>Créer un lobby</h1>
+                    </div>
+                    <div className={'col-12'}>
+                        <p>Ici tu peux créer ton propre lobby</p>
+                    </div>
                 </div>
+                <div className={'row'}>
+                    <div className={'row container-fluid'}>
+                        <div className={'col-12'}>
+                            <Input id={'labelInput'}
+                                   inputType={'text'}
+                                   placeholder={'Titre du lobby (n\'en mets pas un trop long)'}
+                                   checked={false}
+                                   className={'mt-5'} onChange={this.handleLabelChange}
+                            />
+                        </div>
+                    </div>
+                    <div className={'row container-fluid'}>
+                        <div className={'col-lg-6 col-md-6 col-sm-6 col-xs-12'}>
+                            <InputArea id={'descriptionInput'}
+                                       placeholder={'Nouvelle description du lobby\nRacontes-y ce que tu veux, du moment que ça reste dans le thème de ton lobby'}
+                                       className={''}
+                                       textAreaClassName={''}
+                                       rows={7}
+                                       onChange={this.handleDescriptionChange}
+                                       disabled={false}
+                            />
+                        </div>
+                        <DropBox
+                            id={'logo-upload-input'}
+                            className={'col-lg-6 col-md-6 col-sm-6 col-xs-12'}
+                            labelNotDragged={'Glisse un logo par ici !'}
+                            labelDragged={'Logo déposé !'}
+                            accept={'image/*'}
+                            backgroundClassName={''}
+                            handleFileDrop={this.handleLogoDrop}
+                            handleFileChange={this.handleLogoChange}
+                        />
+                    </div>
+                    <div className={'row container-fluid'}>
+                            <div className={'pl-lg-3 pl-md-3 pl-sm-3 pl-xs-3 pt-lg-2 pt-md-1 pt-sm-3 pt-xs-4 pr-lg-2 pr-md-2 pr-sm-0 pr-xs-0'}>
+                                <Input
+                                    id={'visibilitInput'}
+                                    inputType={'checkbox'}
+                                    checked={this.state.isPrivate}
+                                    placeholder={'Lobby privé'}
+                                    className={'user-rights-checkbox'}
+                                    onChange={this.toggleVisibility}
+                                />
+                            </div>
+                            <h4
+                                className={'col-11 pl-0 text-left lobby-write-right-label'}
+                            >
+                                Lobby privé (seules les personnes autorisées pourront le
+                                consulter
+                            </h4>
+                    </div>
 
-                <Input
-                    id={'visibilitInput'}
-                    inputType={'checkbox'}
-                    checked={this.state.isPrivate}
-                    placeholder={''}
-                    className={'user-rights-checkbox'}
-                    onChange={this.toggleVisibility}
-                />
-                <SubmitButton
-                    text={'Mettre à jour le lobby'}
-                    onClick={this.createLobby}
-                    className={'mt-5'}
-                    disconnectButton={false}
-                />
+                    <div className={'row container-fluid'}>
+                        <div className={'col-12'}>
+                            <SubmitButton
+                                text={'Mettre à jour le lobby'}
+                                onClick={this.createLobby}
+                                className={'mt-5'}
+                                disconnectButton={false}
+                            />
+                        </div>
+                    </div>
+                </div>
             </div>
         );
     }
