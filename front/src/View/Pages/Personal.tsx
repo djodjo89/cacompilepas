@@ -88,6 +88,8 @@ class Personal extends React.Component<any, PersonalState> {
                             logo={lobby['logo']}
                             pseudo={lobby['pseudo']}
                             onTheRight={0 === i % 2}
+                            delete={this.deleteLobby}
+                            activeRemoveButton={true}
                         />
                     );
                 }

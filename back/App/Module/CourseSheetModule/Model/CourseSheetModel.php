@@ -129,7 +129,7 @@ class CourseSheetModel extends AbstractModel
         $this->send_query('
             SELECT label_hashtag
             FROM ccp_hashtag
-            INNER JOIN ccp_coursesheet cc on ccp_hashtag.id_course_sheet = cc.id_course_sheet
+            INNER JOIN ccp_coursesheet cc ON ccp_hashtag.id_course_sheet = cc.id_course_sheet
             WHERE cc.id_course_sheet = ?
         ',
             [$idCourseSheet]);

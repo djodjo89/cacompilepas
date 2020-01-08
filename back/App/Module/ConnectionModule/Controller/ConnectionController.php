@@ -53,6 +53,18 @@ class ConnectionController extends AbstractController
                 $email = $this->getModel()->getUserFromToken($this->getRequest()->getToken())['email'];
                 $result = $this->getModel()->disconnect($email);
                 break;
+
+            case 'register':
+                $result = $this->getModel()->register(
+                    $this->getRequest()->getPseudo(),
+                    $this->getRequest()->getFirstName(),
+                    $this->getRequest()->getLastName(),
+                    $this->getRequest()->getFile()['name'],
+                    $this->getRequest()->getFile()['tmp_name'],
+                    $this->getRequest()->getPassword(),
+                    $this->getRequest()->getConfirmPassword(),
+                    $this->getRequest()->getEmail(),
+                );
         }
         new JSONResponse($result);
     }

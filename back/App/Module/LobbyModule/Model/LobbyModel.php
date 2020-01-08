@@ -33,7 +33,7 @@ class LobbyModel extends AbstractModel
                 $this->send_query('
                     SELECT read_right, id_lobby
                     FROM ccp_rights
-                    RIGHT OUTER JOIN ccp_lobby cl on ccp_rights.id_lobby_Protect = cl.id_lobby
+                    RIGHT OUTER JOIN ccp_lobby cl ON ccp_rights.id_lobby_Protect = cl.id_lobby
                     WHERE 
                     private = 0 OR
                     id_user = ?
@@ -265,17 +265,14 @@ class LobbyModel extends AbstractModel
     public function getUsers(int $idLobby): array
     {
         $this->send_query('
-            SELECT id_user, pseudo, icon, write_right
+            SELECT ccp_user.id_user, pseudo, icon, write_right
             FROM ccp_user
-            INNER JOIN ccp_rights
-            USING (id_user)
-            INNER JOIN ccp_is_admin
-            USING (id_user)
+            INNER JOIN ccp_rights cr ON ccp_user.id_user = cr.id_user
+            LEFT OUTER JOIN ccp_is_admin cia ON ccp_user.id_user = cia.id_user
             WHERE id_lobby_protect = ?
             AND read_right = 1
-            AND id_lobby <> ?
         ',
-            [$idLobby, $idLobby]);
+            [$idLobby]);
 
         return $this->fetchData(['message' => 'Lobby ' . $idLobby . ' does not contain any user']);
     }
@@ -296,8 +293,8 @@ class LobbyModel extends AbstractModel
     {
         $this->send_query('
             SELECT id_lobby, label_lobby, ccp_lobby.description, logo FROM 
-            ccp_lobby INNER JOIN ccp_coursesheet cc on ccp_lobby.id_lobby = cc.id_lobby_contain
-            INNER JOIN ccp_hashtag ch on cc.id_course_sheet = ch.id_course_sheet
+            ccp_lobby INNER JOIN ccp_coursesheet cc ON ccp_lobby.id_lobby = cc.id_lobby_contain
+            INNER JOIN ccp_hashtag ch ON cc.id_course_sheet = ch.id_course_sheet
             WHERE label_hashtag IN (?)
         ',
             [$this->arrayToIN($hashtags)]);
@@ -375,7 +372,14 @@ class LobbyModel extends AbstractModel
         }
     }
 
-    public function create(string $idAdmin, string $label, string $description, string $private, string $logoName, string $logoTmpName): array
+    public function create(
+        string $idAdmin,
+        string $label,
+        string $description,
+        string $private,
+        string $logoName,
+        string $logoTmpName
+    ): array
     {
         $successfulInsert = $this->send_query('
             INSERT INTO ccp_lobby

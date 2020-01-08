@@ -15,7 +15,7 @@ class ConnectionModel extends AbstractModel
                         SELECT id_user, password FROM ccp_user
                         WHERE email = ?
                         ',
-                        [$email]);
+            [$email]);
         if ($result = $this->getQuery()->fetch()) {
             if ($password === $result['password'] || password_verify($password, $result['password'])) {
                 return $result;
@@ -30,7 +30,7 @@ class ConnectionModel extends AbstractModel
         $this->send_query('
             SELECT id_user FROM ccp_user
             WHERE email = ?
-        ',[$email]);
+        ', [$email]);
 
         if ($result = $this->getQuery()->fetch()) {
             return $result;
@@ -44,14 +44,14 @@ class ConnectionModel extends AbstractModel
         $this->send_query('SELECT token FROM ccp_token
                         WHERE token = ?
                         ',
-                        [$token]);
+            [$token]);
         if ($tokenExists = $this->getQuery()->fetch()) {
             // Update token last update date if it is valid
             $this->send_query('UPDATE ccp_token
                             SET last_update_date = NOW()
                             WHERE token = ?
                             ',
-                            [$token]);
+                [$token]);
             return true;
         } else {
             return false;
@@ -63,7 +63,7 @@ class ConnectionModel extends AbstractModel
         $this->send_query('SELECT token FROM ccp_token
                         WHERE id_user = ?
                         ',
-                        [$id_user]);
+            [$id_user]);
         $userAlreadyHasAToken = $this->getQuery()->fetch();
         if ($userAlreadyHasAToken) {
             return $userAlreadyHasAToken['token'];
@@ -83,7 +83,7 @@ class ConnectionModel extends AbstractModel
                             VALUES
                             (?, NOW(), NOW(), ?)
                             ',
-                            [$jwt, $id_user]);
+                [$jwt, $id_user]);
         }
 
         return $jwt;
@@ -112,7 +112,7 @@ class ConnectionModel extends AbstractModel
             SELECT id_lobby, label_lobby, description, logo
             FROM ccp_lobby 
             NATURAL JOIN ccp_is_admin cia
-            INNER JOIN ccp_user cu on cia.id_user = cu.id_user
+            INNER JOIN ccp_user cu ON cia.id_user = cu.id_user
             WHERE email = ?
         ',
             [$email]);
@@ -131,6 +131,72 @@ class ConnectionModel extends AbstractModel
             return ['message' => 'Session was successfully closed'];
         } else {
             return ['message' => 'Session could not be closed'];
+        }
+    }
+
+    public function register(
+        string $pseudo,
+        string $firstName,
+        string $lastName,
+        string $logoName,
+        string $logoTmpName,
+        string $password,
+        string $confirmPassword,
+        string $email
+    ): array
+    {
+        if ($password === $confirmPassword) {
+
+            $this->send_query('
+                SELECT *
+                FROM ccp_user
+                WHERE email = ?
+            ',
+                [$email]);
+
+            if (!$this->getQuery()->fetch()) {
+                $hashedPassword = password_hash($password, PASSWORD_DEFAULT);
+
+                $successfulInsert = $this->send_query('
+                    INSERT INTO ccp_user
+                    (pseudo, first_name, last_name, icon, password, email)
+                    VALUES
+                    (?, ?, ?, ?, ?, ?)
+                ',
+                    [$pseudo, $firstName, $lastName, $logoName, $hashedPassword, $email]);
+
+                if ($successfulInsert) {
+                    $this->send_query('
+                        SELECT id_user
+                        FROM ccp_user
+                        ORDER BY id_user DESC 
+                        LIMIT 1
+                    ',
+                        []);
+
+                    $idUser = (int)$this->fetchData([])[0]['id_user'];
+
+                    $successfulUpload = $this->uploadOnFTP($idUser, $logoName, $logoTmpName, '/icon/', ['jpg', 'jpeg', 'ico', 'png', 'svg', 'bmp']);
+
+                    if ($successfulUpload) {
+                        return ['message' => 'User was successfully registered',
+                            'id_user' => $idUser,
+                            'logoPath' => $logoName,
+                        ];
+                    } else {
+                        return [
+                            'message' => 'User icon could not be uploaded',
+                            'id_user' => $idUser,
+                        ];
+                    }
+                } else {
+                    return ['message' => 'User could not be registered'];
+                }
+            } else {
+                return ['message' => 'User already exists'];
+            }
+        } else {
+            return ['message' => 'Passwords do not match'];
         }
     }
 }
