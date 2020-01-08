@@ -2,6 +2,7 @@ import React, {ReactNode} from 'react';
 import Request from "../../API/Request";
 import HashtagInput from "./HashtagInput";
 import ProposalList from "./ProposalList";
+import '../../css/SearchBar.css';
 
 interface SearchBarState {
     query: string,
@@ -29,18 +30,6 @@ class SearchBar extends React.Component<any, SearchBarState> {
         this.updateQuery = this.updateQuery.bind(this);
     }
 
-    public componentDidUpdate(): void {
-        new Request(
-            '/lobby/search/0',
-            this.refreshProposals,
-            'POST',
-            {
-                search: this.state.query.split(/ /),
-                hashtags: this.state.hashtags,
-            },
-        );
-    }
-
     public refreshProposals(data: any): void {
         this.setState({proposals: undefined === data['message'] ? data.slice(0, 3) : []});
     }
@@ -54,11 +43,28 @@ class SearchBar extends React.Component<any, SearchBarState> {
     }
 
     public updateHashtags(hashtags: string[]): void {
-        this.setState({hashtags: hashtags}, ()=>console.log(this.state.hashtags));
+        this.setState(
+            {hashtags: hashtags},
+            this.sendQuery);
+    }
+
+    public sendQuery(): void {
+        new Request(
+            '/lobby/search/0',
+            this.refreshProposals,
+            'POST',
+            {
+                search: this.state.query.split(/ /),
+                hashtags: this.state.hashtags,
+            },
+        );
     }
 
     public updateQuery(text: string): void {
-        this.setState({query: text});
+        this.setState(
+            {query: text},
+            this.sendQuery,
+        );
     }
 
     public render(): ReactNode {
@@ -84,7 +90,8 @@ class SearchBar extends React.Component<any, SearchBarState> {
                         hashtagClassName={''}
                     />
                 </form>
-                {(() => 0 !== this.state.proposals.length && '' !== this.state.query ? <ProposalList proposals={this.state.proposals}/> : <div></div>)()}
+                {(() => 0 !== this.state.proposals.length ?
+                    <ProposalList proposals={this.state.proposals}/> : <div></div>)()}
             </div>
         );
     }

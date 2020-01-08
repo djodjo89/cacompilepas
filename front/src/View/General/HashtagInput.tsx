@@ -76,19 +76,20 @@ class HashtagInput extends React.Component<HashtagInputProps, HashTagInputState>
     public addHashtag(text: string): void {
         if (!this.state.hashtags.includes(text) && text.includes('#')) {
             let tags: string[] = text.split(/ /);
-            for (let tag of tags) {
+            tags.map(tag => {
                 if ('#' === tag.charAt(0)) {
                     this.state.hashtags.push(text.substr(1, text.length - 1));
                     this.state.widths.push(0);
                     this.setState((state, props) => {
                         return {text: state.text.replace(tag, '')};
                     });
+                    this.props.updateText('');
                     this.props.updateHashtags(this.state.hashtags);
                     // @ts-ignore
                     this.forceUpdate(() => this.input.current.value.replace(tag, ''));
                     this.updateView();
                 }
-            }
+            });
         }
     }
 
@@ -125,7 +126,12 @@ class HashtagInput extends React.Component<HashtagInputProps, HashTagInputState>
         let index: number = this.state.hashtags.indexOf(text);
         this.state.hashtags.splice(index, 1);
         this.state.widths.splice(index, 1);
+        this.props.updateText('');
+        this.props.updateHashtags(this.state.hashtags);
         this.updateView();
+        if ('' === this.state.text && 0 === this.state.hashtags.length) {
+            this.props.onUpdate(true);
+        }
     }
 
     public async updateHashtags(event: React.KeyboardEvent<HTMLInputElement>): Promise<void> {
@@ -135,7 +141,7 @@ class HashtagInput extends React.Component<HashtagInputProps, HashTagInputState>
             this.addHashtag((event as KeyboardEvent).target.value);
         } else if (8 === event.keyCode) {
             // @ts-ignore
-            if ('' === this.input.current.value && 0 !== this.state.hashtags.length) {
+            if (('' === this.input.current.value && 0 !== this.state.hashtags.length) || 0 === this.input.current.selectionStart) {
                 event.preventDefault();
                 this.deleteHashtag(this.state.hashtags[this.state.hashtags.length - 1]);
             }
@@ -153,7 +159,7 @@ class HashtagInput extends React.Component<HashtagInputProps, HashTagInputState>
     }
 
     public renderHashtags(): ReactNode {
-        const res = this.state.hashtags.map(
+        return this.state.hashtags.map(
             (hashtag: string) => {
                 return <Hashtag
                     key={hashtag}
@@ -165,7 +171,6 @@ class HashtagInput extends React.Component<HashtagInputProps, HashTagInputState>
                 />
             }
         );
-        return res;
     }
 
     public render(): ReactNode {

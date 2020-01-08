@@ -5,6 +5,7 @@ import {
 } from 'react-router-dom';
 import {ReactComponent as Loader} from '../img/loader.svg';
 import Request from "../API/Request";
+import Connection from "../View/Connection/Connection";
 
 interface PrivateRouteProps {
     path: string,
@@ -56,7 +57,9 @@ class PrivateRoute extends React.PureComponent<PrivateRouteProps, { status: stri
                 if (undefined !== localStorage.getItem('token') && '' !== localStorage.getItem('token') && 'true' === this.state.status) {
                     return React.createElement(this.props.component, this.props);
                 } else if ('false' === this.state.status) {
-                    return <Redirect to={'/connexion/login'}/>;
+                    const referrer = document.documentURI;
+                    window.history.pushState("", "", '/connexion');
+                    return <Connection referrer={referrer}/>
                 } else {
                     return <div className={'mt-5'}><Loader/></div>;
                 }

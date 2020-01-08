@@ -2,39 +2,6 @@
     font-size: 24px;
 }
 
-#search {
-    position: absolute;
-    z-index: 0;
-    text-indent: 16px;
-    font-size: 1.1em;
-    top: -5.5555567px;
-}
-
-#search-label {
-    z-index: 1;
-    color: grey;
-    margin-left: 10px;
-    height: 22.85px;
-}
-
-.search-icon {
-    margin-top: -5px;
-}
-
-.search-form {
-    height: 30px;
-}
-
-.search-input {
-    height: 37px;
-}
-
-#search-placeholder {
-    margin-top: -3px;
-    margin-left: 5px;
-    font-size: 16px;
-}
-
 #user {
     font-size: 28px;
 }

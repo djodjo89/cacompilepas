@@ -162,15 +162,23 @@ class LobbySummary extends React.Component<{ courseSheets: [] }, {}> {
 
     public render(): ReactNode {
         return (
-            <section className="col-lg-12 col-sm-12 mt-sm-2 pr-sm-0 pr-xs-0">
-                <h2 className="text-left mb-0 mt-0 ml-4">Sommaire</h2>
-                <ul className="lobby-summary-list list-unstyled text-left ml-1 mt-3">
-                    {this.renderList()}
-                </ul>
-                <Divider
-                    className={'offset-lg-3 col-lg-6 offset-md-2 col-md-8 col-sm-6 col-xs-6 mt-5 mb-2 ml-4'}/>
+            <section className={'col-lg-12 col-sm-12 pr-sm-0 pr-xs-0' + (0 !== this.props.courseSheets.length ? ' mt-sm-2' : '')}>
+                {
+                    0 !== this.props.courseSheets.length ?
+                        <div>
+                            <h2 className="text-left mb-0 mt-0 ml-4">Sommaire</h2>
+                            <ul className="lobby-summary-list list-unstyled text-left ml-1 mt-3 ml-4">
+                                {this.renderList()}
+                            </ul>
+                            <Divider
+                                className={'offset-lg-3 col-lg-6 offset-md-2 col-md-8 col-sm-6 col-xs-6 mt-5 mb-2 ml-4'}
+                            />
+                        </div>
+                        :
+                        <div></div>
+                }
             </section>
-        )
+        );
     }
 }
 
@@ -273,8 +281,9 @@ class LobbyBody extends React.Component<LobbyBodyProps, any> {
                                 activeRemoveButton={false}
                                 removableHashtags={false}
                                 delete={undefined}
-                            /> :
-                            <div className={'row container-fluid mt-5'}>
+                            />
+                            :
+                            <div className={'row mt-5'}>
                                 <div className={'col-12 text-left'}>
                                     <p>Il n'y a pas de fiches de cours pour l'instant</p>
                                 </div>
@@ -282,12 +291,22 @@ class LobbyBody extends React.Component<LobbyBodyProps, any> {
                     }
                 </div>
                 <div className={'col-lg-6 col-md-6 col-sm-12 col-xs-12 container-fluid'}>
-                    <div className={'row'}>
-                        <Messages
-                            id={this.props.id}
-                            messages={this.props.messages}
-                        />
-                    </div>
+                    {
+                        // @ts-ignore
+                        undefined !== this.props.messages[0] ?
+                            <div className={'row'}>
+
+                                <Messages
+                                    id={this.props.id}
+                                    messages={this.props.messages}
+                                /></div>
+                            :
+                            <div className={'row mt-5 mb-5'}>
+                                <div className={'col-12 text-left'}>
+                                    <p>Il n'y a pas de messages pour l'instant</p>
+                                </div>
+                            </div>
+                    }
                     <div className={'row'}>
                         <WriteMessageZone
                             labelLobby={this.props.labelLobby}

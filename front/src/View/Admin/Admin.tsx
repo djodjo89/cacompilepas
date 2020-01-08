@@ -554,14 +554,24 @@ class Admin extends React.Component<any, AdminState> {
                                                     </div>
                                                 </div>
                                                 <div className={'row mt-5'}>
-                                                    <CourseSheets
-                                                        id={this.state.id.toString()}
-                                                        courseSheets={this.state.courseSheets}
-                                                        className={'col-lg-12 col-sm-12 mt-lg-3'}
-                                                        activeRemoveButton={true}
-                                                        removableHashtags={true}
-                                                        delete={this.removeCourseSheetFromLobby}
-                                                    />
+                                                    {
+                                                        0 !== this.state.courseSheets.length ?
+                                                            <CourseSheets
+                                                                id={this.state.id.toString()}
+                                                                courseSheets={this.state.courseSheets}
+                                                                className={'col-lg-12 col-sm-12 mt-lg-3'}
+                                                                activeRemoveButton={true}
+                                                                removableHashtags={true}
+                                                                delete={this.removeCourseSheetFromLobby}
+                                                            />
+                                                            :
+                                                            <div className={'row container-fluid mt-5'}>
+                                                                <div className={'col-12 text-left'}>
+                                                                    <p>Il n'y a pas de fiches de cours pour l'instant</p>
+                                                                </div>
+                                                            </div>
+                                                    }
+
                                                 </div>
                                             </div>
                                         );
@@ -570,7 +580,9 @@ class Admin extends React.Component<any, AdminState> {
                                     case 'rights':
                                         tab = (
                                             <div className={'container-fluid  col-lg-8 col-md-12 col-sm-12 col-xs-12'}>
-                                                <h2>Utilisateurs autorisés à consulter le lobby</h2>
+                                                <div className={'row container-fluid text-left pr-0'}>
+                                                    <h2>Utilisateurs autorisés à consulter le lobby</h2>
+                                                </div>
                                                 <div className={'row'}>
                                                     <Users
                                                         id={this.state.id.toString()}

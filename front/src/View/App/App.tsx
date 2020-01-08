@@ -30,7 +30,7 @@ class App extends React.Component {
                         <PrivateRoute path={'/lobby'} component={Lobby} rest={[]}/>
                         <PrivateRoute path={'/coursesheet'} component={CourseSheetPage} rest={[]}/>
                         <Route path={'/connexion'}>
-                            <Connection/>
+                            <Connection referrer={document.referrer}/>
                         </Route>
                         <PrivateRoute path={'/admin'} component={Admin} rest={[]}/>
                         <PrivateRoute path={'/creation'} component={LobbyCreation} rest={[]}/>
