@@ -314,8 +314,8 @@ class LobbyModel extends AbstractModel
         $this->send_query('
             SELECT id_lobby, label_lobby, description, logo, pseudo
             FROM ccp_lobby
-            INNER JOIN ccp_is_admin USING(id_lobby)
-            INNER JOIN ccp_user USING(id_user)
+            LEFT OUTER JOIN ccp_is_admin USING(id_lobby)
+            LEFT OUTER JOIN ccp_user USING(id_user)
             WHERE private = 0
         ');
         return $this->fetchData(['message' => 'There is no public lobby']);
@@ -338,16 +338,25 @@ class LobbyModel extends AbstractModel
         }
     }
   
-    public function getLobbiesByKeyWords(array $search): array
+    public function searchLobbies(array $search, array $hashtags): array
     {
         $count = 0;
         $length = count($search);
-        $params = '';
+        $searchParams = '';
+        $hashtagsParams = '';
 
         foreach ($search as $key => $value) {
-            $params .= " UPPER(label_lobby) LIKE UPPER('%" . $value . "%')";
+            $searchParams .= " UPPER(label_lobby) LIKE UPPER('%" . $value . "%')";
             if ($count !== $length - 1) {
-                $params .= ' AND';
+                $searchParams .= ' AND';
+            }
+            $count++;
+        }
+
+        foreach ($hashtags as $key => $value) {
+            $hashtagsParams .= 'label_hashtag = ' . $value;
+            if ($count !== $length - 1) {
+                $hashtagsParams .= ' AND';
             }
             $count++;
         }
@@ -355,7 +364,11 @@ class LobbyModel extends AbstractModel
         $this->send_query('
             SELECT id_lobby, label_lobby, ccp_lobby.description, logo 
             FROM ccp_lobby 
-            WHERE ' . $params . ' AND private = 0',
+            WHERE ' . $searchParams . '
+            LEFT OUTER JOIN ccp_hashtags
+            WHERE ' . $hashtagsParams . '
+            AND private = 0
+            ',
             []);
         return $this->fetchData([]);
     }

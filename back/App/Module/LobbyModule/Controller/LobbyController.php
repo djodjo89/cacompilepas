@@ -191,7 +191,7 @@ class LobbyController extends AbstractController
                     break;
 
                 case 'search':
-                    $result = $this->getModel()->getLobbiesByKeyWords($this->getRequest()->getSearch());
+                    $result = $this->getModel()->searchLobbies($this->getRequest()->getSearch(), $this->getRequest()->getHashtags());
                     break;
 
                 default:

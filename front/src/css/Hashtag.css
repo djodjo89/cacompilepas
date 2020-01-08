@@ -5,6 +5,7 @@
 }
 
 .hashtagBox {
+    margin-top: -2px !important;
     background-color: #3c3ca0;
     opacity: 0.9;
     z-index: 1;

@@ -57,7 +57,6 @@ class HashtagInput extends React.Component<HashtagInputProps, HashTagInputState>
             this.props.onUpdate(false);
         }
         this.props.updateHashtagsView(this.renderHashtags());
-        this.props.updateHashtags(this.state.hashtags);
     }
 
     public componentDidMount(): void {
@@ -84,6 +83,7 @@ class HashtagInput extends React.Component<HashtagInputProps, HashTagInputState>
                     this.setState((state, props) => {
                         return {text: state.text.replace(tag, '')};
                     });
+                    this.props.updateHashtags(this.state.hashtags);
                     // @ts-ignore
                     this.forceUpdate(() => this.input.current.value.replace(tag, ''));
                     this.updateView();
