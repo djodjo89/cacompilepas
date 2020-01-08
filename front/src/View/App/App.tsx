@@ -15,6 +15,7 @@ import Admin from '../Admin/Admin';
 import PublicLobbies from "../Public/PublicLobbies";
 import CourseSheetPage from "../Pages/CourseSheetPage";
 import Personal from "../Pages/Personal";
+import LobbyCreation from "../Pages/LobbyCreation";
 
 class App extends React.Component {
     public render(): ReactNode {
@@ -32,6 +33,7 @@ class App extends React.Component {
                             <Connection/>
                         </Route>
                         <PrivateRoute path={'/admin'} component={Admin} rest={[]}/>
+                        <PrivateRoute path={'/creation'} component={LobbyCreation} rest={[]}/>
                         <Route path={'/public'}>
                             <PublicLobbies/>
                         </Route>

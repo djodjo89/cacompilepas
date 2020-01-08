@@ -27,9 +27,12 @@ class PublicLobbies extends React.Component<any, PublicLobbiesState> {
 
     public renderLobbies(): ReactNode {
         let res;
+        let i: number = 0;
         if (0 !== this.state.lobbies.length && undefined !== this.state.lobbies[0]) {
             res = this.state.lobbies.map(
-                lobby =>
+                lobby => {
+                    i++;
+                    return (
                     <PublicLobby
                         key={lobby['id_lobby']}
                         id={lobby['id_lobby']}
@@ -37,9 +40,12 @@ class PublicLobbies extends React.Component<any, PublicLobbiesState> {
                         description={lobby['description']}
                         logo={lobby['logo']}
                         pseudo={lobby['pseudo']}
+                        onTheRight={0 === i % 2}
                         activeRemoveButton={false}
                         delete={null}
                     />
+                    );
+                }
             );
         }
         else {

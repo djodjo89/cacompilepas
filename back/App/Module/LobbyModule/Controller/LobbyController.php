@@ -38,6 +38,7 @@ class LobbyController extends AbstractController
             'getLogo',
             'addMessage',
             'delete',
+            'create',
         ]);
     }
 
@@ -46,8 +47,22 @@ class LobbyController extends AbstractController
         $this->checkAction();
         $idLobby = (int)$this->getRequest()->getParam();
         $result = [];
-        if ($idLobby !== 0) {
+        if (0 !== $idLobby) {
             $this->checkToken();
+
+            if (-1 == $idLobby) {
+                $result = $this->getModel()->create(
+                    $this->getModel()->idUserFromToken($this->getRequest()->getToken()),
+                    $this->getRequest()->getLabel(),
+                    $this->getRequest()->getDescription(),
+                    $this->getRequest()->getPrivate(),
+                    $this->getRequest()->getFile()['name'],
+                    $this->getRequest()->getFile()['tmp_name'],
+                    );
+
+                $idLobby = $result['id_lobby'];
+            }
+
             $rightsOnLobby = $this->getModel()->checkRights($idLobby, $this->getRequest()->getToken());
         } else {
             $rightsOnLobby = 'none';
@@ -70,11 +85,9 @@ class LobbyController extends AbstractController
                     $file = $this->getModel()->getFile($idLobby, $this->getRequest()->getPath(), '/coursesheets/');
                     $this->downloadFile($file);
                     break;
-                
+
                 case 'addMessage':
-                    $decoded = $this->getModel()->getUserFromToken($this->getRequest()->getToken());
-                    $idUser = $this->getModel()->findUser($decoded['email']);
-                    $result = $this->getModel()->addMessage($idLobby, $idUser, $this->getRequest()->getContent());
+                    $result = $this->getModel()->addMessage($idLobby, $this->getModel()->idUserFromToken($this->getRequest()->getToken()), $this->getRequest()->getContent());
                     break;
 
                 default:
@@ -183,7 +196,7 @@ class LobbyController extends AbstractController
 
                 default:
                     new JSONException('You do not have the right to access this lobby');
-                break;
+                    break;
             }
         }
         new JSONResponse($result);

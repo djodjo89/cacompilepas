@@ -9,6 +9,7 @@ interface PublicLobbyProps {
     description: string,
     logo: string,
     pseudo: string,
+    onTheRight: boolean,
     activeRemoveButton: boolean,
     delete: any
 }
@@ -47,10 +48,9 @@ class PublicLobby extends React.Component<PublicLobbyProps, any> {
 
     public render(): ReactNode {
         return (
-            <div
-                className={'container-fluid row col-lg-5 mt-lg-0 mt-sm-4 pr-0 mb-lg-5 mr-lg-4 pl-lg-0 pl-md-0 pl-sm-2 pl-xs-2 '
-                + (0 === this.props.id % 2 ? ' offset-lg-1 ml-lg-5' : 'mr-lg-5')
-                }>
+            <div className={'container-fluid row col-lg-5 mt-lg-0 mt-sm-4 pr-0 mb-lg-5 mr-lg-4 pl-lg-0 pl-md-0 pl-sm-2 pl-xs-2 '
+                + (this.props.onTheRight ? 'mr-lg-5' : ' offset-lg-1 ml-lg-5')
+            }>
                 <div className={'col-lg-3 col-md-3 col-sm-4 pl-0 pr-lg-5 pr-md-5 pr-sm-4 pr-xs-5'}>
                     <img
                         id={'lobby-logo-' + this.props.id}

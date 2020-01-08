@@ -33,7 +33,7 @@ class LobbyModel extends AbstractModel
                 $this->send_query('
                     SELECT read_right, id_lobby
                     FROM ccp_rights
-                    INNER JOIN ccp_lobby cl on ccp_rights.id_lobby_Protect = cl.id_lobby
+                    RIGHT OUTER JOIN ccp_lobby cl on ccp_rights.id_lobby_Protect = cl.id_lobby
                     WHERE 
                     private = 0 OR
                     id_user = ?
@@ -373,5 +373,48 @@ class LobbyModel extends AbstractModel
         } else {
             return ['message' => 'Lobby could not be deleted'];
         }
+    }
+
+    public function create(string $idAdmin, string $label, string $description, string $private, string $logoName, string $logoTmpName): array
+    {
+        $successfulInsert = $this->send_query('
+            INSERT INTO ccp_lobby
+            (label_lobby, description, logo, private)
+            VALUES
+            (?, ?, ?, ?)
+        ',
+            [$label, $description, $logoName, 'true' === $private ? 1 : 0]);
+
+        if ($successfulInsert) {
+            $this->send_query('
+                SELECT id_lobby
+                FROM ccp_lobby
+                ORDER BY id_lobby DESC 
+                LIMIT 1
+            ',
+                []);
+
+            $idLobby = (int)$this->fetchData([])[0]['id_lobby'];
+
+            $successfulUpload = $this->uploadOnFTP($idLobby, $logoName, $logoTmpName, '/logo/', ['jpg', 'jpeg', 'ico', 'png', 'svg', 'bmp']);
+
+            $this->send_query('
+                INSERT INTO ccp_is_admin
+                (id_user, id_lobby) VALUES (?, ?)
+            ',
+                [$idAdmin, $idLobby]);
+
+            return ['message' => 'Lobby was successfully uploaded',
+                    'id_lobby' => $idLobby,
+                    'logoPath' => $logoName,
+                ];
+        } else {
+            return ['message' => 'Lobby could not be created'];
+        }
+    }
+
+    public function idUserFromToken(string $token) {
+        $decoded = $this->getUserFromToken($token);
+        return $this->findUser($decoded['email']);
     }
 }
