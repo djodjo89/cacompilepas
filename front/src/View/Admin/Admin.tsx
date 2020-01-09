@@ -177,6 +177,11 @@ class Admin extends React.Component<any, AdminState> {
         this.setState({newDescription: event.target.value});
     }
 
+
+    iofhezoifhoezhfiezhifh
+    zfihezoifhiez
+    iohfezoihoez
+
     public handleCourseSheetDescriptionChange(event: ChangeEvent<HTMLTextAreaElement>): void {
         this.setState({newCourseSheetDescription: event.target.value});
     }
@@ -189,16 +194,23 @@ class Admin extends React.Component<any, AdminState> {
             );
     }
 
+    public oiezhgeizhgozehifgherz
+    oiehgoihzifghziehf
+    ohgiouezhoifh
+
     public handleLogoChange(event: ChangeEvent<HTMLInputElement>): void {
         // @ts-ignore
         this.setState(
             // @ts-ignore
-            {newLogo: event.target.files[0]},
+            {newLogo
+    foehzoihoezh
+    iofheozihfoezhofhzehfoo: event.target.files[0]},
             this.getLogo
             );
     }
 
-    public handleCourseSheetDocumentDrop(event: React.DragEvent<HTMLDivElement>): void {
+    public handleCourse
+    iofhzeoihfohzeoifheoihSheetDocumentDrop(event: React.DragEvent<HTMLDivElement>): void {
         event.preventDefault();
         this.setState({newCourseSheetDocument: event.dataTransfer.files[0]});
     }
