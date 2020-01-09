@@ -379,13 +379,6 @@ class Admin extends React.Component<any, AdminState> {
         this.setState({hashtagInputIsNotEmpty: isEmpty});
     }
 
-    public updateHashtagsView(hashtagsView: ReactNode): void {
-        this.setState({hashtagsView: hashtagsView});
-    }
-
-    public updateHashtags(hashtags: string[]): void {
-        this.setState({hashtags: hashtags});
-    }
 
     public getLogo(): void {
         new Request(
@@ -400,6 +393,15 @@ class Admin extends React.Component<any, AdminState> {
             'blob',
         );
     }
+    
+    public updateHashtagsView(hashtagsView: ReactNode): void {
+        this.setState({hashtagsView: hashtagsView});
+    }
+
+    public updateHashtags(hashtags: string[]): void {
+        this.setState({hashtags: hashtags});
+    }
+
 
     public fillLogo(data: Blob): void {
         const img: any = document.getElementById('lobby-logo' + this.state.id);
