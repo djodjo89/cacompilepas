@@ -17,7 +17,23 @@ import SubmitButton from "../General/SubmitButton";
 
 interface AdminState {
     id: number,
-    isAdmin: string,
+    public refreshVisibility(): void {
+    new Request('/lobby/visibility/' + this.state.id, this.updateVisibility);
+}
+
+public handleLabelChange(event: ChangeEvent<HTMLInputElement>): void {
+    this.setState({newLabel: event.target.value});
+}
+
+public handleCourseSheetTitleChange(event: ChangeEvent<HTMLInputElement>): void {
+    this.setState({newCourseSheetTitle: event.target.value});
+}
+
+public handleDescriptionChange(event: ChangeEvent<HTMLTextAreaElement>): void {
+    this.setState({newDescription: event.target.value});
+}
+
+isAdmin: string,
     currentTab: string,
     currentLabel: string,
     currentDescription: string,
@@ -147,14 +163,7 @@ class Admin extends React.Component<any, AdminState> {
         }
     }
 
-    public fillUsers(data: any): void {
-        if (undefined === data['message']) {
-            this.setState({users: data});
-        } else {
-            this.setState({users: []});
-        }
-    }
-
+    public fillUsers(
     public updateVisibility(data: any): void {
         if (undefined === data['message']) {
             '1' === data[0]['private'] ? this.setState({private: 'true'}) : this.setState({private: 'false'});
@@ -177,21 +186,43 @@ class Admin extends React.Component<any, AdminState> {
         this.setState({newDescription: event.target.value});
     }
 
+    public refreshVisibility(): void {
+        new Request('/lobby/visibility/' + this.state.id, this.updateVisibility);
+    }
 
-    iofhezoifhoezhfiezhifh
-    zfihezoifhiez
-    iohfezoihoez
+    public handleLabelChange(event: ChangeEvent<HTMLInputElement>): void {
+        this.setState({newLabel: event.target.value});
+    }
+
+    public handleCourseSheetTitleChange(event: ChangeEvent<HTMLInputElement>): void {
+        this.setState({newCourseSheetTitle: event.target.value});
+    }
+
+    public handleDescriptionChange(event: ChangeEvent<HTMLTextAreaElement>): void {
+        this.setState({newDescription: event.target.value});
+    }
+
+
+
 
     public handleCourseSheetDescriptionChange(event: ChangeEvent<HTMLTextAreaElement>): void {
         this.setState({newCourseSheetDescription: event.target.value});
     }
 
     public handleLogoDrop(event: React.DragEvent<HTMLDivElement>): void {
-        event.preventDefault();
+        this.setState(
+            // @ts-ignore
+            {newLogo
+                foehzoihoezh
+                iofheozihfoezhofhzehfoo: event.target.files[0]},
+            this.getLogo
+        );
         this.setState(
             {newLogo: event.dataTransfer.files[0]},
             this.getLogo
-            );
+        );
+        event.preventDefault();
+
     }
 
     public oiezhgeizhgozehifgherz
@@ -200,13 +231,9 @@ class Admin extends React.Component<any, AdminState> {
 
     public handleLogoChange(event: ChangeEvent<HTMLInputElement>): void {
         // @ts-ignore
-        this.setState(
-            // @ts-ignore
-            {newLogo
-    foehzoihoezh
-    iofheozihfoezhofhzehfoo: event.target.files[0]},
-            this.getLogo
-            );
+        iofhezoifhoezhfiezhifh
+        zfihezoifhiez
+        iohfezoihoez
     }
 
     public handleCourse
@@ -284,7 +311,23 @@ class Admin extends React.Component<any, AdminState> {
         // @ts-ignore
         formData.append('token', localStorage.getItem('token'));
         if (
-            '' !== this.state.newCourseSheetTitle &&
+            '' !== this.state.newC
+        public refreshVisibility(): void {
+    new Request('/lobby/visibility/' + this.state.id, this.updateVisibility);
+}
+
+public handleLabelChange(event: ChangeEvent<HTMLInputElement>): void {
+    this.setState({newLabel: event.target.value});
+}
+
+public handleCourseSheetTitleChange(event: ChangeEvent<HTMLInputElement>): void {
+    this.setState({newCourseSheetTitle: event.target.value});
+}
+
+public handleDescriptionChange(event: ChangeEvent<HTMLTextAreaElement>): void {
+    this.setState({newDescription: event.target.value});
+}
+ourseSheetTitle &&
             '' !== this.state.newCourseSheetDescription &&
             null !== this.state.newCourseSheetDocument
         ) {
@@ -384,6 +427,16 @@ public renderLobbies(): ReactNode {
 
 
     public getLogo(): void {
+
+
+
+        public handleUserEmailChange(event: ChangeEvent<HTMLInputElement>): void {
+        this.setState({newUserEmail: event.target.value});
+}
+
+
+
+
         new Request(
             '/lobby/getLogo/0',
             this.fillLogo,
