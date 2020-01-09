@@ -305,57 +305,48 @@ class Admin extends React.Component<any, AdminState> {
     public refreshUsers(): void {
         new Request('/lobby/users/' + this.state.id, this.fillUsers);
     }
-
-    public fetchCourseSheets(data: any): void {
-        if (data['message'].includes('successfully')) {
-            this.refreshCourseSheets();
-        }
+    buttons: ['Non, merci', 'Oui !'],
+    icon: 'warning',
+    dangerMode: true,
+})
+.then((willDelete) => {
+    if (willDelete) {
+        this.delete();
+        swal('Ca y est, le lobby a été supprimé !', {
+            icon: 'success',
+        })
+    } else {
+        swal('Rassure-toi, le lobby n\'a pas été supprimé !');
     }
+})
+);
+}
 
-    public fetchUsers(data: any): void {
-        if (data['message'].includes('successfully')) {
-            this.refreshUsers();
-        }
-    }
+public refreshData(): void {
+    new Request(
+        '/connection/personal/0',
+        this.fetchData,
+    );
+}
 
-    public removeCourseSheetFromLobby(event: React.MouseEvent<HTMLImageElement, MouseEvent>): void {
-        let removeButton: any = event.target;
-        new Request('/lobby/deleteCourseSheet/' + this.state.id,
-            this.fetchCourseSheets,
-            'POST',
-            {
-                id: removeButton.id.split(/-/)[2],
-            });
-    }
-
-    public removeUserFromLobby(event: React.MouseEvent<HTMLImageElement, MouseEvent>): void {
-        let removeButton: any = event.target;
-        new Request('/lobby/removeUser/' + this.state.id,
-            this.fetchUsers,
-            'POST',
-            {
-                id: removeButton.id.split(/-/)[2],
-            });
-    }
-
-    public toggleWriteRights(event: React.ChangeEvent<HTMLInputElement>): void {
-        let action: string = true === event.target.checked ?
-            'addWriteRight/' :
-            'removeWriteRight/';
-        new Request(
-            '/lobby/' + action + this.state.id,
-            this.fetchUsers,
-            'POST',
-            {
-                id: event.target.id,
-            },
-        );
-    }
-
-    public addUser(event: React.MouseEvent<HTMLButtonElement, MouseEvent>): void {
-        new Request(
-            '/lobby/addUser/' + this.state.id,
-            this.refreshUsers,
+public renderLobbies(): ReactNode {
+    let res;
+    let i: number = 0;
+    if (0 !== this.state.lobbies.length && undefined !== this.state.lobbies[0]) {
+        res = this.state.lobbies.map(
+            (lobby: any) => {
+                i++;
+                return (
+                    <PublicLobby
+                        key={lobby['id_lobby']}
+                        id={lobby['id_lobby']}
+                        label={lobby['label_lobby']}
+                        description={lobby['description']}
+                        logo={lobby['logo']}
+                        pseudo={lobby['pseudo']}
+                        onTheRight={0 === i % 2}
+                    />
+                );            this.refreshUsers,
             'POST',
             {
                 email: this.state.newUserEmail,
@@ -393,7 +384,7 @@ class Admin extends React.Component<any, AdminState> {
             'blob',
         );
     }
-    
+
     public updateHashtagsView(hashtagsView: ReactNode): void {
         this.setState({hashtagsView: hashtagsView});
     }
