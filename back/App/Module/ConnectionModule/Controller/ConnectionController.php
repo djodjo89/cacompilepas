@@ -14,8 +14,8 @@ class ConnectionController extends AbstractController
             case 'login':
                 $email = $this->getRequest()->getEmail();
                 $password = $this->getRequest()->getPassword();
-                $idUser = $this->getModel()->checkIfUserExists($email, $password)['id_user'];
-                if ($idUser) {
+                if (0 !== count($this->getModel()->checkIfUserExists($email, $password))) {
+                    $idUser = $this->getModel()->checkIfUserExists($email, $password)['id_user'];
                     $result = [
                         'token' => $this->getModel()->generateToken($email, $password, $idUser),
                         'connected' => true,
