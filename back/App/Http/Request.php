@@ -46,11 +46,11 @@ class Request
     {
         $finalParam = '';
         $splitted = explode('_', $param);
-        if (count($splitted) > 1 && strtoupper($splitted[0]) === $splitted[0]) {
+        if (count($splitted) > 1 && strtoupper($splitted[0]) !== $splitted[0]) {
             foreach ($splitted as $index => $word) {
                 $finalParam .= strtoupper(substr($word, 0, 1)) . strtolower(substr($word, 1, strlen($word) - 1));
             }
-            $finalParam = strtolower(substr($finalParam, 0, 1)) . substr($finalParam, 0, strlen($finalParam) - 1);
+            $finalParam = strtolower(substr($finalParam, 0, 1)) . substr($finalParam, 1, strlen($finalParam));
         } else {
             $finalParam = strtolower(substr($param, 0, 1)) . substr($param, 1, strlen($param) - 1);
         }
