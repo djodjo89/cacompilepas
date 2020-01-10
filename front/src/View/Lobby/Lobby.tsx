@@ -162,15 +162,23 @@ class LobbySummary extends React.Component<{ courseSheets: [] }, {}> {
 
     public render(): ReactNode {
         return (
-            <section className="col-lg-12 col-sm-12 mt-sm-2 pr-sm-0 pr-xs-0">
-                <h2 className="text-left mb-0 mt-0">Sommaire</h2>
-                <ul className="lobby-summary-list list-unstyled text-left ml-1 mt-3">
-                    {this.renderList()}
-                </ul>
-                <Divider
-                    className={'offset-lg-3 col-lg-6 offset-md-2 col-md-8 col-sm-6 col-xs-6 mt-5 mb-2'}/>
+            <section className={'col-lg-12 col-sm-12 pr-sm-0 pr-xs-0' + (0 !== this.props.courseSheets.length ? ' mt-sm-2' : '')}>
+                {
+                    0 !== this.props.courseSheets.length ?
+                        <div>
+                            <h2 className="text-left mb-0 mt-0 ml-4">Sommaire</h2>
+                            <ul className="lobby-summary-list list-unstyled text-left ml-1 mt-3 ml-4">
+                                {this.renderList()}
+                            </ul>
+                            <Divider
+                                className={'offset-lg-3 col-lg-6 offset-md-2 col-md-8 col-sm-6 col-xs-6 mt-5 mb-2 ml-4'}
+                            />
+                        </div>
+                        :
+                        <div></div>
+                }
             </section>
-        )
+        );
     }
 }
 
@@ -232,9 +240,18 @@ class LobbyDescription extends React.Component<{ id: string }, { lobby: any }> {
                         />
                     </div>
                     <div className={'col-lg-10 col-md-10 col-sm-9 col-xs-8 pr-0'}>
-                        <p className="lobby-page-description">{this.state.lobby['description']}</p>
+                        <div className={'row'}>
+                            <div className={'col-12 text-left'}>
+                                <h1>{this.state.lobby['label_lobby']}</h1>
+                            </div>
+                        </div>
+                        <div className={'row'}>
+                            <div className={'col-12'}>
+                                <p className="lobby-page-description">{this.state.lobby['description']}</p>
+                            </div>
+                        </div>
                     </div>
-                    <Divider className={'col-lg-3 col-md-6 col-sm-6 col-xs-6 mt-5 mb-5'}/>
+                    <Divider className={'col-lg-3 col-md-6 col-sm-6 col-xs-6 mt-5 ml-5 mb-5'}/>
                 </div>
             </section>
         )
@@ -254,22 +271,42 @@ class LobbyBody extends React.Component<LobbyBodyProps, any> {
         return (
             <div className={'col-lg-12 col-md-12 col-sm-12 col-xs-12'}>
                 <div className={'col-lg-6 col-md-6 col-sm-12 col-xs-12 container-fluid'}>
-                    <CourseSheets
-                        id={this.props.id}
-                        courseSheets={this.props.courseSheets}
-                        className={'mt-lg-3'}
-                        activeRemoveButton={false}
-                        removableHashtags={false}
-                        delete={undefined}
-                    />
+                    {
+                        // @ts-ignore
+                        undefined !== this.props.courseSheets[0] ?
+                            <CourseSheets
+                                id={this.props.id}
+                                courseSheets={this.props.courseSheets}
+                                className={'mt-lg-3'}
+                                activeRemoveButton={false}
+                                removableHashtags={false}
+                                delete={undefined}
+                            />
+                            :
+                            <div className={'row mt-5'}>
+                                <div className={'col-12 text-left'}>
+                                    <p>Il n'y a pas de fiches de cours pour l'instant</p>
+                                </div>
+                            </div>
+                    }
                 </div>
                 <div className={'col-lg-6 col-md-6 col-sm-12 col-xs-12 container-fluid'}>
-                    <div className={'row'}>
-                        <Messages
-                            id={this.props.id}
-                            messages={this.props.messages}
-                        />
-                    </div>
+                    {
+                        // @ts-ignore
+                        undefined !== this.props.messages[0] ?
+                            <div className={'row'}>
+
+                                <Messages
+                                    id={this.props.id}
+                                    messages={this.props.messages}
+                                /></div>
+                            :
+                            <div className={'row mt-5 mb-5'}>
+                                <div className={'col-12 text-left'}>
+                                    <p>Il n'y a pas de messages pour l'instant</p>
+                                </div>
+                            </div>
+                    }
                     <div className={'row'}>
                         <WriteMessageZone
                             labelLobby={this.props.labelLobby}
