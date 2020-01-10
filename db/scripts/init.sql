@@ -232,6 +232,7 @@ INSERT INTO ccp_rights (read_right,write_right,id_lobby_protect,id_user) VALUES 
 /******   ccp_is_admin   ********/
 INSERT INTO ccp_is_admin (id_user, id_lobby) VALUES (1, 1);
 INSERT INTO ccp_is_admin (id_user, id_lobby) VALUES (2, 2);
+INSERT INTO ccp_is_admin (id_user, id_lobby) VALUES (1, 3);
 
 /******   ccp_hashtag    ********/
 INSERT INTO ccp_hashtag (label_hashtag, id_course_sheet) VALUES ("programmation", 1);

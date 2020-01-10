@@ -10,7 +10,7 @@ interface ConnectionStates {
     formWasSubmitted: boolean,
 }
 
-class Connection extends React.Component<{referrer: string}, ConnectionStates> {
+class Connection extends React.Component<{ referrer: string }, ConnectionStates> {
     private email: string;
     private password: string;
 
@@ -106,13 +106,16 @@ class Connection extends React.Component<{referrer: string}, ConnectionStates> {
                                 } else if ('false' === this.state.status && true === this.state.formWasSubmitted) {
                                     return (
                                         <div
-                                            className="col-lg-3 col-sm-11 offset-lg-4 mt-0 mb-sm-3 rounded-1 connection-error">
-                                            Identifiants incorrects
+                                            className={'col-lg-3 col-sm-11 mt-0 mb-lg-4 mb-md-4 mb-sm-4 mb-xs-4 rounded-1 container-fluid p-0'}
+                                        >
+                                            <div className={'container-fluid col-12 p-0'}>
+                                                <div className={'col-12 connection-error'}>
+                                                    Identifiants incorrects
+                                                </div>
+                                            </div>
                                         </div>
                                     );
                                 }
-                            } else {
-                                return
                             }
                         })()}
                     </div>
