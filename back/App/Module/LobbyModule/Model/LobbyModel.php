@@ -12,22 +12,29 @@ use Firebase\JWT\JWT;
 
 class LobbyModel extends AbstractModel
 {
-
-    public function checkRights(int $idLobby, string $token): string
+    public function isAdmin(int $idUser, int $idLobby): bool
     {
-        $decoded = $this->getUserFromToken($token);
-
-        if ($result = (new ConnectionModel($this->getConnection()))->checkIfUserExists($decoded['email'], $decoded['password'])) {
-            $idUser = $result['id_user'];
-            $this->send_query('
+        $this->send_query('
                 SELECT id_user
                 FROM ccp_is_admin
                 WHERE id_user = ?
                 AND id_lobby = ?
             ',
-                [(int)$idUser, $idLobby]);
+            [(int)$idUser, $idLobby]);
+        if ($this->getQuery()->fetch()) {
+            return true;
+        } else {
+            return false;
+        }
+    }
+    public function checkRights(int $idLobby, string $token): string
+    {
+        $decoded = $this->getUserFromToken($token);
 
-            if ($result = $this->getQuery()->fetch()) {
+        if ($result = (new ConnectionModel($this->getConnection()))->checkIfUserExists($decoded['email'], $decoded['password'])) {
+            $isAdmin = $this->isAdmin((int)$result['id_user'], $idLobby);
+
+            if ($isAdmin) {
                 return 'admin';
             } else {
                 $this->send_query('
@@ -39,7 +46,7 @@ class LobbyModel extends AbstractModel
                     id_user = ?
                     AND id_lobby_protect = ?
                 ',
-                    [(int)$idUser, $idLobby]);
+                    [(int)$result['id_user'], $idLobby]);
                 if ($result = $this->getQuery()->fetch()) {
                     return 'user';
                 } else {
@@ -121,17 +128,22 @@ class LobbyModel extends AbstractModel
 
     public function verifyIfRightExists(int $idLobby, int $idUser): bool
     {
-        $this->send_query('
+        $isAdmin = $this->isAdmin($idUser, $idLobby);
+        if (!$isAdmin) {
+            $this->send_query('
             SELECT id_right FROM ccp_rights
             WHERE id_lobby_protect = ?
             AND id_user = ?
         ',
-            [$idLobby, $idUser]);
+                [$idLobby, $idUser]);
 
-        if ($result = $this->getQuery()->fetch()) {
-            return true;
+            if ($result = $this->getQuery()->fetch()) {
+                return true;
+            } else {
+                return false;
+            }
         } else {
-            return false;
+            return true;
         }
     }
 
@@ -265,7 +277,7 @@ class LobbyModel extends AbstractModel
     public function getUsers(int $idLobby): array
     {
         $this->send_query('
-            SELECT ccp_user.id_user, pseudo, icon, write_right
+            SELECT DISTINCT id_user, pseudo, icon, write_right
             FROM ccp_user
             INNER JOIN ccp_rights cr ON ccp_user.id_user = cr.id_user
             LEFT OUTER JOIN ccp_is_admin cia ON ccp_user.id_user = cia.id_user
@@ -311,8 +323,8 @@ class LobbyModel extends AbstractModel
         $this->send_query('
             SELECT id_lobby, label_lobby, description, logo, pseudo
             FROM ccp_lobby
-            INNER JOIN ccp_is_admin USING(id_lobby)
-            INNER JOIN ccp_user USING(id_user)
+            LEFT OUTER JOIN ccp_is_admin USING(id_lobby)
+            LEFT OUTER JOIN ccp_user USING(id_user)
             WHERE private = 0
         ');
         return $this->fetchData(['message' => 'There is no public lobby']);
@@ -335,24 +347,42 @@ class LobbyModel extends AbstractModel
         }
     }
   
-    public function getLobbiesByKeyWords(array $search): array
+    public function searchLobbies(array $search, array $hashtags): array
     {
         $count = 0;
-        $length = count($search);
-        $params = '';
+        $lengthSearch = count($search);
+        $searchParams = '';
+        $hashtagsParams = '';
+        $lengthHashtags = count($hashtags);
 
         foreach ($search as $key => $value) {
-            $params .= " UPPER(label_lobby) LIKE UPPER('%" . $value . "%')";
-            if ($count !== $length - 1) {
-                $params .= ' AND';
+            $searchParams .= " UPPER(label_lobby) LIKE UPPER('%" . $value . "%')";
+            if ($count !== $lengthSearch - 1) {
+                $searchParams .= ' AND';
+            }
+            $count++;
+        }
+
+        $count = 0;
+
+        foreach ($hashtags as $key => $value) {
+            $hashtagsParams .= " label_hashtag = '" . $value . "'";
+            if ($count !== $lengthHashtags - 1) {
+                $hashtagsParams .= ' OR';
             }
             $count++;
         }
 
         $this->send_query('
-            SELECT id_lobby, label_lobby, ccp_lobby.description, logo 
+            SELECT DISTINCT id_lobby, label_lobby, ccp_lobby.description, logo 
             FROM ccp_lobby 
-            WHERE ' . $params . ' AND private = 0',
+            LEFT OUTER JOIN ccp_coursesheet on ccp_lobby.id_lobby = ccp_coursesheet.id_lobby_contain
+            NATURAL JOIN ccp_hashtag
+            WHERE
+            ' . (0 !== $lengthSearch ? '(' . $searchParams . ') ' : '') .
+            (0 !== $lengthHashtags ? ' AND (' . $hashtagsParams . ')' : '') . '
+            AND private = 0
+            ',
             []);
         return $this->fetchData([]);
     }

@@ -58,9 +58,10 @@ class LobbyCreation extends React.Component<any, LobbyCreationState> {
     }
 
     public checkIfOk(data: any): void {
-        this.setState({id: data['id_lobby']});
-        this.setState({logoPath: data['logo']});
-        console.log(data);
+        if (undefined !== data['id_lobby']) {
+            // @ts-ignore
+            document.location = '/lobby/' + data['id_lobby'];
+        }
     }
 
     public getLogo(): void {
@@ -124,7 +125,7 @@ class LobbyCreation extends React.Component<any, LobbyCreationState> {
                 </div>
                 <div className={'row'}>
                     <div className={'row container-fluid'}>
-                        <div className={'col-12'}>
+                        <div className={'col-lg-6 col-md-6 col-sm-12 col-xs-12'}>
                             <Input id={'labelInput'}
                                    inputType={'text'}
                                    placeholder={'Titre du lobby (n\'en mets pas un trop long)'}

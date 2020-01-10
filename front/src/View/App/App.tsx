@@ -29,8 +29,8 @@ class App extends React.Component {
                         </Route>
                         <PrivateRoute path={'/lobby'} component={Lobby} rest={[]}/>
                         <PrivateRoute path={'/coursesheet'} component={CourseSheetPage} rest={[]}/>
-                        <Route path={'/connexion'}>
-                            <Connection/>
+                        <Route path={'/connexion/login'}>
+                            <Connection referrer={document.referrer}/>
                         </Route>
                         <PrivateRoute path={'/admin'} component={Admin} rest={[]}/>
                         <PrivateRoute path={'/creation'} component={LobbyCreation} rest={[]}/>

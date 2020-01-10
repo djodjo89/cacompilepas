@@ -48,10 +48,10 @@ class PublicLobby extends React.Component<PublicLobbyProps, any> {
 
     public render(): ReactNode {
         return (
-            <div className={'container-fluid row col-lg-5 mt-lg-0 mt-sm-4 pr-0 mb-lg-5 mr-lg-4 pl-lg-0 pl-md-0 pl-sm-2 pl-xs-2 '
-                + (this.props.onTheRight ? 'mr-lg-5' : ' offset-lg-1 ml-lg-5')
+            <div className={'container-fluid row col-lg-5 mt-lg-0 mt-sm-4 pr-0 mb-5 mr-lg-4 pl-lg-0 pl-md-0 pl-sm-2 pl-xs-2 '
+                + (this.props.onTheRight ? 'ml-lg-5 pl-lg-5' : 'offset-lg-1 ml-lg-0')
             }>
-                <div className={'col-lg-3 col-md-3 col-sm-4 pl-0 pr-lg-5 pr-md-5 pr-sm-4 pr-xs-5'}>
+                <div className={'col-lg-3 col-md-3 col-sm-3 col-xs-3 pl-0 pr-lg-5 pr-md-5 pr-sm-4 pr-xs-5'}>
                     <img
                         id={'lobby-logo-' + this.props.id}
                         className={'lobby-logo'}
@@ -82,13 +82,13 @@ class PublicLobby extends React.Component<PublicLobbyProps, any> {
                         <p>{this.props.description}</p>
                     </div>
                     <div className={'row mt-lg-3 mt-md-3 mt-sm-3 mt-xs-3'}>
-                        <div className={'col-lg-8 col-md-8 col-sm-8 col-xs-8 text-left p-0'}>
+                        <div className={'col-lg-5 col-md-5 col-sm-5 col-xs-5 text-left p-0'}>
                             <a
                                 href={'/lobby/' + this.props.id}
                             ><p>Lien vers le lobby</p></a>
                         </div>
-                        <div className={'col-lg-4 col-md-4 col-sm-4 col-xs-4 p-0'}>
-                            <p className={' text-right'}>{this.props.pseudo}</p>
+                        <div className={'col-lg-7 col-md-7 col-sm-7 col-xs-7 p-0'}>
+                            <p className={' text-right'}>{undefined !== this.props.pseudo ? this.props.pseudo : <a href={'/admin/' + this.props.id}>Admin de {this.props.label.substr(0, 3)}...</a>}</p>
                         </div>
                     </div>
                 </div>

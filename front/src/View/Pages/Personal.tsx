@@ -4,6 +4,7 @@ import '../../css/Personal.css';
 import Request from "../../API/Request";
 import Divider from "../General/Divider";
 import PublicLobby from "../Public/PublicLobby";
+import SubmitButton from "../General/SubmitButton";
 
 interface PersonalState {
     personalInformation: any,
@@ -88,9 +89,8 @@ class Personal extends React.Component<any, PersonalState> {
                             logo={lobby['logo']}
                             pseudo={lobby['pseudo']}
                             onTheRight={0 === i % 2}
-                            delete={this.deleteLobby}
                             activeRemoveButton={true}
-                        />
+                            delete={this.deleteLobby}/>
                     );
                 }
             );
@@ -130,9 +130,9 @@ class Personal extends React.Component<any, PersonalState> {
 
     public render(): ReactNode {
         return (
-            <div className={'container-fluid mt-5'}>
-                <div className={'row container-fluid'}>
-                    <div className={'row container-fluid'}>
+            <div className={'container-fluid mt-5 pr-0'}>
+                <div className={'row container-fluid pr-0'}>
+                    <div className={'row container-fluid pr-0'}>
                         <div className={'col-12'}>
                             <img
                                 id={'personal-icon-' + this.state.personalInformation['id_user']}
@@ -141,9 +141,19 @@ class Personal extends React.Component<any, PersonalState> {
                             />
                         </div>
                     </div>
-                    <div className={'row container-fluid mt-5'}>
-                        <div className={'col-12 text-center'}>
+                    <div className={'row container-fluid mt-5 pr-0'}>
+                        <div className={'offset-lg-3 col-lg-3 col-md-6 col-sm-6 col-xs-12 text-lg-left text-sm-center'}>
                             <h3>{this.state.personalInformation['first_name']}</h3>
+                        </div>
+                        <div className={'offset-lg-1 col-lg-5 col-md-6 col-sm-6 col-xs-12 mt-4'}>
+                            <a href={'/creation'}>
+                                <SubmitButton
+                                    text={'Crée un lobby ici !'}
+                                    onClick={(event: any) => console.log('Lobby creation')}
+                                    className={'mt-1px offset-lg-5 col-lg-7 col-md-6 col-sm-12 col-xs-12 container-fluid add-coursesheet-button mt-5'}
+                                    disconnectButton={false}
+                                />
+                            </a>
                         </div>
                     </div>
                 </div>
