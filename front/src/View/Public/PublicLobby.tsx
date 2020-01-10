@@ -68,10 +68,10 @@ class PublicLobby extends React.Component<PublicLobbyProps, any> {
                             {this.props.activeRemoveButton ?
                                 <div className={'col-lg-1 col-md-1 col-sm-1 col-xs-1'}>
                                     <img
-                                        id={'coursesheet-remove-' + this.props.id}
+                                        id={'course-sheet-remove-' + this.props.id}
                                         src={minusIcon}
                                         alt={'Minus Icon'}
-                                        className={'remove-button plus-icon ml-5 mr-0'}
+                                        className={'remove-button minus-icon ml-5 mr-0'}
                                         onClick={this.props.delete}
                                     />
                                 </div> :

@@ -28,7 +28,7 @@ describe('Lobby Test', () => {
             .should('not.be.visible');
         cy.get('lobby-summary-list').should('not.exist');
         cy.get('course-sheets-section').should('not.exist');
-        cy.get('no-coursesheet-message').should('not.be.empty');
+        cy.get('no-course-sheet-message').should('not.be.empty');
         cy.get('messages-list').should('not.exist');
         cy.get('no-messages-message').should('not.be.empty');
     })

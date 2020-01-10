@@ -46,11 +46,11 @@
     height: 40px;
 }
 
-#titleInput {
+#title-input {
     width: 220px;
 }
 
-.add-coursesheet-button {
+.add-course-sheet-button {
     width: 100% !important;
     margin-top: 0px !important;
     margin-left: 15px;
@@ -131,4 +131,9 @@
 
 .hashtagInputBox {
     margin-bottom: -31px !important;
+}
+
+.hashtag {
+    margin-top: 3px !important;
+    padding-top: 0 !important;
 }

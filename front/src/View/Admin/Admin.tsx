@@ -324,7 +324,7 @@ class Admin extends React.Component<any, AdminState> {
             this.fetchCourseSheets,
             'POST',
             {
-                id: removeButton.id.split(/-/)[2],
+                id: removeButton.id.split(/-/)[3],
             });
     }
 
@@ -384,6 +384,7 @@ class Admin extends React.Component<any, AdminState> {
     }
 
     public updateHashtags(hashtags: string[]): void {
+        console.log(hashtags);
         this.setState({hashtags: hashtags});
     }
 
@@ -482,7 +483,7 @@ class Admin extends React.Component<any, AdminState> {
                                         );
                                         break;
 
-                                    case 'coursesheets':
+                                    case 'course-sheets':
                                         tab = (
                                             <div className={'container-fluid  col-lg-8 col-md-12 col-sm-12 col-xs-12'}>
                                                 <h2>Informations visibles par les visiteurs</h2>
@@ -490,12 +491,12 @@ class Admin extends React.Component<any, AdminState> {
                                                     <div
                                                         className={'col-lg-4 col-md-4 col-sm-4 col-xs-4 pr-lg-0 pl-sm-4'}>
                                                         <div className={'centered-80'}>
-                                                            <Input id={'titleInput'} inputType={'text'}
+                                                            <Input id={'title-input'} inputType={'text'}
                                                                    placeholder={'Titre'}
                                                                    className={'no-mb'}
                                                                    checked={false}
                                                                    onChange={this.handleCourseSheetTitleChange}/>
-                                                            <DropBox id={'courseSheetInput'}
+                                                            <DropBox id={'course-sheet-input'}
                                                                      className={'text-sm-left'}
                                                                      backgroundClassName={'mt-1'}
                                                                      labelNotDragged={'Glisse une fiche par ici !'}
@@ -537,7 +538,7 @@ class Admin extends React.Component<any, AdminState> {
                                                                             updateHashtagsView={this.updateHashtagsView}
                                                                             updateHashtags={this.updateHashtags}
                                                                             updateText={this.updateText}
-                                                                            hashtagClassName={'hashtagInputBox'}
+                                                                            hashtagClassName={'hashtagInputBox hashtag'}
                                                                         />
                                                                     </div>
                                                                 </div>
@@ -547,7 +548,7 @@ class Admin extends React.Component<any, AdminState> {
                                                             <SubmitButton
                                                                 text={'Une nouvelle fiche ? Ajoute-la !'}
                                                                 onClick={this.addCourseSheet}
-                                                                className={'mt-1px col-sm-12 container-fluid add-coursesheet-button mt-5'}
+                                                                className={'mt-1px col-sm-12 container-fluid add-course-sheet-button mt-5'}
                                                                 disconnectButton={false}
                                                             />
                                                         </div>
@@ -655,7 +656,7 @@ class Admin extends React.Component<any, AdminState> {
                                                         </li>
                                                         <li className="nav-item" onClick={this.navigateToCourseSheets}>
                                                             <a className="nav-link custom-tab"
-                                                               href={'coursesheets'}>Fiches</a>
+                                                               href={'course-sheets'}>Fiches</a>
                                                         </li>
                                                         <li className="nav-item" onClick={this.navigateToCourseSheets}>
                                                             <a className="nav-link custom-tab"

@@ -32,7 +32,7 @@ class User extends React.Component<UserProps, any> {
                             id={'user-remove-' + this.props.id}
                             src={minusIcon}
                             alt={'Minus Icon'}
-                            className={'remove-button plus-icon ml-5 mr-0'}
+                            className={'remove-button minus-icon ml-5 mr-0'}
                             onClick={this.props.delete}
                         />
                     </div>
