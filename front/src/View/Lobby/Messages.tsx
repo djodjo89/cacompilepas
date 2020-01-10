@@ -39,8 +39,8 @@ class Messages extends React.Component<{ id: string, messages: [] }, any> {
 
     public render(): ReactNode {
         return (
-            <div className={'col-lg-12 col-md-12 col-sm-12 col-xs-12 pl-lg-0 pl-sm-0 pr-lg-5 mt-lg-3 mt-sm-4'}>
-                <ul className={'messages-list list-unstyled'}>
+            <div className="col-lg-12 col-md-12 col-sm-12 col-xs-12 pl-lg-0 pl-sm-0 pr-lg-5 mt-lg-3 mt-sm-4">
+                <ul className="messages-list list-unstyled">
                     {this.renderMessages()}
                 </ul>
             </div>
