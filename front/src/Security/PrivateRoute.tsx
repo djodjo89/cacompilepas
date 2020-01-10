@@ -58,7 +58,7 @@ class PrivateRoute extends React.PureComponent<PrivateRouteProps, { status: stri
                     return React.createElement(this.props.component, this.props);
                 } else if ('false' === this.state.status) {
                     const referrer = document.documentURI;
-                    window.history.pushState("", "", '/connexion/login');
+                    window.history.pushState("", "", '/connexion');
                     return <Connection referrer={referrer}/>
                 } else {
                     return <div className={'mt-5'}><Loader/></div>;
