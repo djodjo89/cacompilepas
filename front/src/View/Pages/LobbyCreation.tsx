@@ -126,7 +126,7 @@ class LobbyCreation extends React.Component<any, LobbyCreationState> {
                 <div className={'row'}>
                     <div className={'row container-fluid'}>
                         <div className={'col-lg-6 col-md-6 col-sm-12 col-xs-12'}>
-                            <Input id={'labelInput'}
+                            <Input id={'label-input'}
                                    inputType={'text'}
                                    placeholder={'Titre du lobby (n\'en mets pas un trop long)'}
                                    checked={false}
@@ -136,7 +136,7 @@ class LobbyCreation extends React.Component<any, LobbyCreationState> {
                     </div>
                     <div className={'row container-fluid'}>
                         <div className={'col-lg-6 col-md-6 col-sm-6 col-xs-12'}>
-                            <InputArea id={'descriptionInput'}
+                            <InputArea id={'description-input'}
                                        placeholder={'Nouvelle description du lobby\nRacontes-y ce que tu veux, du moment que ça reste dans le thème de ton lobby'}
                                        className={''}
                                        textAreaClassName={''}

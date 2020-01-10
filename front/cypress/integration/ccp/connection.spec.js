@@ -1,5 +1,5 @@
-describe('First Test', function () {
-    it('Visits the connection page', function () {
+describe('Connection Test', () => {
+    it('Visits the connection page', () => {
         // Private route redirection test
         localStorage.setItem('token', '');
         cy.visit('http://localhost:3000/lobby/12');
@@ -44,7 +44,8 @@ describe('First Test', function () {
 
         cy.location('href')
             .should('be.equal', 'http://localhost:3000/lobby/12');
-
+    })
+    it('Disconnect', () => {
         // Disconnect button test
         cy.contains('Connecté')
             .parent()
@@ -53,7 +54,8 @@ describe('First Test', function () {
 
         cy.location('href')
             .should('be.equal', 'http://localhost:3000/');
-
+    })
+    it('Go to connection page', () => {
         // Connect button test
         cy.get('#user')
             .click();

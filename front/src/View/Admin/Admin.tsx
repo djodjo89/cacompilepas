@@ -402,7 +402,7 @@ class Admin extends React.Component<any, AdminState> {
     }
 
     public fillLogo(data: Blob): void {
-        const img: any = document.getElementById('lobby-logo' + this.state.id);
+        const img: any = document.getElementById('lobby-logo-' + this.state.id);
         const blob = new Blob([data], {type: 'image/jpg'});
         img.src = URL.createObjectURL(blob);
     }
@@ -427,13 +427,13 @@ class Admin extends React.Component<any, AdminState> {
                                         tab = (
                                             <div className={'container-fluid col-lg-8 col-md-12 col-sm-12 col-xs-12'}>
                                                 <h2>Informations visibles par les visiteurs</h2>
-                                                <Input id={'labelInput'}
+                                                <Input id={'label-input'}
                                                        inputType={'text'}
                                                        placeholder={'Titre du lobby (n\'en mets pas un trop long)'}
                                                        checked={false}
                                                        className={'mt-5'} onChange={this.handleLabelChange}/>
                                                 <div className={'row mt-5'}>
-                                                    <InputArea id={'descriptionInput'}
+                                                    <InputArea id={'new-description-input'}
                                                                placeholder={'Nouvelle description du lobby\nRacontes-y ce que tu veux, du moment que ça reste dans le thème de ton lobby'}
                                                                className={'col-lg-6 col-md-6 col-sm-6 col-xs-6'}
                                                                textAreaClassName={''}
@@ -441,7 +441,7 @@ class Admin extends React.Component<any, AdminState> {
                                                                onChange={this.handleDescriptionChange}
                                                                disabled={false}
                                                     />
-                                                    <InputArea id={'descriptionInput'}
+                                                    <InputArea id={'current-description-input'}
                                                                placeholder={'Description actuelle du lobby\n' + this.state.currentDescription}
                                                                className={'col-lg-6 col-md-6 col-sm-6 col-xs-6'}
                                                                textAreaClassName={''}
@@ -454,7 +454,7 @@ class Admin extends React.Component<any, AdminState> {
                                                     <div className={'col-6'}>
                                                         <h3>Logo actuel</h3>
                                                         <img
-                                                            id={'lobby-logo' + this.state.id}
+                                                            id={'lobby-logo-' + this.state.id}
                                                             className={'lobby-logo'}
                                                             src={this.state.logoPath}
                                                             alt={'Lobby logo'}
@@ -508,7 +508,7 @@ class Admin extends React.Component<any, AdminState> {
                                                     <div className={'col-lg-8 col-md-8 col-sm-8 col-xs-8 pl-lg-0'}>
                                                         <div
                                                             className={'row container-fluid course-sheet-textarea-container'}>
-                                                            <InputArea id={'descriptionInput'}
+                                                            <InputArea id={'description-input'}
                                                                        placeholder={'Description de la fiche\nFais-en un bref résumé permettant de savoir à quoi s\'attendre en la lisant'}
                                                                        className={'col-lg-12 col-md-12 col-sm-12 col-xs-12 course-sheet-textarea'}
                                                                        textAreaClassName={'course-sheet-textarea'}
@@ -646,7 +646,7 @@ class Admin extends React.Component<any, AdminState> {
                                     <section className={'content row container-fluid'}>
                                         <div className={'row col col-lg-12 col-md-12 col-sm-12 col-xs-12'}>
                                             <div className={'admin-header'}>
-                                                <h1>{this.state.currentLabel}</h1>
+                                                <h1 className={'lobby-title'}>{this.state.currentLabel}</h1>
                                                 <nav>
                                                     <ul className="nav nav-tabs custom-tab-nav">
                                                         <li className="nav-item" onClick={this.navigateToCourseSheets}>
