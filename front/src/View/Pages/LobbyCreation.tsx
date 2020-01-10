@@ -159,7 +159,7 @@ class LobbyCreation extends React.Component<any, LobbyCreationState> {
                     <div className={'row container-fluid'}>
                             <div className={'pl-lg-3 pl-md-3 pl-sm-3 pl-xs-3 pt-lg-2 pt-md-1 pt-sm-3 pt-xs-4 pr-lg-2 pr-md-2 pr-sm-0 pr-xs-0'}>
                                 <Input
-                                    id={'visibilitInput'}
+                                    id={'visibility-input'}
                                     inputType={'checkbox'}
                                     checked={this.state.isPrivate}
                                     placeholder={'Lobby privé'}

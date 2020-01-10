@@ -347,7 +347,7 @@ class Admin extends React.Component<any, AdminState> {
             this.fetchUsers,
             'POST',
             {
-                id: event.target.id,
+                id: event.target.id.split(/-/)[3],
             },
         );
     }
@@ -597,7 +597,7 @@ class Admin extends React.Component<any, AdminState> {
                                                     <div className={'row'}>
                                                         <div className={'col-12 pl-0 add-usr-button'}>
                                                             <Input
-                                                                id={'friendInput'}
+                                                                id={'friend-input'}
                                                                 inputType={'email'}
                                                                 placeholder={'Un ami veut voir ton lobby ? Alors saisis son adresse email ici'}
                                                                 checked={false}
@@ -620,7 +620,7 @@ class Admin extends React.Component<any, AdminState> {
                                                 <div className={'row col-12 pt-5'}>
                                                     <div className={'col-1 pt-2 pl-0 pr-0'}>
                                                         <Input
-                                                            id={'visibilitInput'}
+                                                            id={'visibility-input'}
                                                             inputType={'checkbox'}
                                                             checked={'true' === this.state.private ? true : false}
                                                             placeholder={''}

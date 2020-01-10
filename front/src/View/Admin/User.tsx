@@ -48,7 +48,7 @@ class User extends React.Component<UserProps, any> {
                     <div className={'row col-10 pt-5'}>
                         <div className={'col-1 pt-2 pl-0 pr-0'}>
                             <Input
-                                id={this.props.id}
+                                id={'user-right-checkbox-' + this.props.id}
                                 inputType={'checkbox'}
                                 checked={this.props.writeRight}
                                 placeholder={''}
