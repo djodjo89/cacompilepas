@@ -166,8 +166,8 @@ class LobbySummary extends React.Component<{ courseSheets: [] }, {}> {
                 {
                     0 !== this.props.courseSheets.length ?
                         <div>
-                            <h2 className="text-left mb-0 mt-0 ml-4">Sommaire</h2>
-                            <ul className="lobby-summary-list list-unstyled text-left ml-1 mt-3 ml-4">
+                            <h2 className={'text-left mb-0 mt-0 ml-4'}>Sommaire</h2>
+                            <ul className={'lobby-summary-list list-unstyled text-left ml-1 mt-3 ml-4'}>
                                 {this.renderList()}
                             </ul>
                             <Divider
@@ -242,7 +242,7 @@ class LobbyDescription extends React.Component<{ id: string }, { lobby: any }> {
                     <div className={'col-lg-10 col-md-10 col-sm-9 col-xs-8 pr-0'}>
                         <div className={'row'}>
                             <div className={'col-12 text-left'}>
-                                <h1>{this.state.lobby['label_lobby']}</h1>
+                                <h1 id={'lobby-label'}>{this.state.lobby['label_lobby']}</h1>
                             </div>
                         </div>
                         <div className={'row'}>
@@ -285,7 +285,7 @@ class LobbyBody extends React.Component<LobbyBodyProps, any> {
                             :
                             <div className={'row mt-5'}>
                                 <div className={'col-12 text-left'}>
-                                    <p>Il n'y a pas de fiches de cours pour l'instant</p>
+                                    <p className={'no-coursesheet-message'}>Il n'y a pas de fiches de cours pour l'instant</p>
                                 </div>
                             </div>
                     }
@@ -303,7 +303,7 @@ class LobbyBody extends React.Component<LobbyBodyProps, any> {
                             :
                             <div className={'row mt-5 mb-5'}>
                                 <div className={'col-12 text-left'}>
-                                    <p>Il n'y a pas de messages pour l'instant</p>
+                                    <p className={'no-messages-message'}>Il n'y a pas de messages pour l'instant</p>
                                 </div>
                             </div>
                     }
