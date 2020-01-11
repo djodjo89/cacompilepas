@@ -1,6 +1,7 @@
 import React, {ReactNode} from "react";
 import Request from "../../API/Request";
 import PublicLobby from "./PublicLobby";
+import Header from "../General/Header";
 
 interface PublicLobbiesState {
     lobbies: any[],
@@ -64,20 +65,10 @@ class PublicLobbies extends React.Component<any, PublicLobbiesState> {
     public render(): ReactNode {
         return (
             <div className={'container-fluid'}>
-                <div className={'row container-fluid pl-0'}>
-                    <div className={'row col-12'}>
-                        <div className={'col-12 text-left'}>
-                            <h1>Lobbies publics</h1>
-                        </div>
-                    </div>
-                    <div className={'row'}>
-                        <div className={'col-12 ml-4'}>
-                            <div className={'ml-1'}>
-                                <p>Ici tu pourras trouver les lobbies publics</p>
-                            </div>
-                        </div>
-                    </div>
-                </div>
+                <Header
+                    h1={'Lobbies publics'}
+                    p={'Ici tu pourras trouver les lobbies publics'}
+                />
                 <div className={'row container-fluid pt-lg-5 pt-md-5 pr-0'}>
                     {this.renderLobbies()}
                 </div>

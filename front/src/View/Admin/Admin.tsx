@@ -477,7 +477,7 @@ class Admin extends React.Component<any, AdminState> {
                                                     text={'Mettre à jour le lobby'}
                                                     onClick={this.updateLobbby}
                                                     className={'mt-5'}
-                                                    disconnectButton={false}
+                                                    disconnectButton={'plus'}
                                                 />
                                             </div>
                                         );
@@ -549,7 +549,7 @@ class Admin extends React.Component<any, AdminState> {
                                                                 text={'Une nouvelle fiche ? Ajoute-la !'}
                                                                 onClick={this.addCourseSheet}
                                                                 className={'mt-1px col-sm-12 container-fluid add-course-sheet-button mt-5'}
-                                                                disconnectButton={false}
+                                                                disconnectButton={'plus'}
                                                             />
                                                         </div>
                                                     </div>
@@ -612,7 +612,7 @@ class Admin extends React.Component<any, AdminState> {
                                                                 text={'Ca y est ? Alors c\'est parti, ajoute-le !'}
                                                                 onClick={this.addUser}
                                                                 className={'mt-0 col-12 add-usr-button'}
-                                                                disconnectButton={false}
+                                                                disconnectButton={'plus'}
                                                             />
                                                         </div>
                                                     </div>

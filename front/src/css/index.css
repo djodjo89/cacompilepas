@@ -103,3 +103,7 @@ input {
 	height: 64px;
 	width: 64px;
 }
+
+.header-title {
+	margin-left: -3px;
+}
