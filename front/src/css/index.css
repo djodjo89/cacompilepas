@@ -62,6 +62,13 @@ input {
 	margin-right: 25px;
 }
 
+.minus-icon {
+	height: 25px;
+	width: 25px;
+	margin-left: -35px;
+	margin-right: 25px;
+}
+
 .disconnect-icon {
 	height: 35px;
 	width: 35px;

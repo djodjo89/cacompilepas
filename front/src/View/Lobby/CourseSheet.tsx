@@ -54,7 +54,7 @@ class CourseSheet extends React.Component<CourseSheetProps, CourseSheetState> {
             this.fillPreview,
             'POST',
             {
-                path: this.props.link
+                path: this.props.link,
             },
             'json',
             'blob',
@@ -143,7 +143,7 @@ class CourseSheet extends React.Component<CourseSheetProps, CourseSheetState> {
 
     public render(): ReactNode {
         return (
-            <div id={'coursesheet-' + this.props.id} className={'row mt-5 col-lg-12 col-md-12 col-sm-12 col-xs-12'}>
+            <div id={'course-sheet-' + this.props.id} className={'course-sheet row mt-5 col-lg-12 col-md-12 col-sm-12 col-xs-12'}>
                 <div
                     className={'col-lg-2 col-md-2 col-sm-2 col-xs-2 mt-lg-2 mt-md-2 mt-sm-2 mt-xs-2 pl-lg-0 pl-md-0 pl-sm-0 pl-xs-0 pr-lg-0 pr-md-0 pr-sm-0 pr-xs-0'}>
                     <div className={'mt-0'}>
@@ -162,10 +162,10 @@ class CourseSheet extends React.Component<CourseSheetProps, CourseSheetState> {
                         {this.props.activeRemoveButton ?
                             <div className={'col-lg-1 col-md-1 col-sm-1 col-xs-1'}>
                                 <img
-                                    id={'coursesheet-remove-' + this.props.id}
+                                    id={'course-sheet-remove-' + this.props.id}
                                     src={minusIcon}
                                     alt={'Minus Icon'}
-                                    className={'remove-button plus-icon ml-5 mr-0'}
+                                    className={'remove-button minus-icon ml-5 mr-0'}
                                     onClick={this.props.delete}
                                 />
                             </div> :
@@ -178,7 +178,7 @@ class CourseSheet extends React.Component<CourseSheetProps, CourseSheetState> {
                         <p className={'course-sheet-description'}>{this.props.description}</p>
                         <footer className={'pl-lg-0'}>
                             <a
-                                href={'/coursesheet/' + this.props.id + '/' + this.props.title + '/' + this.props.link}
+                                href={'/coursesheet/' + this.props.idLobby + '/' + this.props.title + '/' + this.props.link}
                                 className={'course-sheet-link col-lg-6 col-md-6 col-sm-6 col-xs-6 text-lg-left text-md-left text-sm-left text-xs-left pl-lg-0 pl-md-0 pl-sm-0 pl-xs-0 d-block mt-lg-2 mt-md-2 mt-sm-2 mt-xs-2'}
                             >
                                 Lien vers la fiche

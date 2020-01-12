@@ -1,3 +1,5 @@
+import connect from './bundle';
+
 describe('Lobby Test', () => {
     it('Visits normal lobby', () => {
         cy.visit('http://localhost:3000/lobby/1');
@@ -26,18 +28,8 @@ describe('Lobby Test', () => {
             .should('not.be.visible');
         cy.get('lobby-summary-list').should('not.exist');
         cy.get('course-sheets-section').should('not.exist');
-        cy.get('no-coursesheet-message').should('not.be.empty');
+        cy.get('no-course-sheet-message').should('not.be.empty');
         cy.get('messages-list').should('not.exist');
         cy.get('no-messages-message').should('not.be.empty');
     })
 })
-
-let connect = () => {
-    cy.get('#inputMail')
-        .type('thomas@cacompilepas.com');
-
-    cy.get('#inputPassword')
-        .type('root');
-
-    cy.contains('Connexion').click();
-}

@@ -187,7 +187,7 @@ class DropBox extends React.Component<DropBoxProps, DropBoxState> {
                     transform: this.state.draggingState === 'dragging' ? 'rotate(-2deg) translateY(-10px)' : 'rotate(0)',
                 }}
             >
-                <label>
+                <label className={'file-upload'}>
                     <DropBoxBackground
                         label={this.state.label}
                         className={this.props.backgroundClassName}

@@ -324,7 +324,7 @@ class Admin extends React.Component<any, AdminState> {
             this.fetchCourseSheets,
             'POST',
             {
-                id: removeButton.id.split(/-/)[2],
+                id: removeButton.id.split(/-/)[3],
             });
     }
 
@@ -347,7 +347,7 @@ class Admin extends React.Component<any, AdminState> {
             this.fetchUsers,
             'POST',
             {
-                id: event.target.id,
+                id: event.target.id.split(/-/)[3],
             },
         );
     }
@@ -384,6 +384,7 @@ class Admin extends React.Component<any, AdminState> {
     }
 
     public updateHashtags(hashtags: string[]): void {
+        console.log(hashtags);
         this.setState({hashtags: hashtags});
     }
 
@@ -402,7 +403,7 @@ class Admin extends React.Component<any, AdminState> {
     }
 
     public fillLogo(data: Blob): void {
-        const img: any = document.getElementById('lobby-logo' + this.state.id);
+        const img: any = document.getElementById('lobby-logo-' + this.state.id);
         const blob = new Blob([data], {type: 'image/jpg'});
         img.src = URL.createObjectURL(blob);
     }
@@ -427,13 +428,13 @@ class Admin extends React.Component<any, AdminState> {
                                         tab = (
                                             <div className={'container-fluid col-lg-8 col-md-12 col-sm-12 col-xs-12'}>
                                                 <h2>Informations visibles par les visiteurs</h2>
-                                                <Input id={'labelInput'}
+                                                <Input id={'label-input'}
                                                        inputType={'text'}
                                                        placeholder={'Titre du lobby (n\'en mets pas un trop long)'}
                                                        checked={false}
                                                        className={'mt-5'} onChange={this.handleLabelChange}/>
                                                 <div className={'row mt-5'}>
-                                                    <InputArea id={'descriptionInput'}
+                                                    <InputArea id={'new-description-input'}
                                                                placeholder={'Nouvelle description du lobby\nRacontes-y ce que tu veux, du moment que ça reste dans le thème de ton lobby'}
                                                                className={'col-lg-6 col-md-6 col-sm-6 col-xs-6'}
                                                                textAreaClassName={''}
@@ -441,7 +442,7 @@ class Admin extends React.Component<any, AdminState> {
                                                                onChange={this.handleDescriptionChange}
                                                                disabled={false}
                                                     />
-                                                    <InputArea id={'descriptionInput'}
+                                                    <InputArea id={'current-description-input'}
                                                                placeholder={'Description actuelle du lobby\n' + this.state.currentDescription}
                                                                className={'col-lg-6 col-md-6 col-sm-6 col-xs-6'}
                                                                textAreaClassName={''}
@@ -454,7 +455,7 @@ class Admin extends React.Component<any, AdminState> {
                                                     <div className={'col-6'}>
                                                         <h3>Logo actuel</h3>
                                                         <img
-                                                            id={'lobby-logo' + this.state.id}
+                                                            id={'lobby-logo-' + this.state.id}
                                                             className={'lobby-logo'}
                                                             src={this.state.logoPath}
                                                             alt={'Lobby logo'}
@@ -482,7 +483,7 @@ class Admin extends React.Component<any, AdminState> {
                                         );
                                         break;
 
-                                    case 'coursesheets':
+                                    case 'course-sheets':
                                         tab = (
                                             <div className={'container-fluid  col-lg-8 col-md-12 col-sm-12 col-xs-12'}>
                                                 <h2>Informations visibles par les visiteurs</h2>
@@ -490,12 +491,12 @@ class Admin extends React.Component<any, AdminState> {
                                                     <div
                                                         className={'col-lg-4 col-md-4 col-sm-4 col-xs-4 pr-lg-0 pl-sm-4'}>
                                                         <div className={'centered-80'}>
-                                                            <Input id={'titleInput'} inputType={'text'}
+                                                            <Input id={'title-input'} inputType={'text'}
                                                                    placeholder={'Titre'}
                                                                    className={'no-mb'}
                                                                    checked={false}
                                                                    onChange={this.handleCourseSheetTitleChange}/>
-                                                            <DropBox id={'courseSheetInput'}
+                                                            <DropBox id={'course-sheet-input'}
                                                                      className={'text-sm-left'}
                                                                      backgroundClassName={'mt-1'}
                                                                      labelNotDragged={'Glisse une fiche par ici !'}
@@ -508,7 +509,7 @@ class Admin extends React.Component<any, AdminState> {
                                                     <div className={'col-lg-8 col-md-8 col-sm-8 col-xs-8 pl-lg-0'}>
                                                         <div
                                                             className={'row container-fluid course-sheet-textarea-container'}>
-                                                            <InputArea id={'descriptionInput'}
+                                                            <InputArea id={'description-input'}
                                                                        placeholder={'Description de la fiche\nFais-en un bref résumé permettant de savoir à quoi s\'attendre en la lisant'}
                                                                        className={'col-lg-12 col-md-12 col-sm-12 col-xs-12 course-sheet-textarea'}
                                                                        textAreaClassName={'course-sheet-textarea'}
@@ -537,7 +538,7 @@ class Admin extends React.Component<any, AdminState> {
                                                                             updateHashtagsView={this.updateHashtagsView}
                                                                             updateHashtags={this.updateHashtags}
                                                                             updateText={this.updateText}
-                                                                            hashtagClassName={'hashtagInputBox'}
+                                                                            hashtagClassName={'hashtagInputBox hashtag'}
                                                                         />
                                                                     </div>
                                                                 </div>
@@ -547,7 +548,7 @@ class Admin extends React.Component<any, AdminState> {
                                                             <SubmitButton
                                                                 text={'Une nouvelle fiche ? Ajoute-la !'}
                                                                 onClick={this.addCourseSheet}
-                                                                className={'mt-1px col-sm-12 container-fluid add-coursesheet-button mt-5'}
+                                                                className={'mt-1px col-sm-12 container-fluid add-course-sheet-button mt-5'}
                                                                 disconnectButton={false}
                                                             />
                                                         </div>
@@ -596,7 +597,7 @@ class Admin extends React.Component<any, AdminState> {
                                                     <div className={'row'}>
                                                         <div className={'col-12 pl-0 add-usr-button'}>
                                                             <Input
-                                                                id={'friendInput'}
+                                                                id={'friend-input'}
                                                                 inputType={'email'}
                                                                 placeholder={'Un ami veut voir ton lobby ? Alors saisis son adresse email ici'}
                                                                 checked={false}
@@ -619,7 +620,7 @@ class Admin extends React.Component<any, AdminState> {
                                                 <div className={'row col-12 pt-5'}>
                                                     <div className={'col-1 pt-2 pl-0 pr-0'}>
                                                         <Input
-                                                            id={'visibilitInput'}
+                                                            id={'visibility-input'}
                                                             inputType={'checkbox'}
                                                             checked={'true' === this.state.private ? true : false}
                                                             placeholder={''}
@@ -646,7 +647,7 @@ class Admin extends React.Component<any, AdminState> {
                                     <section className={'content row container-fluid'}>
                                         <div className={'row col col-lg-12 col-md-12 col-sm-12 col-xs-12'}>
                                             <div className={'admin-header'}>
-                                                <h1>{this.state.currentLabel}</h1>
+                                                <h1 className={'lobby-title'}>{this.state.currentLabel}</h1>
                                                 <nav>
                                                     <ul className="nav nav-tabs custom-tab-nav">
                                                         <li className="nav-item" onClick={this.navigateToCourseSheets}>
@@ -655,7 +656,7 @@ class Admin extends React.Component<any, AdminState> {
                                                         </li>
                                                         <li className="nav-item" onClick={this.navigateToCourseSheets}>
                                                             <a className="nav-link custom-tab"
-                                                               href={'coursesheets'}>Fiches</a>
+                                                               href={'course-sheets'}>Fiches</a>
                                                         </li>
                                                         <li className="nav-item" onClick={this.navigateToCourseSheets}>
                                                             <a className="nav-link custom-tab"
