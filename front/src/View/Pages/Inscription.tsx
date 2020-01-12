@@ -66,11 +66,9 @@ class Inscription extends React.Component{
     public passwordVerification () : boolean {
 
         if (this.password.length > 8){
-            console.log("mdp suffisament long");
             return true;
         }
         else{
-            console.log("mdp trop court");
             return false;
         }
 
@@ -79,11 +77,9 @@ class Inscription extends React.Component{
     public checkForm () : boolean {
         console.log(this.passwordVerification());
         if (this.passwordVerification() && this.prenom !== '' && this.nom !== '' && this.pseudo !=='' && this.email !== ''){
-            console.log("Formulaire Correct");
             return true;
         }
         else{
-            console.log("Form pas correct");
             return false;
         }
 
@@ -189,18 +185,6 @@ class InscriptionInput extends React.Component<InscriptionInputProps, {}> {
 
     }
 }
-/*
-class DifferentPasswordError extends React.Component<{}, {}> {
-    public render (){
-        if ()
-        return (
-            <div>mot de passe différents</div>
-        )
-    }
-}
-
- */
-
 
 class ButtonInscription extends React.Component<{}, {}> {
     public render() {
