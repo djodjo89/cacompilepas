@@ -31,7 +31,7 @@ class SearchBar extends React.Component<any, SearchBarState> {
     }
 
     public refreshProposals(data: any): void {
-        this.setState({proposals: undefined === data['message'] ? data.slice(0, 3) : []});
+        this.setState({proposals: undefined === data['message'] ? data.slice(0, document.body.offsetWidth > 576 ? 3 : 2) : []});
     }
 
     public emptyInput(isEmpty: boolean): void {
@@ -44,20 +44,25 @@ class SearchBar extends React.Component<any, SearchBarState> {
 
     public updateHashtags(hashtags: string[]): void {
         this.setState(
-            {hashtags: hashtags},
+            {hashtags: undefined === hashtags ? [] : hashtags},
             this.sendQuery);
     }
 
     public sendQuery(): void {
-        new Request(
-            '/lobby/search/0',
-            this.refreshProposals,
-            'POST',
-            {
-                search: this.state.query.split(/ /),
-                hashtags: this.state.hashtags,
-            },
-        );
+        if (this.state.query !== '' || 0 !== this.state.hashtags.length) {
+            new Request(
+                '/lobby/search/0',
+                this.refreshProposals,
+                'POST',
+                {
+                    search: this.state.query.split(/ /),
+                    hashtags: this.state.hashtags,
+                },
+            );
+        } else {
+            this.refreshProposals([]);
+        }
+
     }
 
     public updateQuery(text: string): void {
