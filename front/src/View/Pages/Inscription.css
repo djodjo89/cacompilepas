@@ -1,0 +1,23 @@
+.inscription-bloc{
+    width : 97%;
+    margin-top: 7%;
+}
+
+.buttons-top{
+    margin-left: 235px;
+}
+.buttons-bottom{
+    margin-top: 60px;
+}
+
+#redirect-button{
+    font-size: 16px;
+    text-decoration: underline;
+}
+.submit-button{
+    margin-top: -30px;
+}
+#redirect-button:hover{
+    color: #27276a;
+    cursor: pointer;
+}
