@@ -156,7 +156,7 @@ class CourseSheet extends React.Component<CourseSheetProps, CourseSheetState> {
                         </Document>
                     </div>
                 </div>
-                <div className={'col-lg-9 col-md-9 col-sm-9 col-xs-12 pr-sm-0 pr-0 pl-0 pl-lg-0 pl-md-0 pl-sm-5'}>
+                <div className={'col-lg-9 col-md-10 col-sm-10 col-xs-12 pr-sm-0 pr-0 pl-0 pl-lg-0 pl-md-0 pl-sm-5'}>
                     <div className={'container-fluid row pl-0'}>
                         <h3 className={'col-lg-11 col-md-11 col-sm-11 col-xs-11 text-left mt-0'}>{this.props.title}</h3>
                         {this.props.activeRemoveButton ?

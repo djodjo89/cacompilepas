@@ -1,4 +1,4 @@
-@media (max-width: 700px) {
+@media (max-width: 575px) {
     .admin-header {
         width: 92%;
         margin-left: auto;
@@ -6,7 +6,7 @@
     }
 }
 
-@media (min-width: 701px) {
+@media (min-width: 576px) {
     .admin-header {
         width: 95%;
         margin-left: auto;
@@ -14,15 +14,15 @@
     }
 }
 
-@media (min-width: 993px) {
+@media (min-width: 768px) {
     .admin-header {
-        width: 64.5%;
+        width: 95%;
         margin-left: auto;
         margin-right: auto;
     }
 }
 
-@media (min-width: 1201px) {
+@media (min-width: 992px) {
     .admin-header {
         width: 64.5%;
         margin-left: auto;
@@ -72,10 +72,6 @@
     height: 40px;
 }
 
-#title-input {
-    width: 220px;
-}
-
 .add-course-sheet-button {
     width: 100% !important;
     margin-top: 0px !important;
@@ -121,50 +117,4 @@
 
 .mt-1px {
     margin-top: 1px !important;
-}
-
-#addHashtags {
-    position: relative;
-    z-index: 0;
-    text-indent: 16px;
-    font-size: 14px;
-    color: #a6a6a6;
-}
-
-#addHashtags:active {
-    position: relative;
-    z-index: 0;
-    text-indent: 16px;
-    font-size: 14px;
-    color: #a6a6a6;
-}
-
-#hashtag-label {
-    z-index: 1;
-    color: #a6a6a6;
-    margin-left: 10px;
-}
-
-#hashtag-placeholder {
-    position: absolute;
-    left: 23px;
-    top: 9px;
-    margin-left: 5px;
-    font-weight: normal;
-    font-size: 14px;
-    min-height: 20px;
-}
-
-.hashtagInputBox {
-    margin-bottom: -31px !important;
-}
-
-.hashtag {
-    margin-top: 3px !important;
-    padding-top: 0 !important;
-}
-
-.sc-bdVaJa.thXdN {
-    padding-right: .25rem !important;
-    padding-left: .25rem !important;
 }

@@ -22,7 +22,7 @@
     margin-right: auto;
 }
 
-@media (min-width: 768px) {
+@media (min-width: 576px) {
     .react-pdf__Page__canvas {
         margin-left: 0 !important;
     }
@@ -38,40 +38,26 @@
     border-radius: 50px;
 }
 
+.not-dragged-logo {
+    padding: 10px;
+    margin: 10px;
+    border-radius: 5px;
+    background-color: #e6e6e6;
+    width: 50%;
+    height: 50%;
+    max-width: 300px;
+    margin-left: auto;
+    margin-right: auto;
+}
+
 @media (max-width: 700px) {
     .not-dragged-logo {
-        padding: 10px;
-        margin: 10px;
-        border-radius: 5px;
-        background-color: #e6e6e6;
         width: 50%;
-        height: 50%;
-        max-width: 300px;
-        margin-left: auto;
-        margin-right: auto;
     }
 }
 
 @media (min-width: 701px) {
-    .lobby-logo {
-        width: 128px !important;
-        height: 128px !important;
-        border-radius: 70px !important;
-    }
-}
-
-@media (min-width: 993px) {
-    .lobby-logo {
-        width: 128px !important;
-        height: 128px !important;
-        border-radius: 70px !important;
-    }
-}
-
-@media (min-width: 1201px) {
-    .lobby-logo {
-        width: 128px !important;
-        height: 128px !important;
-        border-radius: 70px !important;
+    .not-dragged-logo {
+        width: 40%;
     }
 }

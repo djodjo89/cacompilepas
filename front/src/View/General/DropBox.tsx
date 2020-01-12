@@ -23,7 +23,7 @@ class DropBoxBackground extends React.Component<DropBoxBackgroundProps, any> {
                 style={{
                     backgroundColor: this.props.dragged ? 'transparent' : '#ffffff'
                 }}
-                className={(this.props.dragged ? 'pt-3 mt-0 ' : 'pt-4 mt-4 pb-4 ') + 'rounded pb-lg-2 pb-md-2 pb-sm-2 ml-4 ml-lg-5 ml-md-5 ml-sm-4 ' + this.props.className}
+                className={(this.props.dragged ? 'pt-3 mt-0 ' : 'pt-4 mt-3 mt-lg-4 mt-md-4 mt-sm-4 pb-4 ') + 'rounded pb-lg-2 pb-md-2 pb-sm-2 ' + this.props.className}
             >
                 {this.props.children}
                 <div className={'d-none d-lg-block d-md-block d-sm-block'}>

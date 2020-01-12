@@ -426,7 +426,7 @@ class Admin extends React.Component<any, AdminState> {
                                 switch (this.state.currentTab) {
                                     case 'presentation':
                                         tab = (
-                                            <div className={'container-fluid col-12 col-lg-8 pr-0'}>
+                                            <div className={'container-fluid col-12 col-lg-8'}>
                                                 <h2>Informations visibles par les visiteurs</h2>
                                                 <Input id={'label-input'}
                                                        inputType={'text'}
@@ -461,19 +461,19 @@ class Admin extends React.Component<any, AdminState> {
                                                             alt={'Lobby logo'}
                                                         />
                                                     </div>
-                                                    <div className={'col-5 ml-2 ml-lg-4 ml-md-4 ml-sm-4 p-0'}>
+                                                    <div className={'col-5 ml-2 mt-0 ml-lg-4 ml-md-4 ml-sm-4 p-0'}>
                                                         <DropBox id={'logo-input'}
                                                                  className={'mt-lg-4 mt-md-4 mt-sm-5'}
                                                                  labelNotDragged={'Glisse un logo par ici !'}
                                                                  labelDragged={'Logo déposé !'}
                                                                  accept={'image/*'}
-                                                                 backgroundClassName={'mt-lg-4 mt-md-4 mt-sm-4'}
+                                                                 backgroundClassName={'mt-lg-4 mt-md-4 mt-sm-4 ml-4 ml-lg-5 ml-md-5 ml-sm-4'}
                                                                  handleFileDrop={this.handleLogoDrop}
                                                                  handleFileChange={this.handleLogoChange}
                                                         />
                                                     </div>
                                                 </div>
-                                                <div className={'row container-fluid pr-0'}>
+                                                <div className={'row pr-4 pl-4'}>
                                                     <SubmitButton
                                                         text={'Mettre à jour le lobby'}
                                                         onClick={this.updateLobbby}
@@ -487,19 +487,18 @@ class Admin extends React.Component<any, AdminState> {
 
                                     case 'course-sheets':
                                         tab = (
-                                            <div className={'container-fluid  col-lg-8 col-md-12 col-sm-12 col-xs-12'}>
+                                            <div className={'container-fluid col-12 col-lg-8 pr-0'}>
                                                 <h2>Informations visibles par les visiteurs</h2>
                                                 <div className={'row mt-5'}>
-                                                    <div
-                                                        className={'col-lg-4 col-md-4 col-sm-4 col-xs-4 pr-lg-0 pl-sm-4'}>
-                                                        <div className={'centered-80'}>
+                                                    <div className={'col-lg-4 col-md-4 col-sm-4 col-xs-12 pl-0 pr-lg-5 pr-md-0 pr-sm-0 pr-xs-0'}>
                                                             <Input id={'title-input'} inputType={'text'}
                                                                    placeholder={'Titre'}
                                                                    className={'no-mb'}
                                                                    checked={false}
+                                                                   formGroupClassName={'mb-0 mb-lg-3 mb-md-3 mb-sm-4 pb-2 pb-lg-0 pb-md-0 pr-0 pl-0 pl-lg-4 pl-md-5 pl-sm-4 col-12'}
                                                                    onChange={this.handleCourseSheetTitleChange}/>
                                                             <DropBox id={'course-sheet-input'}
-                                                                     className={'text-sm-left'}
+                                                                     className={'text-sm-left col-6 offset-3 offset-lg-0 offset-md-0 offset-sm-0 col-lg-12 col-md-12 col-sm-12 mt-3 mt-lg-0 mt-md-0 mt-sm-0 pr-0 pl-0 pl-lg-4 pl-md-5 pl-sm-4'}
                                                                      backgroundClassName={'mt-1'}
                                                                      labelNotDragged={'Glisse une fiche par ici !'}
                                                                      labelDragged={'Fiche déposée !'}
@@ -507,10 +506,9 @@ class Admin extends React.Component<any, AdminState> {
                                                                      handleFileDrop={this.handleCourseSheetDocumentDrop}
                                                                      handleFileChange={this.handleCourseSheetDocumentChange}/>
                                                         </div>
-                                                    </div>
-                                                    <div className={'col-lg-8 col-md-8 col-sm-8 col-xs-8 pl-lg-0'}>
+                                                    <div className={'col-lg-8 col-md-8 col-sm-8 col-xs-12 mt-4 mt-lg-0 mt-md-0 mt-sm-0 pt-2 pt-lg-0 pt-md-0 pt-sm-0 pr-0 pr-lg-4 pr-md-4 pr-sm-4 pl-0 pl-lg-0 pl-md-5 pl-sm-5'}>
                                                         <div
-                                                            className={'row container-fluid course-sheet-textarea-container'}>
+                                                            className={'row container-fluid course-sheet-textarea-container pr-0 pl-0'}>
                                                             <InputArea id={'description-input'}
                                                                        placeholder={'Description de la fiche\nFais-en un bref résumé permettant de savoir à quoi s\'attendre en la lisant'}
                                                                        className={'col-lg-12 col-md-12 col-sm-12 col-xs-12 course-sheet-textarea'}
@@ -520,37 +518,37 @@ class Admin extends React.Component<any, AdminState> {
                                                                        disabled={false}
                                                             />
                                                         </div>
-                                                        <div className={'row container-fluid pr-0 mb-4'}>
+                                                        <div className={'row container-fluid mb-4 pr-0 pl-0'}>
                                                             <div
                                                                 className={'col-lg-12 col-md-12 col-sm-12 col-xs-12 ml-0 pr-0 pt-1'}>
                                                                 <div className={'form-inline'}>
-                                                                    <label id="hashtag-label" htmlFor="addHashtags">
+                                                                    <label id="hashtag-label" htmlFor="add-hashtags">
                                                                         <span
                                                                             id="hashtag-placeholder">{this.state.hashtagInputIsNotEmpty ? 'Entre des hashtags pour cette fiche' : ''}</span>
                                                                     </label>
                                                                     {this.state.hashtagsView}
                                                                     <div
-                                                                        className={'col-lg-12 col-md-12 col-sm-12 col-xs-12 pl-0 pr-0'}>
+                                                                        className={'col-12 pl-0 pr-0'}>
                                                                         <HashtagInput
-                                                                            id={'addHashtags'}
-                                                                            className={'form-control w-100 mt-0 rounded hashtagInput col-lg-12 col-md-12 col-sm-12 col-xs-12'}
+                                                                            id={'add-hashtags'}
+                                                                            className={'form-control w-100 mt-0 rounded hashtag-input col-12'}
                                                                             type={'text'}
                                                                             baseIndent={-3}
                                                                             onUpdate={this.emptyInput}
                                                                             updateHashtagsView={this.updateHashtagsView}
                                                                             updateHashtags={this.updateHashtags}
                                                                             updateText={this.updateText}
-                                                                            hashtagClassName={'hashtagInputBox hashtag'}
+                                                                            hashtagClassName={'hashtag-input-box hashtag'}
                                                                         />
                                                                     </div>
                                                                 </div>
                                                             </div>
                                                         </div>
-                                                        <div className={'row container-fluid'}>
+                                                        <div className={'row container-fluid pr-0 pr-lg-4 pr-md-4 pr-sm-4 pl-0'}>
                                                             <SubmitButton
                                                                 text={'Une nouvelle fiche ? Ajoute-la !'}
                                                                 onClick={this.addCourseSheet}
-                                                                className={'mt-1px col-sm-12 container-fluid add-course-sheet-button mt-5'}
+                                                                className={'mt-1 col-sm-12 container-fluid add-course-sheet-button mt-5 mr-0'}
                                                                 disconnectButton={'plus'}
                                                             />
                                                         </div>
@@ -562,7 +560,7 @@ class Admin extends React.Component<any, AdminState> {
                                                             <CourseSheets
                                                                 id={this.state.id.toString()}
                                                                 courseSheets={this.state.courseSheets}
-                                                                className={'col-lg-12 col-sm-12 mt-lg-3'}
+                                                                className={'col-lg-12 col-sm-12 mt-lg-3 pl-0 pl-lg-4 pl-md-5 pl-sm-4'}
                                                                 activeRemoveButton={true}
                                                                 removableHashtags={true}
                                                                 delete={this.removeCourseSheetFromLobby}
@@ -595,7 +593,7 @@ class Admin extends React.Component<any, AdminState> {
                                                         delete={this.removeUserFromLobby}
                                                     />
                                                 </div>
-                                                <div className={'container col-lg-8 col-md-8 col-sm-10 col-xs-12 mt-5'}>
+                                                <div className={'col-12 col-lg-10 col-md-10 offset-lg-1 offset-md-1 mt-5'}>
                                                     <div className={'row'}>
                                                         <div className={'col-12 pl-0 add-usr-button'}>
                                                             <Input
