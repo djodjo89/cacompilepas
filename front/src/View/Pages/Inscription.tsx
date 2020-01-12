@@ -25,6 +25,7 @@ class Inscription extends React.Component{
         this.state = {
         }
 
+
         this.handleEmailChange = this.handleEmailChange.bind(this);
         this.handlePasswordChange = this.handlePasswordChange.bind(this);
         this.handlePrenomChange = this.handlePrenomChange.bind(this);
