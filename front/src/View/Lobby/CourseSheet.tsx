@@ -143,10 +143,10 @@ class CourseSheet extends React.Component<CourseSheetProps, CourseSheetState> {
 
     public render(): ReactNode {
         return (
-            <div id={'course-sheet-' + this.props.id} className={'course-sheet row mt-5 col-lg-12 col-md-12 col-sm-12 col-xs-12'}>
+            <div id={'course-sheet-' + this.props.id} className={'course-sheet row mt-5 col-lg-12 col-md-12 col-sm-12 col-xs-12 pr-0'}>
                 <div
-                    className={'col-lg-2 col-md-2 col-sm-2 col-xs-2 mt-lg-2 mt-md-2 mt-sm-2 mt-xs-2 pl-lg-0 pl-md-0 pl-sm-0 pl-xs-0 pr-lg-0 pr-md-0 pr-sm-0 pr-xs-0'}>
-                    <div className={'mt-0'}>
+                    className={'col-lg-2 col-md-2 col-sm-2 d-none d-lg-block d-md-block d-sm-block mt-lg-2 mt-md-2 mt-1 mt-lg-0 mt-md-0 mr-lg-5 pl-0 pr-0'}>
+                    <div className={'mt-lg-0 mt-md-1 mt-sm-1'}>
                         <Document
                             file={this.state.file}
                             onLoadSuccess={this.onDocumentLoadSuccess}
@@ -156,9 +156,9 @@ class CourseSheet extends React.Component<CourseSheetProps, CourseSheetState> {
                         </Document>
                     </div>
                 </div>
-                <div className={'col-lg-10 col-md-10 col-sm-10 col-xs-10 pr-sm-0 pr-0 pl-lg-4 pl-lg-md-4 pl-sm-5 pl-xs-5'}>
+                <div className={'col-lg-9 col-md-9 col-sm-9 col-xs-12 pr-sm-0 pr-0 pl-0 pl-lg-0 pl-md-0 pl-sm-5'}>
                     <div className={'container-fluid row pl-0'}>
-                        <h3 className={'col-lg-11 col-md-11 col-sm-11 col-xs-11 text-left mt-lg-0 mt-md-0 mt-sm-0 mt-xs-0'}>{this.props.title}</h3>
+                        <h3 className={'col-lg-11 col-md-11 col-sm-11 col-xs-11 text-left mt-0'}>{this.props.title}</h3>
                         {this.props.activeRemoveButton ?
                             <div className={'col-lg-1 col-md-1 col-sm-1 col-xs-1'}>
                                 <img
@@ -171,19 +171,19 @@ class CourseSheet extends React.Component<CourseSheetProps, CourseSheetState> {
                             </div> :
                             <div></div>}
                     </div>
-                    <div className={'col-lg-12 col-md-12 col-sm-12 col-xs-12 mb-2 text-left pl-1 float-none'}>
+                    <div className={'col-lg-12 col-md-12 col-sm-12 col-xs-12 mb-2 pl-0 text-left float-none'}>
                         {this.renderHashtags()}
                     </div>
-                    <div className={'course-sheet-presentation ml-lg-1 ml-md-1 ml-sm-1 ml-xs-1'}>
+                    <div className={'course-sheet-presentation ml-0'}>
                         <p className={'course-sheet-description'}>{this.props.description}</p>
-                        <footer className={'pl-lg-0'}>
+                        <footer className={'container-fluid row'}>
                             <a
                                 href={'/coursesheet/' + this.props.idLobby + '/' + this.props.title + '/' + this.props.link}
-                                className={'course-sheet-link col-lg-6 col-md-6 col-sm-6 col-xs-6 text-lg-left text-md-left text-sm-left text-xs-left pl-lg-0 pl-md-0 pl-sm-0 pl-xs-0 d-block mt-lg-2 mt-md-2 mt-sm-2 mt-xs-2'}
+                                className={'course-sheet-link col-5 text-left mt-2 p-0 d-block'}
                             >
                                 Lien vers la fiche
                             </a>
-                            <h4 className={'col-lg-6 col-md-6 col-sm-6 col-xs-6 text-lg-right text-md-right text-sm-right text-xs-right'}>Mathys</h4>
+                            <h4 className={'col-7 text-right p-0'}>Mathys</h4>
                         </footer>
                     </div>
                 </div>

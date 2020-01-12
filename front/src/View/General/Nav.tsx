@@ -74,11 +74,11 @@ class Nav extends React.Component<any, { tokenExists: boolean }> {
                         status={this.state.tokenExists}
                     />
                 </div>
-                <div className={'ml-lg-3 pl-lg-1'}></div>
+                <div className={'ml-lg-0 pl-lg-0'}></div>
                 <SearchBar/>
                 <ConnectedStatus
                     connectedDivClassName={''}
-                    connectedButtonClassName={'mt-0 ml-4 pt-0 pl-0 disconnect-button'}
+                    connectedButtonClassName={'mt-0 ml-3 pt-0 pl-1 disconnect-button'}
                     notConnectedClassName={'mt-lg-3 mt-md-3 mt-sm-1 mr-5 pt-lg-2 pr-lg-5 pr-sm-1 pl-0'}
                     displayMessageClassName={'visible'}
                     display={'d-none d-lg-block d-md-block d-sm-block col-lg-1 col-md-1 col-sm-1'}

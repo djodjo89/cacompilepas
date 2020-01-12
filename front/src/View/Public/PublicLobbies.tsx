@@ -64,12 +64,12 @@ class PublicLobbies extends React.Component<any, PublicLobbiesState> {
 
     public render(): ReactNode {
         return (
-            <div className={'container-fluid'}>
+            <div className={'container-fluid p-0 p-lg-4 p-md-4 p-sm-4 ml-sm-2'}>
                 <Header
                     h1={'Lobbies publics'}
                     p={'Ici tu pourras trouver les lobbies publics'}
                 />
-                <div className={'row container-fluid pt-lg-5 pt-md-5 pr-0'}>
+                <div className={'row container-fluid mt-3 mt-lg-0 mt-md-0 mt-sm-0 pt-lg-5 pt-md-0 pr-0 pl-0'}>
                     {this.renderLobbies()}
                 </div>
             </div>)

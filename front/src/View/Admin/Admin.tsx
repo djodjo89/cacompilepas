@@ -426,7 +426,7 @@ class Admin extends React.Component<any, AdminState> {
                                 switch (this.state.currentTab) {
                                     case 'presentation':
                                         tab = (
-                                            <div className={'container-fluid col-lg-8 col-md-12 col-sm-12 col-xs-12'}>
+                                            <div className={'container-fluid col-12 col-lg-8 pr-0'}>
                                                 <h2>Informations visibles par les visiteurs</h2>
                                                 <Input id={'label-input'}
                                                        inputType={'text'}
@@ -451,34 +451,36 @@ class Admin extends React.Component<any, AdminState> {
                                                                disabled={true}
                                                     />
                                                 </div>
-                                                <div className={'row container-fluid'}>
-                                                    <div className={'col-6'}>
-                                                        <h3>Logo actuel</h3>
+                                                <div className={'row container-fluid p-0 ml-3'}>
+                                                    <div className={'col-6 pl-0 pr-5'}>
+                                                        <h3 className={'d-none d-lg-block d-md-block d-sm-block mr-4'}>Logo actuel</h3>
                                                         <img
                                                             id={'lobby-logo-' + this.state.id}
-                                                            className={'lobby-logo'}
+                                                            className={'lobby-logo mt-3 mt-lg-0 mt-md-0 mt-sm-0 mr-4'}
                                                             src={this.state.logoPath}
                                                             alt={'Lobby logo'}
                                                         />
                                                     </div>
-                                                    <div className={'col-5 offset-1'}>
+                                                    <div className={'col-5 ml-2 ml-lg-4 ml-md-4 ml-sm-4 p-0'}>
                                                         <DropBox id={'logo-input'}
-                                                                 className={'mt-5'}
+                                                                 className={'mt-lg-4 mt-md-4 mt-sm-5'}
                                                                  labelNotDragged={'Glisse un logo par ici !'}
                                                                  labelDragged={'Logo déposé !'}
                                                                  accept={'image/*'}
-                                                                 backgroundClassName={'mt-4'}
+                                                                 backgroundClassName={'mt-lg-4 mt-md-4 mt-sm-4'}
                                                                  handleFileDrop={this.handleLogoDrop}
                                                                  handleFileChange={this.handleLogoChange}
                                                         />
                                                     </div>
                                                 </div>
-                                                <SubmitButton
-                                                    text={'Mettre à jour le lobby'}
-                                                    onClick={this.updateLobbby}
-                                                    className={'mt-5'}
-                                                    disconnectButton={'plus'}
-                                                />
+                                                <div className={'row container-fluid pr-0'}>
+                                                    <SubmitButton
+                                                        text={'Mettre à jour le lobby'}
+                                                        onClick={this.updateLobbby}
+                                                        className={'mt-5 col-12'}
+                                                        disconnectButton={'plus'}
+                                                    />
+                                                </div>
                                             </div>
                                         );
                                         break;
@@ -645,7 +647,6 @@ class Admin extends React.Component<any, AdminState> {
                                 }
                                 return (
                                     <section className={'content row container-fluid'}>
-                                        <div className={'row col col-lg-12 col-md-12 col-sm-12 col-xs-12'}>
                                             <div className={'admin-header'}>
                                                 <h1 className={'lobby-title'}>{this.state.currentLabel}</h1>
                                                 <nav>
@@ -665,7 +666,6 @@ class Admin extends React.Component<any, AdminState> {
                                                     </ul>
                                                 </nav>
                                             </div>
-                                        </div>
                                         {tab}
                                     </section>
                                 );

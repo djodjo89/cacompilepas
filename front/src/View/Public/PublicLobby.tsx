@@ -51,47 +51,51 @@ class PublicLobby extends React.Component<PublicLobbyProps, any> {
             <div className={'container-fluid row col-lg-5 mt-lg-0 mt-sm-4 pr-0 mb-5 mr-lg-4 pl-lg-0 pl-md-0 pl-sm-2 pl-xs-2 '
                 + (this.props.onTheRight ? 'ml-lg-5 pl-lg-5' : 'offset-lg-1 ml-lg-0')
             }>
-                <div className={'col-lg-3 col-md-3 col-sm-3 col-xs-3 pl-0 pr-lg-5 pr-md-5 pr-sm-4 pr-xs-5'}>
+                <div className={'d-none d-lg-block d-md-block d-sm-block col-lg-3 col-md-2 col-sm-3 pl-lg-0 pl-md-5 pl-sm-0 pr-lg-0 pr-md-5 pr-sm-0 pr-xs-5 ml-2 ml-lg-0 ml-md-0'}>
                     <img
                         id={'lobby-logo-' + this.props.id}
-                        className={'lobby-logo'}
+                        className={'lobby-logo mr-0 mr-lg-0 mr-md-3 ml-3 ml-md-0 ml-sm-0'}
                         src={this.props.logo}
                         alt={'Lobby ' + this.props.label + ' logo'}
                     />
                 </div>
-                <div className={'container-fluid col-lg-9 col-md-9 col-sm-8 mb-0 pl-lg-5 pl-md-5 pl-sm-0 pl-xs-0 pr-0'}>
-                    <div className={'row'}>
-                        <div className={'col-9 text-left pl-0'}>
-                            <h3 className={'m-0'}>{this.props.label}</h3>
+                <div className={'container-fluid col-lg-9 col-md-9 col-sm-8 mb-0 ml-md-0 pl-lg-5 pl-md-5 pl-sm-0 pl-xs-0 pr-0'}>
+
+                    <div className={'container-fluid'}>
+                        <div className={'row'}>
+                            <div className={'col-9 text-left pl-0'}>
+                                <h3 className={'m-0'}>{this.props.label}</h3>
+                            </div>
+                            <div className={'col-1 mt-1'}>
+                                {this.props.activeRemoveButton ?
+                                    <div className={'col-lg-1 col-md-1 col-sm-1 col-xs-1'}>
+                                        <img
+                                            id={'course-sheet-remove-' + this.props.id}
+                                            src={minusIcon}
+                                            alt={'Minus Icon'}
+                                            className={'remove-button minus-icon ml-5 mr-0'}
+                                            onClick={this.props.delete}
+                                        />
+                                    </div> :
+                                    <div></div>}
+                            </div>
                         </div>
-                        <div className={'col-1 mt-1'}>
-                            {this.props.activeRemoveButton ?
-                                <div className={'col-lg-1 col-md-1 col-sm-1 col-xs-1'}>
-                                    <img
-                                        id={'course-sheet-remove-' + this.props.id}
-                                        src={minusIcon}
-                                        alt={'Minus Icon'}
-                                        className={'remove-button minus-icon ml-5 mr-0'}
-                                        onClick={this.props.delete}
-                                    />
-                                </div> :
-                                <div></div>}
+                        <div className={'row public-lobby-description align-top d-inline-block mt-2 pr-0 pl-5'}>
+                            <p>{this.props.description}</p>
                         </div>
+                        <div className={'row mt-lg-3 mt-md-3 mt-sm-3 mt-xs-3'}>
+                            <div className={'col-lg-5 col-md-5 col-sm-5 col-xs-5 text-left p-0'}>
+                                <a
+                                    href={'/lobby/' + this.props.id}
+                                ><p>Lien vers le lobby</p></a>
+                            </div>
+                            <div className={'col-lg-7 col-md-7 col-sm-7 col-xs-7 p-0'}>
+                                <p className={' text-right'}>{undefined !== this.props.pseudo ? this.props.pseudo : <a href={'/admin/' + this.props.id}>Admin de {this.props.label.substr(0, 3)}...</a>}</p>
+                            </div>
+                        </div>
+
                     </div>
-                    <div className={'row public-lobby-description mt-0 align-top d-inline-block mt-2 col-12 pl-0 pr-0'}>
-                        <p>{this.props.description}</p>
-                    </div>
-                    <div className={'row mt-lg-3 mt-md-3 mt-sm-3 mt-xs-3'}>
-                        <div className={'col-lg-5 col-md-5 col-sm-5 col-xs-5 text-left p-0'}>
-                            <a
-                                href={'/lobby/' + this.props.id}
-                            ><p>Lien vers le lobby</p></a>
-                        </div>
-                        <div className={'col-lg-7 col-md-7 col-sm-7 col-xs-7 p-0'}>
-                            <p className={' text-right'}>{undefined !== this.props.pseudo ? this.props.pseudo : <a href={'/admin/' + this.props.id}>Admin de {this.props.label.substr(0, 3)}...</a>}</p>
-                        </div>
-                    </div>
-                </div>
+                   </div>
             </div>
         )
     }
