@@ -115,7 +115,6 @@ class Inscription extends React.Component{
         else{
             swal("Erreur de formulaire - Paramètres manquants ou mot de passe trop court ");
         }
-
         this.setState({formWasSubmitted: true});
     }
 
