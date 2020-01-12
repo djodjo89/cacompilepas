@@ -10,7 +10,7 @@ interface ConnectionStates {
     formWasSubmitted: boolean,
 }
 
-class Connection extends React.Component<{ referrer: string }, ConnectionStates> {
+class Connection extends React.Component<{}, ConnectionStates> {
     private email: string;
     private password: string;
 
@@ -58,6 +58,7 @@ class Connection extends React.Component<{ referrer: string }, ConnectionStates>
 
     public handleEmailChange(event: ChangeEvent<HTMLInputElement>): void {
         // @ts-ignore
+        console.log(this.email);
         this.email = event.target.value;
     }
 
@@ -85,6 +86,11 @@ class Connection extends React.Component<{ referrer: string }, ConnectionStates>
         this.setState({formWasSubmitted: true});
     }
 
+    public redirectToInscriptionPage(): void {
+        // @ts-ignore
+        window.location='/Inscription';
+    }
+
     render(): ReactNode {
         return (
             <section className="content row connection-bloc">
@@ -98,24 +104,19 @@ class Connection extends React.Component<{ referrer: string }, ConnectionStates>
                                 if ('true' === this.state.status || true === this.state.tokenExists) {
                                     if (this.referrerIsNotConnection()) {
                                         // @ts-ignore
-                                        window.location = this.props.referrer;
+                                        window.location = document.referrer;
                                     } else {
                                         // @ts-ignore
                                         window.location = '/';
                                     }
                                 } else if ('false' === this.state.status && true === this.state.formWasSubmitted) {
-                                    return (
-                                        <div
-                                            className={'col-lg-3 col-sm-11 mt-0 mb-lg-4 mb-md-4 mb-sm-4 mb-xs-4 rounded-1 container-fluid p-0'}
-                                        >
-                                            <div className={'container-fluid col-12 p-0'}>
-                                                <div className={'col-12 connection-error'}>
-                                                    Identifiants incorrects
-                                                </div>
-                                            </div>
-                                        </div>
-                                    );
+                                    return <div
+                                        className="col-lg-3 col-sm-11 offset-lg-4 mt-0 mb-sm-3 rounded-1 connection-error">
+                                        Identifiants incorrects
+                                    </div>;
                                 }
+                            } else {
+                                return
                             }
                         })()}
                     </div>
@@ -127,6 +128,9 @@ class Connection extends React.Component<{ referrer: string }, ConnectionStates>
                                              placeholder={"Mot de passe"}
                                              className={"custom"} onChange={this.handlePasswordChange}/>
                             <ButtonConnection/>
+                            <br/>
+                            <br/>
+                            Pas encore de compte ? <a id={"redirect-button-to-inscription"} onClick={this.redirectToInscriptionPage}>Inscrit toi ! </a>
                         </form>
                     </div>
                 </div>
@@ -175,3 +179,4 @@ class ButtonConnection extends React.Component<{}, {}> {
 }
 
 export default Connection;
+
