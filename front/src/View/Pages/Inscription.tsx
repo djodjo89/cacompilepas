@@ -1,21 +1,21 @@
 import React, {ChangeEvent, FormEvent, ReactNode} from 'react';
 import Request from '../../API/Request';
 import '../../css/Inscription.css';
-import DropBox from '../General/DropBox';
+import swal from 'sweetalert';
 
 class Inscription extends React.Component{
     private email: string;
     private password: string;
     private passwordConfirmation: string;
-    private prenom: string;
-    private nom: string;
+    private firstName: string;
+    private name: string;
     private pseudo: string;
     private passwordValid: boolean;
 
     constructor(props: any) {
         super(props);
-        this.prenom = '';
-        this.nom = '';
+        this.firstName = '';
+        this.name = '';
         this.pseudo = '';
         this.email = '';
         this.password = '';
@@ -51,12 +51,12 @@ class Inscription extends React.Component{
         this.passwordVerification();
     }
 
-    public handlePrenomChange (event: ChangeEvent<HTMLInputElement>) : void {
-        this.prenom = event.target.value;
+    public handleFirstnameChange (event: ChangeEvent<HTMLInputElement>) : void {
+        this.firstName = event.target.value;
     }
 
-    public handleNomChange (event: ChangeEvent<HTMLInputElement>) : void {
-        this.nom = event.target.value;
+    public handleNameChange (event: ChangeEvent<HTMLInputElement>) : void {
+        this.name = event.target.value;
     }
 
     public handlePseudoChange (event: ChangeEvent<HTMLInputElement>) : void {
@@ -76,7 +76,7 @@ class Inscription extends React.Component{
 
     public checkForm () : boolean {
         console.log(this.passwordVerification());
-        if (this.passwordVerification() && this.prenom !== '' && this.nom !== '' && this.pseudo !=='' && this.email !== ''){
+        if (this.passwordVerification() && this.firstName !== '' && this.name !== '' && this.pseudo !=='' && this.email !== ''){
             return true;
         }
         else{
@@ -104,8 +104,8 @@ class Inscription extends React.Component{
                 this.updateConnectStatus,
                 'POST',
                 {
-                    prenom : this.prenom,
-                    nom : this.nom,
+                    prenom : this.firstName,
+                    nom : this.name,
                     pseudo : this.pseudo,
                     email: this.email,
                     password: this.password
@@ -113,7 +113,7 @@ class Inscription extends React.Component{
             );
         }
         else{
-            alert("erreur")
+            swal("Erreur de formulaire - Paramètres manquants ou mot de passe trop court ");
         }
 
         this.setState({formWasSubmitted: true});
@@ -189,7 +189,7 @@ class InscriptionInput extends React.Component<InscriptionInputProps, {}> {
 class ButtonInscription extends React.Component<{}, {}> {
     public render() {
         return (
-            <button type="submit" className="btn btn-default btn-transparent mt-0 rounded-1 custom">Connexion</button>
+            <button type="submit" className="btn btn-default btn-transparent mt-0 rounded-1 custom">Créer ton compte !</button>
         )
     }
 }
