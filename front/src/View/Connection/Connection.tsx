@@ -6,6 +6,8 @@ import SubmitButton from "../General/SubmitButton";
 import Header from "../General/Header";
 
 interface ConnectionStates {
+    email: string,
+    password: string,
     // Pending (''), connected ('true') or not connected ('false')
     status: string,
     token: string,
@@ -14,14 +16,12 @@ interface ConnectionStates {
 }
 
 class Connection extends React.Component<{ referrer: string }, ConnectionStates> {
-    private email: string;
-    private password: string;
 
     constructor(props: any) {
         super(props);
-        this.email = '';
-        this.password = '';
         this.state = {
+            email: '',
+            password: '',
             status: '',
             token: '',
             tokenExists: false,
@@ -61,17 +61,22 @@ class Connection extends React.Component<{ referrer: string }, ConnectionStates>
 
     public handleEmailChange(event: ChangeEvent<HTMLInputElement>): void {
         // @ts-ignore
-        this.email = event.target.value;
+        this.setState({email: event.target.value});
     }
 
     public handlePasswordChange(event: ChangeEvent<HTMLInputElement>): void {
         // @ts-ignore
-        this.password = event.target.value;
+        this.setState({password: event.target.value});
     }
 
     public updateConnectStatus(data: any): void {
-        this.setState({status: '' + data['connected']});
-        localStorage.setItem('token', data['token']);
+        this.setState(
+            {status: '' + data['connected']},
+            () => this.setState(
+                {formWasSubmitted: true},
+                () => localStorage.setItem('token', data['token'])
+            )
+        );
     }
 
     public submit(event: React.MouseEvent<HTMLButtonElement, MouseEvent> | FormEvent<HTMLFormElement>): void {
@@ -81,11 +86,10 @@ class Connection extends React.Component<{ referrer: string }, ConnectionStates>
             this.updateConnectStatus,
             'POST',
             {
-                email: this.email,
-                password: this.password
+                email: this.state.email,
+                password: this.state.password
             },
         );
-        this.setState({formWasSubmitted: true});
     }
 
     render(): ReactNode {
