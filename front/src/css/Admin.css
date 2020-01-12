@@ -90,7 +90,7 @@
     padding-right: 0;
 }
 
-@media screen and (min-width: 1080px) {
+@media screen and (min-width: 992px) {
     .centered-80 {
         width: 80%;
         margin-left: auto;
@@ -117,4 +117,28 @@
 
 .mt-1px {
     margin-top: 1px !important;
+}
+
+@media (max-width: 575px) {
+    .checkbox-container {
+        flex: 0 0 6%;
+    }
+}
+
+@media (min-width: 576px) {
+    .checkbox-container {
+        flex: 0 0 7%;
+    }
+}
+
+@media (min-width: 768px) {
+    .checkbox-container {
+        flex: 0 0 5%;
+    }
+}
+
+@media (min-width: 992px) {
+    .checkbox-container {
+        flex: 0 0 5%;
+    }
 }

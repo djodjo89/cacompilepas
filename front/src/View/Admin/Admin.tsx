@@ -488,7 +488,7 @@ class Admin extends React.Component<any, AdminState> {
                                     case 'course-sheets':
                                         tab = (
                                             <div className={'container-fluid col-12 col-lg-8 pr-0'}>
-                                                <h2>Informations visibles par les visiteurs</h2>
+                                                <h2>Fiches de cours présentes dans le lobby</h2>
                                                 <div className={'row mt-5'}>
                                                     <div className={'col-lg-4 col-md-4 col-sm-4 col-xs-12 pl-0 pr-lg-5 pr-md-0 pr-sm-0 pr-xs-0'}>
                                                             <Input id={'title-input'} inputType={'text'}
@@ -581,9 +581,7 @@ class Admin extends React.Component<any, AdminState> {
                                     case 'rights':
                                         tab = (
                                             <div className={'container-fluid  col-lg-8 col-md-12 col-sm-12 col-xs-12'}>
-                                                <div className={'row container-fluid text-left pr-0'}>
-                                                    <h2>Utilisateurs autorisés à consulter le lobby</h2>
-                                                </div>
+                                                <h2>Utilisateurs autorisés à consulter le lobby</h2>
                                                 <div className={'row'}>
                                                     <Users
                                                         id={this.state.id.toString()}
@@ -617,8 +615,8 @@ class Admin extends React.Component<any, AdminState> {
                                                         </div>
                                                     </div>
                                                 </div>
-                                                <div className={'row col-12 pt-5'}>
-                                                    <div className={'col-1 pt-2 pl-0 pr-0'}>
+                                                <div className={'row col-12 pt-5 pr-0'}>
+                                                    <div className={'col-1 pt-2 pl-0 pr-0 checkbox-container'}>
                                                         <Input
                                                             id={'visibility-input'}
                                                             inputType={'checkbox'}
@@ -629,7 +627,7 @@ class Admin extends React.Component<any, AdminState> {
                                                         />
                                                     </div>
                                                     <h4
-                                                        className={'col-11 pl-0 pt-1 text-left lobby-write-right-label'}
+                                                        className={'col-11 pt-0 pt-lg-0 pt-md-0 pt-sm-0 pr-0 pl-2 pl-lg-0 pl-md-0 pl-sm-0 text-left lobby-write-right-label'}
                                                     >
                                                         Lobby privé (seules les personnes autorisées pourront le
                                                         consulter

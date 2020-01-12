@@ -20,13 +20,11 @@ class User extends React.Component<UserProps, any> {
 
     public render(): ReactNode {
         return (
-            <div id={'user-' + this.props.id} className={'user-card row col-lg-12 col-md-12 col-sm-12 col-xs-12'}>
-                <div
-                    className={'row col-lg-12 col-md-12 col-sm-12 col-xs-12 pl-lg-0 pl-md-0 pl-sm-0 pl-xs-0 pr-lg-0 pr-md-0 pr-sm-0 pr-xs-0'}
-                >
-                    <h3 className={'col-lg-11 col-md-11 col-sm-11 col-xs-11 text-lg-left text-md-left text-sm-left text-xs-left'}>{this.props.pseudo}</h3>
+            <div id={'user-' + this.props.id} className={'user-card row col-12'}>
+                <div className={'row col-12 pl-0 pr-0'}>
+                    <h3 className={'col-11 text-left'}>{this.props.pseudo}</h3>
                     <div
-                        className={'col-lg-1 col-md-1 col-sm-1 col-xs-1 pr-0 mt-lg-5 mt-md-5 mt-sm-5 mt-xs-5'}
+                        className={'col-1 pr-0 mt-4 pt-3'}
                     >
                         <img
                             id={'user-remove-' + this.props.id}
@@ -37,15 +35,15 @@ class User extends React.Component<UserProps, any> {
                         />
                     </div>
                 </div>
-                <div
-                    className={'row col-lg-12 col-md-12 col-sm-12 col-xs-12 mt-lg-2 mt-md-2 mt-sm-2 mt-xs-2 rounded'}
-                >
-                    <img
-                        src={this.props.icon}
-                        alt={'User Icon'}
-                        className={'user-icon col-2 pl-0 rounded-circle'}
-                    />
-                    <div className={'row col-10 pt-5'}>
+                <div className={'row col-12 mt-2 rounded ml-1 ml-md-0 ml-sm-0 pr-0 pl-1 pl-md-0 pl-sm-0'}>
+                    <div className={'col-3 col-lg-2 col-md-2 col-sm-2 mr-4 mr-lg-0 mr-md-0 mr-sm-0 ml-1 ml-lg-0 ml-md-0 ml-sm-0 pr-0 pl-2 pl-lg-4 pl-md-3 pl-sm-3 text-left'}>
+                        <img
+                            src={this.props.icon}
+                            alt={'User Icon'}
+                            className={'user-icon col-2 pl-0 rounded-circle'}
+                        />
+                    </div>
+                    <div className={'row col-9 col-lg-10 col-md-10 col-sm-10 offset-1 pt-5 pr-0'}>
                         <div className={'col-1 pt-2 pl-0 pr-0'}>
                             <Input
                                 id={'user-right-checkbox-' + this.props.id}
@@ -57,10 +55,10 @@ class User extends React.Component<UserProps, any> {
                             />
                         </div>
                         <h4
-                            className={'col-11 pl-0 pt-1 text-left lobby-write-right-label'}
+                            className={'col-11 pt-1 pr-0 pl-5 pl-lg-0 pl-md-0 pl-sm-0 text-left lobby-write-right-label'}
                             onClick={this.check}
                         >
-                            A le droit de modifier le lobby
+                            Peut modifier le lobby
                         </h4>
                     </div>
                 </div>
