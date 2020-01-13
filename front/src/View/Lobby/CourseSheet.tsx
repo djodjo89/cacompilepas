@@ -1,14 +1,16 @@
 import React, {ReactNode} from 'react';
+import {pdfjs, Document, Page} from 'react-pdf';
 import Request from '../../API/Request';
+import Hashtag from '../General/Hashtag';
+import {display} from '../../Model/Month';
 import '../../css/CourseSheet.css';
 import minusIcon from '../../img/minus-icon-red-t.png';
-import Hashtag from '../General/Hashtag';
-import {pdfjs, Document, Page} from 'react-pdf';
 
 interface CourseSheetProps {
     id: string,
     idLobby: string,
     title: string,
+    pseudo: string,
     publication_date: string,
     link: string,
     description: string,
@@ -157,8 +159,8 @@ class CourseSheet extends React.Component<CourseSheetProps, CourseSheetState> {
                     </div>
                 </div>
                 <div className={'col-lg-9 col-md-10 col-sm-10 col-xs-12 pr-sm-0 pr-0 pl-0 pl-lg-0 pl-md-0 pl-sm-5'}>
-                    <div className={'container-fluid row pl-0'}>
-                        <h3 className={'col-lg-11 col-md-11 col-sm-11 col-xs-11 text-left mt-0'}>{this.props.title}</h3>
+                    <div className={'container-fluid row pl-0 pr-0'}>
+                        <h3 className={(this.props.activeRemoveButton ? 'col-11 ' : 'col-12 ') + 'course-sheet-label text-left mt-0 pr-0'}>{display(this.props.title + ', ', this.props.publication_date)}</h3>
                         {this.props.activeRemoveButton ?
                             <div className={'col-lg-1 col-md-1 col-sm-1 col-xs-1'}>
                                 <img
@@ -183,7 +185,7 @@ class CourseSheet extends React.Component<CourseSheetProps, CourseSheetState> {
                             >
                                 Lien vers la fiche
                             </a>
-                            <h4 className={'col-7 text-right p-0'}>Mathys</h4>
+                            <h4 className={'col-7 text-right p-0'}>{this.props.pseudo}</h4>
                         </footer>
                     </div>
                 </div>
