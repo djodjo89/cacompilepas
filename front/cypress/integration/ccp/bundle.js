@@ -1,8 +1,8 @@
 let connect = () => {
-    cy.get('#inputMail')
+    cy.get('#input-mail')
         .type('thomas@cacompilepas.com');
 
-    cy.get('#inputPassword')
+    cy.get('#input-password')
         .type('root');
 
     cy.contains('Connexion').click();

@@ -6,23 +6,42 @@ interface SubmitButtonProps {
     text: string,
     onClick: (event: React.MouseEvent<HTMLButtonElement, MouseEvent>) => void,
     className: string,
-    disconnectButton: boolean,
+    disconnectButton?: string,
 }
 
 class SubmitButton extends React.Component<SubmitButtonProps, any> {
     public render(): ReactNode {
         return (
             <button
-                className={'btn btn-default btn-transparent rounded-1 ' + this.props.className}
+                className={'btn btn-default btn-transparent rounded ' + this.props.className}
                 onClick={this.props.onClick}
             >
-                <img
-                    className={this.props.disconnectButton ? 'disconnect-icon' : 'plus-icon'}
-                    src={
-                        (() => this.props.disconnectButton ? disconnectIcon : plusIcon)()
+                {(() => {
+                    if (undefined !== this.props.disconnectButton) {
+                        return <img
+                            className={
+                                (() => {
+                                    if ('disconnect' === this.props.disconnectButton) {
+                                        return 'disconnect-icon';
+                                    } else if ('plus' === this.props.disconnectButton) {
+                                        return 'plus-icon';
+                                    }
+                                })()
+                            }
+                            src={
+                                (() => {
+                                    if ('disconnect' === this.props.disconnectButton) {
+                                        return disconnectIcon;
+                                    } else if ('plus' === this.props.disconnectButton) {
+                                        return plusIcon;
+                                    }
+                                })()
+                            }
+                            alt={'Plus Icon'}
+                        />;
                     }
-                    alt={'Plus Icon'}
-                />
+                })()}
+
                     {this.props.text}
             </button>
         )

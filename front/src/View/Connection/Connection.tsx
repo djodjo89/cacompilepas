@@ -1,8 +1,13 @@
-import React, {ChangeEvent, FormEvent, ReactNode} from 'react';
+import React, {ChangeEvent, FormEvent, ReactElement, ReactNode} from 'react';
 import Request from '../../API/Request';
 import '../../css/Connection.css';
+import Input from "../General/Input";
+import SubmitButton from "../General/SubmitButton";
+import Header from "../General/Header";
 
 interface ConnectionStates {
+    email: string,
+    password: string,
     // Pending (''), connected ('true') or not connected ('false')
     status: string,
     token: string,
@@ -11,14 +16,12 @@ interface ConnectionStates {
 }
 
 class Connection extends React.Component<{ referrer: string }, ConnectionStates> {
-    private email: string;
-    private password: string;
 
     constructor(props: any) {
         super(props);
-        this.email = '';
-        this.password = '';
         this.state = {
+            email: '',
+            password: '',
             status: '',
             token: '',
             tokenExists: false,
@@ -27,7 +30,7 @@ class Connection extends React.Component<{ referrer: string }, ConnectionStates>
         this.referrerIsNotConnection = this.referrerIsNotConnection.bind(this);
         this.handleEmailChange = this.handleEmailChange.bind(this);
         this.handlePasswordChange = this.handlePasswordChange.bind(this);
-        this.submitForm = this.submitForm.bind(this);
+        this.submit = this.submit.bind(this);
         this.updateConnectStatus = this.updateConnectStatus.bind(this);
         this.setState = this.setState.bind(this);
         this.checkIfAlreadyConnected = this.checkIfAlreadyConnected.bind(this);
@@ -58,38 +61,48 @@ class Connection extends React.Component<{ referrer: string }, ConnectionStates>
 
     public handleEmailChange(event: ChangeEvent<HTMLInputElement>): void {
         // @ts-ignore
-        this.email = event.target.value;
+        this.setState({email: event.target.value});
     }
 
     public handlePasswordChange(event: ChangeEvent<HTMLInputElement>): void {
         // @ts-ignore
-        this.password = event.target.value;
+        this.setState({password: event.target.value});
     }
 
     public updateConnectStatus(data: any): void {
-        this.setState({status: '' + data['connected']});
-        localStorage.setItem('token', data['token']);
+        this.setState(
+            {status: '' + data['connected']},
+            () => this.setState(
+                {formWasSubmitted: true},
+                () => localStorage.setItem('token', data['token'])
+            )
+        );
     }
 
-    public submitForm(event: FormEvent<HTMLFormElement>): void {
+    public submit(event: React.MouseEvent<HTMLButtonElement, MouseEvent> | FormEvent<HTMLFormElement>): void {
         event.preventDefault();
         new Request(
             '/connection/login',
             this.updateConnectStatus,
             'POST',
             {
-                email: this.email,
-                password: this.password
+                email: this.state.email,
+                password: this.state.password
             },
         );
-        this.setState({formWasSubmitted: true});
     }
 
     render(): ReactNode {
         return (
-            <section className="content row connection-bloc">
-                <div className="container">
-                    <div className={"row"}>
+            <section className={'content row connection-bloc'}>
+                <div className={'container-fluid'}>
+                    <Header
+                        h1={'Connecte-toi ici'}
+                        p={'Comme ça tu pourras accéder à notre super site de fiches de cours !'}
+                        containerClassName={'ml-0 ml-lg-2 ml-md-2 ml-sm-2 mb-5'}
+                        contentClassName={'offset-lg-3 offset-md-2 pl-0 pl-lg-0 pl-md-4 pl-sm-3'}
+                    />
+                    <div className={'row'}>
                         {(() => {
                             // If token exists and user connected, redirect to referrer
                             // Else if form was submitted and credentials were incorrect,
@@ -119,57 +132,47 @@ class Connection extends React.Component<{ referrer: string }, ConnectionStates>
                             }
                         })()}
                     </div>
-                    <div className={"row"}>
-                        <form id={"connectForm"} className="col-lg-4 col-lg-offset-4 col-sm" onSubmit={this.submitForm}>
-                            <ConnectionInput id={"inputMail"} inputType={"email"} placeholder={"Adresse email"}
-                                             className={""} onChange={this.handleEmailChange}/>
-                            <ConnectionInput id={"inputPassword"} inputType={"password"}
-                                             placeholder={"Mot de passe"}
-                                             className={"custom"} onChange={this.handlePasswordChange}/>
-                            <ButtonConnection/>
+                    <div className={'row'}>
+                        <form
+                            id={'connectForm'}
+                            className={'col-lg-6 col-md-8 col-sm-12 offset-lg-3 pr-sm-5 pl-lg-4 pl-sm-5 container-fluid'}
+                            onSubmit={this.submit}
+                        >
+                            <div className={'row pl-4'}>
+                                <div className={'row container-fluid pr-0'}>
+                                    <div className={'col-12 p-0'}>
+                                        <Input
+                                            id={'input-mail'}
+                                            inputType={'email'}
+                                            placeholder={'Adresse email'}
+                                            checked={false}
+                                            className={'connection-input'}
+                                            onChange={this.handleEmailChange}
+                                        />
+                                    </div>
+                                </div>
+                                <div className={'row container-fluid mt-5 pr-0'}>
+                                    <div className={'col-12 p-0'}>
+                                        <Input
+                                            id={'input-password'}
+                                            inputType={'password'}
+                                            placeholder={'Mot de passe'}
+                                            checked={false}
+                                            className={'connection-input'}
+                                            onChange={this.handlePasswordChange}
+                                        />
+                                    </div>
+                                </div>
+                            </div>
+                            <SubmitButton
+                                text={'Connexion'}
+                                onClick={this.submit}
+                                className={'mt-5 connection-button'}
+                            />
                         </form>
                     </div>
                 </div>
             </section>
-        )
-    }
-}
-
-interface ConnectionInputProps {
-    id: string;
-    inputType: string;
-    placeholder: string;
-    className: string;
-    onChange: (event: ChangeEvent<HTMLInputElement>) => void;
-}
-
-class ConnectionInput extends React.Component<ConnectionInputProps, {}> {
-
-    private readonly className: string;
-
-    constructor(props: ConnectionInputProps) {
-        super(props);
-        this.className = "form-control text-center mt-0 rounded-1 " + this.props.className;
-    }
-
-    public render(): ReactNode {
-        return <div className="form-group">
-            <input type={this.props.inputType}
-                   className={this.className}
-                   id={this.props.id}
-                   placeholder={this.props.placeholder}
-                   onFocus={e => e.target.placeholder = ""}
-                   onBlur={e => e.target.placeholder = this.props.placeholder}
-                   onChange={this.props.onChange}
-            />
-        </div>
-    }
-}
-
-class ButtonConnection extends React.Component<{}, {}> {
-    public render() {
-        return (
-            <button type="submit" className="btn btn-default btn-transparent mt-0 rounded-1 custom">Connexion</button>
         )
     }
 }

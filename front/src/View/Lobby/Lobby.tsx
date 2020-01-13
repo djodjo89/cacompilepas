@@ -1,8 +1,4 @@
 import React, {ReactNode} from 'react';
-import Divider from '../General/Divider';
-import Messages from './Messages';
-import CourseSheets from "./CourseSheets";
-import WriteMessageZone from './WriteMessageZone';
 import Request from "../../API/Request";
 import '../../css/Lobby.css';
 import {
@@ -11,6 +7,8 @@ import {
     BrowserRouter as Router,
 } from "react-router-dom";
 import {ReactComponent as Loader} from "../../img/loader.svg";
+import LobbyTop from "./LobbyTop";
+import LobbyBody from "./LobbyBody";
 
 interface LobbyState {
     right: string,
@@ -104,7 +102,7 @@ class Lobby extends React.Component<any, LobbyState> {
                         {() => {
                             if ('true' === this.state.right) {
                                 return (
-                                    <section className={"content row container-fluid pr-sm-0"}>
+                                    <section className={"content row container-fluid pr-0"}>
                                         <LobbyTop
                                             id={this.props.location.pathname.split(/\//)[2]}
                                             lobbyInformation={this.state.lobbyInformation}
@@ -128,194 +126,6 @@ class Lobby extends React.Component<any, LobbyState> {
                 </Switch>
             </Router>
         );
-    }
-}
-
-class LobbyTop extends React.Component<{ id: string, lobbyInformation: any, courseSheets: [] }, {}> {
-
-    public render(): ReactNode {
-        return (
-            <div className="row container-fluid">
-                <LobbyDescription
-                    id={this.props.id}
-                />
-                <LobbySummary courseSheets={this.props.courseSheets}/>
-            </div>
-        )
-    }
-}
-
-class LobbySummary extends React.Component<{ courseSheets: [] }, {}> {
-    constructor(props: any) {
-        super(props);
-        this.renderList = this.renderList.bind(this);
-    }
-
-    public renderList(): ReactNode {
-        let res = [], i = 0;
-        for (let courseSheet of this.props.courseSheets) {
-            res.push(<li key={i}><p className={'mb-0'}>{courseSheet['title']}</p></li>);
-            i++;
-        }
-        return res;
-    }
-
-    public render(): ReactNode {
-        return (
-            <section className={'col-lg-12 col-sm-12 pr-sm-0 pr-xs-0' + (0 !== this.props.courseSheets.length ? ' mt-sm-2' : '')}>
-                {
-                    0 !== this.props.courseSheets.length ?
-                        <div>
-                            <h2 className={'text-left mb-0 mt-0 ml-4'}>Sommaire</h2>
-                            <ul className={'lobby-summary-list list-unstyled text-left ml-1 mt-3 ml-4'}>
-                                {this.renderList()}
-                            </ul>
-                            <Divider
-                                className={'offset-lg-3 col-lg-6 offset-md-2 col-md-8 col-sm-6 col-xs-6 mt-5 mb-2 ml-4'}
-                            />
-                        </div>
-                        :
-                        <div></div>
-                }
-            </section>
-        );
-    }
-}
-
-class LobbyDescription extends React.Component<{ id: string }, { lobby: any }> {
-    public constructor(props: any) {
-        super(props);
-        this.state = {
-            lobby: [],
-        };
-        this.fillDescription = this.fillDescription.bind(this);
-        this.getLogo = this.getLogo.bind(this);
-        this.fillLogo = this.fillLogo.bind(this);
-        this.refreshDescription = this.refreshDescription.bind(this);
-    }
-
-    public componentDidMount(): void {
-        this.refreshDescription();
-    }
-
-    public refreshDescription(): void {
-        new Request('/lobby/consult/' + this.props.id, this.fillDescription);
-    }
-
-    public fillDescription(data: any): void {
-        this.setState(
-            {lobby: data[0]},
-            this.getLogo);
-    }
-
-    public getLogo(): void {
-        new Request(
-            '/lobby/getLogo/0',
-            this.fillLogo,
-            'POST',
-            {
-                idLobby: this.props.id,
-                path: this.state.lobby['logo'],
-            },
-            'json',
-            'blob',
-        );
-    }
-
-    public fillLogo(data: Blob): void {
-        const img: any = document.getElementById('lobby-logo' + this.props.id);
-        const blob = new Blob([data], {type: 'image/jpg'});
-        img.src = URL.createObjectURL(blob);
-    }
-
-    public render(): ReactNode {
-        return (
-            <section className="col-lg-12 col-sm-12 pr-lg-0 pr-md-0 pr-sm-0 pr-xs-0">
-                <div className={'row container-fluid mt-5 p-0'}>
-                    <div className={'col-lg-2 col-md-2 col-sm-3 col-xs-4 text-left pr-lg-0'}>
-                        <img
-                            id={'lobby-logo' + this.props.id}
-                            className={'lobby-logo'}
-                            alt={'Lobby logo'}
-                        />
-                    </div>
-                    <div className={'col-lg-10 col-md-10 col-sm-9 col-xs-8 pr-0'}>
-                        <div className={'row'}>
-                            <div className={'col-12 text-left'}>
-                                <h1 id={'lobby-label'}>{this.state.lobby['label_lobby']}</h1>
-                            </div>
-                        </div>
-                        <div className={'row'}>
-                            <div className={'col-12'}>
-                                <p className="lobby-page-description">{this.state.lobby['description']}</p>
-                            </div>
-                        </div>
-                    </div>
-                    <Divider className={'col-lg-3 col-md-6 col-sm-6 col-xs-6 mt-5 ml-5 mb-5'}/>
-                </div>
-            </section>
-        )
-    }
-}
-
-interface LobbyBodyProps {
-    id: string,
-    labelLobby: string,
-    courseSheets: [],
-    onEnter: (event: React.KeyboardEvent<HTMLDivElement>) => void,
-    messages: any,
-}
-
-class LobbyBody extends React.Component<LobbyBodyProps, any> {
-    public render(): ReactNode {
-        return (
-            <div className={'col-lg-12 col-md-12 col-sm-12 col-xs-12'}>
-                <div className={'col-lg-6 col-md-6 col-sm-12 col-xs-12 container-fluid'}>
-                    {
-                        // @ts-ignore
-                        undefined !== this.props.courseSheets[0] ?
-                            <CourseSheets
-                                id={this.props.id}
-                                courseSheets={this.props.courseSheets}
-                                className={'mt-lg-3'}
-                                activeRemoveButton={false}
-                                removableHashtags={false}
-                                delete={undefined}
-                            />
-                            :
-                            <div className={'row mt-5'}>
-                                <div className={'col-12 text-left'}>
-                                    <p className={'no-coursesheet-message'}>Il n'y a pas de fiches de cours pour l'instant</p>
-                                </div>
-                            </div>
-                    }
-                </div>
-                <div className={'col-lg-6 col-md-6 col-sm-12 col-xs-12 container-fluid'}>
-                    {
-                        // @ts-ignore
-                        undefined !== this.props.messages[0] ?
-                            <div className={'row'}>
-
-                                <Messages
-                                    id={this.props.id}
-                                    messages={this.props.messages}
-                                /></div>
-                            :
-                            <div className={'row mt-5 mb-5'}>
-                                <div className={'col-12 text-left'}>
-                                    <p className={'no-messages-message'}>Il n'y a pas de messages pour l'instant</p>
-                                </div>
-                            </div>
-                    }
-                    <div className={'row'}>
-                        <WriteMessageZone
-                            labelLobby={this.props.labelLobby}
-                            onEnter={this.props.onEnter}
-                        />
-                    </div>
-                </div>
-            </div>
-        )
     }
 }
 

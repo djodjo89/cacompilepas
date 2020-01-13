@@ -376,8 +376,8 @@ class LobbyModel extends AbstractModel
         $this->send_query('
             SELECT DISTINCT id_lobby, label_lobby, ccp_lobby.description, logo 
             FROM ccp_lobby 
-            LEFT OUTER JOIN ccp_coursesheet on ccp_lobby.id_lobby = ccp_coursesheet.id_lobby_contain
-            NATURAL JOIN ccp_hashtag
+            LEFT OUTER JOIN ccp_coursesheet ON ccp_lobby.id_lobby = ccp_coursesheet.id_lobby_contain
+            LEFT OUTER JOIN ccp_hashtag ON ccp_coursesheet.id_course_sheet = ccp_hashtag.id_course_sheet
             WHERE
             ' . (0 !== $lengthSearch ? '(' . $searchParams . ') ' : '') .
             (0 !== $lengthHashtags ? ' AND (' . $hashtagsParams . ')' : '') . '

@@ -2,11 +2,10 @@ import React from 'react';
 import { ReactComponent as Logo } from "../../img/new-logo-2.svg";
 
 interface SvgProps {
-  id: string
-  alt: string
+  className: string,
 }
 
-class Svg extends React.PureComponent {
+class Svg extends React.PureComponent<SvgProps, any> {
 
   public move() {
     let count = 0;
@@ -55,7 +54,9 @@ class Svg extends React.PureComponent {
 
   public render(): React.ReactNode {
     return (
-		<Logo/>
+        <div className={this.props.className}>
+          <Logo/>
+        </div>
     )
   }
 }

@@ -151,7 +151,7 @@ class Personal extends React.Component<any, PersonalState> {
                                     text={'Crée un lobby ici !'}
                                     onClick={(event: any) => console.log('Lobby creation')}
                                     className={'mt-1px offset-lg-5 col-lg-7 col-md-6 col-sm-12 col-xs-12 container-fluid add-course-sheet-button mt-5'}
-                                    disconnectButton={false}
+                                    disconnectButton={'plus'}
                                 />
                             </a>
                         </div>

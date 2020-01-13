@@ -4,6 +4,7 @@ import DropBox from "../General/DropBox";
 import Input from "../General/Input";
 import InputArea from "../General/InputArea";
 import SubmitButton from "../General/SubmitButton";
+import Header from "../General/Header";
 
 interface LobbyCreationState {
     id: number,
@@ -115,14 +116,10 @@ class LobbyCreation extends React.Component<any, LobbyCreationState> {
     public render(): ReactNode {
         return (
             <div className={'container-fluid'}>
-                <div className={'row'}>
-                    <div className={'col-12 text-left'}>
-                        <h1>Créer un lobby</h1>
-                    </div>
-                    <div className={'col-12'}>
-                        <p>Ici tu peux créer ton propre lobby</p>
-                    </div>
-                </div>
+                <Header
+                    h1={'Créer un lobby'}
+                    p={'Ici tu peux créer ton propre lobby'}
+                />
                 <div className={'row'}>
                     <div className={'row container-fluid'}>
                         <div className={'col-lg-6 col-md-6 col-sm-12 col-xs-12'}>
@@ -181,7 +178,7 @@ class LobbyCreation extends React.Component<any, LobbyCreationState> {
                                 text={'Mettre à jour le lobby'}
                                 onClick={this.createLobby}
                                 className={'mt-5'}
-                                disconnectButton={false}
+                                disconnectButton={'plus'}
                             />
                         </div>
                     </div>

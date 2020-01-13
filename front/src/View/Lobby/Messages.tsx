@@ -1,7 +1,13 @@
 import React, {ReactNode} from 'react';
 import Message from "./Message";
 
-class Messages extends React.Component<{ id: string, messages: [] }, any> {
+interface MessagesProps {
+    id: string,
+    messages: [],
+    className?: string,
+}
+
+class Messages extends React.Component<MessagesProps, any> {
     public constructor(props: any) {
         super(props);
         this.state = {
@@ -39,7 +45,7 @@ class Messages extends React.Component<{ id: string, messages: [] }, any> {
 
     public render(): ReactNode {
         return (
-            <div className={'col-lg-12 col-md-12 col-sm-12 col-xs-12 pl-lg-0 pl-sm-0 pr-lg-5 mt-lg-3 mt-sm-4'}>
+            <div className={'col-12 pr-lg-5 pl-lg-0 pl-sm-0 ' + this.props.className}>
                 <ul className={'messages-list list-unstyled'}>
                     {this.renderMessages()}
                 </ul>

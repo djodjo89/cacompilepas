@@ -39,7 +39,7 @@ class HashtagInput extends React.Component<HashtagInputProps, HashTagInputState>
         this.write = this.write.bind(this);
         this.renderHashtags = this.renderHashtags.bind(this);
         this.addHashtag = this.addHashtag.bind(this);
-        this.deleteHashtag = this.deleteHashtag.bind(this);
+        this.deleteHashtags = this.deleteHashtags.bind(this);
         this.updateHashtags = this.updateHashtags.bind(this);
         this.updateIndent = this.updateIndent.bind(this);
         this.updateTotalWidth = this.updateTotalWidth.bind(this);
@@ -116,13 +116,14 @@ class HashtagInput extends React.Component<HashtagInputProps, HashTagInputState>
             content = target.parentElement.firstElementChild.innerText;
         }
         content = content.substr(1, content.length - 1);
-        let index: number = this.state.hashtags.indexOf(content);
-        this.state.hashtags.splice(index, 1);
-        this.state.widths.splice(index, 1);
-        this.updateView();
+        this.deleteHashtags(content);
     }
 
-    public deleteHashtag(text: string): void {
+    public deleteHashtagOnKeyPressed(text: string): void {
+        this.deleteHashtags(text);
+    }
+
+    public deleteHashtags(text: string): void {
         let index: number = this.state.hashtags.indexOf(text);
         this.state.hashtags.splice(index, 1);
         this.state.widths.splice(index, 1);
@@ -143,7 +144,7 @@ class HashtagInput extends React.Component<HashtagInputProps, HashTagInputState>
             // @ts-ignore
             if (('' === this.input.current.value && 0 !== this.state.hashtags.length) || 0 === this.input.current.selectionStart) {
                 event.preventDefault();
-                this.deleteHashtag(this.state.hashtags[this.state.hashtags.length - 1]);
+                this.deleteHashtags(this.state.hashtags[this.state.hashtags.length - 1]);
             }
         }
         this.updateView();

@@ -10,7 +10,7 @@ interface WriteMessageZoneProps {
 class WriteMessageZone extends React.Component<WriteMessageZoneProps, any> {
     public render(): ReactNode {
         return (
-            <div className={'col-lg-12 mt-lg-5 ml-lg-0 pl-lg-0 text-left'}
+            <div className={'col-lg-12 mt-3 ml-lg-0 ml-lg-2 ml-sm-3 pl-lg-4 text-left'}
                 onKeyDown={this.props.onEnter}
             >
                 <Input
