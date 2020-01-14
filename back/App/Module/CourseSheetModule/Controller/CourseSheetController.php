@@ -5,12 +5,13 @@ namespace App\Module\CourseSheetModule\Controller;
 use App\Controller\AbstractController;
 use App\Exception\JSONException;
 use App\Http\JSONResponse;
+use App\Module\CourseSheetModule\Model\CourseSheetModel;
 use App\Module\CourseSheetModule\Model\MessageModel;
 use App\Module\LobbyModule\Model\LobbyModel;
 
 class CourseSheetController extends AbstractController
 {
-    public function __construct(MessageModel $model)
+    public function __construct(CourseSheetModel $model)
     {
         parent::__construct($model);
         $this->setActions([

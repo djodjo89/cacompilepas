@@ -2,12 +2,9 @@
 
 namespace App\Module\LobbyModule\Controller;
 
-use App\Connection\Connection;
 use App\Controller\AbstractController;
 use App\Exception\JSONException;
 use App\Http\JSONResponse;
-use App\Model\AbstractModel;
-use App\Module\ConnectionModule\Model\ConnectionModel;
 use App\Module\CourseSheetModule\Model\CourseSheetModel;
 use App\Module\MessageModule\Model\MessageModel;
 use App\Module\LobbyModule\Model\LobbyModel;
@@ -177,10 +174,6 @@ class LobbyController extends AbstractController
 
                             case 'delete':
                                 $result = $this->getModel()->delete((int)$this->getRequest()->getParam());
-                                break;
-
-                            case 'deleteMessage':
-                                $result = (new MessageModel($this->getModel()->getConnection()))->deleteMessage((int)$this->getRequest()->getId());
                                 break;
                         }
                     }
