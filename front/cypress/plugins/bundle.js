@@ -1,5 +1,5 @@
 let connect = () => {
-    cy.get('#input-mail')
+    cy.get('#input-email')
         .type('thomas@cacompilepas.com');
 
     cy.get('#input-password')

@@ -504,7 +504,7 @@ class Admin extends React.Component<any, AdminState> {
                                                         />
                                                     </div>
                                                     <div className={'col-5 ml-2 mt-0 ml-lg-4 ml-md-4 ml-sm-4 p-0'}>
-                                                        <DropBox id={'logo-input'}
+                                                        <DropBox id={'input-logo'}
                                                                  className={'mt-lg-4 mt-md-4 mt-sm-5'}
                                                                  labelNotDragged={'Glisse un logo par ici !'}
                                                                  labelDragged={'Logo déposé !'}

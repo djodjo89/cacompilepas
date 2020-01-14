@@ -179,24 +179,36 @@ class ConnectionModel extends AbstractModel
                     $successfulUpload = $this->uploadOnFTP($idUser, $logoName, $logoTmpName, '/icon/', ['jpg', 'jpeg', 'ico', 'png', 'svg', 'bmp']);
 
                     if ($successfulUpload) {
-                        return ['message' => 'User was successfully registered',
+                        return [
+                            'status' => 'success',
+                            'message' => 'User was successfully registered',
                             'id_user' => $idUser,
                             'logoPath' => $logoName,
                         ];
                     } else {
                         return [
+                            'status' => 'fail',
                             'message' => 'User icon could not be uploaded',
                             'id_user' => $idUser,
                         ];
                     }
                 } else {
-                    return ['message' => 'User could not be registered'];
+                    return [
+                        'status' => 'fail',
+                        'message' => 'User could not be registered',
+                    ];
                 }
             } else {
-                return ['message' => 'User already exists'];
+                return [
+                    'status' => 'fail',
+                    'message' => 'User already exists',
+                ];
             }
         } else {
-            return ['message' => 'Passwords do not match'];
+            return [
+                'status' => 'fail',
+                'message' => 'Passwords do not match',
+            ];
         }
     }
 }

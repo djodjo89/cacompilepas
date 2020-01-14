@@ -11,10 +11,7 @@
 }
 
 .connection-error {
-    background-color: red;
     opacity: 0.6;
-    padding: 10px;
-    text-align: center;
 }
 
 .connection-input {

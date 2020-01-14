@@ -1,4 +1,4 @@
-import connect from './bundle';
+import connect from '../../plugins/bundle';
 
 describe('Admin Test', function () {
     it('Update description', function () {
@@ -33,7 +33,7 @@ const updateDescription = (newLabel, newDescription, newLogoName) => {
         .then(image => {
             oldFileSrc = image[0].src;
             cy.fixture(fileName).then(fileContent => {
-                cy.get('#logo-input')
+                cy.get('#input-logo')
                     .upload({fileContent, fileName, mimeType: 'application/image'});
                 cy.get('.sc-bdVaJa.thXdN')
                     .contains('Logo déposé !');
