@@ -1,6 +1,6 @@
 <?php
 
-namespace App\Module\MessageController\Controller;
+namespace App\Module\MessageModule\Controller;
 
 use App\Controller\AbstractController;
 use App\Exception\JSONException;
@@ -14,10 +14,7 @@ class MessageController extends AbstractController
     {
         parent::__construct($model);
         $this->setActions([
-            'getLobbiesByHashtag',
-            'addHashtags',
-            'removeHashtag',
-            'getHashtags',
+            'deleteMessage',
         ]);
     }
 
@@ -33,20 +30,12 @@ class MessageController extends AbstractController
         );
         if ('admin' === $rightsOnCourseSheet) {
             switch ($this->getRequest()->getAction()) {
-                case 'addHashtags':
-                    $result = $this->getModel()->addHashtags($this->getRequest()->getParam(), $this->getRequest()->getHashtags());
-                    break;
-
-                case 'removeHashtag':
-                    $result = $this->getModel()->removeHashtag($this->getRequest()->getParam(), $this->getRequest()->getHashtag());
-                    break;
-
-                case 'getHashtags':
-                    $result = $this->getModel()->getHashtags($this->getRequest()->getParam());
+                case 'deleteMessage':
+                    $result = (new MessageModel($this->getModel()->getConnection()))->deleteMessage((int)$this->getRequest()->getId());
                     break;
             }
         } else {
-            new JSONException('You don\'t have the right to access this course sheet');
+            new JSONException('You don\'t have the right to access this message');
         }
         new JSONResponse($result);
     }
