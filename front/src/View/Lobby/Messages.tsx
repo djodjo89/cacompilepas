@@ -5,6 +5,8 @@ interface MessagesProps {
     id: string,
     messages: [],
     className?: string,
+    activeRemoveButton?: boolean,
+    delete?: ((event: React.MouseEvent<HTMLImageElement, MouseEvent>) => void) | undefined,
 }
 
 class Messages extends React.Component<MessagesProps, any> {
@@ -18,8 +20,16 @@ class Messages extends React.Component<MessagesProps, any> {
         this.setState = this.setState.bind(this);
     }
 
-    public renderMessage(key: string, content: string, send_date: string, pseudo: string): ReactNode {
-        return <Message key={key} content={content} send_date={send_date} pseudo={pseudo}/>;
+    public renderMessage(id: string, content: string, send_date: string, pseudo: string): ReactNode {
+        return <Message
+            id={id}
+            key={id}
+            content={content}
+            send_date={send_date}
+            pseudo={pseudo}
+            activeRemoveButton={this.props.activeRemoveButton}
+            delete={this.props.delete}
+        />;
     }
 
     public renderMessages(): ({} | null | undefined)[] {

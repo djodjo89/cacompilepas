@@ -7,6 +7,7 @@ use App\Connection\Connection;
 use App\Exception\JSONException;
 use App\Model\AbstractModel;
 use App\Module\ConnectionModule\Model\ConnectionModel;
+use App\Module\ConnectionModule\Model\MessageModel;
 use Firebase\JWT\JWT;
 
 
@@ -174,12 +175,21 @@ class LobbyModel extends AbstractModel
                 [1, 0, $idLobby, (int)$idUser]);
 
             if ($successfulRightCreation) {
-                return ['message' => "Read right was successfully added for $email"];
+                return [
+                    'status' => 'success',
+                    'message' => "Read right was successfully added for $email",
+                ];
             } else {
-                return ['message' => "Read right could not be added for $email"];
+                return [
+                    'status' => 'fail',
+                    'message' => "Read right could not be added for $email",
+                ];
             }
         } else {
-            return ['message' => "$email already has access to the lobby"];
+            return [
+                'status' => 'fail',
+                'message' => "$email already has access to the lobby",
+            ];
         }
     }
 
@@ -280,16 +290,20 @@ class LobbyModel extends AbstractModel
     public function getUsers(int $idLobby): array
     {
         $this->send_query('
-            SELECT DISTINCT id_user, pseudo, icon, write_right
-            FROM ccp_user
-            INNER JOIN ccp_rights cr ON ccp_user.id_user = cr.id_user
-            LEFT OUTER JOIN ccp_is_admin cia ON ccp_user.id_user = cia.id_user
-            WHERE id_lobby_protect = ?
-            AND read_right = 1
+            SELECT DISTINCT cu.id_user, pseudo, icon, write_right
+            FROM ccp_user cu
+            INNER JOIN ccp_rights cr ON cu.id_user = cr.id_user
+            INNER JOIN ccp_is_admin cia on cr.id_lobby_protect = cia.id_lobby
+            WHERE read_right = 1
+            AND id_lobby_protect = ?
+            AND cr.id_user != cia.id_user
         ',
             [$idLobby]);
 
-        return $this->fetchData(['message' => 'Lobby ' . $idLobby . ' does not contain any user']);
+        return $this->fetchData([
+            'status' => 'fail',
+            'message' => 'Lobby ' . $idLobby . ' does not contain any user'
+        ]);
     }
 
     public function getVisibility(int $idLobby): array
@@ -331,23 +345,6 @@ class LobbyModel extends AbstractModel
             WHERE private = 0
         ');
         return $this->fetchData(['message' => 'There is no public lobby']);
-    }
-
-    public function addMessage(int $idLobby, int $idUser, string $content): array
-    {
-        $successfulInsert = $this->send_query('
-            INSERT INTO ccp_message
-            (content, send_date, id_user, id_lobby)
-            VALUES 
-            (?, NOW(), ?, ?)
-        ',
-            [$content, $idUser, $idLobby]);
-
-        if ($successfulInsert) {
-            return ['message' => 'Message was successfully added'];
-        } else {
-            return ['message' => 'Message could not be added'];
-        }
     }
   
     public function searchLobbies(array $search, array $hashtags): array

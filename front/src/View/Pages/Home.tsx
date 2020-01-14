@@ -23,7 +23,7 @@ class Title extends React.Component {
     public render(): ReactNode {
         return (
             <div id={"Title"} className="col-lg-6">
-                <h1>Banque de fichiers en lignes pour informaticiens</h1>
+                <h1>Banque de fiches en ligne pour informaticiens</h1>
             </div>
         )
     }
@@ -32,7 +32,7 @@ class Title extends React.Component {
 class Description extends React.Component {
     public render(): ReactNode {
         return (
-            <p className={"col-lg-6 description"}>"Concurrent direct de StackOverflow, notre plateforme vous aidera à
+            <p className={"col-lg-6 description"}>"Concurrent direct à StackOverflow, notre plateforme vous aidera à
                 trouver des solutions à vos divers problèmes d'informaticiens !" </p>
 
         )

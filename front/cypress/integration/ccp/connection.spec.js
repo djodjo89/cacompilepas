@@ -1,15 +1,15 @@
 describe('Connection Test', () => {
-    it('Visits the connection page', () => {
+    it('Visit connection page', () => {
         // Private route redirection test
         localStorage.setItem('token', '');
-        cy.visit('http://localhost:3000/lobby/12');
+        cy.visit('http://localhost:3000/lobby/1');
 
         // Bad credentials test
-        cy.get('#inputMail')
+        cy.get('#input-mail')
             .type('fake@email.com')
             .should('have.value', 'fake@email.com');
 
-        cy.get('#inputPassword')
+        cy.get('#input-password')
             .type('pass')
             .should('have.value', 'pass');
 
@@ -21,33 +21,33 @@ describe('Connection Test', () => {
         cy.get('disconnect-button')
             .should('not.exist');
 
-        cy.get('#connectForm')
+        cy.get('#connect-form')
             .submit();
 
         cy.get('connection-error')
             .should('not.be.empty');
 
-        cy.visit('http://localhost:3000/lobby/12');
+        cy.visit('http://localhost:3000/lobby/1');
 
         cy.location('href')
             .should('be.equal', 'http://localhost:3000/connexion/login');
 
         // Good credentials test
-        cy.get('#inputMail')
+        cy.get('#input-mail')
             .type('thomas@cacompilepas.com');
 
-        cy.get('#inputPassword')
+        cy.get('#input-password')
             .type('root');
 
-        cy.get('#connectForm')
+        cy.get('#connect-form')
             .submit();
 
         cy.location('href')
-            .should('be.equal', 'http://localhost:3000/lobby/12');
-    })
-    it('Disconnect', () => {
+            .should('be.equal', 'http://localhost:3000/lobby/1');
+
         // Disconnect button test
-        cy.contains('Connecté')
+        cy.get('.disconnect-button')
+            .last()
             .parent()
             .first()
             .click();
@@ -57,7 +57,8 @@ describe('Connection Test', () => {
     })
     it('Go to connection page', () => {
         // Connect button test
-        cy.get('#user')
+        cy.get('.connect-button')
+            .last()
             .click();
 
         cy.location('href')

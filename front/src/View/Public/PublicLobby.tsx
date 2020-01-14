@@ -83,13 +83,13 @@ class PublicLobby extends React.Component<PublicLobbyProps, any> {
                         <div className={'row public-lobby-description align-top d-inline-block mt-2 pr-0 pl-5'}>
                             <p>{this.props.description}</p>
                         </div>
-                        <div className={'row mt-lg-3 mt-md-3 mt-sm-3 mt-xs-3'}>
-                            <div className={'col-lg-5 col-md-5 col-sm-5 col-xs-5 text-left p-0'}>
+                        <div className={'row mt-3'}>
+                            <div className={'col-6 text-left p-0'}>
                                 <a
                                     href={'/lobby/' + this.props.id}
                                 ><p>Lien vers le lobby</p></a>
                             </div>
-                            <div className={'col-lg-7 col-md-7 col-sm-7 col-xs-7 p-0'}>
+                            <div className={'col-6 p-0'}>
                                 <p className={' text-right'}>{undefined !== this.props.pseudo ? this.props.pseudo : <a href={'/admin/' + this.props.id}>Admin de {this.props.label.substr(0, 3)}...</a>}</p>
                             </div>
                         </div>

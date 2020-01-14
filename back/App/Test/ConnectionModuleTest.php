@@ -6,7 +6,7 @@ namespace App\Test\ConnectionModuleTest;
 define ('CONST_INCLUDE', NULL);
 
 use App\Connection\Connection;
-use App\Module\ConnectionModule\Model\ConnectionModel;
+use App\Module\ConnectionModule\Model\MessageModel;
 use PHPUnit\Framework\TestCase;
 
 class ConnectionModuleTest extends TestCase
