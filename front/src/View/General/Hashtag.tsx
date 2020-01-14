@@ -47,7 +47,7 @@ class Hashtag extends React.Component<HashtagProps, { width: number }> {
     public render(): ReactNode {
         let div = (
             <div key={this.props.text}
-                 className={'rounded p-1 pl-2 pr-2 m-1 hashtagBox ' + this.props.className}
+                 className={'rounded p-1 pl-2 pr-2 mt-1 mb-1 mr-1 hashtag-box ' + this.props.className}
                  ref={this.hashtagBox}
             >
                         <span className={'hashtag'}>

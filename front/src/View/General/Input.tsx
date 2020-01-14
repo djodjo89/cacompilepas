@@ -6,6 +6,7 @@ interface InputProps {
     placeholder: string,
     checked: boolean,
     className: string,
+    formGroupClassName?: string;
     onChange: (event: ChangeEvent<HTMLInputElement>) => void,
 }
 
@@ -20,7 +21,7 @@ class Input extends React.Component<InputProps, {}> {
 
     public render(): ReactNode {
         return (
-        <div className={'form-group'}>
+        <div className={'form-group ' + this.props.formGroupClassName}>
             <input type={this.props.inputType}
                    className={this.className}
                    checked={this.props.checked}

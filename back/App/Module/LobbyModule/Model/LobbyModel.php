@@ -71,8 +71,11 @@ class LobbyModel extends AbstractModel
     public function getCourseSheets(int $idLobby): array
     {
         $this->send_query('
-            SELECT ccp_coursesheet.id_course_sheet, title, publication_date, file_name, description
-            FROM ccp_coursesheet
+            SELECT ccp_coursesheet.id_course_sheet, title, publication_date, file_name, ccp_coursesheet.description, pseudo
+            FROM ccp_coursesheet 
+            INNER JOIN ccp_lobby cl ON ccp_coursesheet.id_lobby_contain = cl.id_lobby
+            INNER JOIN ccp_is_admin cia on cl.id_lobby = cia.id_lobby
+            INNER JOIN ccp_user cu on cia.id_user = cu.id_user
             WHERE id_lobby_Contain = ?
         ',
             [$idLobby]);
@@ -376,8 +379,8 @@ class LobbyModel extends AbstractModel
         $this->send_query('
             SELECT DISTINCT id_lobby, label_lobby, ccp_lobby.description, logo 
             FROM ccp_lobby 
-            LEFT OUTER JOIN ccp_coursesheet on ccp_lobby.id_lobby = ccp_coursesheet.id_lobby_contain
-            NATURAL JOIN ccp_hashtag
+            LEFT OUTER JOIN ccp_coursesheet ON ccp_lobby.id_lobby = ccp_coursesheet.id_lobby_contain
+            LEFT OUTER JOIN ccp_hashtag ON ccp_coursesheet.id_course_sheet = ccp_hashtag.id_course_sheet
             WHERE
             ' . (0 !== $lengthSearch ? '(' . $searchParams . ') ' : '') .
             (0 !== $lengthHashtags ? ' AND (' . $hashtagsParams . ')' : '') . '

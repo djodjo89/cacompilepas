@@ -38,7 +38,7 @@ class CourseSheetModel extends AbstractModel
 
         $idCourseSheet = (int)$this->getQuery()->fetch()[0];
 
-        $this->uploadOnFTP($idCourseSheet, $fileName, $tmpName, '/coursesheets/', AbstractModel::$COURSE_SHEET_EXTENSIONS);
+        $this->uploadOnFTP($idLobby, $fileName, $tmpName, '/coursesheets/', AbstractModel::$COURSE_SHEET_EXTENSIONS);
 
         foreach ($hashtags as $key => $value) {
             if ($successfulInsert) {

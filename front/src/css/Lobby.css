@@ -3,10 +3,36 @@
     max-height: 100px;
 }
 
-.lobby-logo {
-    width: 128px !important;
-    height: 128px !important;
-    border-radius: 70px !important;
+@media (max-width: 700px) {
+    .lobby-logo {
+        width: 100px !important;
+        height: 100px !important;
+        border-radius: 70px !important;
+    }
+}
+
+@media (min-width: 701px) {
+    .lobby-logo {
+        width: 128px !important;
+        height: 128px !important;
+        border-radius: 70px !important;
+    }
+}
+
+@media (min-width: 993px) {
+    .lobby-logo {
+        width: 128px !important;
+        height: 128px !important;
+        border-radius: 70px !important;
+    }
+}
+
+@media (min-width: 1201px) {
+    .lobby-logo {
+        width: 128px !important;
+        height: 128px !important;
+        border-radius: 70px !important;
+    }
 }
 
 .lobby-page-description {

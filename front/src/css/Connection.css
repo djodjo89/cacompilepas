@@ -1,17 +1,8 @@
-.connection-bloc{
-    width : 97%;
-    margin-top: 12%;
-}
-
-.custom {
-    margin-top: 12% !important;
-}
-
 .btn-transparent {
     width: 45% !important;
     background: transparent;
     color: #F2F2F2;
-    border-radius: 0px  white;
+    border-radius: 0px;
 }
 
 .btn-transparent:hover {
@@ -24,4 +15,12 @@
     opacity: 0.6;
     padding: 10px;
     text-align: center;
+}
+
+.connection-input {
+    height: 40px;
+}
+
+.connection-button {
+    height: 40px;
 }

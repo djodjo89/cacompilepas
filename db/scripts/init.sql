@@ -39,7 +39,7 @@ CREATE TABLE ccp_lobby(
 CREATE TABLE ccp_coursesheet(
         id_course_sheet  Int  Auto_increment  NOT NULL ,
         title            Varchar (256) NOT NULL ,
-        publication_date Date NOT NULL ,
+        publication_date DateTime NOT NULL ,
         file_name        Varchar (1024) NOT NULL ,
         description      Varchar (2056) NOT NULL,
         id_lobby_contain Int NOT NULL

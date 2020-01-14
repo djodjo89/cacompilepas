@@ -1,5 +1,5 @@
-import React, {ReactNode} from "react";
-import CourseSheet from "./CourseSheet";
+import React, {ReactNode} from 'react';
+import CourseSheet from './CourseSheet';
 
 interface CourseSheetsProps {
     id: string,
@@ -25,7 +25,8 @@ class CourseSheets extends React.Component<CourseSheetsProps, { courseSheets: []
                     id={courseSheet['id_course_sheet']}
                     idLobby={this.props.id}
                     key={courseSheet['id_course_sheet']}
-                    title={ courseSheet['title']}
+                    title={courseSheet['title']}
+                    pseudo={courseSheet['pseudo']}
                     publication_date={courseSheet['publication_date']}
                     link={courseSheet['file_name']}
                     description={courseSheet['description']}

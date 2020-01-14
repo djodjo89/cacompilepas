@@ -9,21 +9,28 @@ const Heading = styled.p<{ active: boolean }>`
   text-align: center;
 `;
 
-class DropBoxBackground extends React.Component<{ label: string, className: string }, any> {
+interface DropBoxBackgroundProps {
+    label: string,
+    className: string,
+    dragged: boolean,
+}
+// 192.168.43.91
+
+class DropBoxBackground extends React.Component<DropBoxBackgroundProps, any> {
     public render(): ReactNode {
         return (
             <div
                 style={{
-                    backgroundColor: '#ffffff',
-                    width: '220px',
-                    height: '145px',
+                    backgroundColor: this.props.dragged ? 'transparent' : '#ffffff'
                 }}
-                className={'rounded pt-4 ' + this.props.className}
+                className={(this.props.dragged ? 'pt-3 mt-0 ' : 'pt-4 mt-3 mt-lg-4 mt-md-4 mt-sm-4 pb-4 ') + 'rounded pb-lg-2 pb-md-2 pb-sm-2 ' + this.props.className}
             >
                 {this.props.children}
-                <Heading active={false}>
-                    {this.props.label}
-                </Heading>
+                <div className={'d-none d-lg-block d-md-block d-sm-block'}>
+                    <Heading active={false}>
+                        {this.props.label}
+                    </Heading>
+                </div>
             </div>
         );
     }
@@ -130,14 +137,10 @@ class DropBox extends React.Component<DropBoxProps, DropBoxState> {
             if (this.state.file.type.includes('image')) {
                 return (
                     <img
-                        id={'draggedLogo'}
+                        id={'dragged-logo'}
                         src={this.state.src}
                         alt={'Logo'}
-                        style={{
-                            width: '100px',
-                            height: '100px',
-                            borderRadius: '50px',
-                        }}
+                        className={'dragged-logo'}
                     />
                 );
             } else {
@@ -156,17 +159,7 @@ class DropBox extends React.Component<DropBoxProps, DropBoxState> {
         } else {
             return (
                 <div
-                    className={'rounded-1'}
-                    style={{
-                        padding: '10px',
-                        margin: '10px',
-                        borderRadius: '5px',
-                        backgroundColor: '#e6e6e6',
-                        width: '40%',
-                        height: '50%',
-                        marginLeft: 'auto',
-                        marginRight: 'auto',
-                    }}
+                    className={'rounded-1 not-dragged-logo'}
                 >
                     <DropBoxLogo/>
                 </div>
@@ -187,10 +180,11 @@ class DropBox extends React.Component<DropBoxProps, DropBoxState> {
                     transform: this.state.draggingState === 'dragging' ? 'rotate(-2deg) translateY(-10px)' : 'rotate(0)',
                 }}
             >
-                <label>
+                <label className={'file-upload'}>
                     <DropBoxBackground
                         label={this.state.label}
                         className={this.props.backgroundClassName}
+                        dragged={this.state.dragged}
                     >
                         <input
                             type={'file'}

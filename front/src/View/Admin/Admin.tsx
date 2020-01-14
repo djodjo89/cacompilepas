@@ -324,7 +324,7 @@ class Admin extends React.Component<any, AdminState> {
             this.fetchCourseSheets,
             'POST',
             {
-                id: removeButton.id.split(/-/)[2],
+                id: removeButton.id.split(/-/)[3],
             });
     }
 
@@ -347,7 +347,7 @@ class Admin extends React.Component<any, AdminState> {
             this.fetchUsers,
             'POST',
             {
-                id: event.target.id,
+                id: event.target.id.split(/-/)[3],
             },
         );
     }
@@ -384,6 +384,7 @@ class Admin extends React.Component<any, AdminState> {
     }
 
     public updateHashtags(hashtags: string[]): void {
+        console.log(hashtags);
         this.setState({hashtags: hashtags});
     }
 
@@ -402,7 +403,7 @@ class Admin extends React.Component<any, AdminState> {
     }
 
     public fillLogo(data: Blob): void {
-        const img: any = document.getElementById('lobby-logo' + this.state.id);
+        const img: any = document.getElementById('lobby-logo-' + this.state.id);
         const blob = new Blob([data], {type: 'image/jpg'});
         img.src = URL.createObjectURL(blob);
     }
@@ -425,15 +426,15 @@ class Admin extends React.Component<any, AdminState> {
                                 switch (this.state.currentTab) {
                                     case 'presentation':
                                         tab = (
-                                            <div className={'container-fluid col-lg-8 col-md-12 col-sm-12 col-xs-12'}>
+                                            <div className={'container-fluid col-12 col-lg-8 offset-lg-2 pl-4'}>
                                                 <h2>Informations visibles par les visiteurs</h2>
-                                                <Input id={'labelInput'}
+                                                <Input id={'label-input'}
                                                        inputType={'text'}
                                                        placeholder={'Titre du lobby (n\'en mets pas un trop long)'}
                                                        checked={false}
                                                        className={'mt-5'} onChange={this.handleLabelChange}/>
                                                 <div className={'row mt-5'}>
-                                                    <InputArea id={'descriptionInput'}
+                                                    <InputArea id={'new-description-input'}
                                                                placeholder={'Nouvelle description du lobby\nRacontes-y ce que tu veux, du moment que ça reste dans le thème de ton lobby'}
                                                                className={'col-lg-6 col-md-6 col-sm-6 col-xs-6'}
                                                                textAreaClassName={''}
@@ -441,7 +442,7 @@ class Admin extends React.Component<any, AdminState> {
                                                                onChange={this.handleDescriptionChange}
                                                                disabled={false}
                                                     />
-                                                    <InputArea id={'descriptionInput'}
+                                                    <InputArea id={'current-description-input'}
                                                                placeholder={'Description actuelle du lobby\n' + this.state.currentDescription}
                                                                className={'col-lg-6 col-md-6 col-sm-6 col-xs-6'}
                                                                textAreaClassName={''}
@@ -450,53 +451,54 @@ class Admin extends React.Component<any, AdminState> {
                                                                disabled={true}
                                                     />
                                                 </div>
-                                                <div className={'row container-fluid'}>
-                                                    <div className={'col-6'}>
-                                                        <h3>Logo actuel</h3>
+                                                <div className={'row container-fluid p-0 ml-3'}>
+                                                    <div className={'col-6 pl-0 pr-5'}>
+                                                        <h3 className={'d-none d-lg-block d-md-block d-sm-block mr-4'}>Logo actuel</h3>
                                                         <img
-                                                            id={'lobby-logo' + this.state.id}
-                                                            className={'lobby-logo'}
+                                                            id={'lobby-logo-' + this.state.id}
+                                                            className={'lobby-logo mt-3 mt-lg-0 mt-md-0 mt-sm-0 mr-4'}
                                                             src={this.state.logoPath}
                                                             alt={'Lobby logo'}
                                                         />
                                                     </div>
-                                                    <div className={'col-5 offset-1'}>
+                                                    <div className={'col-5 ml-2 mt-0 ml-lg-4 ml-md-4 ml-sm-4 p-0'}>
                                                         <DropBox id={'logo-input'}
-                                                                 className={'mt-5'}
+                                                                 className={'mt-lg-4 mt-md-4 mt-sm-5'}
                                                                  labelNotDragged={'Glisse un logo par ici !'}
                                                                  labelDragged={'Logo déposé !'}
                                                                  accept={'image/*'}
-                                                                 backgroundClassName={'mt-4'}
+                                                                 backgroundClassName={'mt-lg-4 mt-md-4 mt-sm-4 ml-4 ml-lg-5 ml-md-5 ml-sm-4'}
                                                                  handleFileDrop={this.handleLogoDrop}
                                                                  handleFileChange={this.handleLogoChange}
                                                         />
                                                     </div>
                                                 </div>
-                                                <SubmitButton
-                                                    text={'Mettre à jour le lobby'}
-                                                    onClick={this.updateLobbby}
-                                                    className={'mt-5'}
-                                                    disconnectButton={false}
-                                                />
+                                                <div className={'row pr-4 pl-4'}>
+                                                    <SubmitButton
+                                                        text={'Mettre à jour le lobby'}
+                                                        onClick={this.updateLobbby}
+                                                        className={'mt-5 col-12'}
+                                                        disconnectButton={'plus'}
+                                                    />
+                                                </div>
                                             </div>
                                         );
                                         break;
 
-                                    case 'coursesheets':
+                                    case 'course-sheets':
                                         tab = (
-                                            <div className={'container-fluid  col-lg-8 col-md-12 col-sm-12 col-xs-12'}>
-                                                <h2>Informations visibles par les visiteurs</h2>
-                                                <div className={'row mt-5'}>
-                                                    <div
-                                                        className={'col-lg-4 col-md-4 col-sm-4 col-xs-4 pr-lg-0 pl-sm-4'}>
-                                                        <div className={'centered-80'}>
-                                                            <Input id={'titleInput'} inputType={'text'}
+                                            <div className={'container-fluid col-12 col-lg-8 pr-0'}>
+                                                <h2>Fiches de cours présentes dans le lobby</h2>
+                                                <div className={'row mt-5 pl-0'}>
+                                                    <div className={'col-lg-4 col-md-4 col-sm-4 col-xs-12 pl-0 pr-lg-5 pr-md-0 pr-sm-0 pr-xs-0 pl-4 pl-lg-0 pl-md-0 pl-sm-0'}>
+                                                            <Input id={'title-input'} inputType={'text'}
                                                                    placeholder={'Titre'}
                                                                    className={'no-mb'}
                                                                    checked={false}
+                                                                   formGroupClassName={'mb-0 mb-lg-2 mb-md-1 mb-sm-4 pb-2 pb-lg-1 pb-md-0 pr-0 pl-0 pl-lg-4 pl-md-4 pl-sm-4 col-12'}
                                                                    onChange={this.handleCourseSheetTitleChange}/>
-                                                            <DropBox id={'courseSheetInput'}
-                                                                     className={'text-sm-left'}
+                                                            <DropBox id={'course-sheet-input'}
+                                                                     className={'text-sm-left col-6 offset-3 offset-lg-0 offset-md-0 offset-sm-0 col-lg-12 col-md-12 col-sm-12 mt-3 mt-lg-0 mt-md-0 mt-sm-0 pr-0 pl-0 pl-lg-4 pl-md-4 pl-sm-4'}
                                                                      backgroundClassName={'mt-1'}
                                                                      labelNotDragged={'Glisse une fiche par ici !'}
                                                                      labelDragged={'Fiche déposée !'}
@@ -504,62 +506,61 @@ class Admin extends React.Component<any, AdminState> {
                                                                      handleFileDrop={this.handleCourseSheetDocumentDrop}
                                                                      handleFileChange={this.handleCourseSheetDocumentChange}/>
                                                         </div>
-                                                    </div>
-                                                    <div className={'col-lg-8 col-md-8 col-sm-8 col-xs-8 pl-lg-0'}>
+                                                    <div className={'col-12 col-lg-8 col-md-8 col-sm-8 mt-4 mt-lg-0 mt-md-0 mt-sm-0 pt-2 pt-lg-0 pt-md-0 pt-sm-0 pr-0 pr-lg-4 pr-md-4 pr-sm-4 pl-4 pl-lg-0 pl-md-5 pl-sm-5'}>
                                                         <div
-                                                            className={'row container-fluid course-sheet-textarea-container'}>
-                                                            <InputArea id={'descriptionInput'}
+                                                            className={'row container-fluid course-sheet-textarea-container pr-0 pl-4 pl-lg-0 pl-md-0 pl-sm-0'}>
+                                                            <InputArea id={'description-input'}
                                                                        placeholder={'Description de la fiche\nFais-en un bref résumé permettant de savoir à quoi s\'attendre en la lisant'}
-                                                                       className={'col-lg-12 col-md-12 col-sm-12 col-xs-12 course-sheet-textarea'}
+                                                                       className={'col-12 pl-0 course-sheet-textarea'}
                                                                        textAreaClassName={'course-sheet-textarea'}
                                                                        rows={6}
                                                                        onChange={this.handleCourseSheetDescriptionChange}
                                                                        disabled={false}
                                                             />
                                                         </div>
-                                                        <div className={'row container-fluid pr-0 mb-4'}>
+                                                        <div className={'row container-fluid mb-4 pr-0 pl-4 pl-lg-0 pl-md-0 pl-sm-0'}>
                                                             <div
-                                                                className={'col-lg-12 col-md-12 col-sm-12 col-xs-12 ml-0 pr-0 pt-1'}>
+                                                                className={'col-12 ml-0 pt-1 pr-0 pl-0'}>
                                                                 <div className={'form-inline'}>
-                                                                    <label id="hashtag-label" htmlFor="addHashtags">
+                                                                    <label id="hashtag-label" htmlFor="add-hashtags">
                                                                         <span
                                                                             id="hashtag-placeholder">{this.state.hashtagInputIsNotEmpty ? 'Entre des hashtags pour cette fiche' : ''}</span>
                                                                     </label>
                                                                     {this.state.hashtagsView}
                                                                     <div
-                                                                        className={'col-lg-12 col-md-12 col-sm-12 col-xs-12 pl-0 pr-0'}>
+                                                                        className={'col-12 pl-0 pr-0'}>
                                                                         <HashtagInput
-                                                                            id={'addHashtags'}
-                                                                            className={'form-control w-100 mt-0 rounded hashtagInput col-lg-12 col-md-12 col-sm-12 col-xs-12'}
+                                                                            id={'add-hashtags'}
+                                                                            className={'form-control w-100 mt-0 rounded hashtag-input col-12'}
                                                                             type={'text'}
                                                                             baseIndent={-3}
                                                                             onUpdate={this.emptyInput}
                                                                             updateHashtagsView={this.updateHashtagsView}
                                                                             updateHashtags={this.updateHashtags}
                                                                             updateText={this.updateText}
-                                                                            hashtagClassName={'hashtagInputBox'}
+                                                                            hashtagClassName={'hashtag-input-box hashtag'}
                                                                         />
                                                                     </div>
                                                                 </div>
                                                             </div>
                                                         </div>
-                                                        <div className={'row container-fluid'}>
+                                                        <div className={'row container-fluid pr-0 pl-4 pl-lg-0 pl-md-0 pl-sm-0'}>
                                                             <SubmitButton
                                                                 text={'Une nouvelle fiche ? Ajoute-la !'}
                                                                 onClick={this.addCourseSheet}
-                                                                className={'mt-1px col-sm-12 container-fluid add-coursesheet-button mt-5'}
-                                                                disconnectButton={false}
+                                                                className={'col-sm-12 container-fluid add-course-sheet-button mt-5 mr-0 ml-0 pl-0'}
+                                                                disconnectButton={'plus'}
                                                             />
                                                         </div>
                                                     </div>
                                                 </div>
-                                                <div className={'row mt-5'}>
+                                                <div className={'row mt-5 pl-0'}>
                                                     {
                                                         0 !== this.state.courseSheets.length ?
                                                             <CourseSheets
                                                                 id={this.state.id.toString()}
                                                                 courseSheets={this.state.courseSheets}
-                                                                className={'col-lg-12 col-sm-12 mt-lg-3'}
+                                                                className={'col-lg-12 col-sm-12 mt-lg-3 pl-4'}
                                                                 activeRemoveButton={true}
                                                                 removableHashtags={true}
                                                                 delete={this.removeCourseSheetFromLobby}
@@ -580,9 +581,7 @@ class Admin extends React.Component<any, AdminState> {
                                     case 'rights':
                                         tab = (
                                             <div className={'container-fluid  col-lg-8 col-md-12 col-sm-12 col-xs-12'}>
-                                                <div className={'row container-fluid text-left pr-0'}>
-                                                    <h2>Utilisateurs autorisés à consulter le lobby</h2>
-                                                </div>
+                                                <h2>Utilisateurs autorisés à consulter le lobby</h2>
                                                 <div className={'row'}>
                                                     <Users
                                                         id={this.state.id.toString()}
@@ -592,11 +591,11 @@ class Admin extends React.Component<any, AdminState> {
                                                         delete={this.removeUserFromLobby}
                                                     />
                                                 </div>
-                                                <div className={'container col-lg-8 col-md-8 col-sm-10 col-xs-12 mt-5'}>
+                                                <div className={'col-12 col-lg-10 col-md-10 offset-lg-1 offset-md-1 mt-5'}>
                                                     <div className={'row'}>
                                                         <div className={'col-12 pl-0 add-usr-button'}>
                                                             <Input
-                                                                id={'friendInput'}
+                                                                id={'friend-input'}
                                                                 inputType={'email'}
                                                                 placeholder={'Un ami veut voir ton lobby ? Alors saisis son adresse email ici'}
                                                                 checked={false}
@@ -611,15 +610,15 @@ class Admin extends React.Component<any, AdminState> {
                                                                 text={'Ca y est ? Alors c\'est parti, ajoute-le !'}
                                                                 onClick={this.addUser}
                                                                 className={'mt-0 col-12 add-usr-button'}
-                                                                disconnectButton={false}
+                                                                disconnectButton={'plus'}
                                                             />
                                                         </div>
                                                     </div>
                                                 </div>
-                                                <div className={'row col-12 pt-5'}>
-                                                    <div className={'col-1 pt-2 pl-0 pr-0'}>
+                                                <div className={'row col-12 pt-5 pr-0'}>
+                                                    <div className={'col-1 pt-2 pl-0 pr-0 checkbox-container'}>
                                                         <Input
-                                                            id={'visibilitInput'}
+                                                            id={'visibility-input'}
                                                             inputType={'checkbox'}
                                                             checked={'true' === this.state.private ? true : false}
                                                             placeholder={''}
@@ -628,7 +627,7 @@ class Admin extends React.Component<any, AdminState> {
                                                         />
                                                     </div>
                                                     <h4
-                                                        className={'col-11 pl-0 pt-1 text-left lobby-write-right-label'}
+                                                        className={'col-11 pt-0 pt-lg-0 pt-md-0 pt-sm-0 pr-0 pl-2 pl-lg-0 pl-md-0 pl-sm-0 text-left lobby-write-right-label'}
                                                     >
                                                         Lobby privé (seules les personnes autorisées pourront le
                                                         consulter
@@ -643,10 +642,9 @@ class Admin extends React.Component<any, AdminState> {
                                         break;
                                 }
                                 return (
-                                    <section className={'content row container-fluid'}>
-                                        <div className={'row col col-lg-12 col-md-12 col-sm-12 col-xs-12'}>
+                                    <section className={'content row container-fluid pl-0'}>
                                             <div className={'admin-header'}>
-                                                <h1>{this.state.currentLabel}</h1>
+                                                <h1 className={'lobby-title'}>{this.state.currentLabel}</h1>
                                                 <nav>
                                                     <ul className="nav nav-tabs custom-tab-nav">
                                                         <li className="nav-item" onClick={this.navigateToCourseSheets}>
@@ -655,7 +653,7 @@ class Admin extends React.Component<any, AdminState> {
                                                         </li>
                                                         <li className="nav-item" onClick={this.navigateToCourseSheets}>
                                                             <a className="nav-link custom-tab"
-                                                               href={'coursesheets'}>Fiches</a>
+                                                               href={'course-sheets'}>Fiches</a>
                                                         </li>
                                                         <li className="nav-item" onClick={this.navigateToCourseSheets}>
                                                             <a className="nav-link custom-tab"
@@ -664,7 +662,6 @@ class Admin extends React.Component<any, AdminState> {
                                                     </ul>
                                                 </nav>
                                             </div>
-                                        </div>
                                         {tab}
                                     </section>
                                 );
