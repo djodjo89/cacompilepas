@@ -43,7 +43,7 @@ const addAndRemoveCourseSheet = (newTitle, newDescription, newFileName, hashtags
                     .last()
                     .click();
                 cy.get('.remove-button')
-                    .last()
+                    .first()
                     .click();
                 cy.get('.course-sheets-section')
                     .children('.course-sheet').its('length')

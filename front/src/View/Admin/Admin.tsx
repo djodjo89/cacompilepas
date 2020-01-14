@@ -14,6 +14,7 @@ import CourseSheets from '../Lobby/CourseSheets';
 import Users from './Users';
 import HashtagInput from "../General/HashtagInput";
 import SubmitButton from "../General/SubmitButton";
+import Messages from "../Lobby/Messages";
 
 interface AdminState {
     id: number,
@@ -26,6 +27,7 @@ interface AdminState {
     newDescription: string,
     newLogo: File | null,
     courseSheets: [],
+    messages: [],
     newCourseSheetTitle: string,
     newCourseSheetDescription: string,
     newCourseSheetDocument: File | null,
@@ -53,6 +55,7 @@ class Admin extends React.Component<any, AdminState> {
             newDescription: '',
             newLogo: null,
             courseSheets: [],
+            messages: [],
             newCourseSheetTitle: '',
             newCourseSheetDescription: '',
             newCourseSheetDocument: null,
@@ -69,48 +72,53 @@ class Admin extends React.Component<any, AdminState> {
     }
 
     public init(): void {
+        this.addUser = this.addUser.bind(this);
         this.checkIfAdmin = this.checkIfAdmin.bind(this);
+        this.emptyInput = this.emptyInput.bind(this);
+        this.fetchCourseSheets = this.fetchCourseSheets.bind(this);
+        this.fetchMessages = this.fetchMessages.bind(this);
+        this.fetchUsers = this.fetchUsers.bind(this);
+        this.fillPresentation = this.fillPresentation.bind(this);
+        this.fillUsers = this.fillUsers.bind(this);
+        this.fillCourseSheets = this.fillCourseSheets.bind(this);
+        this.fillMessages = this.fillMessages.bind(this);
+        this.fillLogo = this.fillLogo.bind(this);
+        this.handleCourseSheetDocumentDrop = this.handleCourseSheetDocumentDrop.bind(this);
+        this.getLogo = this.getLogo.bind(this);
+        this.handleCourseSheetDocumentChange = this.handleCourseSheetDocumentChange.bind(this);
+        this.handleCourseSheetTitleChange = this.handleCourseSheetTitleChange.bind(this);
+        this.handleCourseSheetDescriptionChange = this.handleCourseSheetDescriptionChange.bind(this);
+        this.handleUserEmailChange = this.handleUserEmailChange.bind(this);
         this.handleLabelChange = this.handleLabelChange.bind(this);
         this.handleDescriptionChange = this.handleDescriptionChange.bind(this);
         this.handleLogoDrop = this.handleLogoDrop.bind(this);
         this.handleLogoChange = this.handleLogoChange.bind(this);
-        this.updateLobbby = this.updateLobbby.bind(this);
-        this.update = this.update.bind(this);
-        this.navigateToCourseSheets = this.navigateToCourseSheets.bind(this);
-        this.fillCourseSheets = this.fillCourseSheets.bind(this);
-        this.removeCourseSheetFromLobby = this.removeCourseSheetFromLobby.bind(this);
-        this.removeUserFromLobby = this.removeUserFromLobby.bind(this);
-        this.fetchCourseSheets = this.fetchCourseSheets.bind(this);
-        this.fetchUsers = this.fetchUsers.bind(this);
+        this.addCourseSheet = this.addCourseSheet.bind(this);
+        this.navigate = this.navigate.bind(this);
         this.refreshPresentation = this.refreshPresentation.bind(this);
         this.refreshCourseSheets = this.refreshCourseSheets.bind(this);
-        this.handleCourseSheetDocumentDrop = this.handleCourseSheetDocumentDrop.bind(this);
-        this.handleCourseSheetDocumentChange = this.handleCourseSheetDocumentChange.bind(this);
-        this.handleCourseSheetTitleChange = this.handleCourseSheetTitleChange.bind(this);
-        this.handleCourseSheetDescriptionChange = this.handleCourseSheetDescriptionChange.bind(this);
-        this.addCourseSheet = this.addCourseSheet.bind(this);
-        this.refreshUsers = this.refreshUsers.bind(this);
-        this.fillUsers = this.fillUsers.bind(this);
-        this.toggleWriteRights = this.toggleWriteRights.bind(this);
-        this.addUser = this.addUser.bind(this);
-        this.handleUserEmailChange = this.handleUserEmailChange.bind(this);
+        this.refreshMessages = this.refreshMessages.bind(this);
         this.refreshVisibility = this.refreshVisibility.bind(this);
-        this.updateVisibility = this.updateVisibility.bind(this);
+        this.refreshUsers = this.refreshUsers.bind(this);
+        this.refreshAdmin = this.refreshAdmin.bind(this);
+        this.removeCourseSheetFromLobby = this.removeCourseSheetFromLobby.bind(this);
+        this.removeMessageFromLobby = this.removeMessageFromLobby.bind(this);
+        this.removeUserFromLobby = this.removeUserFromLobby.bind(this);
+        this.toggleWriteRights = this.toggleWriteRights.bind(this);
         this.toggleVisibility = this.toggleVisibility.bind(this);
-        this.emptyInput = this.emptyInput.bind(this);
+        this.updateLobbby = this.updateLobbby.bind(this);
+        this.update = this.update.bind(this);
         this.updateHashtagsView = this.updateHashtagsView.bind(this);
         this.updateHashtags = this.updateHashtags.bind(this);
-        this.fillPresentation = this.fillPresentation.bind(this);
-        this.refreshAdmin = this.refreshAdmin.bind(this);
-        this.getLogo = this.getLogo.bind(this);
-        this.fillLogo = this.fillLogo.bind(this);
         this.updateText = this.updateText.bind(this);
+        this.updateVisibility = this.updateVisibility.bind(this);
     }
 
     public componentDidMount(): void {
         this.refreshAdmin();
         this.refreshPresentation();
         this.refreshCourseSheets();
+        this.refreshMessages();
         this.refreshUsers();
         this.refreshVisibility();
     }
@@ -142,6 +150,19 @@ class Admin extends React.Component<any, AdminState> {
             );
         } else {
             this.setState({courseSheets: []},
+                () => this.forceUpdate(() => this.render())
+            );
+        }
+    }
+
+    public fillMessages(data: any): void {
+        if (undefined === data['message']) {
+            this.setState(
+                {messages: data},
+                () => this.forceUpdate(() => this.render())
+            );
+        } else {
+            this.setState({messages: []},
                 () => this.forceUpdate(() => this.render())
             );
         }
@@ -186,7 +207,7 @@ class Admin extends React.Component<any, AdminState> {
         this.setState(
             {newLogo: event.dataTransfer.files[0]},
             this.getLogo
-            );
+        );
     }
 
     public handleLogoChange(event: ChangeEvent<HTMLInputElement>): void {
@@ -195,7 +216,7 @@ class Admin extends React.Component<any, AdminState> {
             // @ts-ignore
             {newLogo: event.target.files[0]},
             this.getLogo
-            );
+        );
     }
 
     public handleCourseSheetDocumentDrop(event: React.DragEvent<HTMLDivElement>): void {
@@ -223,11 +244,11 @@ class Admin extends React.Component<any, AdminState> {
             this.setState(
                 {currentLogo: this.state.newLogo},
                 this.getLogo
-                );
+            );
         }
     }
 
-    public navigateToCourseSheets(event: React.MouseEvent<HTMLLIElement, MouseEvent>): void {
+    public navigate(event: React.MouseEvent<HTMLLIElement, MouseEvent>): void {
         event.preventDefault();
         let target: any = event.target;
         for (let li of target.parentElement.parentElement.children) {
@@ -302,6 +323,10 @@ class Admin extends React.Component<any, AdminState> {
         new Request('/lobby/coursesheets/' + this.state.id, this.fillCourseSheets);
     }
 
+    public refreshMessages(): void {
+        new Request('/lobby/messages/' + this.state.id, this.fillMessages);
+    }
+
     public refreshUsers(): void {
         new Request('/lobby/users/' + this.state.id, this.fillUsers);
     }
@@ -309,6 +334,12 @@ class Admin extends React.Component<any, AdminState> {
     public fetchCourseSheets(data: any): void {
         if (data['message'].includes('successfully')) {
             this.refreshCourseSheets();
+        }
+    }
+
+    public fetchMessages(data: any): void {
+        if ('success' === data['status']) {
+            this.refreshMessages();
         }
     }
 
@@ -325,6 +356,16 @@ class Admin extends React.Component<any, AdminState> {
             'POST',
             {
                 id: removeButton.id.split(/-/)[3],
+            });
+    }
+
+    public removeMessageFromLobby(event: React.MouseEvent<HTMLImageElement, MouseEvent>): void {
+        let removeButton: any = event.target;
+        new Request('/lobby/deleteMessage/' + this.state.id,
+            this.fetchMessages,
+            'POST',
+            {
+                id: removeButton.id.split(/-/)[2],
             });
     }
 
@@ -453,7 +494,8 @@ class Admin extends React.Component<any, AdminState> {
                                                 </div>
                                                 <div className={'row container-fluid p-0 ml-3'}>
                                                     <div className={'col-6 pl-0 pr-5'}>
-                                                        <h3 className={'d-none d-lg-block d-md-block d-sm-block mr-4'}>Logo actuel</h3>
+                                                        <h3 className={'d-none d-lg-block d-md-block d-sm-block mr-4'}>Logo
+                                                            actuel</h3>
                                                         <img
                                                             id={'lobby-logo-' + this.state.id}
                                                             className={'lobby-logo mt-3 mt-lg-0 mt-md-0 mt-sm-0 mr-4'}
@@ -487,26 +529,28 @@ class Admin extends React.Component<any, AdminState> {
 
                                     case 'course-sheets':
                                         tab = (
-                                            <div className={'container-fluid col-12 col-lg-8 pr-0'}>
+                                            <div className={'container-fluid col-12 col-lg-8 pr-4 pr-sm-0'}>
                                                 <h2>Fiches de cours présentes dans le lobby</h2>
                                                 <div className={'row mt-5 pl-0'}>
-                                                    <div className={'col-lg-4 col-md-4 col-sm-4 col-xs-12 pl-0 pr-lg-5 pr-md-0 pr-sm-0 pr-xs-0 pl-4 pl-lg-0 pl-md-0 pl-sm-0'}>
-                                                            <Input id={'title-input'} inputType={'text'}
-                                                                   placeholder={'Titre'}
-                                                                   className={'no-mb'}
-                                                                   checked={false}
-                                                                   formGroupClassName={'mb-0 mb-lg-2 mb-md-1 mb-sm-4 pb-2 pb-lg-1 pb-md-0 pr-0 pl-0 pl-lg-4 pl-md-4 pl-sm-4 col-12'}
-                                                                   onChange={this.handleCourseSheetTitleChange}/>
-                                                            <DropBox id={'course-sheet-input'}
-                                                                     className={'text-sm-left col-6 offset-3 offset-lg-0 offset-md-0 offset-sm-0 col-lg-12 col-md-12 col-sm-12 mt-3 mt-lg-0 mt-md-0 mt-sm-0 pr-0 pl-0 pl-lg-4 pl-md-4 pl-sm-4'}
-                                                                     backgroundClassName={'mt-1'}
-                                                                     labelNotDragged={'Glisse une fiche par ici !'}
-                                                                     labelDragged={'Fiche déposée !'}
-                                                                     accept={'.docx,.pdf,.html,.htm,.odp,txt,md'}
-                                                                     handleFileDrop={this.handleCourseSheetDocumentDrop}
-                                                                     handleFileChange={this.handleCourseSheetDocumentChange}/>
-                                                        </div>
-                                                    <div className={'col-12 col-lg-8 col-md-8 col-sm-8 mt-4 mt-lg-0 mt-md-0 mt-sm-0 pt-2 pt-lg-0 pt-md-0 pt-sm-0 pr-0 pr-lg-4 pr-md-4 pr-sm-4 pl-4 pl-lg-0 pl-md-5 pl-sm-5'}>
+                                                    <div
+                                                        className={'col-lg-4 col-md-4 col-sm-4 col-xs-12 pl-0 pr-lg-5 pr-md-0 pr-sm-0 pr-xs-0 pl-4 pl-lg-0 pl-md-0 pl-sm-0'}>
+                                                        <Input id={'title-input'} inputType={'text'}
+                                                               placeholder={'Titre'}
+                                                               className={'no-mb'}
+                                                               checked={false}
+                                                               formGroupClassName={'mb-0 mb-lg-2 mb-md-1 mb-sm-4 pb-2 pb-lg-1 pb-md-0 pr-0 pl-0 pl-lg-4 pl-md-4 pl-sm-4 col-12'}
+                                                               onChange={this.handleCourseSheetTitleChange}/>
+                                                        <DropBox id={'course-sheet-input'}
+                                                                 className={'text-sm-left col-6 offset-3 offset-lg-0 offset-md-0 offset-sm-0 col-lg-12 col-md-12 col-sm-12 mt-3 mt-lg-0 mt-md-0 mt-sm-0 pr-0 pl-0 pl-lg-4 pl-md-4 pl-sm-4'}
+                                                                 backgroundClassName={'mt-1'}
+                                                                 labelNotDragged={'Glisse une fiche par ici !'}
+                                                                 labelDragged={'Fiche déposée !'}
+                                                                 accept={'.docx,.pdf,.html,.htm,.odp,txt,md'}
+                                                                 handleFileDrop={this.handleCourseSheetDocumentDrop}
+                                                                 handleFileChange={this.handleCourseSheetDocumentChange}/>
+                                                    </div>
+                                                    <div
+                                                        className={'col-12 col-lg-8 col-md-8 col-sm-8 mt-4 mt-lg-0 mt-md-0 mt-sm-0 pt-2 pt-lg-0 pt-md-0 pt-sm-0 pr-0 pr-lg-4 pr-md-4 pr-sm-4 pl-4 pl-lg-0 pl-md-5 pl-sm-5'}>
                                                         <div
                                                             className={'row container-fluid course-sheet-textarea-container pr-0 pl-4 pl-lg-0 pl-md-0 pl-sm-0'}>
                                                             <InputArea id={'description-input'}
@@ -518,7 +562,8 @@ class Admin extends React.Component<any, AdminState> {
                                                                        disabled={false}
                                                             />
                                                         </div>
-                                                        <div className={'row container-fluid mb-4 pr-0 pl-4 pl-lg-0 pl-md-0 pl-sm-0'}>
+                                                        <div
+                                                            className={'row container-fluid mb-4 pr-0 pl-4 pl-lg-0 pl-md-0 pl-sm-0'}>
                                                             <div
                                                                 className={'col-12 ml-0 pt-1 pr-0 pl-0'}>
                                                                 <div className={'form-inline'}>
@@ -544,7 +589,8 @@ class Admin extends React.Component<any, AdminState> {
                                                                 </div>
                                                             </div>
                                                         </div>
-                                                        <div className={'row container-fluid pr-0 pl-4 pl-lg-0 pl-md-0 pl-sm-0'}>
+                                                        <div
+                                                            className={'row container-fluid pr-0 pl-4 pl-lg-0 pl-md-0 pl-sm-0'}>
                                                             <SubmitButton
                                                                 text={'Une nouvelle fiche ? Ajoute-la !'}
                                                                 onClick={this.addCourseSheet}
@@ -568,7 +614,8 @@ class Admin extends React.Component<any, AdminState> {
                                                             :
                                                             <div className={'row container-fluid mt-5'}>
                                                                 <div className={'col-12 text-left'}>
-                                                                    <p>Il n'y a pas de fiches de cours pour l'instant</p>
+                                                                    <p>Il n'y a pas de fiches de cours pour
+                                                                        l'instant</p>
                                                                 </div>
                                                             </div>
                                                     }
@@ -591,7 +638,8 @@ class Admin extends React.Component<any, AdminState> {
                                                         delete={this.removeUserFromLobby}
                                                     />
                                                 </div>
-                                                <div className={'col-12 col-lg-10 col-md-10 offset-lg-1 offset-md-1 mt-5'}>
+                                                <div
+                                                    className={'col-12 col-lg-10 col-md-10 offset-lg-1 offset-md-1 mt-5'}>
                                                     <div className={'row'}>
                                                         <div className={'col-12 pl-0 add-usr-button'}>
                                                             <Input
@@ -637,31 +685,60 @@ class Admin extends React.Component<any, AdminState> {
                                         );
                                         break;
 
+                                    case 'messages':
+                                        tab = (
+                                            <div className={'container-fluid col-12 col-lg-8 pr-0'}>
+                                                <h2>Messages postés dans le lobby</h2>
+                                                <div className={'row mt-5 pl-2'}>
+                                                    {
+                                                        0 !== this.state.messages.length
+                                                            ? <Messages
+                                                                id={this.state.id.toString()}
+                                                                messages={this.state.messages}
+                                                                className={'col-lg-12 col-sm-12 mt-lg-3 pl-4'}
+                                                                activeRemoveButton={true}
+                                                                delete={this.removeMessageFromLobby}
+                                                            />
+                                                            : <div className={'row container-fluid mt-5'}>
+                                                                <div className={'col-12 text-left'}>
+                                                                    <p>Il n'y a pas de fiches de cours pour l'instant</p>
+                                                                </div>
+                                                            </div>
+                                                    }
+                                                </div>
+                                            </div>
+                                        );
+                                        break;
+
                                     default:
                                         tab = <h2>Informations visibles par les visiteurs</h2>
                                         break;
                                 }
                                 return (
-                                    <section className={'content row container-fluid pl-0'}>
-                                            <div className={'admin-header'}>
-                                                <h1 className={'lobby-title'}>{this.state.currentLabel}</h1>
-                                                <nav>
-                                                    <ul className="nav nav-tabs custom-tab-nav">
-                                                        <li className="nav-item" onClick={this.navigateToCourseSheets}>
-                                                            <a className="nav-link custom-tab-active custom-tab"
-                                                               href={'presentation'}>Description</a>
-                                                        </li>
-                                                        <li className="nav-item" onClick={this.navigateToCourseSheets}>
-                                                            <a className="nav-link custom-tab"
-                                                               href={'course-sheets'}>Fiches</a>
-                                                        </li>
-                                                        <li className="nav-item" onClick={this.navigateToCourseSheets}>
-                                                            <a className="nav-link custom-tab"
-                                                               href={'rights'}>Droits</a>
-                                                        </li>
-                                                    </ul>
-                                                </nav>
-                                            </div>
+                                    <section className={'content row container-fluid pl-0 pr-0'}>
+                                        <div className={'admin-header'}>
+                                            <h1 className={'lobby-title'}>{this.state.currentLabel}</h1>
+                                            <nav>
+                                                <ul className="nav nav-tabs custom-tab-nav">
+                                                    <li className="nav-item" onClick={this.navigate}>
+                                                        <a className="nav-link custom-tab-active custom-tab"
+                                                           href={'presentation'}>Description</a>
+                                                    </li>
+                                                    <li className="nav-item" onClick={this.navigate}>
+                                                        <a className="nav-link custom-tab"
+                                                           href={'course-sheets'}>Fiches</a>
+                                                    </li>
+                                                    <li className="nav-item" onClick={this.navigate}>
+                                                        <a className="nav-link custom-tab"
+                                                           href={'rights'}>Droits</a>
+                                                    </li>
+                                                    <li className="nav-item" onClick={this.navigate}>
+                                                        <a className="nav-link custom-tab"
+                                                           href={'messages'}>Messages</a>
+                                                    </li>
+                                                </ul>
+                                            </nav>
+                                        </div>
                                         {tab}
                                     </section>
                                 );

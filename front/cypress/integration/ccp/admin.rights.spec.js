@@ -9,6 +9,7 @@ describe('Admin Course Sheets Test', () => {
         addUser('nabila@cacompilepas.com');
 
         // Lobby should be private by default
+        makePrivate();
         checkIfPrivate();
         toggleVisibility();
         checkIfPublic();
@@ -18,7 +19,7 @@ describe('Admin Course Sheets Test', () => {
 
 const addUser = (email) => {
     cy.get('.nav-item')
-        .last()
+        .eq(2)
         .should('contain.text', 'Droits')
         .click();
 
@@ -47,7 +48,7 @@ const addUser = (email) => {
                     .first()
                     .should('be.checked');
                 cy.get('.remove-button')
-                    .last()
+                    .first()
                     .click();
                 cy.get('.users-section')
                     .children('.user-card').its('length')
@@ -69,4 +70,8 @@ const checkIfPrivate = () => {
 const toggleVisibility = () => {
     cy.get('#visibility-input')
         .click();
+}
+
+const makePrivate = () => {
+    cy.get('#visibility-input').check();
 }
