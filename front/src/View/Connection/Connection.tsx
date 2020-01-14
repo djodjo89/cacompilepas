@@ -134,7 +134,7 @@ class Connection extends React.Component<{ referrer: string }, ConnectionStates>
                     </div>
                     <div className={'row'}>
                         <form
-                            id={'connectForm'}
+                            id={'connect-form'}
                             className={'col-lg-6 col-md-8 col-sm-12 offset-lg-3 pr-sm-5 pl-lg-4 pl-sm-5 container-fluid'}
                             onSubmit={this.submit}
                         >

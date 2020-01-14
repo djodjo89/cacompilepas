@@ -2,12 +2,14 @@
 
 namespace App\Module\LobbyModule\Controller;
 
+use App\Connection\Connection;
 use App\Controller\AbstractController;
 use App\Exception\JSONException;
 use App\Http\JSONResponse;
 use App\Model\AbstractModel;
 use App\Module\ConnectionModule\Model\ConnectionModel;
 use App\Module\CourseSheetModule\Model\CourseSheetModel;
+use App\Module\MessageModule\Model\MessageModel;
 use App\Module\LobbyModule\Model\LobbyModel;
 
 class LobbyController extends AbstractController
@@ -39,6 +41,7 @@ class LobbyController extends AbstractController
             'addMessage',
             'delete',
             'create',
+            'deleteMessage',
         ]);
     }
 
@@ -87,7 +90,7 @@ class LobbyController extends AbstractController
                     break;
 
                 case 'addMessage':
-                    $result = $this->getModel()->addMessage($idLobby, $this->getModel()->idUserFromToken($this->getRequest()->getToken()), $this->getRequest()->getContent());
+                    $result = (new MessageModel($this->getModel()->getConnection()))->addMessage($idLobby, $this->getModel()->idUserFromToken($this->getRequest()->getToken()), $this->getRequest()->getContent());
                     break;
 
                 default:
@@ -174,6 +177,10 @@ class LobbyController extends AbstractController
 
                             case 'delete':
                                 $result = $this->getModel()->delete((int)$this->getRequest()->getParam());
+                                break;
+
+                            case 'deleteMessage':
+                                $result = (new MessageModel($this->getModel()->getConnection()))->deleteMessage((int)$this->getRequest()->getId());
                                 break;
                         }
                     }

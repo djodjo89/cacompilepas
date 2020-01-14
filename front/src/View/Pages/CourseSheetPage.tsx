@@ -1,6 +1,6 @@
-import React, {ReactNode} from "react";
-import Request from "../../API/Request";
-import {Document, Page, pdfjs} from "react-pdf";
+import React, {ReactNode} from 'react';
+import Request from '../../API/Request';
+import {Document, Page, pdfjs} from 'react-pdf';
 
 interface CourseSheetPageProps {
     location: any,
@@ -61,7 +61,7 @@ class CourseSheetPage extends React.Component<CourseSheetPageProps, CourseSheetP
                     </div>
                 </div>
                 <div className={'row container-fluid mt-5'}>
-                    <div className={'col-12'}>
+                    <div className={'col-12 pl-0 pl-sm-5'}>
                         <Document
                             file={this.state.file}
                             onLoadSuccess={this.onDocumentLoadSuccess}

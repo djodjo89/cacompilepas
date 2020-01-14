@@ -4,7 +4,6 @@ namespace App\Http;
 
 use App\Connection\Connection;
 use App\Exception\JSONException;
-use App\Exception\NoModuleProvidedException;
 use App\Http\Request;
 use App\Module\ConnectionModule\ConnectionModule;
 use App\Module\ConnectionModule\Controller\ConnectionController;

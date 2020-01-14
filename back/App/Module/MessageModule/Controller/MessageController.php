@@ -1,14 +1,14 @@
 <?php
 
-namespace App\Module\CourseSheetModule\Controller;
+namespace App\Module\MessageController\Controller;
 
 use App\Controller\AbstractController;
 use App\Exception\JSONException;
 use App\Http\JSONResponse;
-use App\Module\CourseSheetModule\Model\MessageModel;
+use App\Module\MessageModule\Model\MessageModel;
 use App\Module\LobbyModule\Model\LobbyModel;
 
-class CourseSheetController extends AbstractController
+class MessageController extends AbstractController
 {
     public function __construct(MessageModel $model)
     {
