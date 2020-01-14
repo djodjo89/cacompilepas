@@ -9,3 +9,9 @@
 .lobby-write-right-label:hover {
     cursor: pointer;
 }
+
+@media (min-width: 768px) {
+    .user-rights-checkbox-container {
+        flex: 0 0 6%
+    }
+}

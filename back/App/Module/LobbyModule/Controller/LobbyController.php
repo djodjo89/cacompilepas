@@ -39,6 +39,7 @@ class LobbyController extends AbstractController
             'delete',
             'create',
             'deleteMessage',
+            'getIcon',
         ]);
     }
 
@@ -192,6 +193,11 @@ class LobbyController extends AbstractController
 
                 case 'search':
                     $result = $this->getModel()->searchLobbies($this->getRequest()->getSearch(), $this->getRequest()->getHashtags());
+                    break;
+
+                case 'getIcon':
+                    $icon = $this->getModel()->getFile($this->getRequest()->getIdUser(), $this->getRequest()->getPath(), '/icon/');
+                    $this->downloadFile($icon);
                     break;
 
                 default:

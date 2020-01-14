@@ -1,5 +1,6 @@
 import React, {ReactNode} from 'react';
 import User from "./User";
+import Request from "../../API/Request";
 
 interface UsersProps {
     id: string,
@@ -23,7 +24,7 @@ class Users extends React.Component<UsersProps, any> {
                     key={user['id_user']}
                     pseudo={user['pseudo']}
                     writeRight={user['write_right'] === '1' ? true : false}
-                    icon={user['user_icon']}
+                    icon={user['icon']}
                     delete={this.props.delete}
                     toggleWriteRights={this.props.toggleWriteRights}
                 />

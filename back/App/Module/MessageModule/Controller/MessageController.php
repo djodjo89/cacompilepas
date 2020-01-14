@@ -25,7 +25,7 @@ class MessageController extends AbstractController
         $result = [];
 
         $rightsOnCourseSheet = (new LobbyModel($this->getModel()->getConnection()))->checkRights(
-            $this->getModel()->getLobbyId($this->getRequest()->getParam()),
+            $this->getRequest()->getParam(),
             $this->getRequest()->getToken()
         );
         if ('admin' === $rightsOnCourseSheet) {

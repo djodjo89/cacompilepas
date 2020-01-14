@@ -21,7 +21,7 @@ class Input extends React.Component<InputProps, {}> {
 
     public render(): ReactNode {
         return (
-        <div className={'form-group ' + this.props.formGroupClassName}>
+        <div className={'form-group ' + undefined !== this.props.formGroupClassName ? this.props.formGroupClassName : ''}>
             <input type={this.props.inputType}
                    className={this.className}
                    checked={this.props.checked}
