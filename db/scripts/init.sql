@@ -63,18 +63,6 @@ CREATE TABLE ccp_rights(
         ,CONSTRAINT ccp_rights_ccp_user_FK FOREIGN KEY (id_user) REFERENCES ccp_user(id_user) ON DELETE CASCADE
 );
 
-
-#------------------------------------------------------------
-# Table: ccp_privilege
-#------------------------------------------------------------
-
-CREATE TABLE ccp_privilege(
-        id_privilege   Int  Auto_increment  NOT NULL ,
-        name_privilege Varchar (256) NOT NULL
-	,CONSTRAINT ccp_privilege_PK PRIMARY KEY (id_privilege)
-);
-
-
 #------------------------------------------------------------
 # Table: ccp_hashtag
 #------------------------------------------------------------
@@ -85,63 +73,6 @@ CREATE TABLE ccp_hashtag(
 	,CONSTRAINT ccp_hashtag_PK PRIMARY KEY (label_hashtag, id_course_sheet)
 );
 
-
-#------------------------------------------------------------
-# Table: ccp_write
-#------------------------------------------------------------
-
-CREATE TABLE ccp_write(
-        id_user         Int NOT NULL ,
-        id_course_sheet Int NOT NULL
-	,CONSTRAINT ccp_write_PK PRIMARY KEY (id_user,id_course_sheet)
-
-	,CONSTRAINT ccp_write_ccp_user_FK FOREIGN KEY (id_user) REFERENCES ccp_user(id_user) ON DELETE CASCADE
-	,CONSTRAINT ccp_write_ccp_coursesheet_FK FOREIGN KEY (id_course_sheet) REFERENCES ccp_coursesheet(id_course_sheet) ON DELETE CASCADE
-);
-
-
-#------------------------------------------------------------
-# Table: ccp_have
-#------------------------------------------------------------
-
-CREATE TABLE ccp_have(
-        id_right Int NOT NULL ,
-        id_user  Int NOT NULL
-	,CONSTRAINT ccp_have_PK PRIMARY KEY (id_right,id_user)
-
-	,CONSTRAINT ccp_have_ccp_rights_FK FOREIGN KEY (id_right) REFERENCES ccp_rights(id_right) ON DELETE CASCADE
-	,CONSTRAINT ccp_have_ccp_user_FK FOREIGN KEY (id_user) REFERENCES ccp_user(id_user) ON DELETE CASCADE
-);
-
-
-#------------------------------------------------------------
-# Table: ccp_own
-#------------------------------------------------------------
-
-CREATE TABLE ccp_own(
-        id_privilege Int NOT NULL ,
-        id_user      Int NOT NULL
-	,CONSTRAINT ccp_own_PK PRIMARY KEY (id_privilege,id_user)
-
-	,CONSTRAINT ccp_own_ccp_privilege_FK FOREIGN KEY (id_privilege) REFERENCES ccp_privilege(id_privilege) ON DELETE CASCADE
-	,CONSTRAINT ccp_own_ccp_user_FK FOREIGN KEY (id_user) REFERENCES ccp_user(id_user) ON DELETE CASCADE
-);
-
-
-#------------------------------------------------------------
-# Table: ccp_identify
-#------------------------------------------------------------
-
-CREATE TABLE ccp_identify(
-        id_course_sheet Int NOT NULL ,
-        label_hashtag   Varchar (64) NOT NULL
-	,CONSTRAINT identify_PK PRIMARY KEY (id_course_sheet,label_hashtag)
-
-	,CONSTRAINT ccp_identify_ccp_coursesheet_FK FOREIGN KEY (id_course_sheet) REFERENCES ccp_coursesheet(id_course_sheet) ON DELETE CASCADE
-	,CONSTRAINT ccp_identify_ccp_hashtag_FK FOREIGN KEY (label_hashtag) REFERENCES ccp_hashtag(label_hashtag) ON DELETE CASCADE
-);
-
-
 #------------------------------------------------------------
 # Table: ccp_is_admin
 #------------------------------------------------------------
@@ -150,7 +81,6 @@ CREATE TABLE ccp_is_admin(
         id_user  Int NOT NULL ,
         id_lobby Int NOT NULL
 	,CONSTRAINT ccp_is_admin_PK PRIMARY KEY (id_user,id_lobby)
-
 	,CONSTRAINT ccp_is_admin_ccp_user_FK FOREIGN KEY (id_user) REFERENCES ccp_user(id_user) ON DELETE CASCADE
 	,CONSTRAINT ccp_is_admin_ccp_lobby_FK FOREIGN KEY (id_lobby) REFERENCES ccp_lobby(id_lobby) ON DELETE CASCADE
 );
