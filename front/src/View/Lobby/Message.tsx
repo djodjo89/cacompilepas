@@ -1,20 +1,6 @@
-import React, {ReactNode} from "react";
-import userIcon from "../../img/icon-female-user.svg";
-
-enum Month {
-    Janvier,
-    Février,
-    Mars,
-    Avril,
-    Mai,
-    Juin,
-    Juillet,
-    Août,
-    Septembre,
-    Octobre,
-    Novembre,
-    Décembre,
-}
+import React, {ReactNode} from 'react';
+import {display} from '../../Model/Month';
+import userIcon from '../../img/icon-female-user.svg';
 
 interface MessageProps {
     content: string,
@@ -34,12 +20,7 @@ class Message extends React.Component<MessageProps, {}> {
                     </div>
                     <h4
                         className={'col-12 col-lg-9 col-md-9 col-sm-9 offset-1 mb-sm-0 mt-4 ml-0 ml-lg-2 ml-md-3 ml-sm-4 pt-2 pr-0 pl-0'}>
-                        {this.props.pseudo}, le&nbsp;
-                        {this.props.send_date.split(/ /)[0].split(/-/)[2]}&nbsp;
-                        {Month[parseInt(this.props.send_date.split(/-/)[1]) - 1]}&nbsp;
-                        {this.props.send_date.split(/-/)[0]} à&nbsp;
-                        {this.props.send_date.split(/ /)[1].split(/:/)[0]}h
-                        {this.props.send_date.split(/ /)[1].split(/:/)[1]}
+                        {display(this.props.pseudo + ', ', this.props.send_date)}
                     </h4>
                 </div>
                 <div className={'row col-lg-12 col-md-10 col-sm-12 offset-md-2 ml-lg-4 ml-md-4 ml-sm-4 ml-xs-4'}>

@@ -19,6 +19,24 @@
     cursor: pointer;
 }
 
+@media (max-width: 575px) {
+    .course-sheet-label {
+        font-size: 20.2px;
+    }
+}
+
+@media (min-width: 576px) {
+    .course-sheet-label {
+        font-size: 22.4px;
+    }
+}
+
+@media (min-width: 768px) {
+    .course-sheet-label {
+        font-size: 24px;
+    }
+}
+
 .course-sheet-link:active {
     text-decoration: none !important;
 }
