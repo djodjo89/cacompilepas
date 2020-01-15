@@ -69,7 +69,10 @@ abstract class AbstractModel
         $newFileOnFTP = $uploadDirectory . $file;
 
         if (ftp_put($this->connection::$ftp, $newFileOnFTP, $tmpName, FTP_BINARY)) {
-            return ['message' => "Successfully uploaded $fileName."];
+            return [
+                'status' => 'success',
+                'message' => "Successfully uploaded $fileName."
+            ];
         } else {
             new JSONException("Could not upload $fileName");
         }
@@ -114,9 +117,12 @@ abstract class AbstractModel
                 $count++;
             }
 
-            return ['message' => $result];
+            return [
+                'status' => 'success',
+                'message' => $result,
+            ];
         } else {
-            return ['message' => "An error occurred during $model update"];
+            new JSONException("An error occurred during $model update");
         }
     }
 
@@ -140,7 +146,7 @@ abstract class AbstractModel
         if (ftp_get($this->connection::$ftp, '/tmp/' . $fileName, $uploadDirectory . $file, FTP_BINARY)) {
             return '/tmp/' . $fileName;
         } else {
-            new JSONException(['message' => 'File could not be fetched']);
+            new JSONException('File could not be fetched');
         }
     }
 

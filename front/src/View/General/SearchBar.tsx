@@ -31,7 +31,7 @@ class SearchBar extends React.Component<any, SearchBarState> {
     }
 
     public refreshProposals(data: any): void {
-        this.setState({proposals: undefined === data['message'] ? data.slice(0, document.body.offsetWidth > 576 ? 3 : 2) : []});
+        this.setState({proposals: 'fail' !== data['status'] ? data.slice(0, document.body.offsetWidth > 576 ? 3 : 2) : []});
     }
 
     public emptyInput(isEmpty: boolean): void {

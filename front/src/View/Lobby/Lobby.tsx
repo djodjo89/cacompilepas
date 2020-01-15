@@ -81,7 +81,7 @@ class Lobby extends React.Component<any, LobbyState> {
     }
 
     public fillCourseSheets(data: any): void {
-        if (undefined === data['message']) {
+        if ('fail' !== data['status']) {
             this.setState({courseSheets: data});
             this.setState({right: 'true'});
         } else if (data['message'].includes('right')) {
