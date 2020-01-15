@@ -7,6 +7,7 @@ interface InputProps {
     checked?: boolean,
     className?: string,
     formGroupClassName?: string;
+    onEnter?: (event: React.KeyboardEvent<HTMLInputElement>) => void,
     onChange: (event: ChangeEvent<HTMLInputElement>) => void,
 }
 
@@ -29,6 +30,7 @@ class Input extends React.Component<InputProps, {}> {
                    placeholder={this.props.placeholder}
                    onFocus={e => e.target.placeholder = ""}
                    onBlur={e => e.target.placeholder = this.props.placeholder}
+                   onKeyDown={this.props.onEnter}
                    onChange={this.props.onChange}
             />
         </div>

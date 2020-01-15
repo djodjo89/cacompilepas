@@ -137,7 +137,7 @@ class Personal extends React.Component<any, PersonalState> {
                             <img
                                 id={'personal-icon-' + this.state.personalInformation['id_user']}
                                 className={'personal-icon'}
-                                alt={'Personal icon'}
+                                alt={this.state.personalInformation['pseudo']}
                             />
                         </div>
                     </div>

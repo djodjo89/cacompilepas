@@ -62,7 +62,7 @@ class User extends React.Component<UserProps, any> {
                         <img
                             id={'user-remove-' + this.props.id}
                             src={minusIcon}
-                            alt={'Minus Icon'}
+                            alt={'Retirer l\'utilisateur'}
                             className={'remove-button minus-icon mr-0'}
                             onClick={this.props.delete}
                         />
@@ -73,7 +73,7 @@ class User extends React.Component<UserProps, any> {
                         <img
                             id={'user-icon-' + this.props.id}
                             src={this.props.icon}
-                            alt={'User Icon'}
+                            alt={this.props.pseudo}
                             className={'user-icon rounded-circle row'}
                         />
                     </div>

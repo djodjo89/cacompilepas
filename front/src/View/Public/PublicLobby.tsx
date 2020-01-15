@@ -56,7 +56,7 @@ class PublicLobby extends React.Component<PublicLobbyProps, any> {
                         id={'lobby-logo-' + this.props.id}
                         className={'lobby-logo mr-0 mr-lg-0 mr-md-3 ml-3 ml-md-0 ml-sm-0'}
                         src={this.props.logo}
-                        alt={'Lobby ' + this.props.label + ' logo'}
+                        alt={this.props.label}
                     />
                 </div>
                 <div className={'container-fluid col-lg-9 col-md-9 col-sm-8 mb-0 ml-md-0 pl-lg-5 pl-md-5 pl-sm-0 pl-xs-0 pr-0'}>

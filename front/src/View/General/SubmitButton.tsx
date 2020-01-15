@@ -37,7 +37,7 @@ class SubmitButton extends React.Component<SubmitButtonProps, any> {
                                     }
                                 })()
                             }
-                            alt={'Plus Icon'}
+                            alt={'Ajouter'}
                         />;
                     }
                 })()}

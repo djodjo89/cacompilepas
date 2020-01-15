@@ -56,7 +56,7 @@ class Message extends React.Component<MessageProps, {}> {
                              id={'user-icon-' + this.props.id}
                              src={this.props.icon}
                              className={'user-icon rounded-circle App-logo'}
-                             alt={'User icon'}/>
+                             alt={this.props.pseudo}/>
                     </div>
                     <h4
                         className={(this.props.activeRemoveButton ? 'col-11 ' : 'col-12 ') + ' col-lg-9 col-md-9 col-sm-9 offset-1 mb-sm-0 mt-4 ml-0 ml-lg-4 ml-md-1 ml-sm-4 pt-2 pr-0 pl-0 pl-lg-1'}>

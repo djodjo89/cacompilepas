@@ -87,7 +87,7 @@ describe('Connection Test', () => {
             cy.get('#input-icon')
                 .upload({fileContent, fileName, mimeType: 'application/image'});
 
-            cy.get('#dragged-logo')
+            cy.get('#dragged-file')
                 .should('have.attr', 'src');
         });
 

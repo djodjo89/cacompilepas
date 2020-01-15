@@ -15,7 +15,7 @@ class RemoveButton extends React.Component<RemoveButtonProps, any> {
                 <img
                     id={this.props.id}
                     src={minusIcon}
-                    alt={'Minus Icon'}
+                    alt={'Supprimer'}
                     className={'remove-button minus-icon ' + this.props.imgClassName}
                     onClick={this.props.delete}
                 />

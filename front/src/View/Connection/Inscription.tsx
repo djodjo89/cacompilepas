@@ -98,6 +98,7 @@ class Inscription extends React.Component<any, InscriptionState> {
                 text: 'Tu es des nôtres à présent, connecte-toi vite pour' +
                     ' découvrir toutes les possibilités du site !!!',
                 buttons: [false],
+                icon: 'success',
                 timer: 5000,
                 // @ts-ignore
             }).then(() => window.location = '/connexion/login');
@@ -183,12 +184,12 @@ class Inscription extends React.Component<any, InscriptionState> {
                                     labelNotDragged={'Glisse ta photo profil ici !'}
                                     labelDragged={'Photo déposée'}
                                     accept={'image/*'}
-                                    backgroundClassName={''}
+                                    backgroundClassName={'mt-5'}
                                     handleFileDrop={this.handleIconDrop}
                                     handleFileChange={this.handleIconChange}
                                 />
                                 <Input id={'input-email'} inputType={'email'} placeholder={'Adresse email'}
-                                       formGroupClassName={'col-12 mt-5'}
+                                       formGroupClassName={'col-12 mt-4 pt-3'}
                                        className={'connection-input'}onChange={this.handleEmailChange}/>
                                 <Input id={'input-password'} inputType={'password'}
                                        placeholder={'Mot de passe'}
