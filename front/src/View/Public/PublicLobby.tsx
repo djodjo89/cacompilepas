@@ -18,6 +18,7 @@ interface PublicLobbyProps {
 class PublicLobby extends React.Component<PublicLobbyProps, any> {
     public constructor(props: PublicLobbyProps) {
         super(props);
+
         this.fillLogo = this.fillLogo.bind(this);
         this.getLogo = this.getLogo.bind(this);
     }
@@ -32,7 +33,7 @@ class PublicLobby extends React.Component<PublicLobbyProps, any> {
             this.fillLogo,
             'POST',
             {
-                idLobby: this.props.id,
+                id_lobby: this.props.id,
                 path: this.props.logo,
             },
             'json',

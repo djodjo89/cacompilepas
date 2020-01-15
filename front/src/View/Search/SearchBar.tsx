@@ -1,6 +1,6 @@
 import React, {ReactNode} from 'react';
 import Request from "../../API/Request";
-import HashtagInput from "./HashtagInput";
+import HashtagInput from "../Hashtags/HashtagInput";
 import ProposalList from "./ProposalList";
 import '../../css/SearchBar.css';
 
@@ -31,7 +31,7 @@ class SearchBar extends React.Component<any, SearchBarState> {
     }
 
     public refreshProposals(data: any): void {
-        this.setState({proposals: 'fail' !== data['status'] ? data.slice(0, document.body.offsetWidth > 576 ? 3 : 2) : []});
+        this.setState({proposals: 'fail' !== data['status'] && [] !== data ? data : []});
     }
 
     public emptyInput(isEmpty: boolean): void {
@@ -80,7 +80,7 @@ class SearchBar extends React.Component<any, SearchBarState> {
                     <label id="search-label" htmlFor="search">
                         <span className="glyphicon glyphicon-search search-icon"></span>
                         <span
-                            id="search-placeholder">{this.state.inputIsNotEmpty ? 'Rechercher...' : ''}</span>
+                            id="search-placeholder">{this.state.inputIsNotEmpty ? 'Cherche un lobby ou un utilisateur...' : ''}</span>
                     </label>
                     {this.state.hashtagsView}
                     <HashtagInput

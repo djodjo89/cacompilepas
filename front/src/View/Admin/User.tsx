@@ -1,5 +1,5 @@
-import React, {ChangeEvent, ReactNode} from "react";
-import Input from '../General/Input';
+import React, {ReactNode} from "react";
+import Input from '../General/Inputs/Input';
 import minusIcon from '../../img/minus-icon-red-t.png';
 import '../../css/User.css';
 import Request from "../../API/Request";
@@ -14,7 +14,7 @@ interface UserProps {
 }
 
 class User extends React.Component<UserProps, any> {
-    public constructor(props: any) {
+    public constructor(props: UserProps) {
         super(props);
 
         this.fillIcon = this.fillIcon.bind(this);

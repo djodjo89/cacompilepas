@@ -1,9 +1,9 @@
 import React, {ChangeEvent, ReactNode} from 'react';
 import Request from "../../API/Request";
-import DropBox from "../General/DropBox";
-import Input from "../General/Input";
-import InputArea from "../General/InputArea";
-import SubmitButton from "../General/SubmitButton";
+import DropBox from "../General/Inputs/DropBox";
+import Input from "../General/Inputs/Input";
+import InputArea from "../General/Inputs/InputArea";
+import SubmitButton from "../General/Inputs/SubmitButton";
 import Header from "../General/Header";
 import swal from "sweetalert";
 

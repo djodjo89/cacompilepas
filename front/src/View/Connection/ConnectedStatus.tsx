@@ -1,5 +1,5 @@
 import React, {ReactNode} from "react";
-import SubmitButton from "../General/SubmitButton";
+import SubmitButton from "../General/Inputs/SubmitButton";
 
 interface ConnectedStatusProps {
     connectedDivClassName: string

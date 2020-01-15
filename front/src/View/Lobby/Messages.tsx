@@ -10,7 +10,7 @@ interface MessagesProps {
 }
 
 class Messages extends React.Component<MessagesProps, any> {
-    public constructor(props: any) {
+    public constructor(props: MessagesProps) {
         super(props);
         this.state = {
             messages: [],

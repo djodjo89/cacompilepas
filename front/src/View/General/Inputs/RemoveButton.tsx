@@ -1,5 +1,5 @@
 import React, {ReactNode} from 'react';
-import minusIcon from '../../img/minus-icon-red-t.png';
+import minusIcon from '../../../img/minus-icon-red-t.png';
 
 interface RemoveButtonProps {
     id: string,

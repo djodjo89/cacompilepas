@@ -13,7 +13,7 @@ interface HashtagProps {
 class Hashtag extends React.Component<HashtagProps, { width: number }> {
     private hashtagBox: Ref<HTMLDivElement>;
 
-    public constructor(props: any) {
+    public constructor(props: HashtagProps) {
         super(props);
         this.state = {
             width: 0,

@@ -1,7 +1,7 @@
 import React, {ChangeEvent, ReactNode} from 'react';
 import styled from 'styled-components';
-import '../../css/DropBox.css';
-import {ReactComponent as DropBoxLogo} from "../../img/usable-image-icon.svg";
+import '../../../css/DropBox.css';
+import {ReactComponent as DropBoxLogo} from "../../../img/usable-image-icon.svg";
 import {pdfjs, Document, Page} from 'react-pdf';
 
 const Heading = styled.p<{ active: boolean }>`
@@ -56,7 +56,7 @@ interface DropBoxState {
 }
 
 class DropBox extends React.Component<DropBoxProps, DropBoxState> {
-    constructor(props: any) {
+    constructor(props: DropBoxProps) {
         super(props);
         this.state = {
             draggingState: '',

@@ -23,7 +23,7 @@ interface HashTagInputState {
 class HashtagInput extends React.Component<HashtagInputProps, HashTagInputState> {
     private input: Ref<HTMLInputElement>;
 
-    public constructor(props: any) {
+    public constructor(props: HashtagInputProps) {
         super(props);
         this.state = {
             text: '',

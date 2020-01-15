@@ -2,7 +2,7 @@ import React, {ReactNode} from "react";
 import Request from "../../API/Request";
 
 class LobbyDescription extends React.Component<{ id: string }, { lobby: any }> {
-    public constructor(props: any) {
+    public constructor(props: { id: string }) {
         super(props);
         this.state = {
             lobby: [],

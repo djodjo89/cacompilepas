@@ -2,7 +2,7 @@ import React, {ReactNode} from "react";
 import LobbyDivider from "./LobbyDivider";
 
 class LobbySummary extends React.Component<{ courseSheets: [] }, any> {
-    constructor(props: any) {
+    constructor(props: { courseSheets: [] }) {
         super(props);
         this.renderList = this.renderList.bind(this);
     }

@@ -1,6 +1,5 @@
 import React, {ReactNode} from 'react';
 import User from "./User";
-import Request from "../../API/Request";
 
 interface UsersProps {
     id: string,

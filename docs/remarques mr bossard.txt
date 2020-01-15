@@ -1,3 +1,0 @@
-V	0,n : un utilisateur peut n'avoir aucun droit sur un lobby
-V	Un message est forcément dans un lobby
-Architecture parallèle pour des messages privés

@@ -4,7 +4,7 @@ import '../../css/Personal.css';
 import Request from "../../API/Request";
 import Divider from "../General/Divider";
 import PublicLobby from "../Public/PublicLobby";
-import SubmitButton from "../General/SubmitButton";
+import SubmitButton from "../General/Inputs/SubmitButton";
 
 interface PersonalState {
     personalInformation: any,
