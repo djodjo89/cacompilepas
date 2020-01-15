@@ -1,4 +1,4 @@
-import connect from './bundle';
+import connect from '../../plugins/bundle';
 
 describe('Lobby Test', () => {
     it('Visits normal lobby', () => {

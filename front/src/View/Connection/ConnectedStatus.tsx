@@ -24,7 +24,10 @@ class ConnectedStatus extends React.Component<ConnectedStatusProps, any> {
                             disconnectButton={'disconnect'}
                         />
                     </div>
-                    <div className={'row ' + this.props.displayMessageClassName}>
+                    <div
+                        className={'row disconnect-button ' + this.props.displayMessageClassName}
+                        onClick={this.props.disconnect}
+                    >
                         Connecté
                     </div>
                 </div>

@@ -79,6 +79,7 @@ input {
 }
 
 .disconnect-button:hover {
+	cursor: pointer;
 	border-color: transparent;
 	background-color: transparent !important;
 }

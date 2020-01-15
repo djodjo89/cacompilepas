@@ -1,4 +1,4 @@
-import connect from './bundle';
+import connect from '../../plugins/bundle';
 
 describe('Admin Course Sheets Test', () => {
     it('Add course sheets Test', () => {

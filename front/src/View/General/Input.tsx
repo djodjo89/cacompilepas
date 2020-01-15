@@ -4,8 +4,8 @@ interface InputProps {
     id: string,
     inputType: string,
     placeholder: string,
-    checked: boolean,
-    className: string,
+    checked?: boolean,
+    className?: string,
     formGroupClassName?: string;
     onChange: (event: ChangeEvent<HTMLInputElement>) => void,
 }

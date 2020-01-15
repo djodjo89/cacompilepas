@@ -27,7 +27,7 @@ class Request<T> {
         this.beautifulRoute = beautifulRoute;
         this.route = '/';
         this.method = method;
-        this.domain = 'http://localhost:80';
+        this.domain = 'http://192.168.1.19:80';
         this.type = type;
         this.data = data;
         this.initRoute();

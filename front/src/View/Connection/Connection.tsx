@@ -4,6 +4,7 @@ import '../../css/Connection.css';
 import Input from "../General/Input";
 import SubmitButton from "../General/SubmitButton";
 import Header from "../General/Header";
+import swal from "sweetalert";
 
 interface ConnectionStates {
     email: string,
@@ -27,13 +28,14 @@ class Connection extends React.Component<{ referrer: string }, ConnectionStates>
             tokenExists: false,
             formWasSubmitted: false,
         }
-        this.referrerIsNotConnection = this.referrerIsNotConnection.bind(this);
+        this.checkIfAlreadyConnected = this.checkIfAlreadyConnected.bind(this);
         this.handleEmailChange = this.handleEmailChange.bind(this);
         this.handlePasswordChange = this.handlePasswordChange.bind(this);
+        this.redirect = this.redirect.bind(this);
+        this.referrerIsNotConnection = this.referrerIsNotConnection.bind(this);
+        this.setState = this.setState.bind(this);
         this.submit = this.submit.bind(this);
         this.updateConnectStatus = this.updateConnectStatus.bind(this);
-        this.setState = this.setState.bind(this);
-        this.checkIfAlreadyConnected = this.checkIfAlreadyConnected.bind(this);
     }
 
     // Check if token is still valid
@@ -92,6 +94,11 @@ class Connection extends React.Component<{ referrer: string }, ConnectionStates>
         );
     }
 
+    public redirect(): void {
+        // @ts-ignore
+        window.location = this.referrerIsNotConnection() ? this.props.referrer : '/';
+    }
+
     render(): ReactNode {
         return (
             <section className={'content row connection-bloc'}>
@@ -99,7 +106,7 @@ class Connection extends React.Component<{ referrer: string }, ConnectionStates>
                     <Header
                         h1={'Connecte-toi ici'}
                         p={'Comme ça tu pourras accéder à notre super site de fiches de cours !'}
-                        containerClassName={'ml-0 ml-lg-2 ml-md-2 ml-sm-2 mb-5'}
+                        containerClassName={'mt-5 pt-5 ml-0 ml-lg-2 ml-md-2 ml-sm-2 mb-5'}
                         contentClassName={'offset-lg-3 offset-md-2 pl-0 pl-lg-0 pl-md-4 pl-sm-3'}
                     />
                     <div className={'row'}>
@@ -108,21 +115,26 @@ class Connection extends React.Component<{ referrer: string }, ConnectionStates>
                             // Else if form was submitted and credentials were incorrect,
                             // display an error message
                             if (undefined !== localStorage.getItem('token') || '' !== localStorage.getItem('token')) {
-                                if ('true' === this.state.status || true === this.state.tokenExists) {
-                                    if (this.referrerIsNotConnection()) {
-                                        // @ts-ignore
-                                        window.location = this.props.referrer;
+                                if ('true' === this.state.status || this.state.tokenExists) {
+                                    if (this.state.tokenExists) {
+                                        this.redirect();
                                     } else {
-                                        // @ts-ignore
-                                        window.location = '/';
+                                        swal({
+                                            title: 'Ca y est !',
+                                            text: 'Tu es connecté à présent, amuse-toi bien !',
+                                            icon: 'success',
+                                            buttons: [false],
+                                            timer: 2000,
+                                            // @ts-ignore
+                                        }).then(() => window.location = this.referrerIsNotConnection() ? this.props.referrer : '/');
                                     }
                                 } else if ('false' === this.state.status && true === this.state.formWasSubmitted) {
                                     return (
                                         <div
-                                            className={'col-lg-3 col-sm-11 mt-0 mb-lg-4 mb-md-4 mb-sm-4 mb-xs-4 rounded-1 container-fluid p-0'}
+                                            className={'container-fluid col-lg-6 col-md-8 col-sm-11 mb-3 pb-0 pr-4 pr-md-5 pr-sm-0 pl-4 pl-lg-4 pl-md-5 pl-sm-0'}
                                         >
-                                            <div className={'container-fluid col-12 p-0'}>
-                                                <div className={'col-12 connection-error'}>
+                                            <div className={'col-12 p-0'}>
+                                                <div className={'col-12 p-3 rounded bg-danger connection-error'}>
                                                     Identifiants incorrects
                                                 </div>
                                             </div>
@@ -142,7 +154,7 @@ class Connection extends React.Component<{ referrer: string }, ConnectionStates>
                                 <div className={'row container-fluid pr-0'}>
                                     <div className={'col-12 p-0'}>
                                         <Input
-                                            id={'input-mail'}
+                                            id={'input-email'}
                                             inputType={'email'}
                                             placeholder={'Adresse email'}
                                             checked={false}
@@ -169,6 +181,22 @@ class Connection extends React.Component<{ referrer: string }, ConnectionStates>
                                 onClick={this.submit}
                                 className={'mt-5 connection-button'}
                             />
+                            <div className={'row mt-2'}>
+                                <div className={'col-12 pl-3'}>
+                                    <p className={'text-center'}>
+                                        Tu n'as pas de compte ?
+                                        <a
+                                            id={'redirect-button'}
+                                            className={'h4 pl-3'}
+                                            href={'/connexion/register'}
+                                        >
+                                            <u>
+                                                Inscris-toi !
+                                            </u>
+                                        </a>
+                                    </p>
+                                </div>
+                            </div>
                         </form>
                     </div>
                 </div>
