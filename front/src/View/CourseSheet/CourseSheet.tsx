@@ -1,7 +1,7 @@
 import React, {ReactNode} from 'react';
 import {pdfjs, Document, Page} from 'react-pdf';
 import Request from '../../API/Request';
-import Hashtag from '../Hashtags/Hashtag';
+import Hashtag from '../Hashtag/Hashtag';
 import {display} from '../../Model/Month';
 import '../../css/CourseSheet.css';
 import RemoveButton from "../General/Inputs/RemoveButton";

@@ -1,6 +1,6 @@
 import React, {ReactNode} from 'react';
 import Request from "../../API/Request";
-import HashtagInput from "../Hashtags/HashtagInput";
+import HashtagInput from "../Hashtag/HashtagInput";
 import ProposalList from "./ProposalList";
 import '../../css/SearchBar.css';
 

@@ -17,7 +17,7 @@ interface LobbyState {
     lobbyInformation: any,
 }
 
-class Lobby extends React.Component<any, LobbyState> {
+class LobbyPage extends React.Component<any, LobbyState> {
 
     public constructor(props: any) {
         super(props);
@@ -129,4 +129,4 @@ class Lobby extends React.Component<any, LobbyState> {
     }
 }
 
-export default Lobby;
+export default LobbyPage;

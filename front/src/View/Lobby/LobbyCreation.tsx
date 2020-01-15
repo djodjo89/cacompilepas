@@ -182,7 +182,7 @@ class LobbyCreation extends React.Component<any, LobbyCreationState> {
                                     id={'visibility-input'}
                                     inputType={'checkbox'}
                                     checked={this.state.isPrivate}
-                                    placeholder={'Lobby privé'}
+                                    placeholder={'LobbyPage privé'}
                                     className={'user-rights-checkbox'}
                                     onChange={this.toggleVisibility}
                                 />

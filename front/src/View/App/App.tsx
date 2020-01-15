@@ -5,7 +5,7 @@ import {
     Route
 } from "react-router-dom";
 import Nav from '../General/Nav';
-import Lobby from '../Lobby/Lobby';
+import LobbyPage from '../Lobby/LobbyPage';
 import Connection from '../Connection/Connection';
 import NotFound from '../Pages/NotFound';
 import PrivateRoute from "../../Security/PrivateRoute";
@@ -13,7 +13,7 @@ import '../../css/App.css';
 import Home from "../Pages/Home";
 import Admin from '../Admin/Admin';
 import PublicLobbies from "../Public/PublicLobbies";
-import CourseSheetPage from "../Pages/CourseSheetPage";
+import CourseSheetPage from "../CourseSheet/CourseSheetPage";
 import Personal from "../Pages/Personal";
 import LobbyCreation from "../Lobby/LobbyCreation";
 import Inscription from "../Connection/Inscription";
@@ -28,7 +28,7 @@ class App extends React.Component {
                         <Route exact path={'/'}>
                             <Home/>
                         </Route>
-                        <PrivateRoute path={'/lobby'} component={Lobby} rest={[]}/>
+                        <PrivateRoute path={'/lobby'} component={LobbyPage} rest={[]}/>
                         <PrivateRoute path={'/coursesheet'} component={CourseSheetPage} rest={[]}/>
                         <Route path={'/connexion/login'}>
                             <Connection referrer={document.referrer}/>

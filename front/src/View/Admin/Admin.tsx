@@ -10,11 +10,11 @@ import Input from '../General/Inputs/Input';
 import InputArea from '../General/Inputs/InputArea';
 import DropBox from '../General/Inputs/DropBox';
 import '../../css/Admin.css';
-import CourseSheets from '../Lobby/CourseSheets';
+import CourseSheets from '../CourseSheet/CourseSheets';
 import Users from './Users';
-import HashtagInput from "../Hashtags/HashtagInput";
+import HashtagInput from "../Hashtag/HashtagInput";
 import SubmitButton from "../General/Inputs/SubmitButton";
-import Messages from "../Lobby/Messages";
+import Messages from "../Message/Messages";
 import swal from "sweetalert";
 
 interface AdminState {

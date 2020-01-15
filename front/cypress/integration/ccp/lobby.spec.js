@@ -1,6 +1,6 @@
 import connect from '../../plugins/bundle';
 
-describe('Lobby Test', () => {
+describe('LobbyPage Test', () => {
     it('Visits normal lobby', () => {
         cy.visit('http://localhost:3000/lobby/1');
 
