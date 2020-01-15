@@ -1,6 +1,6 @@
 import React, {ReactNode} from "react";
 import '../../css/Message.css';
-import Input from "../General/Input";
+import Input from "../General/Inputs/Input";
 
 interface WriteMessageZoneProps {
     labelLobby: string,

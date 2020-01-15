@@ -38,36 +38,33 @@
 @media (max-width: 575px) {
     .proposal-list {
         z-index: 1;
-        max-height: 100px;
-        background-color: #ffffff;
     }
 }
 
 @media (min-width: 576px) {
     .proposal-list {
         z-index: 1;
-        max-height: 100px;
-        background-color: #ffffff;
     }
 }
 
 @media (min-width: 768px) {
     .proposal-list {
         z-index: 1;
-        max-height: 100px;
-        background-color: #ffffff;
     }
 }
 
 @media (min-width: 992px) {
     .proposal-list {
         z-index: 1;
-        max-height: 100px;
-        background-color: #ffffff;
     }
 }
 
 .proposal {
     font-size: 16px;
     color: #5757e7;
+}
+
+.proposal-icon {
+    height: 32px;
+    width: 32px;
 }

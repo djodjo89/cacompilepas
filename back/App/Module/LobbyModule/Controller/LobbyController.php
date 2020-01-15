@@ -83,7 +83,7 @@ class LobbyController extends AbstractController
                     break;
 
                 case 'coursesheet':
-                    $file = $this->getModel()->getFile($idLobby, $this->getRequest()->getPath(), '/coursesheets/');
+                    $file = $this->getModel()->getFile((int)$idLobby, $this->getRequest()->getPath(), '/coursesheets/');
                     $this->downloadFile($file);
                     break;
 
@@ -187,16 +187,18 @@ class LobbyController extends AbstractController
                     break;
 
                 case 'getLogo':
-                    $logo = $this->getModel()->getFile($this->getRequest()->getIdLobby(), $this->getRequest()->getPath(), '/logo/');
+                    $logo = $this->getModel()->getFile((int)$this->getRequest()->getIdLobby(), $this->getRequest()->getPath(), '/logo/');
                     $this->downloadFile($logo);
                     break;
 
                 case 'search':
-                    $result = $this->getModel()->searchLobbies($this->getRequest()->getSearch(), $this->getRequest()->getHashtags());
+                    $users = $this->getModel()->searchUsers($this->getRequest()->getSearch());
+                    $lobbies = $this->getModel()->searchLobbies($this->getRequest()->getSearch(), $this->getRequest()->getHashtags());
+                    $result = array_merge($users, $lobbies);
                     break;
 
                 case 'getIcon':
-                    $icon = $this->getModel()->getFile($this->getRequest()->getIdUser(), $this->getRequest()->getPath(), '/icon/');
+                    $icon = $this->getModel()->getFile((int)$this->getRequest()->getIdUser(), $this->getRequest()->getPath(), '/icon/');
                     $this->downloadFile($icon);
                     break;
 

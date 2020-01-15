@@ -1,6 +1,5 @@
 import React, {ReactNode} from 'react';
-import SearchBar from './SearchBar';
-import SubmitButton from "./SubmitButton";
+import SearchBar from '../Search/SearchBar';
 import '../../css/Nav.css';
 import Svg from '../Assets/Svg';
 import Request from "../../API/Request";

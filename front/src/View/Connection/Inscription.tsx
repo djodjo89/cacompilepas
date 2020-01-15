@@ -2,9 +2,9 @@ import React, {ChangeEvent, FormEvent, ReactNode} from 'react';
 import swal from 'sweetalert';
 import passwordValidator from 'password-validator';
 import Request from '../../API/Request';
-import DropBox from '../General/DropBox';
-import Input from "../General/Input";
-import SubmitButton from "../General/SubmitButton";
+import DropBox from '../General/Inputs/DropBox';
+import Input from "../General/Inputs/Input";
+import SubmitButton from "../General/Inputs/SubmitButton";
 import Header from "../General/Header";
 
 interface InscriptionState {

@@ -6,14 +6,14 @@ import {
     Route,
 } from 'react-router-dom';
 import {ReactComponent as Loader} from '../../img/loader.svg';
-import Input from '../General/Input';
-import InputArea from '../General/InputArea';
-import DropBox from '../General/DropBox';
+import Input from '../General/Inputs/Input';
+import InputArea from '../General/Inputs/InputArea';
+import DropBox from '../General/Inputs/DropBox';
 import '../../css/Admin.css';
 import CourseSheets from '../Lobby/CourseSheets';
 import Users from './Users';
-import HashtagInput from "../General/HashtagInput";
-import SubmitButton from "../General/SubmitButton";
+import HashtagInput from "../Hashtags/HashtagInput";
+import SubmitButton from "../General/Inputs/SubmitButton";
 import Messages from "../Lobby/Messages";
 import swal from "sweetalert";
 

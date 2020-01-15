@@ -400,6 +400,31 @@ class LobbyModel extends AbstractModel
             'message' => 'There is no public lobby',
         ]);
     }
+
+    public function searchUsers(array $search): array
+    {
+        $count = 0;
+        $lengthSearch = count($search);
+        $usersParams = '';
+
+        foreach ($search as $key => $value) {
+            $usersParams .= " UPPER(pseudo) LIKE UPPER('%" . $value . "%') OR 
+                              UPPER(first_name) LIKE UPPER('%" . $value . "%') OR 
+                              UPPER(last_name) LIKE UPPER('%" . $value . "%')";
+            if ($count !== $lengthSearch - 1) {
+                $usersParams .= ' OR';
+            }
+            $count++;
+        }
+
+        $this->send_query('
+            SELECT DISTINCT id_user, first_name, last_name, pseudo, icon
+            FROM ccp_user
+            WHERE' . $usersParams,
+            []);
+
+        return $this->fetchData([]);
+    }
   
     public function searchLobbies(array $search, array $hashtags): array
     {
@@ -434,10 +459,11 @@ class LobbyModel extends AbstractModel
             LEFT OUTER JOIN ccp_hashtag ON ccp_coursesheet.id_course_sheet = ccp_hashtag.id_course_sheet
             WHERE
             ' . (0 !== $lengthSearch ? '(' . $searchParams . ') ' : '') .
-            (0 !== $lengthHashtags ? ' AND (' . $hashtagsParams . ')' : '') . '
-            AND private = 0
+            (0 !== $lengthHashtags ? 0 !== $lengthSearch ? ' AND (' . $hashtagsParams . ')' : '(' . $hashtagsParams . ')' : '') .
+            ' AND private = 0
             ',
             []);
+
         return $this->fetchData([]);
     }
 

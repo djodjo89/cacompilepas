@@ -1,6 +1,12 @@
-import React, {ReactNode} from "react";
+import React, {ReactNode} from 'react';
 
-class Proposal extends React.Component<{ id: number, content: string }, any> {
+interface ProposalProps {
+    id: string,
+    content: string,
+    image: string,
+}
+
+class Proposal extends React.Component<ProposalProps, any> {
     public render(): ReactNode {
         return (
             <a

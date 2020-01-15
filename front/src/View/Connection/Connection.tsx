@@ -1,8 +1,8 @@
 import React, {ChangeEvent, FormEvent, ReactElement, ReactNode} from 'react';
 import Request from '../../API/Request';
 import '../../css/Connection.css';
-import Input from "../General/Input";
-import SubmitButton from "../General/SubmitButton";
+import Input from "../General/Inputs/Input";
+import SubmitButton from "../General/Inputs/SubmitButton";
 import Header from "../General/Header";
 import swal from "sweetalert";
 
@@ -18,7 +18,7 @@ interface ConnectionStates {
 
 class Connection extends React.Component<{ referrer: string }, ConnectionStates> {
 
-    constructor(props: any) {
+    constructor(props: { referrer: string }) {
         super(props);
         this.state = {
             email: '',

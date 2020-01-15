@@ -1,10 +1,10 @@
 import React, {ReactNode} from 'react';
 import {pdfjs, Document, Page} from 'react-pdf';
 import Request from '../../API/Request';
-import Hashtag from '../General/Hashtag';
+import Hashtag from '../Hashtags/Hashtag';
 import {display} from '../../Model/Month';
 import '../../css/CourseSheet.css';
-import RemoveButton from "../General/RemoveButton";
+import RemoveButton from "../General/Inputs/RemoveButton";
 
 interface CourseSheetProps {
     id: string,

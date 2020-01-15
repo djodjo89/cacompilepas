@@ -1,7 +1,7 @@
 import React, {ReactNode} from 'react';
 import {display} from '../../Model/Month';
 import userIcon from '../../img/icon-female-user.svg';
-import RemoveButton from "../General/RemoveButton";
+import RemoveButton from "../General/Inputs/RemoveButton";
 import Request from "../../API/Request";
 
 interface MessageProps {
@@ -16,7 +16,7 @@ interface MessageProps {
 }
 
 class Message extends React.Component<MessageProps, {}> {
-    public constructor(props: any) {
+    public constructor(props: MessageProps) {
         super(props);
 
         this.fillIcon = this.fillIcon.bind(this);
@@ -56,7 +56,8 @@ class Message extends React.Component<MessageProps, {}> {
                              id={'user-icon-' + this.props.id}
                              src={this.props.icon}
                              className={'user-icon rounded-circle App-logo'}
-                             alt={this.props.pseudo}/>
+                             alt={this.props.pseudo}
+                        />
                     </div>
                     <h4
                         className={(this.props.activeRemoveButton ? 'col-11 ' : 'col-12 ') + ' col-lg-9 col-md-9 col-sm-9 offset-1 mb-sm-0 mt-4 ml-0 ml-lg-4 ml-md-1 ml-sm-4 pt-2 pr-0 pl-0 pl-lg-1'}>
