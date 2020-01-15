@@ -92,7 +92,7 @@ class Inscription extends React.Component<any, InscriptionState> {
     }
 
     public redirectToConnection(data: any): void {
-        if ('success' === data['status']) {
+        if ('fail' !== data['status']) {
             swal({
                 title: 'Bravo !',
                 text: 'Tu es des nôtres à présent, connecte-toi vite pour' +

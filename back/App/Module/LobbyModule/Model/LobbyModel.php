@@ -66,7 +66,10 @@ class LobbyModel extends AbstractModel
                         WHERE id_lobby = ?
                         ',
             [$idLobby]);
-        return $this->fetchData(['message' => 'Lobby ' . $idLobby . ' doesn\'t exist']);
+        return $this->fetchData([
+            'status' => 'fail',
+            'message' => 'Lobby ' . $idLobby . ' doesn\'t exist',
+        ]);
     }
 
     public function getCourseSheets(int $idLobby): array
@@ -80,7 +83,10 @@ class LobbyModel extends AbstractModel
             WHERE id_lobby_Contain = ?
         ',
             [$idLobby]);
-        return $this->fetchData(['message' => 'Lobby ' . $idLobby . ' doesn\'t contain any course sheet']);
+        return $this->fetchData([
+            'status' => 'fail',
+            'message' => 'Lobby ' . $idLobby . ' doesn\'t contain any course sheet',
+        ]);
     }
 
     public function getMessages(int $idLobby): array
@@ -92,7 +98,10 @@ class LobbyModel extends AbstractModel
                         WHERE id_lobby = ?
                         ',
             [$idLobby]);
-        return $this->fetchData(['message' => 'Lobby ' . $idLobby . ' doesn\'t contain any message']);
+        return $this->fetchData([
+            'status' => 'fail',
+            'message' => 'Lobby ' . $idLobby . ' doesn\'t contain any message',
+        ]);
     }
 
     public function getLogo(int $idLobby): string
@@ -204,12 +213,21 @@ class LobbyModel extends AbstractModel
                 [$idLobby, $idUser]);
 
             if ($successfulRightDeletion) {
-                return ['message' => 'Read right was successfully removed '];
+                return [
+                    'status' => 'success',
+                    'message' => 'Read right was successfully removed ',
+                ];
             } else {
-                return ['message' => 'Read right could not be removed'];
+                return [
+                    'status' => 'fail',
+                    'message' => 'Read right could not be removed',
+                ];
             }
         } else {
-            return ['message' => 'User is already out of the lobby'];
+            return [
+                'status' => 'fail',
+                'message' => 'User is already out of the lobby',
+            ];
         }
     }
 
@@ -225,12 +243,21 @@ class LobbyModel extends AbstractModel
                 [$idLobby, $idUser]);
 
             if ($successfulWriteRightUpdate) {
-                return ['message' => 'Write right was successfully added'];
+                return [
+                    'status' => 'success',
+                    'message' => 'Write right was successfully added',
+                ];
             } else {
-                return ['message' => 'Write right could not be added'];
+                return [
+                    'status' => 'fail',
+                    'message' => 'Write right could not be added',
+                ];
             }
         } else {
-            return ['message' => 'User doesn\'t have access to the lobby'];
+            return [
+                'status' => 'fail',
+                'message' => 'User doesn\'t have access to the lobby',
+            ];
         }
     }
 
@@ -246,12 +273,21 @@ class LobbyModel extends AbstractModel
                 [$idLobby, $idUser]);
 
             if ($successfulWriteRightRemove) {
-                return ['message' => 'Write right was successfully removed'];
+                return [
+                    'status' => 'success',
+                    'message' => 'Write right was successfully removed',
+                ];
             } else {
-                return ['message' => 'Write right could not be removed from'];
+                return [
+                    'status' => 'fail',
+                    'message' => 'Write right could not be removed from',
+                ];
             }
         } else {
-            return ['message' => 'User doesn\'t have access to the lobby'];
+            return [
+                'status' => 'fail',
+                'message' => 'User doesn\'t have access to the lobby',
+            ];
         }
     }
 
@@ -265,9 +301,15 @@ class LobbyModel extends AbstractModel
             [$idLobby]);
 
         if ($successfullyMadePublic) {
-            return ['message' => 'Lobby was successfully made private'];
+            return [
+                'status' => 'success',
+                'message' => 'Lobby was successfully made private',
+            ];
         } else {
-            return ['message' => 'Lobby could not be made private'];
+            return [
+                'status' => 'fail',
+                'message' => 'Lobby could not be made private',
+            ];
         }
     }
 
@@ -281,9 +323,15 @@ class LobbyModel extends AbstractModel
             [$idLobby]);
 
         if ($successfullyMadePublic) {
-            return ['message' => 'Lobby was successfully made public'];
+            return [
+                'status' => 'success',
+                'message' => 'Lobby was successfully made public',
+            ];
         } else {
-            return ['message' => 'Lobby could not be made public'];
+            return [
+                'status' => 'fail',
+                'message' => 'Lobby could not be made public',
+            ];
         }
     }
 
@@ -302,7 +350,7 @@ class LobbyModel extends AbstractModel
 
         return $this->fetchData([
             'status' => 'fail',
-            'message' => 'Lobby ' . $idLobby . ' does not contain any user'
+            'message' => 'Lobby ' . $idLobby . ' does not contain any user',
         ]);
     }
 
@@ -315,7 +363,10 @@ class LobbyModel extends AbstractModel
         ',
             [$idLobby]);
 
-        return $this->fetchData(['message' => 'Lobby ' . $idLobby . 'does not exist']);
+        return $this->fetchData([
+            'status' => 'fail',
+            'message' => 'Lobby ' . $idLobby . 'does not exist',
+        ]);
     }
   
     public function getByHashtags(array $hashtags): array
@@ -344,7 +395,10 @@ class LobbyModel extends AbstractModel
             LEFT OUTER JOIN ccp_user USING(id_user)
             WHERE private = 0
         ');
-        return $this->fetchData(['message' => 'There is no public lobby']);
+        return $this->fetchData([
+            'status' => 'fail',
+            'message' => 'There is no public lobby',
+        ]);
     }
   
     public function searchLobbies(array $search, array $hashtags): array
@@ -396,9 +450,15 @@ class LobbyModel extends AbstractModel
             [$idLobby]);
 
         if ($successfullDelete) {
-            return ['message' => 'Lobby was successfully deleted'];
+            return [
+                'status' => 'success',
+                'message' => 'Lobby was successfully deleted',
+            ];
         } else {
-            return ['message' => 'Lobby could not be deleted'];
+            return [
+                'status' => 'fail',
+                'message' => 'Lobby could not be deleted',
+            ];
         }
     }
 
@@ -438,12 +498,17 @@ class LobbyModel extends AbstractModel
             ',
                 [$idAdmin, $idLobby]);
 
-            return ['message' => 'Lobby was successfully uploaded',
+            return [
+                'status' => 'success',
+                'message' => 'Lobby was successfully uploaded',
                     'id_lobby' => $idLobby,
                     'logoPath' => $logoName,
                 ];
         } else {
-            return ['message' => 'Lobby could not be created'];
+            return [
+                'status' => 'fail',
+                'message' => 'Lobby could not be created',
+            ];
         }
     }
 

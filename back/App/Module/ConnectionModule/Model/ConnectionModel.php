@@ -103,7 +103,10 @@ class ConnectionModel extends AbstractModel
         ',
             [$email]);
 
-        return $this->fetchData(['message' => 'User does not exist']);
+        return $this->fetchData([
+            'status' => 'success',
+            'message' => 'User does not exist',
+        ]);
     }
 
     public function getPersonalLobbies(string $email): array
@@ -116,7 +119,10 @@ class ConnectionModel extends AbstractModel
             WHERE email = ?
         ',
             [$email]);
-        return $this->fetchData(['message' => 'User does not own any lobby']);
+        return $this->fetchData([
+            'status' => 'success',
+            'message' => 'User does not own any lobby',
+        ]);
     }
 
     public function disconnect(string $email): array
@@ -128,9 +134,15 @@ class ConnectionModel extends AbstractModel
             [(int)$this->getUserByEmail($email)['id_user']]);
 
         if ($successfulDelete) {
-            return ['message' => 'Session was successfully closed'];
+            return [
+                'status' => 'success',
+                'message' => 'Session was successfully closed',
+            ];
         } else {
-            return ['message' => 'Session could not be closed'];
+            return [
+                'status' => 'fail',
+                'message' => 'Session could not be closed',
+            ];
         }
     }
 

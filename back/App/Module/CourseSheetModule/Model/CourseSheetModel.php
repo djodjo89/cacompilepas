@@ -15,7 +15,10 @@ class CourseSheetModel extends AbstractModel
         ',
             [$idCourseSheet]);
 
-        return $this->fetchData(['message' => 'An error occurred when trying to get containing lobby'])[0]['id_lobby_contain'];
+        return $this->fetchData([
+            'status' => 'fail',
+            'message' => 'An error occurred when trying to get containing lobby',
+        ])[0]['id_lobby_contain'];
     }
 
     public function addCourseSheet(int $idLobby, string $title, string $fileName, string $tmpName, string $description, array $hashtags): array
@@ -53,9 +56,15 @@ class CourseSheetModel extends AbstractModel
         }
 
         if ($successfulInsert) {
-            return ['message' => 'Course sheet was successfully added'];
+            return [
+                'status' => 'success',
+                'message' => 'Course sheet was successfully added',
+            ];
         } else {
-            return ['message' => 'Course sheet could not be added'];
+            return [
+                'status' => 'fail',
+                'message' => 'Course sheet could not be added',
+            ];
         }
     }
 
@@ -87,10 +96,14 @@ class CourseSheetModel extends AbstractModel
             $this->deleteOnFTP($oldFileNameOnFTPServer, '/coursesheets/');
 
             return [
+                'status' => 'success',
                 'message' => 'Course sheet was successfully deleted',
             ];
         } else {
-            return ['message' => 'Course sheet could not be deleted'];
+            return [
+                'status' => 'fail',
+                'message' => 'Course sheet could not be deleted',
+            ];
         }
     }
 
@@ -103,10 +116,16 @@ class CourseSheetModel extends AbstractModel
             ",
                 [$value, $idCourseSheet]);
             if (!$successfullyAdded) {
-                return ['message' => 'Hashtags could not be added'];
+                return [
+                    'status' => 'fail',
+                    'message' => 'Hashtags could not be added',
+                ];
             }
         }
-        return ['message' => 'Successfully added hashtags'];
+        return [
+            'status' => 'success',
+            'message' => 'Successfully added hashtags',
+        ];
     }
 
     public function removeHashtag(int $idCourseSheet, string $hashtag): array
@@ -118,9 +137,15 @@ class CourseSheetModel extends AbstractModel
         ',
             [$hashtag, $idCourseSheet]);
         if (!$successfullyRemoved) {
-            return ['message' => 'Hashtag could not be removed'];
+            return [
+                'status' => 'fail',
+                'message' => 'Hashtag could not be removed',
+            ];
         } else {
-            return ['message' => 'Hashtag was successfully removed'];
+            return [
+                'status' => 'success',
+                'message' => 'Hashtag was successfully removed',
+            ];
         }
     }
 
@@ -134,6 +159,9 @@ class CourseSheetModel extends AbstractModel
         ',
             [$idCourseSheet]);
 
-        return $this->fetchData(['message' => 'Course sheet doesn\'t have any hashtag']);
+        return $this->fetchData([
+            'status' => 'fail',
+            'message' => 'Course sheet doesn\'t have any hashtag',
+        ]);
     }
 }

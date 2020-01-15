@@ -137,7 +137,7 @@ class Admin extends React.Component<any, AdminState> {
     }
 
     public fillPresentation(data: any): void {
-        if (undefined === data['message']) {
+        if ('fail' !== data['status']) {
             this.setState({currentLabel: data[0]['label_lobby']});
             this.setState({currentDescription: data[0]['description']});
             this.setState(
@@ -148,7 +148,7 @@ class Admin extends React.Component<any, AdminState> {
     }
 
     public fillCourseSheets(data: any): void {
-        if (undefined === data['message']) {
+        if ('fail' !== data['status']) {
             this.setState(
                 {courseSheets: data},
                 () => this.forceUpdate(() => this.render())
@@ -161,7 +161,7 @@ class Admin extends React.Component<any, AdminState> {
     }
 
     public fillMessages(data: any): void {
-        if (undefined === data['message']) {
+        if ('fail' !== data['status']) {
             this.setState(
                 {messages: data},
                 () => this.forceUpdate(() => this.render())
@@ -174,7 +174,7 @@ class Admin extends React.Component<any, AdminState> {
     }
 
     public fillUsers(data: any): void {
-        if (undefined === data['message']) {
+        if ('fail' !== data['status']) {
             this.setState({users: data});
         } else {
             this.setState({users: []});
@@ -182,7 +182,7 @@ class Admin extends React.Component<any, AdminState> {
     }
 
     public updateVisibility(data: any): void {
-        if (undefined === data['message']) {
+        if ('fail' !== data['status']) {
             '1' === data[0]['private'] ? this.setState({private: 'true'}) : this.setState({private: 'false'});
         }
     }
@@ -338,19 +338,19 @@ class Admin extends React.Component<any, AdminState> {
     }
 
     public fetchCourseSheets(data: any): void {
-        if (data['message'].includes('successfully')) {
+        if ('fail' !== data['status']) {
             this.refreshCourseSheets();
         }
     }
 
     public fetchMessages(data: any): void {
-        if ('success' === data['status']) {
+        if ('fail' !== data['status']) {
             this.refreshMessages();
         }
     }
 
     public fetchUsers(data: any): void {
-        if (data['message'].includes('successfully')) {
+        if ('fail' !== data['status']) {
             this.refreshUsers();
         }
     }
