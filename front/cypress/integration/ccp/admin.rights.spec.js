@@ -7,7 +7,6 @@ describe('Admin Course Sheets Test', () => {
         connect();
 
         addUser('nabila@cacompilepas.com');
-
         // Lobby should be private by default
         makePrivate();
         checkIfPrivate();

@@ -55,7 +55,7 @@ class LobbyDescription extends React.Component<{ id: string }, { lobby: any }> {
                         <img
                             id={'lobby-logo' + this.props.id}
                             className={'lobby-logo mt-0 mt-lg-4 mt-md-4 mt-sm-4'}
-                            alt={'Lobby logo'}
+                            alt={this.state.lobby['label_lobby']}
                         />
                     </div>
                     <div className={'col-lg-10 col-md-10 col-sm-9 col-xs-12 pr-0'}>

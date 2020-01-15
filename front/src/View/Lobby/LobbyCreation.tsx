@@ -5,6 +5,7 @@ import Input from "../General/Input";
 import InputArea from "../General/InputArea";
 import SubmitButton from "../General/SubmitButton";
 import Header from "../General/Header";
+import swal from "sweetalert";
 
 interface LobbyCreationState {
     id: number,
@@ -59,9 +60,22 @@ class LobbyCreation extends React.Component<any, LobbyCreationState> {
     }
 
     public checkIfOk(data: any): void {
-        if (undefined !== data['id_lobby']) {
-            // @ts-ignore
-            document.location = '/lobby/' + data['id_lobby'];
+        if ('fail' !== data['status']) {
+            swal({
+                title: 'Bien joué !',
+                text: 'Le lobby ' + this.state.label + ' a bien été créé !',
+                buttons: [false],
+                icon: 'success',
+                timer: 5000,
+                // @ts-ignore
+            }).then(() => document.location = '/lobby/' + data['id_lobby']);
+        } else {
+            swal({
+                title: 'Oups !',
+                text: 'Il y a eu un soucis lors de la création du lobby, vérifie' +
+                    'que tu as bien rempli tous les champs.',
+                icon: 'warning',
+            })
         }
     }
 
@@ -97,20 +111,29 @@ class LobbyCreation extends React.Component<any, LobbyCreationState> {
     }
 
     public createLobby(event: React.MouseEvent<HTMLButtonElement, MouseEvent>): void {
-        let formData = new FormData();
-        formData.append('label', this.state.label);
-        formData.append('description', this.state.description);
-        formData.append('private', '' + this.state.isPrivate);
-        // @ts-ignore
-        formData.append('file', this.state.logo);
-        new Request(
-            '/lobby/create/' + -1,
-            this.checkIfOk,
-            'POST',
-            formData,
+        if ('' !== this.state.label && '' !== this.state.description && null !== this.state.logo) {
+            let formData = new FormData();
+            formData.append('label', this.state.label);
+            formData.append('description', this.state.description);
+            formData.append('private', '' + this.state.isPrivate);
             // @ts-ignore
-            this.state.logo.type,
-        );
+            formData.append('file', this.state.logo);
+            new Request(
+                '/lobby/create/' + -1,
+                this.checkIfOk,
+                'POST',
+                formData,
+                // @ts-ignore
+                this.state.logo.type,
+            );
+        } else {
+            swal({
+                title: 'Oups !',
+                text: 'Il y a eu un soucis lors de la création du lobby, vérifie' +
+                    ' que tu as bien rempli tous les champs.',
+                icon: 'warning',
+            })
+        }
     }
 
     public render(): ReactNode {
@@ -121,7 +144,7 @@ class LobbyCreation extends React.Component<any, LobbyCreationState> {
                     p={'Ici tu peux créer ton propre lobby'}
                 />
                 <div className={'row'}>
-                    <div className={'row container-fluid'}>
+                    <div className={'row container-fluid mb-4 pb-3'}>
                         <div className={'col-lg-6 col-md-6 col-sm-12 col-xs-12'}>
                             <Input id={'label-input'}
                                    inputType={'text'}
@@ -144,16 +167,16 @@ class LobbyCreation extends React.Component<any, LobbyCreationState> {
                         </div>
                         <DropBox
                             id={'logo-upload-input'}
-                            className={'col-lg-6 col-md-6 col-sm-6 col-xs-12'}
+                            className={'col-lg-6 col-md-6 col-sm-6 col-xs-12 mt-2 mt-sm-0 pt-1 pt-sm-0'}
                             labelNotDragged={'Glisse un logo par ici !'}
                             labelDragged={'Logo déposé !'}
                             accept={'image/*'}
-                            backgroundClassName={''}
+                            backgroundClassName={'mt-1'}
                             handleFileDrop={this.handleLogoDrop}
                             handleFileChange={this.handleLogoChange}
                         />
                     </div>
-                    <div className={'row container-fluid'}>
+                    <div className={'row container-fluid mt-3 mt-sm-2'}>
                             <div className={'pl-lg-3 pl-md-3 pl-sm-3 pl-xs-3 pt-lg-2 pt-md-1 pt-sm-3 pt-xs-4 pr-lg-2 pr-md-2 pr-sm-0 pr-xs-0'}>
                                 <Input
                                     id={'visibility-input'}
@@ -164,18 +187,20 @@ class LobbyCreation extends React.Component<any, LobbyCreationState> {
                                     onChange={this.toggleVisibility}
                                 />
                             </div>
+                        <div className={'col-11 mt-0 mt-lg-2 mt-md-2 mt-sm-3 pt-0 pl-0 text-left lobby-write-right-label'}>
                             <h4
-                                className={'col-11 pl-0 text-left lobby-write-right-label'}
+                                className={'mt-2 mt-lg-2 mt-md-1 pt-1 pt-md-1 ml-3 ml-lg-2 ml-md-2 ml-sm-3'}
                             >
                                 Lobby privé (seules les personnes autorisées pourront le
                                 consulter
                             </h4>
+                        </div>
                     </div>
 
                     <div className={'row container-fluid'}>
                         <div className={'col-12'}>
                             <SubmitButton
-                                text={'Mettre à jour le lobby'}
+                                text={'Créer le lobby'}
                                 onClick={this.createLobby}
                                 className={'mt-5'}
                                 disconnectButton={'plus'}

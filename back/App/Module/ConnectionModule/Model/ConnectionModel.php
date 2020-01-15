@@ -97,7 +97,7 @@ class ConnectionModel extends AbstractModel
     public function getPersonalInformation(string $email): array
     {
         $this->send_query('
-            SELECT id_user, first_name, icon
+            SELECT id_user, first_name, pseudo, icon
             FROM ccp_user
             WHERE email LIKE ?
         ',

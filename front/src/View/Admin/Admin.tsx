@@ -15,6 +15,7 @@ import Users from './Users';
 import HashtagInput from "../General/HashtagInput";
 import SubmitButton from "../General/SubmitButton";
 import Messages from "../Lobby/Messages";
+import swal from "sweetalert";
 
 interface AdminState {
     id: number,
@@ -73,6 +74,8 @@ class Admin extends React.Component<any, AdminState> {
 
     public init(): void {
         this.addUser = this.addUser.bind(this);
+        this.addUserWithClick = this.addUserWithClick.bind(this);
+        this.addUserWithKeyBoard = this.addUserWithKeyBoard.bind(this);
         this.checkIfAdmin = this.checkIfAdmin.bind(this);
         this.emptyInput = this.emptyInput.bind(this);
         this.fetchCourseSheets = this.fetchCourseSheets.bind(this);
@@ -149,8 +152,7 @@ class Admin extends React.Component<any, AdminState> {
 
     public fillCourseSheets(data: any): void {
         if ('fail' !== data['status']) {
-            this.setState(
-                {courseSheets: data},
+            this.setState({courseSheets: data},
                 () => this.forceUpdate(() => this.render())
             );
         } else {
@@ -314,6 +316,20 @@ class Admin extends React.Component<any, AdminState> {
                 formData,
                 this.state.newCourseSheetDocument.type,
             );
+            swal({
+                title: 'Ca y est !',
+                text: 'La fiche a bien été ajoutée !',
+                buttons: [false],
+                icon: 'success',
+                timer: 3000,
+            });
+        } else {
+            swal({
+                title: 'Mince !',
+                text: 'Il y a eu un problème, la fiche n\'a pas pu être supprimée, ' +
+                    'vérifie que tu as bien rentré tous les champs.',
+                icon: 'warning',
+            });
         }
     }
 
@@ -357,32 +373,77 @@ class Admin extends React.Component<any, AdminState> {
 
     public removeCourseSheetFromLobby(event: React.MouseEvent<HTMLImageElement, MouseEvent>): void {
         let removeButton: any = event.target;
-        new Request('/lobby/deleteCourseSheet/' + this.state.id,
-            this.fetchCourseSheets,
-            'POST',
-            {
-                id: removeButton.id.split(/-/)[3],
-            });
+        swal({
+            title: 'Attention !',
+            text: 'Cette fiche sera définitivement supprimée, est-tu sûr de ton choix ?',
+            icon: 'warning',
+            buttons: ['Non, ça va', 'Oui !'],
+            dangerMode: true,
+        }).then((willDelete) => {
+            if (willDelete) {
+                new Request('/lobby/deleteCourseSheet/' + this.state.id,
+                    this.fetchCourseSheets,
+                    'POST',
+                    {
+                        id: removeButton.id.split(/-/)[3],
+                    });
+                swal('Ca y est, la fiche a été supprimé !', {
+                    icon: 'success',
+                });
+            } else {
+                swal('Rassure-toi, rien n\'a été supprimé !');
+            }
+        });
     }
 
     public removeMessageFromLobby(event: React.MouseEvent<HTMLImageElement, MouseEvent>): void {
         let removeButton: any = event.target;
-        new Request('/message/deleteMessage/' + this.state.id,
-            this.fetchMessages,
-            'POST',
-            {
-                id: removeButton.id.split(/-/)[2],
-            });
+        swal({
+            title: 'Attention !',
+            text: 'Ce message sera définitivement supprimée, est-tu sûr de vouloir faire ça ?',
+            icon: 'warning',
+            buttons: ['Finalement, non', 'Oui !'],
+            dangerMode: true,
+        }).then((willDelete) => {
+            if (willDelete) {
+                new Request('/message/deleteMessage/' + this.state.id,
+                    this.fetchMessages,
+                    'POST',
+                    {
+                        id: removeButton.id.split(/-/)[2],
+                    });
+                swal('C\'est bon, le message est supprimé !', {
+                    icon: 'success',
+                });
+            } else {
+                swal('Pas de problème, le message est sain et sauf !');
+            }
+        });
     }
 
     public removeUserFromLobby(event: React.MouseEvent<HTMLImageElement, MouseEvent>): void {
         let removeButton: any = event.target;
-        new Request('/lobby/removeUser/' + this.state.id,
-            this.fetchUsers,
-            'POST',
-            {
-                id: removeButton.id.split(/-/)[2],
-            });
+        swal({
+            title: 'Attention !',
+            text: 'Cet utilisateur ne pourra plus voir ton lobby, à moins qu\'il ne soit public',
+            icon: 'warning',
+            buttons: ['Je vais y réfléchir', 'Oui !'],
+            dangerMode: true,
+        }).then((willDelete) => {
+            if (willDelete) {
+                new Request('/lobby/removeUser/' + this.state.id,
+                    this.fetchUsers,
+                    'POST',
+                    {
+                        id: removeButton.id.split(/-/)[2],
+                    });
+                swal('Désormais, cet utilisateur n\'aura plus accès à ce lobby.', {
+                    icon: 'success',
+                });
+            } else {
+                swal('Ok, rien de grave n\'a été fait !');
+            }
+        });
     }
 
     public toggleWriteRights(event: React.ChangeEvent<HTMLInputElement>): void {
@@ -399,7 +460,7 @@ class Admin extends React.Component<any, AdminState> {
         );
     }
 
-    public addUser(event: React.MouseEvent<HTMLButtonElement, MouseEvent>): void {
+    public addUser(): void {
         new Request(
             '/lobby/addUser/' + this.state.id,
             this.refreshUsers,
@@ -408,6 +469,16 @@ class Admin extends React.Component<any, AdminState> {
                 email: this.state.newUserEmail,
             },
         );
+    }
+
+    public addUserWithClick(event: React.MouseEvent<HTMLButtonElement, MouseEvent>): void {
+        this.addUser();
+    }
+
+    public addUserWithKeyBoard(event: React.KeyboardEvent<HTMLInputElement>): void {
+        if (13 === event.keyCode) {
+            this.addUser();
+        }
     }
 
     public handleUserEmailChange(event: ChangeEvent<HTMLInputElement>): void {
@@ -506,16 +577,16 @@ class Admin extends React.Component<any, AdminState> {
                                                             id={'lobby-logo-' + this.state.id}
                                                             className={'lobby-logo mt-3 mt-lg-0 mt-md-0 mt-sm-0 mr-4'}
                                                             src={this.state.logoPath}
-                                                            alt={'Lobby logo'}
+                                                            alt={this.state.currentLabel}
                                                         />
                                                     </div>
-                                                    <div className={'col-5 ml-2 mt-0 ml-lg-4 ml-md-4 ml-sm-4 p-0'}>
+                                                    <div className={'col-5 ml-2 mt-0 ml-lg-4 ml-md-4 ml-sm-4 p-0 pt-lg-2 pt-md-3'}>
                                                         <DropBox id={'input-logo'}
                                                                  className={'mt-lg-4 mt-md-4 mt-sm-5'}
                                                                  labelNotDragged={'Glisse un logo par ici !'}
                                                                  labelDragged={'Logo déposé !'}
                                                                  accept={'image/*'}
-                                                                 backgroundClassName={'mt-lg-4 mt-md-4 mt-sm-4 ml-4 ml-lg-5 ml-md-5 ml-sm-4'}
+                                                                 backgroundClassName={'mt-3 mt-lg-4 mt-md-4 mt-sm-4 ml-4 ml-lg-5 ml-md-5 ml-sm-4'}
                                                                  handleFileDrop={this.handleLogoDrop}
                                                                  handleFileChange={this.handleLogoChange}
                                                         />
@@ -547,7 +618,7 @@ class Admin extends React.Component<any, AdminState> {
                                                                formGroupClassName={'mb-0 mb-lg-2 mb-md-1 mb-sm-4 pb-2 pb-lg-1 pb-md-0 pr-0 pl-0 pl-lg-4 pl-md-4 pl-sm-4 col-12'}
                                                                onChange={this.handleCourseSheetTitleChange}/>
                                                         <DropBox id={'course-sheet-input'}
-                                                                 className={'text-sm-left col-6 offset-3 offset-lg-0 offset-md-0 offset-sm-0 col-lg-12 col-md-12 col-sm-12 mt-3 mt-lg-0 mt-md-0 mt-sm-0 pr-0 pl-0 pl-lg-4 pl-md-4 pl-sm-4'}
+                                                                 className={'text-sm-left col-6 offset-3 offset-lg-0 offset-md-0 offset-sm-0 col-lg-12 col-md-12 col-sm-12 mt-3 mt-lg-0 mt-md-0 mt-sm-4 pt-3 pr-0 pl-0 pl-lg-4 pl-md-4 pl-sm-4'}
                                                                  backgroundClassName={'mt-1'}
                                                                  labelNotDragged={'Glisse une fiche par ici !'}
                                                                  labelDragged={'Fiche déposée !'}
@@ -655,6 +726,7 @@ class Admin extends React.Component<any, AdminState> {
                                                                 checked={false}
                                                                 className={'add-usr-input'}
                                                                 onChange={this.handleUserEmailChange}
+                                                                onEnter={this.addUserWithKeyBoard}
                                                             />
                                                         </div>
                                                     </div>
@@ -662,7 +734,7 @@ class Admin extends React.Component<any, AdminState> {
                                                         <div className={'col-12 pl-0 '}>
                                                             <SubmitButton
                                                                 text={'Ca y est ? Alors c\'est parti, ajoute-le !'}
-                                                                onClick={this.addUser}
+                                                                onClick={this.addUserWithClick}
                                                                 className={'mt-0 col-12 add-usr-button'}
                                                                 disconnectButton={'plus'}
                                                             />

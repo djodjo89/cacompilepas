@@ -51,13 +51,13 @@
     height: 0;
 }
 
-.dragged-logo {
+.dragged-file {
     width: 100px;
     height: 100px;
     border-radius: 50px;
 }
 
-.not-dragged-logo {
+.not-dragged-file {
     padding: 10px;
     margin: 10px;
     border-radius: 5px;
@@ -70,13 +70,13 @@
 }
 
 @media (max-width: 700px) {
-    .not-dragged-logo {
+    .not-dragged-file {
         width: 50%;
     }
 }
 
 @media (min-width: 701px) {
-    .not-dragged-logo {
+    .not-dragged-file {
         width: 40%;
     }
 }
