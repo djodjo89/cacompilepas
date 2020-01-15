@@ -20,13 +20,15 @@ class Messages extends React.Component<MessagesProps, any> {
         this.setState = this.setState.bind(this);
     }
 
-    public renderMessage(id: string, content: string, send_date: string, pseudo: string): ReactNode {
+    public renderMessage(id: string, idUser: string, content: string, send_date: string, pseudo: string, icon: string): ReactNode {
         return <Message
             id={id}
             key={id}
+            idUser={idUser}
             content={content}
             send_date={send_date}
             pseudo={pseudo}
+            icon={icon}
             activeRemoveButton={this.props.activeRemoveButton}
             delete={this.props.delete}
         />;
@@ -36,7 +38,7 @@ class Messages extends React.Component<MessagesProps, any> {
         // @ts-ignore
         if (undefined === this.props.messages['message']) {
             return this.props.messages.map(
-                (message: any) => this.renderMessage(message['id_message'], message['content'], message['send_date'], message['pseudo'])
+                (message: any) => this.renderMessage(message['id_message'], message['id_user'], message['content'], message['send_date'], message['pseudo'], message['icon'])
             )
                 .sort((message1: any, message2: any): number => {
                         if (message1.props.send_date < message2.props.send_date) {

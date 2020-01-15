@@ -39,9 +39,9 @@ abstract class AbstractModel
         return explode('.', $fileName)[count(explode('.', $fileName)) - 1];
     }
 
-    public function nameOnFTP(int $idLobby, string $fileName, string $extension): string
+    public function nameOnFTP(int $id, string $fileName, string $extension): string
     {
-        return explode('.' . $extension, $fileName)[0] . "_$idLobby" . '.' . $extension;
+        return explode('.' . $extension, $fileName)[0] . "_$id" . '.' . $extension;
     }
 
     public function checkExtension(string $fileName, array $allowedExtensions): void

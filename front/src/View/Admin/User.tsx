@@ -2,6 +2,7 @@ import React, {ChangeEvent, ReactNode} from "react";
 import Input from '../General/Input';
 import minusIcon from '../../img/minus-icon-red-t.png';
 import '../../css/User.css';
+import Request from "../../API/Request";
 
 interface UserProps {
     id: string,
@@ -13,10 +14,42 @@ interface UserProps {
 }
 
 class User extends React.Component<UserProps, any> {
+    public constructor(props: any) {
+        super(props);
+
+        this.fillIcon = this.fillIcon.bind(this);
+        this.getIcon = this.getIcon.bind(this);
+    }
+
+    public componentDidMount(): void {
+        this.getIcon();
+    }
+
     public check(event: React.MouseEvent<HTMLHeadingElement>): void {
         let checkBox: any = event.target;
         checkBox.parentElement.firstChild.firstChild.firstChild.click();
     }
+
+    public getIcon(): void {
+        new Request(
+            '/lobby/getIcon/0',
+            this.fillIcon,
+            'POST',
+            {
+                idUser: this.props.id,
+                path: this.props.icon,
+            },
+            'json',
+            'blob',
+        );
+    }
+
+    public fillIcon(data: Blob): void {
+        const img: any = document.getElementById('user-icon-' + this.props.id);
+        const blob = new Blob([data], {type: 'image/jpg'});
+        img.src = URL.createObjectURL(blob);
+    }
+
 
     public render(): ReactNode {
         return (
@@ -30,21 +63,22 @@ class User extends React.Component<UserProps, any> {
                             id={'user-remove-' + this.props.id}
                             src={minusIcon}
                             alt={'Minus Icon'}
-                            className={'remove-button minus-icon ml-5 mr-0'}
+                            className={'remove-button minus-icon mr-0'}
                             onClick={this.props.delete}
                         />
                     </div>
                 </div>
                 <div className={'row col-12 mt-2 rounded ml-1 ml-md-0 ml-sm-0 pr-0 pl-1 pl-md-0 pl-sm-0'}>
-                    <div className={'col-3 col-lg-2 col-md-2 col-sm-2 mr-4 mr-lg-0 mr-md-0 mr-sm-0 ml-1 ml-lg-0 ml-md-0 ml-sm-0 pr-0 pl-2 pl-lg-4 pl-md-3 pl-sm-3 text-left'}>
+                    <div className={'row col-2 col-lg-1 col-md-1 col-sm-2 mr-4 mr-lg-0 mr-md-0 mr-sm-0 ml-1 ml-lg-0 ml-md-0 ml-sm-0 pr-0 pl-2 pl-lg-4 pl-md-3 pl-sm-3 text-left'}>
                         <img
+                            id={'user-icon-' + this.props.id}
                             src={this.props.icon}
                             alt={'User Icon'}
-                            className={'user-icon col-2 pl-0 rounded-circle'}
+                            className={'user-icon rounded-circle row'}
                         />
                     </div>
-                    <div className={'row col-9 col-lg-10 col-md-10 col-sm-10 offset-1 pt-5 pr-0'}>
-                        <div className={'col-1 pt-2 pl-0 pr-0'}>
+                    <div className={'row col-10 offset-1 pt-4 pr-0 pl-0 pl-md-4'}>
+                        <div className={'col-1 pt-2 pl-0 pr-0 user-rights-checkbox-container'}>
                             <Input
                                 id={'user-right-checkbox-' + this.props.id}
                                 inputType={'checkbox'}
@@ -55,7 +89,7 @@ class User extends React.Component<UserProps, any> {
                             />
                         </div>
                         <h4
-                            className={'col-11 pt-1 pr-0 pl-5 pl-lg-0 pl-md-0 pl-sm-0 text-left lobby-write-right-label'}
+                            className={'col-11 pt-1 pt-lg-0 pr-0 pl-4 pl-lg-0 pl-md-0 pl-sm-0 text-left lobby-write-right-label'}
                             onClick={this.check}
                         >
                             Peut modifier le lobby

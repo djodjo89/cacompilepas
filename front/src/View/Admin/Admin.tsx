@@ -367,7 +367,7 @@ class Admin extends React.Component<any, AdminState> {
 
     public removeMessageFromLobby(event: React.MouseEvent<HTMLImageElement, MouseEvent>): void {
         let removeButton: any = event.target;
-        new Request('/lobby/deleteMessage/' + this.state.id,
+        new Request('/message/deleteMessage/' + this.state.id,
             this.fetchMessages,
             'POST',
             {
