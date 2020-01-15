@@ -65,6 +65,8 @@ class DropBox extends React.Component<DropBoxProps, DropBoxState> {
             src: '',
             file: null,
         }
+        this.handleMouseDown = this.handleMouseDown.bind(this);
+        this.handleMouseUp = this.handleMouseUp.bind(this);
         this.handleDragOver = this.handleDragOver.bind(this);
         this.handleFileDrop = this.handleFileDrop.bind(this);
         this.handleDragEnter = this.handleDragEnter.bind(this);
@@ -73,6 +75,15 @@ class DropBox extends React.Component<DropBoxProps, DropBoxState> {
         this.updateFilePreview = this.updateFilePreview.bind(this);
         this.onDocumentLoadSuccess = this.onDocumentLoadSuccess.bind(this);
         this.renderLogo = this.renderLogo.bind(this);
+    }
+
+    public handleMouseDown(event: React.MouseEvent<HTMLDivElement>): void {
+        this.setState({label: this.props.labelNotDragged});
+        this.setState({draggingState: 'dragging'});
+    }
+
+    public handleMouseUp(event: React.MouseEvent<HTMLDivElement>): void {
+        this.setState({draggingState: 'not dragging'});
     }
 
     public handleDragOver(event: React.DragEvent<HTMLDivElement>): void {
@@ -132,7 +143,7 @@ class DropBox extends React.Component<DropBoxProps, DropBoxState> {
     }
 
     public renderLogo(): ReactNode {
-        if (this.state.dragged) {
+        if (this.state.dragged && null !== this.state.file) {
             // @ts-ignore
             if (this.state.file.type.includes('image')) {
                 return (
@@ -175,6 +186,8 @@ class DropBox extends React.Component<DropBoxProps, DropBoxState> {
                 onDrop={this.handleFileDrop}
                 onDragEnter={this.handleDragEnter}
                 onDragExit={this.handleDragExit}
+                onMouseDown={this.handleMouseDown}
+                onMouseUp={this.handleMouseUp}
                 style={{
                     opacity: this.state.draggingState === 'dragging' ? 0.5 : 1,
                     transform: this.state.draggingState === 'dragging' ? 'rotate(-2deg) translateY(-10px)' : 'rotate(0)',
