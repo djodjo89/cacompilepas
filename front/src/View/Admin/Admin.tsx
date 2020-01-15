@@ -95,12 +95,13 @@ class Admin extends React.Component<any, AdminState> {
         this.handleLogoChange = this.handleLogoChange.bind(this);
         this.addCourseSheet = this.addCourseSheet.bind(this);
         this.navigate = this.navigate.bind(this);
-        this.refreshPresentation = this.refreshPresentation.bind(this);
-        this.refreshCourseSheets = this.refreshCourseSheets.bind(this);
-        this.refreshMessages = this.refreshMessages.bind(this);
-        this.refreshVisibility = this.refreshVisibility.bind(this);
-        this.refreshUsers = this.refreshUsers.bind(this);
         this.refreshAdmin = this.refreshAdmin.bind(this);
+        this.refreshCourseSheets = this.refreshCourseSheets.bind(this);
+        this.refreshData = this.refreshData.bind(this);
+        this.refreshMessages = this.refreshMessages.bind(this);
+        this.refreshPresentation = this.refreshPresentation.bind(this);
+        this.refreshUsers = this.refreshUsers.bind(this);
+        this.refreshVisibility = this.refreshVisibility.bind(this);
         this.removeCourseSheetFromLobby = this.removeCourseSheetFromLobby.bind(this);
         this.removeMessageFromLobby = this.removeMessageFromLobby.bind(this);
         this.removeUserFromLobby = this.removeUserFromLobby.bind(this);
@@ -115,6 +116,10 @@ class Admin extends React.Component<any, AdminState> {
     }
 
     public componentDidMount(): void {
+        this.refreshData();
+    }
+
+    public refreshData(): void {
         this.refreshAdmin();
         this.refreshPresentation();
         this.refreshCourseSheets();
@@ -250,6 +255,7 @@ class Admin extends React.Component<any, AdminState> {
 
     public navigate(event: React.MouseEvent<HTMLLIElement, MouseEvent>): void {
         event.preventDefault();
+        this.refreshData();
         let target: any = event.target;
         for (let li of target.parentElement.parentElement.children) {
             li.firstElementChild.className = 'nav-link custom-tab';
