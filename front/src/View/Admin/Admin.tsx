@@ -669,7 +669,7 @@ class Admin extends React.Component<any, AdminState> {
                                                         <div
                                                             className={'row container-fluid pr-0 pl-4 pl-lg-0 pl-md-0 pl-sm-0'}>
                                                             <SubmitButton
-                                                                text={'Une nouvelle fiche ? Ajoute-la !'}
+                                                                text={'Ajoute cette fiche !'}
                                                                 onClick={this.addCourseSheet}
                                                                 className={'col-sm-12 container-fluid add-course-sheet-button mt-5 mr-0 ml-0 pl-0'}
                                                                 disconnectButton={'plus'}
