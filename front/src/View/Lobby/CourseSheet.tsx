@@ -149,13 +149,15 @@ class CourseSheet extends React.Component<CourseSheetProps, CourseSheetState> {
                 <div
                     className={'col-lg-2 col-md-2 col-sm-2 d-none d-lg-block d-md-block d-sm-block mt-lg-2 mt-md-2 mt-1 mt-lg-0 mt-md-0 mr-lg-5 pl-0 pr-0'}>
                     <div className={'mt-lg-0 mt-md-1 mt-sm-1'}>
-                        <Document
-                            file={this.state.file}
-                            onLoadSuccess={this.onDocumentLoadSuccess}
-                            noData={<h4>Glisse un fichier</h4>}
-                        >
-                            <Page height={155} scale={1} pageNumber={1}/>
-                        </Document>
+                        <a href={'/coursesheet/' + this.props.idLobby + '/' + this.props.title + '/' + this.props.link}>
+                            <Document
+                                file={this.state.file}
+                                onLoadSuccess={this.onDocumentLoadSuccess}
+                                noData={<h4>Glisse un fichier</h4>}
+                            >
+                                <Page height={155} scale={1} pageNumber={1}/>
+                            </Document>
+                        </a>
                     </div>
                 </div>
                 <div className={'col-lg-9 col-md-10 col-sm-10 col-xs-12 pr-sm-0 pr-0 pl-0 pl-lg-0 pl-md-0 pl-sm-5'}>
