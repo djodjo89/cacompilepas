@@ -66,7 +66,7 @@ class LobbyCreation extends React.Component<any, LobbyCreationState> {
                 text: 'Le lobby ' + this.state.label + ' a bien été créé !',
                 buttons: [false],
                 icon: 'success',
-                timer: 5000,
+                timer: 3000,
                 // @ts-ignore
             }).then(() => document.location = '/lobby/' + data['id_lobby']);
         } else {

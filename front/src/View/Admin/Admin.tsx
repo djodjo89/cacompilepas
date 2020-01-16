@@ -321,7 +321,7 @@ class Admin extends React.Component<any, AdminState> {
                 text: 'La fiche a bien été ajoutée !',
                 buttons: [false],
                 icon: 'success',
-                timer: 3000,
+                timer: 2000,
             });
         } else {
             swal({
