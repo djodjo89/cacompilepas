@@ -79,8 +79,6 @@ class SearchBar extends React.Component<any, SearchBarState> {
                     className="form-inline my-lg-0 my-md-0 my-sm-2 my-xs-2 col-lg-8 col-md-8 col-sm-12 col-xs-12 offset-lg-1 offset-md-1 offset-sm-0 offset-xs-0 p-0 pl-lg-5 search-form">
                     <label id="search-label" htmlFor="search">
                         <span className="glyphicon glyphicon-search search-icon"></span>
-                        <span
-                            id="search-placeholder">{this.state.inputIsNotEmpty ? 'Cherche un lobby ou un utilisateur...' : ''}</span>
                     </label>
                     {this.state.hashtagsView}
                     <HashtagInput
@@ -89,6 +87,7 @@ class SearchBar extends React.Component<any, SearchBarState> {
                         type={'search'}
                         baseIndent={14}
                         onUpdate={this.emptyInput}
+                        placeholder={'Cherche un lobby ou un utilisateur...'}
                         updateHashtagsView={this.updateHashtagsView}
                         updateHashtags={this.updateHashtags}
                         updateText={this.updateQuery}

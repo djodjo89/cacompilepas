@@ -3,22 +3,55 @@
 namespace App\Module\CourseSheetModule\Model;
 
 use App\Model\AbstractModel;
+use App\Module\CourseSheetModule\Exception\InexistentCourseSheetException;
+use App\Module\LobbyModule\Exception\InexistentLobbyException;
 
 class CourseSheetModel extends AbstractModel
 {
     public function getLobbyId(int $idCourseSheet): int
     {
         $this->send_query('
-            SELECT id_lobby_contain
+            SELECT id_course_sheet
             FROM ccp_coursesheet
             WHERE id_course_sheet = ?
         ',
             [$idCourseSheet]);
 
+        if ($result = $this->getQuery()->fetch()) {
+            $this->send_query('
+            SELECT id_lobby_contain
+            FROM ccp_coursesheet
+            WHERE id_course_sheet = ?
+        ',
+                [$idCourseSheet]);
+
+            $result = $this->fetchData();
+
+            if (0 !== count($result)) {
+                return $result[0]['id_lobby_contain'];
+            } else {
+                throw new InexistentLobbyException();
+            }
+        } else {
+            throw new InexistentCourseSheetException();
+        }
+    }
+
+    public function getCourseSheets(int $idLobby): array
+    {
+        $this->send_query('
+            SELECT ccp_coursesheet.id_course_sheet, title, publication_date, file_name, ccp_coursesheet.description, pseudo
+            FROM ccp_coursesheet 
+            INNER JOIN ccp_lobby cl ON ccp_coursesheet.id_lobby_contain = cl.id_lobby
+            INNER JOIN ccp_is_admin cia on cl.id_lobby = cia.id_lobby
+            INNER JOIN ccp_user cu on cia.id_user = cu.id_user
+            WHERE id_lobby_Contain = ?
+        ',
+            [$idLobby]);
         return $this->fetchData([
             'status' => 'fail',
-            'message' => 'An error occurred when trying to get containing lobby',
-        ])[0]['id_lobby_contain'];
+            'message' => 'Lobby ' . $idLobby . ' doesn\'t contain any course sheet',
+        ]);
     }
 
     public function addCourseSheet(int $idLobby, string $title, string $fileName, string $tmpName, string $description, array $hashtags): array

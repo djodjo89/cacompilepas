@@ -10,6 +10,7 @@ interface HashtagInputProps {
     updateHashtagsView: any,
     updateHashtags: any,
     updateText: any,
+    placeholder?: string,
     hashtagClassName: string,
 }
 
@@ -183,6 +184,7 @@ class HashtagInput extends React.Component<HashtagInputProps, HashTagInputState>
                    value={this.state.text}
                    onKeyDown={this.updateHashtags}
                    ref={this.input}
+                   placeholder={this.props.placeholder}
             />
         );
     }

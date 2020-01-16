@@ -4,6 +4,8 @@ namespace App\Http;
 
 use App\Connection\Connection;
 use App\Exception\JSONException;
+use App\Exception\MissingParameterException;
+use App\Exception\RightException;
 use App\Module\ConnectionModule\Controller\ConnectionController;
 use App\Module\ConnectionModule\Model\ConnectionModel;
 use App\Module\CourseSheetModule\Controller\CourseSheetController;
@@ -12,6 +14,8 @@ use App\Module\LobbyModule\Controller\LobbyController;
 use App\Module\LobbyModule\Model\LobbyModel;
 use App\Module\MessageModule\Controller\MessageController;
 use App\Module\MessageModule\Model\MessageModel;
+use App\Module\UserModule\Controller\UserController;
+use App\Module\UserModule\Model\UserModel;
 
 class Router
 {
@@ -44,10 +48,18 @@ class Router
                 $controller = new MessageController(new MessageModel($this->connection));
                 break;
 
+            case 'user':
+                $controller = new UserController(new UserModel($this->connection));
+                break;
+
             default:
                 new JSONException($this->request->getModule() . ' module does not exist');
                 break;
         }
-        $controller->run();
+        try {
+            $controller->run();
+        } catch (MissingParameterException | RightException $e) {
+            new JSONException($e->getMessage());
+        }
     }
 }

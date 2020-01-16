@@ -1,9 +1,7 @@
 import React, {ReactNode} from "react";
-import Proposal from "./Proposal";
-import '../../css/SearchBar.css';
-import User from "../Admin/User";
 import UserProposal from "./UserProposal";
 import LobbyProposal from "./LobbyProposal";
+import '../../css/SearchBar.css';
 
 class ProposalList extends React.Component<{ proposals: [] }, any> {
     public constructor(props: { proposals: [] }) {

@@ -3,6 +3,7 @@
 namespace App\Http;
 
 use App\Exception\JSONException;
+use App\Exception\MissingParameterException;
 
 class Request
 {
@@ -13,7 +14,7 @@ class Request
         $this->fetchParamsFromRequest($_POST);
         $this->fetchParamsFromRequest($_FILES);
         $this->fetchParamsFromRequest($_REQUEST);
-        $this->fetchParamsFromRequest(getallheaders());
+        $this->fetchParamsFromRequest(getallheaders(), false);
         if (!is_null(json_decode(file_get_contents('php://input')))) {
             $this->fetchParamsFromRequest(json_decode(file_get_contents('php://input'), true));
         }
@@ -28,9 +29,12 @@ class Request
         }
     }
 
-    public function fetchParamsFromRequest(array $requestMethod): void
+    public function fetchParamsFromRequest(array $requestMethod, bool $checkIfInSnakeCase = true): void
     {
         foreach ($requestMethod as $key => $value) {
+            if ($checkIfInSnakeCase) {
+                $this->checkIfWrittenInSnakeCase($key);
+            }
             if (is_array($value)) {
                 $this->{$this->toCamelCase(htmlspecialchars($key))} = [];
                 foreach ($value as $k => $val) {
@@ -39,6 +43,20 @@ class Request
             } else {
                 $this->{$this->toCamelCase(htmlspecialchars($key))} = htmlspecialchars($value);
             }
+        }
+    }
+
+    public function checkIfWrittenInSnakeCase(string $param): bool
+    {
+        if (0 !== strlen($param)) {
+            $splittedParam = explode('_', $param);
+            if (ctype_alnum($splittedParam[0]) && strtolower($splittedParam[0]) === $splittedParam[0]) {
+                return $this->checkIfWrittenInSnakeCase(substr($param, strlen($splittedParam[0]) + (1 <= count($splittedParam) ? 1 : 0)));
+            } else {
+                new JSONException('Parameter is not written in snake case');
+            }
+        } else {
+            return true;
         }
     }
 
@@ -61,14 +79,10 @@ class Request
     {
         if ('get' === substr($function, 0, 3)) {
             $attributeName = $this->toCamelCase(substr($function, 3, strlen($function)));
-            if (isset($this->{$attributeName}) || defined($this->{$attributeName})) {
-                    return $this->{$attributeName};
+            if (array_key_exists($attributeName, get_object_vars($this))) {
+                return $this->{$attributeName};
             } else {
-                if (is_array($this->{$attributeName})) {
-                    new JSONException($$attributeName . ' wasn\'t provided');
-                } else {
-                    new JSONException($attributeName . ' wasn\'t provided');
-                }
+                throw new MissingParameterException($attributeName);
             }
         }
     }

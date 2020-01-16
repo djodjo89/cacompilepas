@@ -29,11 +29,10 @@ class LobbyDescription extends React.Component<{ id: string }, { lobby: any }> {
 
     public getLogo(): void {
         new Request(
-            '/lobby/getLogo/0',
+            '/lobby/getLogo/' + this.props.id,
             this.fillLogo,
             'POST',
             {
-                idLobby: this.props.id,
                 path: this.state.lobby['logo'],
             },
             'json',

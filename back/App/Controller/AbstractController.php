@@ -7,12 +7,14 @@ use App\Exception\JSONException;
 use App\Http\Request;
 use App\Model\AbstractModel;
 use App\Module\ConnectionModule\Model\ConnectionModel;
+use App\Module\UserModule\Model\UserModel;
 
 abstract class AbstractController
 {
     private AbstractModel $model;
     private Request $request;
     private array $actions;
+    private string $status;
 
     public function __construct(AbstractModel $model)
     {
@@ -68,6 +70,63 @@ abstract class AbstractController
             header('Content-Length: ' . filesize($file));
             readfile($file);
             exit;
+        }
+    }
+
+    public function visitorOrMore(): bool
+    {
+        return in_array($this->status, ['user', 'visitor', 'admin']);
+    }
+
+    public function userOrMore(): bool
+    {
+        return in_array($this->status, ['user', 'admin']);
+    }
+
+    public function admin(): bool
+    {
+        return $this->status === 'admin';
+    }
+
+    public function checkRights(int $idLobby, string $token = ''): void
+    {
+        $decoded = (new UserModel($this->getModel()->getConnection()))->getUserFromToken($token);
+
+        if ($result = (new UserModel($this->getModel()->getConnection()))->checkIfUserExists($decoded['email'], $decoded['password'])) {
+            $isAdmin = (new UserModel($this->getModel()->getConnection()))->isAdmin((int)$result['id_user'], $idLobby);
+
+            if ($isAdmin) {
+                $this->status = 'admin';
+            } else {
+                $this->getModel()->send_query('
+                    SELECT read_right, id_lobby
+                    FROM ccp_rights
+                    RIGHT OUTER JOIN ccp_lobby cl ON ccp_rights.id_lobby_Protect = cl.id_lobby
+                    WHERE 
+                    private = 0 OR
+                    id_user = ?
+                    AND id_lobby_protect = ?
+                ',
+                    [(int)$result['id_user'], $idLobby]);
+                if ($result = $this->getModel()->getQuery()->fetch()) {
+                    $this->status = 'user';
+                } else {
+                    $this->status = 'none';
+                }
+            }
+        } else {
+            $this->getModel()->send_query('
+                    SELECT id_lobby
+                    FROM ccp_lobby
+                    WHERE id_lobby = ?
+                    AND private = 0
+                ',
+                [$idLobby]);
+            if ($result = $this->getModel()->getQuery()->fetch()) {
+                $this->status = 'visitor';
+            } else {
+                $this->status = 'none';
+            }
         }
     }
 }

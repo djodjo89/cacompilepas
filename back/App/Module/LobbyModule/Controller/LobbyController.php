@@ -3,11 +3,10 @@
 namespace App\Module\LobbyModule\Controller;
 
 use App\Controller\AbstractController;
-use App\Exception\JSONException;
+use App\Exception\RightException;
 use App\Http\JSONResponse;
-use App\Module\CourseSheetModule\Model\CourseSheetModel;
-use App\Module\MessageModule\Model\MessageModel;
 use App\Module\LobbyModule\Model\LobbyModel;
+use App\Module\UserModule\Model\UserModel;
 
 class LobbyController extends AbstractController
 {
@@ -15,31 +14,17 @@ class LobbyController extends AbstractController
     {
         parent::__construct($model);
         $this->setActions([
-            'coursesheets',
-            'messages',
             'consult',
-            'newCourseSheet',
-            'deleteCourseSheet',
-            'addUser',
-            'removeUser',
-            'addWriteRight',
-            'removeWriteRight',
-            'makePrivate',
-            'makePublic',
+            'make_private',
+            'make_public',
             'update',
-            'checkIfAdmin',
-            'users',
             'visibility',
-            'coursesheet',
-            'getByHashtag',
             'search',
-            'getLobbies',
-            'getLogo',
-            'addMessage',
+            'get_lobbies',
+            'get_logo',
             'delete',
             'create',
-            'deleteMessage',
-            'getIcon',
+            'get_icon',
         ]);
     }
 
@@ -51,7 +36,7 @@ class LobbyController extends AbstractController
         if (0 !== $idLobby) {
             $this->checkToken();
 
-            if (-1 == $idLobby) {
+            if (-1 === $idLobby) {
                 $result = $this->getModel()->create(
                     $this->getModel()->idUserFromToken($this->getRequest()->getToken()),
                     $this->getRequest()->getLabel(),
@@ -63,84 +48,33 @@ class LobbyController extends AbstractController
 
                 $idLobby = $result['id_lobby'];
             }
-
-            $rightsOnLobby = $this->getModel()->checkRights($idLobby, $this->getRequest()->getToken());
-        } else {
-            $rightsOnLobby = 'none';
         }
-        if ('none' !== $rightsOnLobby) {
+
+        $this->checkRights($idLobby, $this->getRequest()->getToken());
+
+        if ($this->visitorOrMore()) {
             switch ($this->getRequest()->getAction()) {
-                case 'coursesheets':
-                    $result = $this->getModel()->getCourseSheets($idLobby);
-                    break;
-
-                case 'messages':
-                    $result = $this->getModel()->getMessages($idLobby);
-                    break;
-
                 case 'consult':
                     $result = $this->getModel()->getLobbyById($idLobby);
                     break;
 
-                case 'coursesheet':
-                    $file = $this->getModel()->getFile((int)$idLobby, $this->getRequest()->getPath(), '/coursesheets/');
-                    $this->downloadFile($file);
+                case 'get_logo':
+                    $logo = $this->getModel()->getFile((int)$this->getRequest()->getParam(), $this->getRequest()->getPath(), '/logo/');
+                    $this->downloadFile($logo);
                     break;
 
-                case 'addMessage':
-                    $result = (new MessageModel($this->getModel()->getConnection()))->addMessage($idLobby, $this->getModel()->idUserFromToken($this->getRequest()->getToken()), $this->getRequest()->getContent());
+                case 'get_lobbies':
+                    $result = $this->getModel()->getLobbies();
                     break;
 
                 default:
-                    if ('admin' === $rightsOnLobby) {
+                    if ($this->admin()) {
                         switch ($this->getRequest()->getAction()) {
-                            case 'checkIfAdmin':
-                                $result = ['isAdmin' => true];
-                                break;
-
-                            case 'newCourseSheet':
-                                $requestHashtags = explode('&quot;', $this->getRequest()->getHashtags());
-                                $hashtags = [];
-                                foreach ($requestHashtags as $key => $value) {
-                                    if (ctype_alnum($value)) {
-                                        array_push($hashtags, $value);
-                                    }
-                                }
-                                $result = (new CourseSheetModel($this->getModel()->getConnection()))->addCourseSheet(
-                                    $idLobby,
-                                    $this->getRequest()->getTitle(),
-                                    $this->getRequest()->getFile()['name'],
-                                    $this->getRequest()->getFile()['tmp_name'],
-                                    $this->getRequest()->getDescription(),
-                                    $hashtags,
-                                    );
-                                break;
-
-                            case 'deleteCourseSheet':
-                                $result = (new CourseSheetModel($this->getModel()->getConnection()))->deleteCourseSheet($idLobby, (int)$this->getRequest()->getId());
-                                break;
-
-                            case 'addUser':
-                                $result = $this->getModel()->addUser($idLobby, $this->getRequest()->getEmail());
-                                break;
-
-                            case 'removeUser':
-                                $result = $this->getModel()->removeUser($idLobby, $this->getRequest()->getId());
-                                break;
-
-                            case 'addWriteRight':
-                                $result = $this->getModel()->addWriteRight($idLobby, $this->getRequest()->getId());
-                                break;
-
-                            case 'removeWriteRight':
-                                $result = $this->getModel()->removeWriteRight($idLobby, $this->getRequest()->getId());
-                                break;
-
-                            case 'makePrivate':
+                            case 'make_private':
                                 $result = $this->getModel()->makePrivate($idLobby);
                                 break;
 
-                            case 'makePublic':
+                            case 'make_public':
                                 $result = $this->getModel()->makePublic($idLobby);
                                 break;
 
@@ -161,49 +95,32 @@ class LobbyController extends AbstractController
                                 }
                                 break;
 
-                            case 'users':
-                                $result = $this->getModel()->getUsers($idLobby);
-                                break;
-
                             case 'visibility':
                                 $result = $this->getModel()->getVisibility($idLobby);
-                                break;
-
-                            case 'getByHashtag':
-                                $result = $this->getModel()->getByHashtags($this->getRequest()->getHashtags());
                                 break;
 
                             case 'delete':
                                 $result = $this->getModel()->delete((int)$this->getRequest()->getParam());
                                 break;
+
+                            default:
+                                throw new RightException();
+                                break;
                         }
+                    } else {
+                        throw new RightException();
                     }
-                    break;
             }
         } else {
             switch ($this->getRequest()->getAction()) {
-                case 'getLobbies':
-                    $result = $this->getModel()->getLobbies();
-                    break;
-
-                case 'getLogo':
-                    $logo = $this->getModel()->getFile((int)$this->getRequest()->getIdLobby(), $this->getRequest()->getPath(), '/logo/');
-                    $this->downloadFile($logo);
-                    break;
-
                 case 'search':
-                    $users = $this->getModel()->searchUsers($this->getRequest()->getSearch());
+                    $users = (new UserModel($this->getModel()->getConnection()))->searchUsers($this->getRequest()->getSearch());
                     $lobbies = $this->getModel()->searchLobbies($this->getRequest()->getSearch(), $this->getRequest()->getHashtags());
                     $result = array_merge($users, $lobbies);
                     break;
 
-                case 'getIcon':
-                    $icon = $this->getModel()->getFile((int)$this->getRequest()->getIdUser(), $this->getRequest()->getPath(), '/icon/');
-                    $this->downloadFile($icon);
-                    break;
-
                 default:
-                    new JSONException('You do not have the right to access this lobby');
+                    throw new RightException();
                     break;
             }
         }

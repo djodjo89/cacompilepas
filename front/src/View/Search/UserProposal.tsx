@@ -1,5 +1,6 @@
 import React, {ReactNode} from 'react';
 import Request from "../../API/Request";
+import swal from "sweetalert";
 
 interface UserProposalProps {
     id: string,
@@ -16,6 +17,7 @@ class UserProposal extends React.Component<UserProposalProps, any> {
 
         this.fillIcon = this.fillIcon.bind(this);
         this.getIcon = this.getIcon.bind(this);
+        this.proposeToWriteMessage = this.proposeToWriteMessage.bind(this);
     }
 
     public componentDidMount(): void {
@@ -42,21 +44,39 @@ class UserProposal extends React.Component<UserProposalProps, any> {
         img.src = URL.createObjectURL(blob);
     }
 
+    public proposeToWriteMessage(event: React.MouseEvent<HTMLLIElement>): void {
+        swal({
+            title: 'Veux-tu écrire un message à ' + this.props.pseudo + ' ?',
+            text: 'Un lobby privé vous permettant de discuter sera créé',
+            buttons: ['Tout compte fait, non', 'Oui, c\'est parti !'],
+            dangerMode: true,
+            // @ts-ignore
+        }).then((willToWrite: boolean) => {
+            if (willToWrite) {
+                // @ts-ignore
+                document.location = '/message/conversation/' + this.props.id.split(/-/)[2];
+            }
+        });
+    }
+
     public render(): ReactNode {
         return (
-            <li key={'search-user-' + this.props.id} className={'bg-light p-3' +
-            (() => {
-                if ('first' === this.props.position) {
-                    return ' rounded-top';
-                } else if ('last' === this.props.position) {
-                    return ' rounded-bottom';
-                } else {
-                    return '';
-                }
-            })()}>
-                <a
+            <li
+                key={'search-user-' + this.props.id}
+                className={'bg-light p-3 proposal-link' +
+                (() => {
+                    if ('first' === this.props.position) {
+                        return ' rounded-top';
+                    } else if ('last' === this.props.position) {
+                        return ' rounded-bottom';
+                    } else {
+                        return '';
+                    }
+                })()}
+                onClick={this.proposeToWriteMessage}
+            >
+                <div
                     className={'row'}
-                    href={'/message/conversation/' + this.props.id.split(/-/)[2]}
                 >
                     <div className={'col-1'}>
                         <img
@@ -71,7 +91,7 @@ class UserProposal extends React.Component<UserProposalProps, any> {
                     >
                         {this.props.firstName} {this.props.lastName} alias <u>{this.props.pseudo}</u>
                     </div>
-                </a>
+                </div>
             </li>
         );
     }

@@ -47,7 +47,7 @@ class LobbyPage extends React.Component<any, LobbyState> {
         if (13 === event.keyCode) {
             let content: any = event.target;
             new Request(
-                '/lobby/addMessage/' + this.props.location.pathname.split(/\//)[2],
+                '/message/addMessage/' + this.props.location.pathname.split(/\//)[2],
                 this.refreshMessages,
                 'POST',
                 {content: content.value}
@@ -73,7 +73,7 @@ class LobbyPage extends React.Component<any, LobbyState> {
     }
 
     public refreshMessages(): void {
-        new Request('/lobby/messages/' + this.props.location.pathname.split(/\//)[2], this.fillMessages);
+        new Request('/message/messages/' + this.props.location.pathname.split(/\//)[2], this.fillMessages);
     }
 
     public refreshDescription(): void {

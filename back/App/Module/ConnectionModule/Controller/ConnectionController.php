@@ -4,18 +4,32 @@ namespace App\Module\ConnectionModule\Controller;
 
 use App\Controller\AbstractController;
 use App\Http\JSONResponse;
+use App\Model\AbstractModel;
+use App\Module\UserModule\Model\UserModel;
 
 class ConnectionController extends AbstractController
 {
+    public function __construct(AbstractModel $model)
+    {
+        parent::__construct($model);
+        $this->setActions([
+            'login',
+            'verification',
+            'disconnect',
+            'register',
+        ]);
+    }
+
     public function run(): void
     {
+        $this->checkAction();
         $result = [];
         switch ($this->getRequest()->getAction()) {
             case 'login':
                 $email = $this->getRequest()->getEmail();
                 $password = $this->getRequest()->getPassword();
-                if (0 !== count($this->getModel()->checkIfUserExists($email, $password))) {
-                    $idUser = $this->getModel()->checkIfUserExists($email, $password)['id_user'];
+                if (0 !== count((new UserModel($this->getModel()->getConnection()))->checkIfUserExists($email, $password))) {
+                    $idUser = (new UserModel($this->getModel()->getConnection()))->checkIfUserExists($email, $password)['id_user'];
                     $result = [
                         'token' => $this->getModel()->generateToken($email, $password, $idUser),
                         'connected' => true,
@@ -33,19 +47,6 @@ class ConnectionController extends AbstractController
                 $result = [
                     'token_exists' => $token_exists ? true : false,
                 ];
-                break;
-
-            case 'personal':
-                $this->checkToken();
-                $email = $this->getModel()->getUserFromToken($this->getRequest()->getToken())['email'];
-                $result = $this->getModel()->getPersonalInformation($email);
-                array_push($result, $this->getModel()->getPersonalLobbies($email));
-                break;
-
-            case 'getIcon':
-                $this->checkToken();
-                $icon = $this->getModel()->getIcon($this->getRequest()->getParam(), $this->getRequest()->getPath(), '/icon/');
-                $this->downloadFile($icon);
                 break;
 
             case 'disconnect':

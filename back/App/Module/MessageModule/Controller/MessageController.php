@@ -3,7 +3,7 @@
 namespace App\Module\MessageModule\Controller;
 
 use App\Controller\AbstractController;
-use App\Exception\JSONException;
+use App\Exception\RightException;
 use App\Http\JSONResponse;
 use App\Module\MessageModule\Model\MessageModel;
 use App\Module\LobbyModule\Model\LobbyModel;
@@ -14,28 +14,48 @@ class MessageController extends AbstractController
     {
         parent::__construct($model);
         $this->setActions([
-            'deleteMessage',
+            'messages',
+            'add_message',
+            'delete_message',
         ]);
     }
 
     public function run(): void
     {
         $this->checkAction();
-        $this->checkToken();
+        $idLobby = (int)$this->getRequest()->getIdLobby();
         $result = [];
 
-        $rightsOnCourseSheet = (new LobbyModel($this->getModel()->getConnection()))->checkRights(
-            $this->getRequest()->getParam(),
-            $this->getRequest()->getToken()
-        );
-        if ('admin' === $rightsOnCourseSheet) {
+        $this->checkRights($idLobby,$this->getRequest()->getToken());
+
+        if ($this->userOrMore()) {
+            $this->checkToken();
             switch ($this->getRequest()->getAction()) {
-                case 'deleteMessage':
-                    $result = (new MessageModel($this->getModel()->getConnection()))->deleteMessage((int)$this->getRequest()->getId());
+                case 'add_message':
+                    $result = $this->getModel()->addMessage($idLobby, $this->getModel()->idUserFromToken($this->getRequest()->getToken()), $this->getRequest()->getContent());
+                    break;
+                default:
+                    if ($this->admin()) {
+                        switch ($this->getRequest()->getAction()) {
+                            case 'delete_message':
+                                $result = $this->getModel()->deleteMessage((int)$this->getRequest()->getParam());
+                                break;
+                        }
+                    } else {
+                        new RightException();
+                    }
                     break;
             }
         } else {
-            new JSONException('You don\'t have the right to access this message');
+            switch ($this->getRequest()->getAction()) {
+                case 'messages':
+                    $result = $this->getModel()->getMessages($idLobby);
+                    break;
+
+                default:
+                    new RightException();
+                    break;
+            }
         }
         new JSONResponse($result);
     }

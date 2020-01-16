@@ -2,42 +2,12 @@
 
 namespace App\Module\ConnectionModule\Model;
 
-use App\Connection\Connection;
 use App\Model\AbstractModel;
+use App\Module\UserModule\Model\UserModel;
 use Firebase\JWT\JWT;
 
 class ConnectionModel extends AbstractModel
 {
-
-    public function checkIfUserExists(string $email, string $password): array
-    {
-        $this->send_query('
-                        SELECT id_user, password FROM ccp_user
-                        WHERE email = ?
-                        ',
-            [$email]);
-        if ($result = $this->getQuery()->fetch()) {
-            if ($password === $result['password'] || password_verify($password, $result['password'])) {
-                return $result;
-            }
-        } else {
-            return [];
-        }
-    }
-
-    public function getUserByEmail(string $email): array
-    {
-        $this->send_query('
-            SELECT id_user FROM ccp_user
-            WHERE email = ?
-        ', [$email]);
-
-        if ($result = $this->getQuery()->fetch()) {
-            return $result;
-        } else {
-            return [];
-        }
-    }
 
     public function checkToken(string $token): bool
     {
@@ -72,7 +42,7 @@ class ConnectionModel extends AbstractModel
 
             $payload = array(
                 'email' => $email,
-                'password' => $this->checkIfUserExists($email, $password)['password'],
+                'password' => (new UserModel($this->getConnection()))->checkIfUserExists($email, $password)['password'],
                 'time' => new \DateTime('NOW')
             );
 
@@ -89,49 +59,13 @@ class ConnectionModel extends AbstractModel
         return $jwt;
     }
 
-    public function getIcon(int $idUser, string $path, string $uploadDirectory): string
-    {
-        return $this->getOnFTP($idUser, $path, $uploadDirectory);
-    }
-
-    public function getPersonalInformation(string $email): array
-    {
-        $this->send_query('
-            SELECT id_user, first_name, pseudo, icon
-            FROM ccp_user
-            WHERE email LIKE ?
-        ',
-            [$email]);
-
-        return $this->fetchData([
-            'status' => 'success',
-            'message' => 'User does not exist',
-        ]);
-    }
-
-    public function getPersonalLobbies(string $email): array
-    {
-        $this->send_query('
-            SELECT id_lobby, label_lobby, description, logo
-            FROM ccp_lobby 
-            NATURAL JOIN ccp_is_admin cia
-            INNER JOIN ccp_user cu ON cia.id_user = cu.id_user
-            WHERE email = ?
-        ',
-            [$email]);
-        return $this->fetchData([
-            'status' => 'success',
-            'message' => 'User does not own any lobby',
-        ]);
-    }
-
     public function disconnect(string $email): array
     {
         $successfulDelete = $this->send_query('
             DELETE FROM ccp_token
             WHERE id_user = ?
         ',
-            [(int)$this->getUserByEmail($email)['id_user']]);
+            [(int)(new UserModel($this->getConnection()))->getUserByEmail($email)['id_user']]);
 
         if ($successfulDelete) {
             return [
