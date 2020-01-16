@@ -99,7 +99,7 @@ class Inscription extends React.Component<any, InscriptionState> {
                     ' découvrir toutes les possibilités du site !!!',
                 buttons: [false],
                 icon: 'success',
-                timer: 5000,
+                timer: 3000,
                 // @ts-ignore
             }).then(() => window.location = '/connexion/login');
         } else {
