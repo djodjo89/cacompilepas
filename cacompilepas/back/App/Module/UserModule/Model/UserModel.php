@@ -89,8 +89,9 @@ class UserModel extends AbstractFileModel
             WHERE email = ?
         ',
             [$email]);
+        $result = $this->getQuery()->fetchAll();
         return [
-            'data' => $result = $this->getQuery()->fetchAll() ? $result : [],
+            'data' => $result ? $result : [],
         ];
     }
 

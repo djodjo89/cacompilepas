@@ -1,18 +1,20 @@
 import React, {ReactNode} from 'react';
-import Request from "../../API/Request";
+import Request from '../../API/Request';
 import '../../css/Lobby.css';
 import {
     Switch,
     Route,
     BrowserRouter as Router,
-} from "react-router-dom";
-import {ReactComponent as Loader} from "../../img/loader.svg";
-import LobbyTop from "./LobbyTop";
-import LobbyBody from "./LobbyBody";
-import swal from "sweetalert";
+} from 'react-router-dom';
+import {ReactComponent as Loader} from '../../img/loader.svg';
+import adminIcon from '../../img/admin.png';
+import LobbyTop from './LobbyTop';
+import LobbyBody from './LobbyBody';
+import swal from 'sweetalert';
 
 interface LobbyState {
     right: string,
+    isAdmin: boolean,
     courseSheets: [],
     messages: [],
     lobbyInformation: any,
@@ -24,6 +26,7 @@ class LobbyPage extends React.Component<any, LobbyState> {
         super(props);
         this.state = {
             right: '',
+            isAdmin: false,
             courseSheets: [],
             messages: [],
             lobbyInformation: [],
