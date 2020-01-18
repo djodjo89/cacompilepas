@@ -12,7 +12,7 @@ class UserModel extends AbstractFileModel
 
     public function getUserByEmail(string $email): array
     {
-        $this->send_query('
+        $this->sendQuery('
             SELECT id_user FROM ccp_user
             WHERE email = ?
         ', [$email]);
@@ -26,7 +26,7 @@ class UserModel extends AbstractFileModel
 
     public function checkIfUserExists(string $email, string $password): array
     {
-        $this->send_query('
+        $this->sendQuery('
                         SELECT id_user, password FROM ccp_user
                         WHERE email = ?
                         ',
@@ -40,21 +40,21 @@ class UserModel extends AbstractFileModel
         }
     }
 
-    public function isAdmin(int $userId, int $idLobby): bool
+    public function isAdmin(int $userId, int $lobbyId): bool
     {
-        $this->send_query('
+        $this->sendQuery('
                 SELECT id_user
                 FROM ccp_is_admin
                 WHERE id_user = ?
                 AND id_lobby = ?
             ',
-            [(int)$userId, $idLobby]);
+            [(int)$userId, $lobbyId]);
         return $this->getQuery()->fetch() ? true : false;
     }
 
     public function getPersonalInformation(string $email): array
     {
-        $this->send_query('
+        $this->sendQuery('
             SELECT id_user, first_name, pseudo, icon
             FROM ccp_user
             WHERE email LIKE ?
@@ -66,7 +66,7 @@ class UserModel extends AbstractFileModel
 
     public function getPath(int $userId): string
     {
-        $this->send_query('
+        $this->sendQuery('
             SELECT icon FROM ccp_user
             WHERE id_user = ?
         ',
@@ -81,7 +81,7 @@ class UserModel extends AbstractFileModel
 
     public function getPersonalLobbies(string $email): array
     {
-        $this->send_query('
+        $this->sendQuery('
             SELECT id_lobby, label_lobby, description, logo
             FROM ccp_lobby 
             NATURAL JOIN ccp_is_admin cia
@@ -92,16 +92,17 @@ class UserModel extends AbstractFileModel
         return $this->fetchData('User does not own any lobby');
     }
 
-    public function checkIfRightExists(int $idLobby, int $userId): bool
+    public function checkIfRightExists(int $lobbyId, int $userId): bool
     {
-        $isAdmin = $this->isAdmin($userId, $idLobby);
+        $isAdmin = $this->isAdmin($userId, $lobbyId);
         if (!$isAdmin) {
-            $this->send_query('
+            $this->sendQuery('
             SELECT id_right FROM ccp_rights
             WHERE id_lobby_protect = ?
             AND id_user = ?
+            AND read_right = 1
         ',
-                [$idLobby, $userId]);
+                [$lobbyId, $userId]);
 
             return $this->getQuery()->fetch() ? true : false;
         } else {
@@ -109,18 +110,18 @@ class UserModel extends AbstractFileModel
         }
     }
 
-    public function addUser(int $idLobby, string $email): array
+    public function addUser(int $lobbyId, string $email): array
     {
         $userId = $this->findUser($email);
 
-        if (!$this->checkIfRightExists($idLobby, $userId)) {
-            $successfulRightCreation = $this->send_query('
+        if (!$this->checkIfRightExists($lobbyId, $userId)) {
+            $successfulRightCreation = $this->sendQuery('
                 INSERT INTO ccp_rights
                 (read_right, write_right, id_lobby_protect, id_user)
                 VALUES
                 (?, ?, ?, ?)
             ',
-                [1, 0, $idLobby, (int)$userId]);
+                [1, 0, $lobbyId, (int)$userId]);
 
             if ($successfulRightCreation) {
                 return [
@@ -134,15 +135,15 @@ class UserModel extends AbstractFileModel
         }
     }
 
-    public function removeUser(int $idLobby, int $userId): array
+    public function removeUser(int $lobbyId, int $userId): array
     {
-        if ($this->checkIfRightExists($idLobby, $userId)) {
-            $successfulRightDeletion = $this->send_query('
+        if ($this->checkIfRightExists($lobbyId, $userId)) {
+            $successfulRightDeletion = $this->sendQuery('
                 DELETE FROM ccp_rights
                 WHERE id_lobby_protect = ?
                 AND id_user = ?
             ',
-                [$idLobby, $userId]);
+                [$lobbyId, $userId]);
 
             if ($successfulRightDeletion) {
                 return [
@@ -156,56 +157,82 @@ class UserModel extends AbstractFileModel
         }
     }
 
-    public function addWriteRight(int $idLobby, int $userId): array
+    public function addWriteRight(int $lobbyId, int $userId): array
     {
-        if ($this->checkIfRightExists($idLobby, $userId)) {
-            $successfulWriteRightAdd = $this->send_query('
+        if ($this->checkIfRightExists($lobbyId, $userId)) {
+            $this->sendQuery('
+                SELECT write_right
+                FROM ccp_rights
+                WHERE id_lobby_Protect = ?
+                AND id_user = ?
+                AND write_right = 1
+            ',
+                [$lobbyId, $userId]);
+
+            if (!$this->getQuery()->fetch()) {
+                $successfulWriteRightAdd = $this->sendQuery('
                 UPDATE ccp_rights
                 SET write_right = 1
                 WHERE id_lobby_protect = ?
                 AND id_user = ?
             ',
-                [$idLobby, $userId]);
+                    [$lobbyId, $userId]);
 
-            if ($successfulWriteRightAdd) {
-                return [
-                    'message' => 'Write right was successfully added',
-                ];
+                if ($successfulWriteRightAdd) {
+                    return [
+                        'message' => 'Write right was successfully added',
+                    ];
+                } else {
+                    throw new JSONException('Write right could not be added');
+                }
             } else {
-                throw new JSONException('Write right could not be added');
+                throw new JSONException('Write right already exists');
             }
         } else {
             throw new JSONException('User does not have access to the lobby');
         }
     }
 
-    public function removeWriteRight(int $idLobby, int $userId): array
+    public function removeWriteRight(int $lobbyId, int $userId): array
     {
-        if ($this->checkIfRightExists($idLobby, $userId)) {
-            $successfulWriteRightRemove = $this->send_query('
+        if ($this->checkIfRightExists($lobbyId, $userId)) {
+            $this->sendQuery('
+                SELECT write_right
+                FROM ccp_rights
+                WHERE id_lobby_Protect = ?
+                AND id_user = ?
+                AND write_right = 0
+            ',
+                [$lobbyId, $userId]);
+
+            if (!$this->getQuery()->fetch()) {
+                $successfulWriteRightRemove = $this->sendQuery('
                 UPDATE ccp_rights
                 SET write_right = 0
                 WHERE id_lobby_protect = ?
                 AND id_user = ?
             ',
-                [$idLobby, $userId]);
+                    [$lobbyId, $userId]);
 
-            if ($successfulWriteRightRemove) {
-                return [
-                    'message' => 'Write right was successfully removed',
-                ];
+                if ($successfulWriteRightRemove) {
+                    return [
+                        'message' => 'Write right was successfully removed',
+                    ];
+                } else {
+                    throw new JSONException('Write right could not be removed');
+                }
             } else {
-                throw new JSONException('Write right could not be removed');
+                throw new JSONException('Write right is already removed');
             }
         } else {
             throw new JSONException('User does not have access to the lobby');
         }
     }
 
-    public function getUsers(int $idLobby): array
+    public function getUsers(int $lobbyId): array
     {
-        $this->send_query('
-            SELECT DISTINCT cu.id_user, pseudo, icon
+        $this->sendQuery('
+            SELECT DISTINCT cu.id_user, pseudo, icon, write_right
             FROM ccp_user cu
             INNER JOIN ccp_rights cr ON cu.id_user = cr.id_user
             INNER JOIN ccp_is_admin cia on cr.id_lobby_protect = cia.id_lobby
@@ -213,7 +240,7 @@ class UserModel extends AbstractFileModel
             AND id_lobby_protect = ?
             AND cr.id_user != cia.id_user
         ',
-            [$idLobby]);
+            [$lobbyId]);
 
         return $this->fetchData('Lobby does not contain any user');
     }
@@ -234,7 +261,7 @@ class UserModel extends AbstractFileModel
             $count++;
         }
 
-        $this->send_query('
+        $this->sendQuery('
             SELECT DISTINCT id_user, first_name, last_name, pseudo, icon
             FROM ccp_user
             WHERE' . $usersParams,
@@ -245,7 +272,7 @@ class UserModel extends AbstractFileModel
 
     public function getUserFromToken(string $token): array
     {
-        if ('' !== $token) {
+        if ('' !== $token || null === $token) {
             $publicKey = file_get_contents(__DIR__ . '/../../../../keys/public_key.pem');
             return (array)JWT::decode($token, $publicKey, array('RS512'));
         } else {

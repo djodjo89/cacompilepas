@@ -4,6 +4,7 @@ namespace App\Module\UserModule\Fetcher;
 
 use App\Fetcher\AbstractFetcher;
 use App\Http\Request;
+use App\Module\UserModule\Exception\InexistentUserException;
 use App\Module\UserModule\Model\UserModel;
 
 class UserFetcher extends AbstractFetcher
@@ -16,16 +17,16 @@ class UserFetcher extends AbstractFetcher
 
     protected function fetchFromParameters(): int
     {
-        return (int)$this->getRequest()->getIdLobby();
+        return $this->getRequest()->getLobbyId();
     }
 
     protected function handleMissingId(\Exception $exception): int
     {
-        return 0;
+        return -1;
     }
 
     protected function handleInexistentLobby(\Exception $exception): int
     {
-        return -1;
+        throw new InexistentUserException();
     }
 }

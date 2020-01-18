@@ -6,6 +6,7 @@ use App\Controller\LinkedWithLobbyController;
 use App\Exception\RightException;
 use App\Http\FileResponse;
 use App\Http\JSONException;
+use App\Http\Request;
 use App\Module\LobbyModule\Exception\InexistentLobbyException;
 use App\Module\UserModule\Exception\InexistentUserException;
 use App\Module\UserModule\Fetcher\UserFetcher;
@@ -16,8 +17,8 @@ class UserController extends LinkedWithLobbyController
 
     public function __construct(UserModel $model)
     {
-        parent::__construct($model);
-        $this->setActions([
+        parent::__construct(
+            $model,[
             'get_icon',
             'personal',
             'check_if_admin',
@@ -26,8 +27,9 @@ class UserController extends LinkedWithLobbyController
             'users',
             'add_write_right',
             'remove_write_right',
-        ]);
-        $this->setFetcher(new UserFetcher($this->getModel(), $this->getRequest()));
+        ],
+            new UserFetcher($model, new Request())
+        );
     }
 
     protected function execute(): void
@@ -37,7 +39,7 @@ class UserController extends LinkedWithLobbyController
                 $this->checkToken();
                 $email = $this->getModel()->getUserFromToken($this->getRequest()->getToken())['email'];
                 $result = $this->getModel()->getPersonalInformation($email);
-                array_push($result, $this->getModel()->getPersonalLobbies($email));
+                array_push($result['data'], $this->getModel()->getPersonalLobbies($email)['data']);
                 $this->setJSONResponse($result);
                 break;
 
@@ -54,7 +56,6 @@ class UserController extends LinkedWithLobbyController
                 if ($this->userOrMore()) {
                     $this->checkToken();
                     switch ($this->getRequest()->getAction()) {
-
                         case 'users':
                             $this->setJSONResponse($this->getModel()->getUsers($this->getLobbyId()));
                             break;
@@ -74,11 +75,11 @@ class UserController extends LinkedWithLobbyController
                                         $this->setJSONResponse([]);
                                         break;
 
-                                    case 'add_right_wright':
+                                    case 'add_write_right':
                                         $this->setJSONResponse($this->getModel()->addWriteRight($this->getLobbyId(), $this->getRequest()->getParam()));
                                         break;
 
-                                    case 'remove_right_wright':
+                                    case 'remove_write_right':
                                         $this->setJSONResponse($this->getModel()->removeWriteRight($this->getLobbyId(), $this->getRequest()->getParam()));
                                         break;
 
@@ -96,9 +97,5 @@ class UserController extends LinkedWithLobbyController
                 }
                 break;
         }
-    }
-
-    protected function handleException(InexistentLobbyException $exception): void
-    {
     }
 }

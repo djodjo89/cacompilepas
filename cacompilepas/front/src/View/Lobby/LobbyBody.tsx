@@ -19,7 +19,7 @@ class LobbyBody extends React.Component<LobbyBodyProps, any> {
                 <div className={'col-lg-6 col-md-12 col-sm-12 col-xs-12 container-fluid pl-0 pl-lg-4 pl-md-4 pl-sm-4 pr-0'}>
                     {
                         // @ts-ignore
-                        undefined !== this.props.courseSheets[0] ?
+                        this.props.courseSheets['data'] ?
                             <CourseSheets
                                 id={this.props.id}
                                 courseSheets={this.props.courseSheets}
@@ -31,7 +31,7 @@ class LobbyBody extends React.Component<LobbyBodyProps, any> {
                             :
                             <div className={'row mt-5'}>
                                 <div className={'col-12 text-left'}>
-                                    <p className={'no-coursesheet-message'}>Il n'y a pas de fiches de cours pour l'instant</p>
+                                    <p className={'no-course-sheet-message'}>Il n'y a pas de fiches de cours pour l'instant</p>
                                 </div>
                             </div>
                     }
@@ -48,7 +48,7 @@ class LobbyBody extends React.Component<LobbyBodyProps, any> {
                        </div>
                     {
                         // @ts-ignore
-                        undefined !== this.props.messages[0] ?
+                        this.props.courseSheets['data'] ?
                             <div className={'row'}>
 
                                 <Messages

@@ -138,7 +138,7 @@ class Inscription extends React.Component<any, InscriptionState> {
                     '   - Contient chiffres et des caractères spéciaux\n' +
                     '   - Ne contient pas d\'espaces\n',
                 icon: 'error'
-            }).then((r: any) => null);
+            });
         }
     }
 

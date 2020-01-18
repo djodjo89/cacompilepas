@@ -16,19 +16,18 @@ class Users extends React.Component<UsersProps, any> {
     }
 
     public renderUsers(): ReactNode {
-        if (undefined === this.props.users['message']) {
-            let res = this.props.users.map((user: any) =>
+        if (this.props.users['success']) {
+            return this.props.users['data'].map((user: any) =>
                 <User
                     id={user['id_user']}
                     key={user['id_user']}
                     pseudo={user['pseudo']}
-                    writeRight={user['write_right'] === '1' ? true : false}
+                    writeRight={user['write_right'] === '1'}
                     icon={user['icon']}
                     delete={this.props.delete}
                     toggleWriteRights={this.props.toggleWriteRights}
                 />
             );
-            return res;
         } else {
             return [];
         }

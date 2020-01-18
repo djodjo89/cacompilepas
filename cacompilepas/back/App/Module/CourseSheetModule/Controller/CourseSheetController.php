@@ -6,6 +6,7 @@ use App\Controller\LinkedWithLobbyController;
 use App\Exception\RightException;
 use App\Http\FileResponse;
 use App\Http\JSONException;
+use App\Http\Request;
 use App\Module\LobbyModule\Exception\InexistentLobbyException;
 use App\Module\CourseSheetModule\Exception\InexistentCourseSheetException;
 use App\Module\CourseSheetModule\Fetcher\CourseSheetFetcher;
@@ -16,23 +17,26 @@ class CourseSheetController extends LinkedWithLobbyController
 
     public function __construct(CourseSheetModel $model)
     {
-        parent::__construct($model);
-        $this->setActions([
-            'coursesheets',
+        parent::__construct(
+            $model,
+            [
+            'course_sheet',
+            'course_sheets',
             'add_hashtags',
             'remove_hashtag',
             'get_hashtags',
-            'delete_coursesheet',
-            'add_coursesheet',
-        ]);
-        $this->setFetcher(new CourseSheetFetcher($this->getModel(), $this->getRequest()));
+            'delete_course_sheet',
+            'add_course_sheet',
+        ],
+            new CourseSheetFetcher($model, new Request())
+        );
     }
 
     protected function execute(): void
     {
         if ($this->visitorOrMore()) {
             switch ($this->getRequest()->getAction()) {
-                case 'coursesheets':
+                case 'course_sheets':
                     $this->setJSONResponse($this->getModel()->getCourseSheets($this->getLobbyId()));
                     break;
 
@@ -40,9 +44,9 @@ class CourseSheetController extends LinkedWithLobbyController
                     $this->setJSONResponse($this->getModel()->getHashtags($this->getRequest()->getParam()));
                     break;
 
-                case 'coursesheet':
+                case 'course_sheet':
                     try {
-                        $file = $this->getModel()->getFile((int)$this->getRequest()->getParam(), '/coursesheets/');
+                        $file = $this->getModel()->getOnFTP((int)$this->getRequest()->getParam(), '/course_sheets/');
                     } catch (InexistentCourseSheetException $e) {
                         $this->setResponse(new JSONException($e->getMessage()));
                     }
@@ -61,7 +65,7 @@ class CourseSheetController extends LinkedWithLobbyController
                                 $this->setJSONResponse($this->getModel()->removeHashtag($this->getRequest()->getParam(), $this->getRequest()->getHashtag()));
                                 break;
 
-                            case 'add_coursesheet':
+                            case 'add_course_sheet':
                                 $requestHashtags = explode('&quot;', $this->getRequest()->getHashtags());
                                 $hashtags = [];
                                 foreach ($requestHashtags as $key => $value) {
@@ -80,7 +84,7 @@ class CourseSheetController extends LinkedWithLobbyController
                                 );
                                 break;
 
-                            case 'delete_coursesheet':
+                            case 'delete_course_sheet':
                                 $this->setJSONResponse($this->getModel()->deleteCourseSheet($this->getLobbyId(), (int)$this->getRequest()->getParam()));
                                 break;
 
@@ -96,10 +100,5 @@ class CourseSheetController extends LinkedWithLobbyController
         } else {
             throw new RightException();
         }
-    }
-
-    protected function handleException(InexistentLobbyException $exception): void
-    {
-        throw new JSONException($exception);
     }
 }

@@ -9,7 +9,6 @@ use App\Http\Request;
 use App\Http\Response;
 use App\Model\AbstractModel;
 use App\Module\ConnectionModule\Model\ConnectionModel;
-use App\Module\LobbyModule\Exception\InexistentLobbyException;
 use App\Module\UserModule\Exception\InexistentUserException;
 use App\Module\UserModule\Model\UserModel;
 
@@ -19,13 +18,13 @@ abstract class AbstractController
     private AbstractModel $model;
     private Request $request;
     private Response $response;
-    private array $actions;
     private string $status;
 
-    public function __construct(AbstractModel $model)
+    public function __construct(AbstractModel $model, array $actions)
     {
-        $this->setModel($model);
+        $this->model = $model;
         $this->request = new Request();
+        $this->checkAction($actions);
         $this->checkStatus();
     }
 
@@ -34,11 +33,6 @@ abstract class AbstractController
     public function getModel(): AbstractModel
     {
         return $this->model;
-    }
-
-    public function setModel(AbstractModel $model): void
-    {
-        $this->model = $model;
     }
 
     public function getRequest(): Request
@@ -74,10 +68,10 @@ abstract class AbstractController
         $this->actions = $actions;
     }
 
-    public function checkAction(): void
+    public function checkAction(array $actions): void
     {
-        if (!in_array($this->request->getAction(), $this->actions)) {
-            new JSONException($this->getRequest()->getAction() . ' action doesn\'t exists');
+        if (!in_array($this->request->getAction(), $actions)) {
+            throw new JSONException($this->getRequest()->getAction() . ' action does not exists');
         }
     }
 

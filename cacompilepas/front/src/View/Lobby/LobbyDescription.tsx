@@ -23,7 +23,7 @@ class LobbyDescription extends React.Component<{ id: string }, { lobby: any }> {
 
     public fillDescription(payload: any): void {
         this.setState(
-            {lobby: payload[0]},
+            {lobby: payload['data'][0]},
             this.getLogo);
     }
 

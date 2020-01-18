@@ -5,17 +5,17 @@ namespace App\Http;
 class JSONResponse implements Response
 {
 
-    protected array $response;
+    protected array $payload;
 
     public function __construct(array $params = [])
     {
         if ([] !== $params) {
-            $this->response = [
+            $this->payload = [
                 'success' => true,
                 'data' => isset($params['data']) ? $params['data'] : $params,
             ];
         } else {
-            $this->response = [
+            $this->payload = [
                 'success' => true,
             ];
         }
@@ -23,7 +23,7 @@ class JSONResponse implements Response
 
     public function send(): void
     {
-        echo json_encode($this->response);
+        echo json_encode($this->payload);
         die();
     }
 }

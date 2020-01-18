@@ -23,7 +23,6 @@ class PublicLobbies extends React.Component<any, PublicLobbiesState> {
     }
 
     public fillLobbies(payload: any): void {
-        console.log(payload);
         this.setState({lobbies: payload['data']});
     }
 

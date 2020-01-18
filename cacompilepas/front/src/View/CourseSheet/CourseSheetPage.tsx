@@ -30,7 +30,7 @@ class CourseSheetPage extends React.Component<CourseSheetPageProps, CourseSheetP
 
     public getFile(): void {
         new Request(
-            '/coursesheet/coursesheet/' + this.props.location.pathname.split(/\//)[2],
+            '/course_sheet/course_sheet/' + this.props.location.pathname.split(/\//)[2],
             this.openFile,
             'POST',
             {

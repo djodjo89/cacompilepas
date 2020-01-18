@@ -9,6 +9,7 @@ import {
 import {ReactComponent as Loader} from "../../img/loader.svg";
 import LobbyTop from "./LobbyTop";
 import LobbyBody from "./LobbyBody";
+import swal from "sweetalert";
 
 interface LobbyState {
     right: string,
@@ -47,17 +48,20 @@ class LobbyPage extends React.Component<any, LobbyState> {
         if (13 === event.keyCode) {
             let content: any = event.target;
             new Request(
-                '/message/add_message/' + this.props.location.pathname.split(/\//)[2],
+                '/message/add_message',
                 this.refreshMessages,
                 'POST',
-                {content: content.value}
+                {
+                    lobby_id: this.props.location.pathname.split(/\//)[2],
+                    content: content.value,
+                },
             );
             content.value = '';
         }
     }
 
     public fillDescription(payload: any): void {
-        this.setState({lobbyInformation: payload[0]});
+        this.setState({lobbyInformation: payload['data'][0]});
     }
 
     public fillMessages(payload: any): void {
@@ -66,14 +70,33 @@ class LobbyPage extends React.Component<any, LobbyState> {
 
     public refreshCourseSheets(): void {
         new Request(
-            '/coursesheet/coursesheets/' +
-            this.props.location.pathname.split(/\//)[2],
-            this.fillCourseSheets
+            '/course_sheet/course_sheets',
+            this.fillCourseSheets,
+            'POST',
+            {
+                'lobby_id': this.props.location.pathname.split(/\//)[2],
+            }
         );
     }
 
-    public refreshMessages(): void {
-        new Request('/message/messages/' + this.props.location.pathname.split(/\//)[2], this.fillMessages);
+    public refreshMessages(payload: any = {'success': true}): void {
+        if (payload['success']) {
+            new Request(
+                '/message/messages',
+                this.fillMessages,
+                'POST',
+                {
+                    lobby_id: this.props.location.pathname.split(/\//)[2],
+                }
+            );
+        } else if (false === payload['success']) {
+            console.log('hello');
+            swal({
+                title: 'Tu ne peux pas écrire de message ici',
+                text: 'L\'admin de ce lobby ne t\'a pas donné l\'autorisation d\'envoyer de message ici, tu peux lui en faire la demande si tu le souhaites.',
+                icon: 'error'
+            }).then((r: any) => null);
+        }
     }
 
     public refreshDescription(): void {
@@ -117,7 +140,7 @@ class LobbyPage extends React.Component<any, LobbyState> {
                                     </section>
                                 );
                             } else if ('false' === this.state.right) {
-                                return <h2>Vous n'avez pas les droits nécessaires pour accéder à ce lobby</h2>
+                                return <h2>Tu n'as pas les droits nécessaires pour accéder à ce lobby</h2>
                             } else {
                                 return <div className={'mt-5'}><Loader/></div>
                             }

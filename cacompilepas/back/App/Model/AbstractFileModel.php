@@ -2,6 +2,7 @@
 
 namespace App\Model;
 
+use App\Exception\IncorrectFileExtension;
 use App\Exception\JSONError;
 use App\Http\JSONException;
 
@@ -16,7 +17,7 @@ abstract class AbstractFileModel extends AbstractModel
     {
         $extension = $this->extension($fileName);
         if (!in_array($extension, $allowedExtensions)) {
-            new IncorrectFileException($extension);
+            new IncorrectFileExtension($extension);
         }
     }
 
@@ -36,11 +37,7 @@ abstract class AbstractFileModel extends AbstractModel
         $file = $this->nameOnFTP($id, $fileName, $this->extension($fileName));
         $newFileOnFTP = $uploadDirectory . $file;
 
-        if (ftp_put($this->connection::$ftp, $newFileOnFTP, $tmpName, FTP_BINARY)) {
-            return [
-                'message' => "Successfully uploaded $fileName."
-            ];
-        } else {
+        if (!ftp_put($this->connection::$ftp, $newFileOnFTP, $tmpName, FTP_BINARY)) {
             new JSONException("Could not upload $fileName");
         }
     }

@@ -1,10 +1,3 @@
-interface RequestProps {
-    domain: string;
-    method: string;
-    route: string;
-    data: any;
-}
-
 interface IHttpResponse<T> extends Response {
     jsonBody?: T;
 }
@@ -31,7 +24,7 @@ class Request<T> {
         this.type = type;
         this.data = data;
         this.initRoute();
-        this.sendRequest();
+        this.send();
         this.headers = {};
         this.body = '';
         this.requestInit = {};
@@ -54,7 +47,7 @@ class Request<T> {
         }
     }
 
-    public sendRequest(): void {
+    public send(): void {
 
         switch (this.method) {
             case 'POST':

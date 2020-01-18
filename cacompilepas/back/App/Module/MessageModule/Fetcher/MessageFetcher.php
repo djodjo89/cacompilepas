@@ -16,16 +16,16 @@ class MessageFetcher extends AbstractFetcher
 
     protected function fetchFromParameters(): int
     {
-        return (int)$this->getRequest()->getIdLobby();
+        return $this->getModel()->getLobbyId($this->getRequest()->getParam());
     }
 
     protected function handleMissingId(\Exception $exception): int
     {
-        return -1;
+        return $this->getRequest()->getLobbyId();
     }
 
     protected function handleInexistentLobby(\Exception $exception): int
     {
-        return -1;
+        return $this->getRequest()->getLobbyId();
     }
 }

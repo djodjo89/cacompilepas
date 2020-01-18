@@ -15,12 +15,12 @@ class ConnectedStatus extends React.Component<ConnectedStatusProps, any> {
     public render(): ReactNode {
         if (this.props.status) {
             return (
-                <div className={'container-fluid ' + this.props.connectedDivClassName + ' ' + this.props.display}>
+                <div className={'container-fluid pl-0 ' + this.props.connectedDivClassName + ' ' + this.props.display}>
                     <div className={'row'}>
                         <SubmitButton
                             text={''}
                             onClick={this.props.disconnect}
-                            className={'disconnect-button ' + this.props.connectedButtonClassName + ' container-fluid pb-0 ' + this.props.display}
+                            className={'disconnect-button pl-sm-3 ' + this.props.connectedButtonClassName + ' container-fluid pb-0 ' + this.props.display}
                             disconnectButton={'disconnect'}
                         />
                     </div>
@@ -28,7 +28,7 @@ class ConnectedStatus extends React.Component<ConnectedStatusProps, any> {
                         className={'row disconnect-button ' + this.props.displayMessageClassName}
                         onClick={this.props.disconnect}
                     >
-                        Connecté
+                        Déconnexion
                     </div>
                 </div>
             );

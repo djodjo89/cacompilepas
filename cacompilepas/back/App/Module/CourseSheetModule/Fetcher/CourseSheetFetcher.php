@@ -6,7 +6,6 @@ use App\Fetcher\AbstractFetcher;
 use App\Http\Request;
 use App\Module\CourseSheetModule\Exception\InexistentCourseSheetException;
 use App\Module\CourseSheetModule\Model\CourseSheetModel;
-use App\Module\LobbyModule\Exception\InexistentLobbyException;
 
 class CourseSheetFetcher extends AbstractFetcher
 {
@@ -23,7 +22,7 @@ class CourseSheetFetcher extends AbstractFetcher
 
     protected function handleMissingId(\Exception $exception): int
     {
-        return $this->getRequest()->getIdLobby();
+        return $this->getRequest()->getLobbyId();
     }
 
     protected function handleInexistentLobby(\Exception $exception): int

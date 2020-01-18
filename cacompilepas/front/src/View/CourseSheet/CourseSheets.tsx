@@ -3,7 +3,7 @@ import CourseSheet from './CourseSheet';
 
 interface CourseSheetsProps {
     id: string,
-    courseSheets: [],
+    courseSheets: any,
     className: string,
     activeRemoveButton: boolean,
     removableHashtags: boolean,
@@ -19,8 +19,8 @@ class CourseSheets extends React.Component<CourseSheetsProps, { courseSheets: []
 
     public renderCourseSheets(): ({} | null | undefined)[] {
         // @ts-ignore
-        if (undefined === this.props.courseSheets['is_empty']) {
-            let res = this.props.courseSheets.map((courseSheet: any) =>
+        if (this.props.courseSheets['success']) {
+            let res = this.props.courseSheets['data'].map((courseSheet: any) =>
                 <CourseSheet
                     id={courseSheet['id_course_sheet']}
                     idLobby={this.props.id}

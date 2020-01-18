@@ -68,7 +68,7 @@ class Personal extends React.Component<any, PersonalState> {
 
     public refreshData(): void {
         new Request(
-            '/connection/personal',
+            '/user/personal',
             this.fetchData,
         );
     }
@@ -122,8 +122,8 @@ class Personal extends React.Component<any, PersonalState> {
 
     public fetchData(payload: any) {
         this.setState({
-                personalInformation: payload[0],
-                lobbies: payload[1],
+                personalInformation: payload['data'][0],
+                lobbies: undefined !== payload['data'][1] ? payload['data'][1] : [],
             },
             this.getIcon);
     }

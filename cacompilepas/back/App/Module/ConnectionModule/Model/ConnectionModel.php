@@ -25,7 +25,7 @@ class ConnectionModel extends AbstractModel
 
     public function checkToken(string $token): bool
     {
-        $this->send_query('
+        $this->sendQuery('
             SELECT 
             token FROM ccp_token
             WHERE token = ?
@@ -34,7 +34,7 @@ class ConnectionModel extends AbstractModel
 
         if ($tokenExists = $this->getQuery()->fetch()) {
             // Update token last update date if it is valid
-            $successfulUpdate = $this->send_query('UPDATE ccp_token
+            $successfulUpdate = $this->sendQuery('UPDATE ccp_token
                             SET last_update_date = NOW()
                             WHERE token = ?
                             ',
@@ -48,7 +48,7 @@ class ConnectionModel extends AbstractModel
 
     public function generateToken(string $email, string $password, int $id_user): string
     {
-        $this->send_query('
+        $this->sendQuery('
             SELECT token 
             FROM ccp_token
             WHERE id_user = ?
@@ -68,7 +68,7 @@ class ConnectionModel extends AbstractModel
 
             $jwt = JWT::encode($payload, $privateKey, 'RS512');
 
-            $successfuleInsert = $this->send_query('INSERT INTO ccp_token
+            $successfuleInsert = $this->sendQuery('INSERT INTO ccp_token
                             (token, creation_date, last_update_date, id_user)
                             VALUES
                             (?, NOW(), NOW(), ?)
@@ -85,7 +85,7 @@ class ConnectionModel extends AbstractModel
 
     public function disconnect(string $email): array
     {
-        $successfulDelete = $this->send_query('
+        $successfulDelete = $this->sendQuery('
             DELETE 
             FROM ccp_token
             WHERE id_user = ?
@@ -114,7 +114,7 @@ class ConnectionModel extends AbstractModel
     {
         if ($password === $confirmPassword) {
 
-            $this->send_query('
+            $this->sendQuery('
                 SELECT *
                 FROM ccp_user
                 WHERE email = ?
@@ -124,7 +124,7 @@ class ConnectionModel extends AbstractModel
             if (!$this->getQuery()->fetch()) {
                 $hashedPassword = password_hash($password, PASSWORD_DEFAULT);
 
-                $successfulInsert = $this->send_query('
+                $successfulInsert = $this->sendQuery('
                     INSERT INTO ccp_user
                     (pseudo, first_name, last_name, icon, password, email)
                     VALUES
@@ -133,7 +133,7 @@ class ConnectionModel extends AbstractModel
                     [$pseudo, $firstName, $lastName, $logoName, $hashedPassword, $email]);
 
                 if ($successfulInsert) {
-                    $this->send_query('
+                    $this->sendQuery('
                         SELECT id_user
                         FROM ccp_user
                         ORDER BY id_user DESC 

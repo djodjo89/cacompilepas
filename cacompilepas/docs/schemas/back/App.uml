@@ -1,0 +1,174 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<Diagram>
+  <ID>PHP</ID>
+  <OriginalElement>\App\Fetcher\AbstractFetcher</OriginalElement>
+  <nodes>
+    <node x="1318.0" y="1924.0">\App\Exception\IncompleteResponseException</node>
+    <node x="954.0" y="1924.0">\App\Connection\Connection</node>
+    <node x="705.0" y="1477.0">\App\Module\UserModule\Controller\UserController</node>
+    <node x="235.0" y="1477.0">\App\Module\LobbyModule\Controller\LobbyController</node>
+    <node x="212.0" y="1639.0">\App\Http\Response</node>
+    <node x="470.0" y="1477.0">\App\Module\CourseSheetModule\Controller\CourseSheetController</node>
+    <node x="1036.0" y="620.0">\App\Module\UserModule\Model\UserModel</node>
+    <node x="0.0" y="2027.0">\App\Module\MessageModule\Exception\InexistentMessageException</node>
+    <node x="457.5" y="363.0">\App\Model\AbstractFileModel</node>
+    <node x="234.00000000000003" y="2027.0">\App\Module\LobbyModule\Exception\InexistentLobbyException</node>
+    <node x="454.0" y="2027.0">\App\Module\CourseSheetModule\Exception\InexistentCourseSheetException</node>
+    <node x="1057.0" y="0.0">\App\Model\AbstractModel</node>
+    <node x="1101.0" y="1924.0">\App\Module\ConnectionModule\Controller\ConnectionController</node>
+    <node x="1062.0" y="1639.0">\App\Http\Router</node>
+    <node x="1787.0" y="1367.0">\App\Module\UserModule\Fetcher\UserFetcher</node>
+    <node x="1381.5" y="396.0">\App\Module\ConnectionModule\Model\ConnectionModel</node>
+    <node x="1584.0" y="1924.0">\App\Exception\MissingParameterException</node>
+    <node x="1079.5" y="418.0">\App\Module\MessageModule\Model\MessageModel</node>
+    <node x="965.0" y="1367.0">\App\Module\MessageModule\Fetcher\MessageFetcher</node>
+    <node x="352.5" y="1048.0">\App\Controller\LinkedWithLobbyController</node>
+    <node x="346.0" y="1742.0">\App\Http\JSONException</node>
+    <node x="568.0" y="1639.0">\App\Http\Request</node>
+    <node x="0.0" y="1742.0">\App\Http\JSONResponse</node>
+    <node x="716.0" y="2027.0">\App\Module\UserModule\Exception\InexistentUserException</node>
+    <node x="1376.0" y="1048.0">\App\Fetcher\AbstractFetcher</node>
+    <node x="1836.0" y="1924.0">\App\Exception\IncorrectFileExtension</node>
+    <node x="1239.0" y="1388.0">\App\Module\LobbyModule\Fetcher\LobbyFetcher</node>
+    <node x="0.0" y="2125.0">\App\Exception\RightException</node>
+    <node x="501.0" y="708.0">\App\Module\CourseSheetModule\Model\CourseSheetModel</node>
+    <node x="0.0" y="653.0">\App\Module\LobbyModule\Model\LobbyModel</node>
+    <node x="1513.0" y="1367.0">\App\Module\CourseSheetModule\Fetcher\CourseSheetFetcher</node>
+    <node x="372.0" y="1924.0">\App\Exception\InexistentException</node>
+    <node x="186.0" y="1742.0">\App\Http\FileResponse</node>
+    <node x="0.0" y="1477.0">\App\Module\MessageModule\Controller\MessageController</node>
+  </nodes>
+  <notes />
+  <edges>
+    <edge source="\App\Module\CourseSheetModule\Model\CourseSheetModel" target="\App\Model\AbstractFileModel">
+      <point x="0.0" y="-103.5" />
+      <point x="0.0" y="103.5" />
+    </edge>
+    <edge source="\App\Http\FileResponse" target="\App\Http\Response">
+      <point x="0.0" y="-68.5" />
+      <point x="0.0" y="26.5" />
+    </edge>
+    <edge source="\App\Model\AbstractFileModel" target="\App\Model\AbstractModel">
+      <point x="0.0" y="-103.5" />
+      <point x="758.5" y="338.0" />
+      <point x="1111.5" y="338.0" />
+      <point x="-109.0" y="156.5" />
+    </edge>
+    <edge source="\App\Module\UserModule\Exception\InexistentUserException" target="\App\Exception\InexistentException">
+      <point x="0.0" y="-26.5" />
+      <point x="812.5" y="1997.0" />
+      <point x="516.375" y="1997.0" />
+      <point x="61.875" y="26.5" />
+    </edge>
+    <edge source="\App\Http\JSONException" target="\App\Http\Response">
+      <point x="0.0" y="-68.5" />
+      <point x="434.5" y="1717.0" />
+      <point x="285.3333333333333" y="1717.0" />
+      <point x="29.333333333333314" y="26.5" />
+    </edge>
+    <edge source="\App\Module\CourseSheetModule\Controller\CourseSheetController" target="\App\Controller\LinkedWithLobbyController">
+      <point x="0.0" y="-58.5" />
+      <point x="577.5" y="1457.0" />
+      <point x="486.875" y="1457.0" />
+      <point x="26.875" y="189.5" />
+    </edge>
+    <edge source="\App\Module\UserModule\Controller\UserController" target="\App\Controller\LinkedWithLobbyController">
+      <point x="0.0" y="-58.5" />
+      <point x="812.5" y="1447.0" />
+      <point x="540.625" y="1447.0" />
+      <point x="80.625" y="189.5" />
+    </edge>
+    <edge source="\App\Module\CourseSheetModule\Exception\InexistentCourseSheetException" target="\App\Exception\InexistentException">
+      <point x="0.0" y="-26.5" />
+      <point x="575.0" y="2007.0" />
+      <point x="475.125" y="2007.0" />
+      <point x="20.625" y="26.5" />
+    </edge>
+    <edge source="\App\Module\MessageModule\Model\MessageModel" target="\App\Model\AbstractModel">
+      <point x="0.0" y="-48.5" />
+      <point x="0.0" y="156.5" />
+    </edge>
+    <edge source="\App\Module\ConnectionModule\Model\ConnectionModel" target="\App\Model\AbstractModel">
+      <point x="0.0" y="-70.5" />
+      <point x="1722.0" y="338.0" />
+      <point x="1329.5" y="338.0" />
+      <point x="109.0" y="156.5" />
+    </edge>
+    <edge source="\App\Module\MessageModule\Fetcher\MessageFetcher" target="\App\Fetcher\AbstractFetcher">
+      <point x="0.0" y="-69.5" />
+      <point x="1092.0" y="1337.0" />
+      <point x="1407.75" y="1337.0" />
+      <point x="-95.25" y="134.5" />
+    </edge>
+    <edge source="\App\Http\JSONResponse" target="\App\Http\Response">
+      <point x="0.0" y="-68.5" />
+      <point x="83.0" y="1717.0" />
+      <point x="226.66666666666666" y="1717.0" />
+      <point x="-29.333333333333343" y="26.5" />
+    </edge>
+    <edge source="\App\Module\LobbyModule\Fetcher\LobbyFetcher" target="\App\Fetcher\AbstractFetcher">
+      <point x="0.0" y="-48.5" />
+      <point x="1366.0" y="1347.0" />
+      <point x="1471.25" y="1347.0" />
+      <point x="-31.75" y="134.5" />
+    </edge>
+    <edge source="\App\Module\MessageModule\Controller\MessageController" target="\App\Controller\LinkedWithLobbyController">
+      <point x="0.0" y="-58.5" />
+      <point x="107.5" y="1447.0" />
+      <point x="379.375" y="1447.0" />
+      <point x="-80.625" y="189.5" />
+    </edge>
+    <edge source="\App\Module\UserModule\Model\UserModel" target="\App\Model\AbstractFileModel">
+      <point x="0.0" y="-191.5" />
+      <point x="1167.5" y="595.0" />
+      <point x="959.1666666666666" y="595.0" />
+      <point x="200.66666666666663" y="103.5" />
+    </edge>
+    <edge source="\App\Module\LobbyModule\Model\LobbyModel" target="\App\Model\AbstractFileModel">
+      <point x="0.0" y="-158.5" />
+      <point x="240.5" y="595.0" />
+      <point x="557.8333333333334" y="595.0" />
+      <point x="-200.66666666666663" y="103.5" />
+    </edge>
+    <edge source="\App\Module\UserModule\Fetcher\UserFetcher" target="\App\Fetcher\AbstractFetcher">
+      <point x="0.0" y="-69.5" />
+      <point x="1914.0" y="1337.0" />
+      <point x="1598.25" y="1337.0" />
+      <point x="95.25" y="134.5" />
+    </edge>
+    <edge source="\App\Module\LobbyModule\Exception\InexistentLobbyException" target="\App\Exception\InexistentException">
+      <point x="0.0" y="-26.5" />
+      <point x="334.0" y="2007.0" />
+      <point x="433.875" y="2007.0" />
+      <point x="-20.625" y="26.5" />
+    </edge>
+    <edge source="\App\Module\MessageModule\Exception\InexistentMessageException" target="\App\Exception\InexistentException">
+      <point x="0.0" y="-26.5" />
+      <point x="107.0" y="1997.0" />
+      <point x="392.625" y="1997.0" />
+      <point x="-61.875" y="26.5" />
+    </edge>
+    <edge source="\App\Module\CourseSheetModule\Fetcher\CourseSheetFetcher" target="\App\Fetcher\AbstractFetcher">
+      <point x="0.0" y="-69.5" />
+      <point x="1640.0" y="1347.0" />
+      <point x="1534.75" y="1347.0" />
+      <point x="31.75" y="134.5" />
+    </edge>
+    <edge source="\App\Module\LobbyModule\Controller\LobbyController" target="\App\Controller\LinkedWithLobbyController">
+      <point x="0.0" y="-58.5" />
+      <point x="342.5" y="1457.0" />
+      <point x="433.125" y="1457.0" />
+      <point x="-26.875" y="189.5" />
+    </edge>
+  </edges>
+  <settings layout="Hierarchic Group" zoom="0.6000000000000001" x="1278.0" y="216.0" />
+  <SelectedNodes />
+  <Categories>
+    <Category>Fields</Category>
+    <Category>Constants</Category>
+    <Category>Constructors</Category>
+    <Category>Methods</Category>
+  </Categories>
+  <VISIBILITY>private</VISIBILITY>
+</Diagram>
+

@@ -7,6 +7,7 @@ use App\Exception\MissingParameterException;
 use App\Exception\RightException;
 use App\Http\FileResponse;
 use App\Http\JSONException;
+use App\Http\Request;
 use App\Module\LobbyModule\Exception\InexistentLobbyException;
 use App\Module\LobbyModule\Fetcher\LobbyFetcher;
 use App\Module\LobbyModule\Model\LobbyModel;
@@ -17,8 +18,9 @@ class LobbyController extends LinkedWithLobbyController
 
     public function __construct(LobbyModel $model)
     {
-        parent::__construct($model);
-        $this->setActions([
+        parent::__construct(
+            $model,
+            [
             'consult',
             'make_private',
             'make_public',
@@ -29,8 +31,9 @@ class LobbyController extends LinkedWithLobbyController
             'get_logo',
             'delete',
             'create',
-        ]);
-        $this->setFetcher(new LobbyFetcher($this->getModel(), $this->getRequest()));
+        ],
+            new LobbyFetcher($model, new Request())
+        );
     }
 
     protected function execute(): void
@@ -149,11 +152,5 @@ class LobbyController extends LinkedWithLobbyController
                 }
                 break;
         }
-    }
-
-    protected
-    function handleException(InexistentLobbyException $exception): void
-    {
-
     }
 }

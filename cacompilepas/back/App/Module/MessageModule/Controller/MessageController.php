@@ -5,6 +5,7 @@ namespace App\Module\MessageModule\Controller;
 use App\Controller\LinkedWithLobbyController;
 use App\Exception\RightException;
 use App\Http\JSONException;
+use App\Http\Request;
 use App\Module\LobbyModule\Exception\InexistentLobbyException;
 use App\Module\MessageModule\Fetcher\MessageFetcher;
 use App\Module\MessageModule\Model\MessageModel;
@@ -15,18 +16,20 @@ class MessageController extends LinkedWithLobbyController
 
     public function __construct(MessageModel $model)
     {
-        parent::__construct($model);
-        $this->setActions([
-            'messages',
-            'add_message',
-            'delete_message',
-        ]);
-        $this->setFetcher(new MessageFetcher($this->getModel(), $this->getRequest()));
+        parent::__construct(
+            $model,
+            [
+                'messages',
+                'add_message',
+                'delete_message',
+            ],
+            new MessageFetcher($model, new Request())
+        );
     }
 
     protected function execute(): void
     {
-        if ($this->userOrMore()) {
+        if ($this->visitorOrMore()) {
             switch ($this->getRequest()->getAction()) {
                 case 'messages':
                     $this->setJSONResponse($this->getModel()->getMessages($this->getLobbyId()));
@@ -55,16 +58,14 @@ class MessageController extends LinkedWithLobbyController
                                 }
                                 break;
                         }
+                        break;
+                    } else {
+                        throw new RightException();
                     }
                     break;
             }
         } else {
             throw new RightException();
         }
-    }
-
-    protected function handleException(InexistentLobbyException $exception): void
-    {
-        throw new JSONException($exception->getMessage());
     }
 }

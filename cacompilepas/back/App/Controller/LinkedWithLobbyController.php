@@ -14,13 +14,9 @@ abstract class LinkedWithLobbyController extends AbstractController
     private string $rightOnLobby;
     private AbstractFetcher $lobbyFetcher;
 
-    public function __construct(AbstractModel $model)
+    public function __construct(AbstractModel $model, array $actions, AbstractFetcher $fetcher)
     {
-        parent::__construct($model);
-    }
-
-    protected function setFetcher(AbstractFetcher $fetcher): void
-    {
+        parent::__construct($model, $actions);
         $this->lobbyFetcher = $fetcher;
     }
 
@@ -43,8 +39,6 @@ abstract class LinkedWithLobbyController extends AbstractController
         $this->lobbyId = $this->lobbyFetcher->fetch();
     }
 
-    protected abstract function handleException(InexistentLobbyException $exception): void;
-
     public function visitorOrMore(): bool
     {
         return in_array($this->rightOnLobby, ['user', 'visitor', 'admin']);
@@ -62,7 +56,7 @@ abstract class LinkedWithLobbyController extends AbstractController
 
     public function checkRightsOnLobby(): void
     {
-        $this->getModel()->send_query('
+        $this->getModel()->sendQuery('
             SELECT id_lobby
             FROM ccp_lobby
             WHERE id_lobby = ?
@@ -84,18 +78,34 @@ abstract class LinkedWithLobbyController extends AbstractController
             if ($isAdmin) {
                 $this->rightOnLobby = 'admin';
             } else {
-                $this->getModel()->send_query('
-                    SELECT read_right, id_lobby
+                $this->getModel()->sendQuery('
+                    SELECT read_right
                     FROM ccp_rights
                     RIGHT OUTER JOIN ccp_lobby cl ON ccp_rights.id_lobby_Protect = cl.id_lobby
-                    WHERE 
-                    private = 0 OR
-                    id_user = ?
-                    AND id_lobby_protect = ?
+                    WHERE private = 0 
+                    OR (id_user = ?
+                    AND id_lobby_protect = ?)
                 ',
                     [$userId, $this->lobbyId]);
-                if ($result = $this->getModel()->getQuery()->fetch()) {
-                    $this->rightOnLobby = 'user';
+                if ($right = $this->getModel()->getQuery()->fetch()) {
+                    if ($right['read_right']) {
+                        $this->rightOnLobby = 'visitor';
+
+                        $this->getModel()->sendQuery('
+                        SELECT write_right
+                        FROM ccp_rights
+                        RIGHT OUTER JOIN ccp_lobby cl ON ccp_rights.id_lobby_Protect = cl.id_lobby
+                        WHERE id_user = ?
+                        AND id_lobby_protect = ?
+                    ',
+                            [$userId, $this->lobbyId]);
+
+                        if ($right = $this->getModel()->getQuery()->fetch()) {
+                            if ($right['write_right']) {
+                                $this->rightOnLobby = 'user';
+                            }
+                        }
+                    }
                 } else {
                     $this->rightOnLobby = 'none';
                 }

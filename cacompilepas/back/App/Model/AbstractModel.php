@@ -25,7 +25,7 @@ abstract class AbstractModel
         return $this->connection;
     }
 
-    public function send_query(string $stringQuery, array $parameters = []): bool
+    public function sendQuery(string $stringQuery, array $parameters = []): bool
     {
         $this->query = $this->connection::$bdd->prepare($stringQuery);
         return $this->query->execute($parameters);
@@ -50,7 +50,7 @@ abstract class AbstractModel
             $count++;
         }
 
-        $successfulUpdate = $this->send_query('
+        $successfulUpdate = $this->sendQuery('
                         UPDATE ' . $table . '
                         SET ' . $params . '
                         WHERE ' . $idAttribute . ' = ?',

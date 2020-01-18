@@ -137,17 +137,17 @@ class Admin extends React.Component<any, AdminState> {
 
     public fillPresentation(payload: any): void {
         if (payload['success']) {
-            this.setState({currentLabel: payload[0]['label_lobby']});
-            this.setState({currentDescription: payload[0]['description']});
+            this.setState({currentLabel: payload['data'][0]['label_lobby']});
+            this.setState({currentDescription: payload['data'][0]['description']});
             this.setState(
-                {logoPath: payload[0]['logo']},
+                {logoPath: payload['data'][0]['logo']},
                 this.getLogo
             );
         }
     }
 
     public fillCourseSheets(payload: any): void {
-        this.setState({courseSheets: payload['success'] ? payload['data'] : []},
+        this.setState({courseSheets: payload['success'] ? payload : []},
             () => this.forceUpdate(() => this.render())
         );
     }
@@ -290,7 +290,7 @@ class Admin extends React.Component<any, AdminState> {
             formData.append('hashtags', JSON.stringify(this.state.hashtags));
             formData.append('file', this.state.newCourseSheetDocument);
             new Request(
-                '/coursesheet/add_course_sheet/' + this.state.id,
+                '/course_sheet/add_course_sheet/' + this.state.id,
                 this.refreshCourseSheets,
                 'POST',
                 formData,
@@ -314,7 +314,14 @@ class Admin extends React.Component<any, AdminState> {
     }
 
     public refreshAdmin(): void {
-        new Request('/user/check_if_admin/' + this.state.id, this.checkIfAdmin);
+        new Request(
+            '/user/check_if_admin/' + this.state.id,
+            this.checkIfAdmin,
+            'POST',
+            {
+                'lobby_id': this.state.id,
+            },
+        );
     }
 
     public refreshPresentation(): void {
@@ -322,15 +329,35 @@ class Admin extends React.Component<any, AdminState> {
     }
 
     public refreshCourseSheets(): void {
-        new Request('/coursesheet/coursesheets/' + this.state.id, this.fillCourseSheets);
+        new Request(
+            '/course_sheet/course_sheets',
+            this.fillCourseSheets,
+            'POST',
+            {
+                'lobby_id': this.state.id,
+            }
+        );
     }
 
     public refreshMessages(): void {
-        new Request('/message/messages/' + this.state.id, this.fillMessages);
+        new Request('/message/messages',
+            this.fillMessages,
+            'POST',
+            {
+                'lobby_id': this.state.id,
+            }
+        );
     }
 
     public refreshUsers(): void {
-        new Request('/user/users/' + this.state.id, this.fillUsers);
+        new Request(
+            '/user/users',
+            this.fillUsers,
+            'POST',
+            {
+                'lobby_id': this.state.id,
+            }
+        );
     }
 
     public fetchCourseSheets(payload: any): void {
@@ -361,7 +388,7 @@ class Admin extends React.Component<any, AdminState> {
             dangerMode: true,
         }).then((willDelete) => {
             if (willDelete) {
-                new Request('/coursesheet/delete_coursesheet/' + removeButton.id.split(/-/)[3],
+                new Request('/course_sheet/delete_course_sheet/' + removeButton.id.split(/-/)[3],
                     this.fetchCourseSheets,
                     'POST',
                     {
@@ -429,9 +456,9 @@ class Admin extends React.Component<any, AdminState> {
     public toggleWriteRights(event: React.ChangeEvent<HTMLInputElement>): void {
         let action: string = true === event.target.checked ?
             'add_write_right/' :
-            'remove_wright_right/';
+            'remove_write_right/';
         new Request(
-            '/lobby/' + action + event.target.id.split(/-/)[3],
+            '/user/' + action + event.target.id.split(/-/)[3],
             this.fetchUsers,
             'POST',
             {
@@ -442,10 +469,11 @@ class Admin extends React.Component<any, AdminState> {
 
     public addUser(): void {
         new Request(
-            '/user/add_user/' + this.state.id,
+            '/user/add_user',
             this.refreshUsers,
             'POST',
             {
+                lobby_id: this.state.id,
                 email: this.state.newUserEmail,
             },
         );
@@ -686,7 +714,7 @@ class Admin extends React.Component<any, AdminState> {
                                         tab = (
                                             <div className={'container-fluid  col-lg-8 col-md-12 col-sm-12 col-xs-12'}>
                                                 <h2>Utilisateurs autorisés à consulter le lobby</h2>
-                                                <div className={'row'}>
+                                                <div className={'row pl-sm-2'}>
                                                     <Users
                                                         id={this.state.id.toString()}
                                                         users={this.state.users}
@@ -803,7 +831,7 @@ class Admin extends React.Component<any, AdminState> {
                             } else if ('false' === this.state.isAdmin) {
                                 return (
                                     <div>
-                                        <h1>Vous n'êtes pas administrateur de ce lobby</h1>
+                                        <h1>Tu n'es pas administrateur de ce lobby</h1>
                                     </div>
                                 );
                             } else {

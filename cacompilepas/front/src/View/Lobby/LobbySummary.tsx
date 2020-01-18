@@ -1,7 +1,7 @@
 import React, {ReactNode} from "react";
 import LobbyDivider from "./LobbyDivider";
 
-class LobbySummary extends React.Component<{ courseSheets: [] }, any> {
+class LobbySummary extends React.Component<{ courseSheets: any }, any> {
     constructor(props: { courseSheets: [] }) {
         super(props);
         this.renderList = this.renderList.bind(this);
@@ -9,7 +9,7 @@ class LobbySummary extends React.Component<{ courseSheets: [] }, any> {
 
     public renderList(): ReactNode {
         let res = [], i = 0;
-        for (let courseSheet of this.props.courseSheets) {
+        for (let courseSheet of this.props.courseSheets['data']) {
             res.push(<li key={i}><p className={'mb-0'}>{courseSheet['title']}</p></li>);
             i++;
         }

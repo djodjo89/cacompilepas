@@ -13,13 +13,15 @@ class ConnectionController extends AbstractController
 {
     public function __construct(AbstractModel $model)
     {
-        parent::__construct($model);
-        $this->setActions([
-            'login',
-            'verification',
-            'disconnect',
-            'register',
-        ]);
+        parent::__construct(
+            $model,
+            [
+                'login',
+                'verification',
+                'disconnect',
+                'register',
+            ]
+        );
     }
 
     public function run(): void

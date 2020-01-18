@@ -3,7 +3,7 @@ import Message from "./Message";
 
 interface MessagesProps {
     id: string,
-    messages: [],
+    messages: any,
     className?: string,
     activeRemoveButton?: boolean,
     delete?: ((event: React.MouseEvent<HTMLImageElement, MouseEvent>) => void) | undefined,
@@ -36,8 +36,8 @@ class Messages extends React.Component<MessagesProps, any> {
 
     public renderMessages(): ({} | null | undefined)[] {
         // @ts-ignore
-        if (undefined === this.props.messages['message']) {
-            return this.props.messages.map(
+        if (this.props.messages['success']) {
+            return this.props.messages['data'].map(
                 (message: any) => this.renderMessage(message['id_message'], message['id_user'], message['content'], message['send_date'], message['pseudo'], message['icon'])
             )
                 .sort((message1: any, message2: any): number => {

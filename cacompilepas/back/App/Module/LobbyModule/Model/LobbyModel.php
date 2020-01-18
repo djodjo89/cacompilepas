@@ -14,25 +14,25 @@ use App\Module\LobbyModule\Exception\InexistentLobbyException;
 class LobbyModel extends AbstractFileModel
 {
 
-    public function getLobbyById(int $idLobby): array
+    public function getLobbyById(int $lobbyId): array
     {
-        $this->send_query('
+        $this->sendQuery('
             SELECT id_lobby, label_lobby, description, logo
             FROM ccp_lobby
             WHERE id_lobby = ?
         ',
-            [$idLobby]);
+            [$lobbyId]);
         return $this->fetchData('Lobby does not exist');
     }
 
-    public function getLogo(int $idLobby): string
+    public function getLogo(int $lobbyId): string
     {
-        $this->send_query('
+        $this->sendQuery('
             SELECT logo 
             FROM ccp_lobby
             WHERE id_lobby = ?
         ',
-            [$idLobby]);
+            [$lobbyId]);
 
         if ($result = $this->getQuery()->fetch()) {
             return $result['logo'];
@@ -41,48 +41,48 @@ class LobbyModel extends AbstractFileModel
         }
     }
 
-    public function backUpAndUpdateLogo(int $idLobby, string $fileName): string
+    public function backUpAndUpdateLogo(int $lobbyId, string $fileName): string
     {
         // Update logo in database
         // But make a backup of old logo before to be able to update logo on ftp server
-        $oldLogo = $this->getLogo($idLobby);
-        $this->updateLobby($idLobby, ['logo' => $fileName]);
+        $oldLogo = $this->getLogo($lobbyId);
+        $this->updateLobby($lobbyId, ['logo' => $fileName]);
         return $oldLogo;
     }
 
-    public function updateLogo(int $idLobby, string $fileName, string $tmpName): array
+    public function updateLogo(int $lobbyId, string $fileName, string $tmpName): array
     {
-        $oldLogo = $this->backUpAndUpdateLogo($idLobby, $fileName);
+        $oldLogo = $this->backUpAndUpdateLogo($lobbyId, $fileName);
         try {
-            $result = $this->updateOnFTP($idLobby, $fileName, $tmpName, AbstractModel::$IMG_EXTENSIONS, '/logo/', $oldLogo);
+            $result = $this->updateOnFTP($lobbyId, $fileName, $tmpName, AbstractModel::$IMG_EXTENSIONS, '/logo/', $oldLogo);
             return $result;
         } catch (IncorrectFileExtension $e) {
             throw new JSONException($e->getMessage());
         }
     }
 
-    public function updateLobby(int $idLobby, array $newData): array
+    public function updateLobby(int $lobbyId, array $newData): array
     {
-        return $this->update($idLobby, 'Lobby', 'ccp_lobby', 'id_lobby', $newData);
+        return $this->update($lobbyId, 'Lobby', 'ccp_lobby', 'id_lobby', $newData);
     }
 
-    public function makePrivate(int $idLobby): array
+    public function makePrivate(int $lobbyId): array
     {
-        $this->send_query('
+        $this->sendQuery('
             SELECT private
             FROM ccp_lobby
             WHERE id_lobby = ?
             AND private = 0
         ',
-            [$idLobby]);
+            [$lobbyId]);
 
         if ($result = $this->getQuery()->fetch()) {
-            $successfullyMadePrivate = $this->send_query('
+            $successfullyMadePrivate = $this->sendQuery('
             UPDATE ccp_lobby
             SET private = 1
             WHERE id_lobby = ?
         ',
-                [$idLobby]);
+                [$lobbyId]);
 
             if ($successfullyMadePrivate) {
                 return [
@@ -96,23 +96,23 @@ class LobbyModel extends AbstractFileModel
         }
     }
 
-    public function makePublic(int $idLobby): array
+    public function makePublic(int $lobbyId): array
     {
-        $this->send_query('
+        $this->sendQuery('
             SELECT private
             FROM ccp_lobby
             WHERE id_lobby = ?
             AND private = 1
         ',
-            [$idLobby]);
+            [$lobbyId]);
 
         if ($result = $this->getQuery()->fetch()) {
-            $successfullyMadePublic = $this->send_query('
+            $successfullyMadePublic = $this->sendQuery('
             UPDATE ccp_lobby
             SET private = 0
             WHERE id_lobby = ?
         ',
-                [$idLobby]);
+                [$lobbyId]);
 
             if ($successfullyMadePublic) {
                 return [
@@ -126,21 +126,21 @@ class LobbyModel extends AbstractFileModel
         }
     }
 
-    public function getVisibility(int $idLobby): array
+    public function getVisibility(int $lobbyId): array
     {
-        $this->send_query('
+        $this->sendQuery('
             SELECT private
             FROM ccp_lobby
             WHERE id_lobby = ?
         ',
-            [$idLobby]);
+            [$lobbyId]);
 
         return $this->fetchData('Lobby does not exist');
     }
 
     public function getLobbies(): array
     {
-        $this->send_query('
+        $this->sendQuery('
             SELECT id_lobby, label_lobby, description, logo, pseudo
             FROM ccp_lobby
             LEFT OUTER JOIN ccp_is_admin USING(id_lobby)
@@ -150,14 +150,14 @@ class LobbyModel extends AbstractFileModel
         return $this->fetchData('There is no public lobby');
     }
 
-    public function getPath(int $idLobby): string
+    public function getPath(int $lobbyId): string
     {
-        $this->send_query('
+        $this->sendQuery('
             SELECT logo 
             FROM ccp_lobby
             WHERE id_lobby = ?
         ',
-            [$idLobby]);
+            [$lobbyId]);
 
         if ($path = $this->getQuery()->fetch()) {
             return $path['logo'];
@@ -192,7 +192,7 @@ class LobbyModel extends AbstractFileModel
             $count++;
         }
 
-        $this->send_query('
+        $this->sendQuery('
             SELECT DISTINCT id_lobby, label_lobby, ccp_lobby.description, logo 
             FROM ccp_lobby 
             LEFT OUTER JOIN ccp_coursesheet ON ccp_lobby.id_lobby = ccp_coursesheet.id_lobby_contain
@@ -207,14 +207,14 @@ class LobbyModel extends AbstractFileModel
         return $this->fetchData();
     }
 
-    public function delete(int $idLobby): array
+    public function delete(int $lobbyId): array
     {
-        $successfullDelete = $this->send_query('
+        $successfullDelete = $this->sendQuery('
             DELETE 
             FROM ccp_lobby
             WHERE id_lobby = ?
         ',
-            [$idLobby]);
+            [$lobbyId]);
 
         if ($successfullDelete) {
             return [
@@ -234,7 +234,7 @@ class LobbyModel extends AbstractFileModel
         string $logoTmpName
     ): array
     {
-        $successfulInsert = $this->send_query('
+        $successfulInsert = $this->sendQuery('
             INSERT INTO ccp_lobby
             (label_lobby, description, logo, private)
             VALUES
@@ -243,7 +243,7 @@ class LobbyModel extends AbstractFileModel
             [$label, $description, $logoName, 'true' === $private ? 1 : 0]);
 
         if ($successfulInsert) {
-            $this->send_query('
+            $this->sendQuery('
                 SELECT id_lobby
                 FROM ccp_lobby
                 ORDER BY id_lobby DESC 
@@ -251,31 +251,25 @@ class LobbyModel extends AbstractFileModel
             ',
                 []);
 
-            $idLobby = (int)$this->fetchData('Lobby does not exist')['data'][0]['id_lobby'];
+            $lobbyId = (int)$this->fetchData('Lobby does not exist')['data'][0]['id_lobby'];
 
             try {
-                $successfulUpload = $this->uploadOnFTP($idLobby, $logoName, $logoTmpName, '/logo/', ['jpg', 'jpeg', 'ico', 'png', 'svg', 'bmp']);
+                $this->uploadOnFTP($lobbyId, $logoName, $logoTmpName, '/logo/', ['jpg', 'jpeg', 'ico', 'png', 'svg', 'bmp']);
+            } catch (IncorrectFileExtension $e) {
+                throw new JSONException($e->getMessage());
+            } catch (JSONException $e) {
+                throw $e;
+            }
 
-                if ($successfulUpload) {
-                    $successfulInsert = $this->send_query('
+            $this->sendQuery('
                 INSERT INTO ccp_is_admin
                 (id_user, id_lobby) VALUES (?, ?)
             ',
-                        [$idAdmin, $idLobby]);
+                [$idAdmin, $lobbyId]);
 
-                    if ($successfulInsert) {
-                        return [
-                            'message' => 'Lobby was successfully uploaded',
-                        ];
-                    } else {
-                        throw new JSONException('Lobby could not be uploaded');
-                    }
-                } else {
-                    throw new JSONException('Lobby could not be uploaded');
-                }
-            } catch (IncorrectFileExtension $e) {
-                throw new JSONException($e->getMessage());
-            }
+            return [
+                'message' => 'Lobby was successfully uploaded',
+            ];
         } else {
             throw new JSONException('Lobby could not be created');
         }

@@ -52,7 +52,7 @@ class CourseSheet extends React.Component<CourseSheetProps, CourseSheetState> {
 
     public refreshPreview(): void {
         new Request(
-            '/coursesheet/coursesheet/' + this.props.idLobby,
+            '/course_sheet/course_sheet/' + this.props.id,
             this.fillPreview,
             'POST',
             {
@@ -82,7 +82,7 @@ class CourseSheet extends React.Component<CourseSheetProps, CourseSheetState> {
 
     public fetchHashtags(): void {
         new Request(
-            '/coursesheet/get_hashtags/' + this.props.id,
+            '/course_sheet/get_hashtags/' + this.props.id,
             this.fillHashtags,
         )
     }
@@ -111,7 +111,7 @@ class CourseSheet extends React.Component<CourseSheetProps, CourseSheetState> {
             () => {
                 if (-1 !== this.state.currentHashtagIndex) {
                     new Request(
-                        '/coursesheet/remove_hashtags/' + this.props.id,
+                        '/course_sheet/remove_hashtags/' + this.props.id,
                         this.fetchHashtags,
                         'POST',
                         {
@@ -154,7 +154,7 @@ class CourseSheet extends React.Component<CourseSheetProps, CourseSheetState> {
                         <Document
                             file={this.state.file}
                             onLoadSuccess={this.onDocumentLoadSuccess}
-                            noData={<h4>Glisse un fichier</h4>}
+                            noData={<h4>Récupération de la fiche...</h4>}
                         >
                             <Page height={155} scale={1} pageNumber={1}/>
                         </Document>
@@ -178,7 +178,7 @@ class CourseSheet extends React.Component<CourseSheetProps, CourseSheetState> {
                         <p className={'course-sheet-description'}>{this.props.description}</p>
                         <footer className={'container-fluid row'}>
                             <a
-                                href={'/coursesheet/' + this.props.idLobby + '/' + this.props.title + '/' + this.props.link}
+                                href={'/course-sheet/' + this.props.idLobby + '/' + this.props.title + '/' + this.props.link}
                                 className={'course-sheet-link col-5 text-left mt-2 p-0 d-block'}
                             >
                                 Lien vers la fiche

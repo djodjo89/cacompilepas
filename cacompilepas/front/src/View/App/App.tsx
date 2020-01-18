@@ -29,7 +29,7 @@ class App extends React.Component {
                             <Home/>
                         </Route>
                         <PrivateRoute path={'/lobby'} component={LobbyPage} rest={[]}/>
-                        <PrivateRoute path={'/coursesheet'} component={CourseSheetPage} rest={[]}/>
+                        <PrivateRoute path={'/course-sheet'} component={CourseSheetPage} rest={[]}/>
                         <Route path={'/connexion/login'}>
                             <Connection referrer={document.referrer}/>
                         </Route>
@@ -41,7 +41,7 @@ class App extends React.Component {
                         <Route path={'/public'}>
                             <PublicLobbies/>
                         </Route>
-                        <PrivateRoute path={'/perso'} component={Personal} rest={[]}/>
+                        <PrivateRoute path={'/perso'} component={ Personal} rest={[]}/>
                         <Route path={'*'}>
                             <NotFound/>
                         </Route>
