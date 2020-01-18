@@ -2,6 +2,7 @@
 
 namespace App\Module\ConnectionModule\Model;
 
+use App\Exception\IncorrectFileExtension;
 use App\Http\JSONException;
 use App\Model\AbstractModel;
 use App\Module\UserModule\Model\UserModel;
@@ -105,11 +106,11 @@ class ConnectionModel extends AbstractModel
         string $pseudo,
         string $firstName,
         string $lastName,
-        string $logoName,
-        string $logoTmpName,
         string $password,
         string $confirmPassword,
-        string $email
+        string $email,
+        string $logoName = '',
+        string $logoTmpName = ''
     ): array
     {
         if ($password === $confirmPassword) {
@@ -143,15 +144,27 @@ class ConnectionModel extends AbstractModel
 
                     $userId = (int)$this->fetchData('User does not exist')['data'][0]['id_user'];
 
-                    $successfulUpload = (new UserModel($this->getConnection()))->uploadOnFTP($userId, $logoName, $logoTmpName, '/icon/', ['jpg', 'jpeg', 'ico', 'png', 'svg', 'bmp']);
+                    if ('' !== $logoName && '' !== $logoTmpName) {
+                        try {
+                            $successfulUpload = (new UserModel($this->getConnection()))->uploadOnFTP($userId, $logoName, $logoTmpName, '/icon/', ['jpg', 'jpeg', 'ico', 'png', 'svg', 'bmp']);
+                        } catch (IncorrectFileExtension $e) {
+                            throw new JSONException($e->getMessage());
+                        } catch (JSONException $e) {
+                            throw $e;
+                        }
 
-                    if ($successfulUpload) {
-                        return [
-                            'message' => 'User was successfully registered',
-                        ];
-                    } else {
-                        throw new JSONException('User icon could not be uploaded');
+                        if ($successfulUpload) {
+                            return [
+                                'message' => 'User was successfully registered',
+                            ];
+                        } else {
+                            throw new JSONException('User icon could not be uploaded');
+                        }
                     }
+
+                    return [
+                        'message' => 'User was successfully registered',
+                    ];
                 } else {
                     throw new JSONException('User could not be registered');
                 }

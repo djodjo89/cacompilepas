@@ -52,11 +52,11 @@ class ConnectionController extends AbstractController
                             $this->getRequest()->getPseudo(),
                             $this->getRequest()->getFirstName(),
                             $this->getRequest()->getLastName(),
-                            $file['name'],
-                            $this->getRequest()->getFile()['tmp_name'],
                             $this->getRequest()->getPassword(),
                             $this->getRequest()->getConfirmPassword(),
                             $this->getRequest()->getEmail(),
+                            $file['name'],
+                            $this->getRequest()->getFile()['tmp_name'],
                             )
                         );
                     } catch (MissingParameterException $e) {
@@ -64,8 +64,6 @@ class ConnectionController extends AbstractController
                             $this->getRequest()->getPseudo(),
                             $this->getRequest()->getFirstName(),
                             $this->getRequest()->getLastName(),
-                            'default.png',
-                            '/tmp/default.png',
                             $this->getRequest()->getPassword(),
                             $this->getRequest()->getConfirmPassword(),
                             $this->getRequest()->getEmail(),

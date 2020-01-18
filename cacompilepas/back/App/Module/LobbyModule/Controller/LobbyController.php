@@ -3,6 +3,7 @@
 namespace App\Module\LobbyModule\Controller;
 
 use App\Controller\LinkedWithLobbyController;
+use App\Exception\IncorrectFileExtension;
 use App\Exception\MissingParameterException;
 use App\Exception\RightException;
 use App\Http\FileResponse;
@@ -60,15 +61,30 @@ class LobbyController extends LinkedWithLobbyController
             default:
                 if ($this->connected() && 'create' === $this->getRequest()->getAction()) {
                     $this->checkToken();
-                    $this->setJSONResponse($this->getModel()->create(
-                        (new UserModel($this->getModel()->getConnection()))->userIdFromToken($this->getRequest()->getToken()),
-                        $this->getRequest()->getLabel(),
-                        $this->getRequest()->getDescription(),
-                        $this->getRequest()->getPrivate(),
-                        $this->getRequest()->getFile()['name'],
-                        $this->getRequest()->getFile()['tmp_name'],
-                        )
-                    );
+                    try {
+                        try {
+                            $file = $this->getRequest()->getFile();
+                            $this->setJSONResponse($this->getModel()->create(
+                                (new UserModel($this->getModel()->getConnection()))->userIdFromToken($this->getRequest()->getToken()),
+                                $this->getRequest()->getLabel(),
+                                $this->getRequest()->getDescription(),
+                                $this->getRequest()->getPrivate(),
+                                $this->getRequest()->getFile()['name'],
+                                $this->getRequest()->getFile()['tmp_name'],
+                                )
+                            );
+                        } catch (MissingParameterException $e) {
+                            $this->setJSONResponse($this->getModel()->create(
+                                (new UserModel($this->getModel()->getConnection()))->userIdFromToken($this->getRequest()->getToken()),
+                                $this->getRequest()->getLabel(),
+                                $this->getRequest()->getDescription(),
+                                $this->getRequest()->getPrivate(),
+                                )
+                            );
+                        }
+                    } catch (IncorrectFileExtension $e) {
+                        $this->setResponse(new JSONException($e->getMessage()));
+                    }
                 } else {
                     if ($this->visitorOrMore()) {
                         switch ($this->getRequest()->getAction()) {

@@ -49,7 +49,7 @@ class LobbyCreation extends React.Component<any, LobbyCreationState> {
 
     public toggleVisibility(event: ChangeEvent<HTMLInputElement>): void {
         this.setState((state, props) => {
-            return {isPrivate: true === state.isPrivate ? false : true};
+            return {isPrivate: !state.isPrivate};
         });
     }
 
@@ -110,21 +110,35 @@ class LobbyCreation extends React.Component<any, LobbyCreationState> {
     }
 
     public createLobby(event: React.MouseEvent<HTMLButtonElement, MouseEvent>): void {
-        if ('' !== this.state.label && '' !== this.state.description && null !== this.state.logo) {
+        if ('' !== this.state.label && '' !== this.state.description) {
             let formData = new FormData();
             formData.append('label', this.state.label);
             formData.append('description', this.state.description);
             formData.append('private', '' + this.state.isPrivate);
             // @ts-ignore
             formData.append('file', this.state.logo);
-            new Request(
-                '/lobby/create',
-                this.checkIfOk,
-                'POST',
-                formData,
+            if (null !== this.state.logo) {
                 // @ts-ignore
-                this.state.logo.type,
-            );
+                formData.append('file', this.state.icon);
+
+                new Request(
+                    '/lobby/create',
+                    this.checkIfOk,
+                    'POST',
+                    formData,
+                    // @ts-ignore
+                    this.state.logo.type,
+                );
+            } else {
+                new Request(
+                    '/lobby/create',
+                    this.checkIfOk,
+                    'POST',
+                    formData,
+                    // @ts-ignore
+                    'jpg',
+                );
+            }
         } else {
             swal({
                 title: 'Oups !',
