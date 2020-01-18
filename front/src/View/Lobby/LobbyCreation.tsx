@@ -81,11 +81,10 @@ class LobbyCreation extends React.Component<any, LobbyCreationState> {
 
     public getLogo(): void {
         new Request(
-            '/lobby/getLogo/0',
+            '/lobby/getLogo/' + this.state.id,
             this.fillLogo,
             'POST',
             {
-                idLobby: this.state.id,
                 path: this.state.logoPath,
             },
             'json',
@@ -182,7 +181,7 @@ class LobbyCreation extends React.Component<any, LobbyCreationState> {
                                     id={'visibility-input'}
                                     inputType={'checkbox'}
                                     checked={this.state.isPrivate}
-                                    placeholder={'Lobby privé'}
+                                    placeholder={'LobbyPage privé'}
                                     className={'user-rights-checkbox'}
                                     onChange={this.toggleVisibility}
                                 />

@@ -23,11 +23,10 @@ class LobbyProposal extends React.Component<LobbyProposalProps, any> {
 
     public getLogo(): void {
         new Request(
-            '/lobby/getLogo/0',
+            '/lobby/getLogo/' + this.props.id.split(/-/)[2],
             this.fillLogo,
             'POST',
             {
-                id_lobby: this.props.id.split(/-/)[2],
                 path: this.props.logo,
             },
             'json',

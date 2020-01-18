@@ -1,0 +1,144 @@
+@media (max-width: 575px) {
+    .admin-header {
+        width: 92%;
+        margin-left: auto;
+        margin-right: auto;
+    }
+}
+
+@media (min-width: 576px) {
+    .admin-header {
+        width: 95%;
+        margin-left: auto;
+        margin-right: auto;
+    }
+}
+
+@media (min-width: 768px) {
+    .admin-header {
+        width: 96.5%;
+        margin-left: auto;
+        margin-right: auto;
+    }
+}
+
+@media (min-width: 992px) {
+    .admin-header {
+        width: 64.5%;
+        margin-left: auto;
+        margin-right: auto;
+    }
+}
+
+#dropbox-icon {
+    width: 80%;
+    height: 80%;
+    margin-left: auto;
+    margin-right: auto;
+}
+
+.custom-tab:hover {
+    color: #ffffff;
+    background-color:
+            #27276a !important;
+    border-color:
+            #27276a #27276a
+            #27276a !important;
+    height: 38px;
+}
+
+.custom-tab {
+    text-decoration: none;
+    height: 48px;
+    padding: 0 !important;
+    padding-top: 3px !important;
+    padding-bottom: 0px !important;
+    padding-right: 10px !important;
+    padding-left: 10px !important;
+}
+
+.custom-tab-active {
+    color: #ffffff !important;
+    background-color:
+            #27276a !important;
+    border-color:
+            #27276a #27276a
+            #27276a !important;
+    height: 38px;
+}
+
+.custom-tab-nav {
+    padding: 0px !important;
+    height: 40px;
+}
+
+.add-course-sheet-button {
+    width: 100% !important;
+    margin-top: 0px !important;
+    margin-left: 15px;
+    margin-right: 15px;
+    height: 42px !important;
+}
+
+.course-sheet-textarea {
+    height: 93px !important;
+    margin-bottom: 13px;
+    padding-right: 0;
+}
+
+.course-sheet-textarea-container {
+    padding-right: 0;
+}
+
+@media screen and (min-width: 992px) {
+    .centered-80 {
+        width: 80%;
+        margin-left: auto;
+        margin-right:auto;
+    }
+}
+
+.add-usr-input {
+    height: 40px;
+    border-bottom-left-radius: 0 !important;
+    border-bottom-right-radius: 0 !important;
+}
+
+.add-usr-button {
+    height: 40px;
+    border-top-left-radius: 0 !important;
+    border-top-right-radius: 0 !important;
+    width: 100% !important;
+}
+
+.no-ml {
+    margin-left: 0px;
+}
+
+.mt-1px {
+    margin-top: 1px !important;
+}
+
+@media (max-width: 575px) {
+    .checkbox-container {
+        flex: 0 0 6%;
+    }
+}
+
+@media (min-width: 576px) {
+    .checkbox-container {
+        flex: 0 0 7%;
+    }
+}
+
+@media (min-width: 768px) {
+    .checkbox-container {
+        flex: 0 0 5%;
+    }
+}
+
+@media (min-width: 992px) {
+    .checkbox-container {
+        flex: 0 0 5%;
+    }
+}

@@ -1,7 +1,7 @@
 import React, {ReactNode} from "react";
-import CourseSheets from "./CourseSheets";
-import Messages from "./Messages";
-import WriteMessageZone from "./WriteMessageZone";
+import CourseSheets from "../CourseSheet/CourseSheets";
+import Messages from "../Message/Messages";
+import WriteMessageZone from "../Message/WriteMessageZone";
 import LobbyDivider from "./LobbyDivider";
 
 interface LobbyBodyProps {

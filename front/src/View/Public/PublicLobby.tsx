@@ -29,11 +29,10 @@ class PublicLobby extends React.Component<PublicLobbyProps, any> {
 
     public getLogo(): void {
         new Request(
-            '/lobby/getLogo/0',
+            '/lobby/getLogo/' + this.props.id,
             this.fillLogo,
             'POST',
             {
-                id_lobby: this.props.id,
                 path: this.props.logo,
             },
             'json',

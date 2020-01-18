@@ -1,0 +1,46 @@
+p{
+    font-size: 18px;
+}
+
+.bodyHome{
+    margin-top: 60px;
+}
+
+.buttonsZone{
+    margin-top: 40px;
+    margin-left: 25px;
+}
+
+.description{
+    margin-left: 2px;
+    margin-top: 15px;
+    text-align: center;
+    font-style: italic;
+}
+
+.personalPage{
+    background-color: #5757e7;
+    border-radius: 6px;
+    border: solid white 1px;
+    font-size: 20px;
+}
+.personalPage:hover{
+    background-color: #6669c8;
+    color: #F2F2F2;
+    transition-duration: 0.5s;
+}
+
+.publicLobbies:hover{
+    background-color: #6669c8;
+    color: #F2F2F2;
+    transition-duration: 0.5s;
+}
+
+.publicLobbies{
+    width: 190px;
+    background-color: #F2F2F2;
+    color: #5757e7;
+    border-radius: 6px;
+    font-size: 20px;
+    border: solid white 1px;
+}

@@ -10,11 +10,11 @@ import Input from '../General/Inputs/Input';
 import InputArea from '../General/Inputs/InputArea';
 import DropBox from '../General/Inputs/DropBox';
 import '../../css/Admin.css';
-import CourseSheets from '../Lobby/CourseSheets';
+import CourseSheets from '../CourseSheet/CourseSheets';
 import Users from './Users';
-import HashtagInput from "../Hashtags/HashtagInput";
+import HashtagInput from "../Hashtag/HashtagInput";
 import SubmitButton from "../General/Inputs/SubmitButton";
-import Messages from "../Lobby/Messages";
+import Messages from "../Message/Messages";
 import swal from "sweetalert";
 
 interface AdminState {
@@ -132,7 +132,7 @@ class Admin extends React.Component<any, AdminState> {
     }
 
     public checkIfAdmin(data: any): void {
-        if (true === data['isAdmin']) {
+        if (true === data['is_admin']) {
             this.setState({isAdmin: 'true'});
         } else {
             this.setState({isAdmin: 'false'});
@@ -346,7 +346,7 @@ class Admin extends React.Component<any, AdminState> {
     }
 
     public refreshMessages(): void {
-        new Request('/lobby/messages/' + this.state.id, this.fillMessages);
+        new Request('/message/messages/' + this.state.id, this.fillMessages);
     }
 
     public refreshUsers(): void {
@@ -508,11 +508,10 @@ class Admin extends React.Component<any, AdminState> {
 
     public getLogo(): void {
         new Request(
-            '/lobby/getLogo/0',
+            '/lobby/getLogo/' + this.state.id,
             this.fillLogo,
             'POST',
             {
-                idLobby: this.state.id,
                 path: this.state.logoPath,
             },
             'json',
