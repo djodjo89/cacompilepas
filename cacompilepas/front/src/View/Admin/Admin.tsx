@@ -289,8 +289,9 @@ class Admin extends React.Component<any, AdminState> {
             formData.append('description', this.state.newCourseSheetDescription);
             formData.append('hashtags', JSON.stringify(this.state.hashtags));
             formData.append('file', this.state.newCourseSheetDocument);
+            formData.append('lobby_id', '' + this.state.id);
             new Request(
-                '/course_sheet/add_course_sheet/' + this.state.id,
+                '/course_sheet/add_course_sheet',
                 this.refreshCourseSheets,
                 'POST',
                 formData,
@@ -306,8 +307,8 @@ class Admin extends React.Component<any, AdminState> {
         } else {
             swal({
                 title: 'Mince !',
-                text: 'Il y a eu un problème, la fiche n\'a pas pu être supprimée, ' +
-                    'vérifie que tu as bien rentré tous les champs.',
+                text: 'Il y a eu un problème, la fiche n\'a pas pu être ajoutée, ' +
+                    'vérifie que tu as bien renseigné tous les champs.',
                 icon: 'warning',
             });
         }
