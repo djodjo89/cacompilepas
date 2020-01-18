@@ -1,0 +1,110 @@
+body {
+  margin: 0;
+  font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", "Roboto", "Oxygen",
+    "Ubuntu", "Cantarell", "Fira Sans", "Droid Sans", "Helvetica Neue",
+    sans-serif;
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+  font-family: 'Quicksand', sans-serif;
+  background-color: #5757e7;
+  color: white;
+  font-size: 14px;
+}
+
+h1 {
+	font-size: 44px;
+}
+
+h2 {
+	font-size: 32px;
+}
+
+h3 {
+	font-size: 24px;
+}
+
+h4 {
+	font-size: 20px;
+}
+
+a {
+	font-size: 20px;
+	color: white;
+}
+
+a:hover {
+	color: #27276a;
+	text-decoration: none;
+}
+
+p {
+	text-align: left;
+}
+
+li {
+	text-align: left;
+	font-size: 14px;
+}
+
+input {
+	border-radius: 20px !important;
+}
+
+.divider {
+	height: 1px;
+	background-color: #ffffff;
+}
+
+.plus-icon {
+	height: 25px;
+	width: 25px;
+	margin-left: -35px;
+	margin-right: 25px;
+}
+
+.minus-icon {
+	height: 25px;
+	width: 25px;
+	margin-left: -35px;
+	margin-right: 25px;
+}
+
+.disconnect-icon {
+	height: 35px;
+	width: 35px;
+}
+
+.disconnect-button {
+	border-color: transparent;
+}
+
+.disconnect-button:hover {
+	cursor: pointer;
+	border-color: transparent;
+	background-color: transparent !important;
+}
+
+.disconnect-button:focus {
+	border-color: transparent;
+	background-color: transparent !important;
+	box-shadow: 0 0 0 0rem rgba(0,0,0,0) !important;
+}
+
+.disconnect-button:active {
+	border-color: transparent !important;
+	background-color: transparent !important;
+	box-shadow: 0 0 0 0rem rgba(0,0,0,0) !important;
+}
+
+.remove-button:hover {
+	cursor: pointer;
+}
+
+.user-icon {
+	height: 64px;
+	width: 64px;
+}
+
+.header-title {
+	margin-left: -3px;
+}

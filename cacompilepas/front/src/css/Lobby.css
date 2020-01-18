@@ -1,0 +1,53 @@
+.lobby-summary-list {
+    overflow: scroll;
+    max-height: 100px;
+}
+
+@media (max-width: 700px) {
+    .lobby-logo {
+        width: 100px !important;
+        height: 100px !important;
+        border-radius: 70px !important;
+    }
+}
+
+@media (min-width: 701px) {
+    .lobby-logo {
+        width: 128px !important;
+        height: 128px !important;
+        border-radius: 70px !important;
+    }
+}
+
+@media (min-width: 993px) {
+    .lobby-logo {
+        width: 128px !important;
+        height: 128px !important;
+        border-radius: 70px !important;
+    }
+}
+
+@media (min-width: 1201px) {
+    .lobby-logo {
+        width: 128px !important;
+        height: 128px !important;
+        border-radius: 70px !important;
+    }
+}
+
+.lobby-page-description {
+    overflow: scroll;
+    max-height: 128px;
+}
+
+.edit-lobby-button {
+    color: white;
+    background: transparent;
+    border-color: #ffffff;
+}
+
+.edit-lobby-button:hover {
+    color: white;
+    background: rgba(255, 255, 255, 0.2);
+    border-color: #ffffff;
+}

@@ -1,0 +1,1199 @@
+{
+	"info": {
+		"_postman_id": "700d681b-fd56-41b2-ba3d-d6674ef90b54",
+		"name": "Cacompilepas",
+		"schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json"
+	},
+	"item": [
+		{
+			"name": "Get Coursesheets",
+			"protocolProfileBehavior": {
+				"disableBodyPruning": true
+			},
+			"request": {
+				"method": "GET",
+				"header": [
+					{
+						"key": "Content-Type",
+						"name": "Content-Type",
+						"value": "application/json",
+						"type": "text"
+					},
+					{
+						"key": "Authorization",
+						"value": "Bearer eyJ0eXAiOiJKV1QiLCJhbGciOiJSUzUxMiJ9.eyJlbWFpbCI6InRob21hc0BjYWNvbXBpbGVwYXMuY29tIiwicGFzc3dvcmQiOiIkMnkkMTAkRlU1MG9zeTYzY2x4M1ltTWFyT3l2T0xUeEp2R0hsSkc3ODdEMlwvZkxzN3ZOcDRmazdySVwvSyIsInRpbWUiOnsiZGF0ZSI6IjIwMjAtMDEtMDYgMTM6NTI6MTAuNTc1Mjk5IiwidGltZXpvbmVfdHlwZSI6MywidGltZXpvbmUiOiJFdXJvcGVcL1BhcmlzIn19.b8F7kG6R9fH92l5Kxqa3XRB2X-4z88aQn20gftRdZoyLX1wQMKZca_1LBlBZcqS7EInkAVzxC_t4Z8yR_fz5R4ycTuqECa9ixdm0_oKxKCwpiTQrOih24VevQsO3NhfiE99JEJeJ3N052GCbdochSUHVaaMGhcI6TjRdmzg0tFw",
+						"type": "text"
+					}
+				],
+				"body": {
+					"mode": "raw",
+					"raw": "",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "http://localhost/?module=lobby&action=coursesheets&param=1",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"path": [
+						""
+					],
+					"query": [
+						{
+							"key": "module",
+							"value": "lobby"
+						},
+						{
+							"key": "action",
+							"value": "coursesheets"
+						},
+						{
+							"key": "param",
+							"value": "1"
+						}
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Update Lobby label",
+			"request": {
+				"method": "POST",
+				"header": [
+					{
+						"key": "Content-Type",
+						"name": "Content-Type",
+						"value": "application/json",
+						"type": "text"
+					}
+				],
+				"body": {
+					"mode": "raw",
+					"raw": "{\n\t\"token\":\"eyJ0eXAiOiJKV1QiLCJhbGciOiJSUzUxMiJ9.eyJlbWFpbCI6InRob21hc0BjYWNvbXBpbGVwYXMuY29tIiwicGFzc3dvcmQiOiIkMnkkMTAkRlU1MG9zeTYzY2x4M1ltTWFyT3l2T0xUeEp2R0hsSkc3ODdEMlwvZkxzN3ZOcDRmazdySVwvSyIsInRpbWUiOnsiZGF0ZSI6IjIwMTktMTItMTMgMTM6MjE6NTYuODk5Njg5IiwidGltZXpvbmVfdHlwZSI6MywidGltZXpvbmUiOiJFdXJvcGVcL1BhcmlzIn19.cDWswLtT-KhDAgn0aDGmHuPLA-tbbLt21nBMKcpTWpjsdZOC_2aYxdMZ3F9xf_IzCZQdtbLozf5_QmrAu_kWf2OnbaLKwdPVxahZV2K9DlNZzQq2SOk4HZ7kh_aPgqKcdgq_WmselKgdiIl8PC5TXLkq2GsbGQIiRWulbygFagA\",\n\t\"label\": \"Le java pour les nuls\",\n\t\"description\": \"Le java nanana\"\n}",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "http://localhost/?module=lobby&action=update&param=1",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"path": [
+						""
+					],
+					"query": [
+						{
+							"key": "module",
+							"value": "lobby"
+						},
+						{
+							"key": "action",
+							"value": "update"
+						},
+						{
+							"key": "param",
+							"value": "1"
+						}
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Login",
+			"request": {
+				"method": "POST",
+				"header": [
+					{
+						"key": "Content-Type",
+						"name": "Content-Type",
+						"value": "application/json",
+						"type": "text"
+					}
+				],
+				"body": {
+					"mode": "raw",
+					"raw": "{\n\t\"email\": \"thomas@cacompilepas.com\",\n\t\"password\": \"root\"\n}",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "localhost/?module=connection&action=login&Authorization=Bearer eyJ0eXAiOiJKV1QiLCJhbGciOiJSUzUxMiJ9.eyJlbWFpbCI6InRob21hc0BjYWNvbXBpbGVwYXMuY29tIiwicGFzc3dvcmQiOiIkMnkkMTAkRlU1MG9zeTYzY2x4M1ltTWFyT3l2T0xUeEp2R0hsSkc3ODdEMlwvZkxzN3ZOcDRmazdySVwvSyIsInRpbWUiOnsiZGF0ZSI6IjIwMTktMTItMjcgMTM6NTE6MTguOTAyMzc0IiwidGltZXpvbmVfdHlwZSI6MywidGltZXpvbmUiOiJFdXJvcGVcL1BhcmlzIn19.FubdOCNura9LtizJY2MxpGizbZsdUDmwKnQjYt3LN9QbSLC35lNldi4DSYY9QVptxhbVCkfra5wnmidyahffG9_heqX1dWs8jFjDyBOdVg3gdbO2rerHNjoN_X8mL7uH_Y1aveVpfA4ru930xEWyFClTI2E3iAGNf5EonPCRLPA",
+					"host": [
+						"localhost"
+					],
+					"path": [
+						""
+					],
+					"query": [
+						{
+							"key": "module",
+							"value": "connection"
+						},
+						{
+							"key": "action",
+							"value": "login"
+						},
+						{
+							"key": "Authorization",
+							"value": "Bearer eyJ0eXAiOiJKV1QiLCJhbGciOiJSUzUxMiJ9.eyJlbWFpbCI6InRob21hc0BjYWNvbXBpbGVwYXMuY29tIiwicGFzc3dvcmQiOiIkMnkkMTAkRlU1MG9zeTYzY2x4M1ltTWFyT3l2T0xUeEp2R0hsSkc3ODdEMlwvZkxzN3ZOcDRmazdySVwvSyIsInRpbWUiOnsiZGF0ZSI6IjIwMTktMTItMjcgMTM6NTE6MTguOTAyMzc0IiwidGltZXpvbmVfdHlwZSI6MywidGltZXpvbmUiOiJFdXJvcGVcL1BhcmlzIn19.FubdOCNura9LtizJY2MxpGizbZsdUDmwKnQjYt3LN9QbSLC35lNldi4DSYY9QVptxhbVCkfra5wnmidyahffG9_heqX1dWs8jFjDyBOdVg3gdbO2rerHNjoN_X8mL7uH_Y1aveVpfA4ru930xEWyFClTI2E3iAGNf5EonPCRLPA"
+						}
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Token verification",
+			"protocolProfileBehavior": {
+				"disableBodyPruning": true
+			},
+			"request": {
+				"method": "GET",
+				"header": [
+					{
+						"key": "Content-Type",
+						"name": "Content-Type",
+						"value": "application/json",
+						"type": "text"
+					}
+				],
+				"body": {
+					"mode": "raw",
+					"raw": "{\n\t\"email\": \"thomas@cacompilepas.com\",\n\t\"password\": \"root\"\n}",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "localhost:80/?module=connection&action=verification",
+					"host": [
+						"localhost"
+					],
+					"port": "80",
+					"path": [
+						""
+					],
+					"query": [
+						{
+							"key": "module",
+							"value": "connection"
+						},
+						{
+							"key": "action",
+							"value": "verification"
+						}
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Delete Course sheet",
+			"request": {
+				"method": "POST",
+				"header": [
+					{
+						"key": "Content-Type",
+						"name": "Content-Type",
+						"value": "application/json",
+						"type": "text"
+					}
+				],
+				"body": {
+					"mode": "raw",
+					"raw": "{\n\t\"id\": \"1\",\n\t\"token\": \"eyJ0eXAiOiJKV1QiLCJhbGciOiJSUzUxMiJ9.eyJlbWFpbCI6InRob21hc0BjYWNvbXBpbGVwYXMuY29tIiwicGFzc3dvcmQiOiIkMnkkMTAkRlU1MG9zeTYzY2x4M1ltTWFyT3l2T0xUeEp2R0hsSkc3ODdEMlwvZkxzN3ZOcDRmazdySVwvSyIsInRpbWUiOnsiZGF0ZSI6IjIwMTktMTItMTQgMTc6MDA6NTQuODkxODI1IiwidGltZXpvbmVfdHlwZSI6MywidGltZXpvbmUiOiJFdXJvcGVcL1BhcmlzIn19.OjOUMrqiJoxTJDKshVfZJbupcy7-y2M7mrL4V6OZlsPI1-qBDHioG_TOuaXL3Jsr6esFxjRRb8C3vsMYlOSwX_Lu_-GNbuIHlNqRSUJ6KCpCcyKRU7w6S_zOwtI1dVUo4Mmum4uxq3cC-GUR64P5T5Kao2XwoZRcrZ3-TPXWJmg\"\n}",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "http://localhost/?module=lobby&action=deleteCourseSheet&param=1",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"path": [
+						""
+					],
+					"query": [
+						{
+							"key": "module",
+							"value": "lobby"
+						},
+						{
+							"key": "action",
+							"value": "deleteCourseSheet"
+						},
+						{
+							"key": "param",
+							"value": "1"
+						}
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Add user to lobby",
+			"request": {
+				"method": "POST",
+				"header": [
+					{
+						"key": "Content-Type",
+						"name": "Content-Type",
+						"value": "application/json",
+						"type": "text"
+					}
+				],
+				"body": {
+					"mode": "raw",
+					"raw": "{\n\t\"email\": \"nabila@cacompilepas.com\",\n\t\"token\": \"eyJ0eXAiOiJKV1QiLCJhbGciOiJSUzUxMiJ9.eyJlbWFpbCI6InRob21hc0BjYWNvbXBpbGVwYXMuY29tIiwicGFzc3dvcmQiOiIkMnkkMTAkRlU1MG9zeTYzY2x4M1ltTWFyT3l2T0xUeEp2R0hsSkc3ODdEMlwvZkxzN3ZOcDRmazdySVwvSyIsInRpbWUiOnsiZGF0ZSI6IjIwMTktMTItMTcgMTM6MDg6MDcuNDEwNDI3IiwidGltZXpvbmVfdHlwZSI6MywidGltZXpvbmUiOiJFdXJvcGVcL1BhcmlzIn19.BAY1Y05Gd2iO1SNTOxhpRoZVFFhvxNcn7W_64u6-FxJmKI0PwdoFTH-g54xu6p1rv-Pkv1cBuoSEdvK4-kgR2Ibp5uX9bXOGhXVlABGMEgWM2yaXkbZ_aZceekOCifiv0rLnTldDrNdJWcolT6_p85nZ4nsRUItupNYUU_KZrNw\"\n}",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "http://localhost/?module=lobby&action=addUser&param=1",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"path": [
+						""
+					],
+					"query": [
+						{
+							"key": "module",
+							"value": "lobby"
+						},
+						{
+							"key": "action",
+							"value": "addUser"
+						},
+						{
+							"key": "param",
+							"value": "1"
+						}
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Add write rights on lobby",
+			"request": {
+				"method": "POST",
+				"header": [
+					{
+						"key": "Content-Type",
+						"name": "Content-Type",
+						"type": "text",
+						"value": "application/json"
+					}
+				],
+				"body": {
+					"mode": "raw",
+					"raw": "{\n\t\"email\": \"nabila@cacompilepas.com\",\n\t\"token\": \"eyJ0eXAiOiJKV1QiLCJhbGciOiJSUzUxMiJ9.eyJlbWFpbCI6InRob21hc0BjYWNvbXBpbGVwYXMuY29tIiwicGFzc3dvcmQiOiIkMnkkMTAkRlU1MG9zeTYzY2x4M1ltTWFyT3l2T0xUeEp2R0hsSkc3ODdEMlwvZkxzN3ZOcDRmazdySVwvSyIsInRpbWUiOnsiZGF0ZSI6IjIwMTktMTItMTQgMjA6Mzc6NDcuMTE2MDIxIiwidGltZXpvbmVfdHlwZSI6MywidGltZXpvbmUiOiJFdXJvcGVcL1BhcmlzIn19.UTIwBxxWuoPUUVKMaJXi-jdb_zlUmx5kMT65Mso2R_83t05pQtRiviq63_Ll4-qSNwi5G11eOUZtQ0yHYanc3cvBxvmGFBSEqOjFcaiFvwQaT_dpeigb43CARVQm8V0VSmPyFitjXMT617pprHCJSDkQ_wLqBqh1hBTYZw8Dq_w\"\n}",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "http://localhost/?module=lobby&action=addWriteRight&param=1",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"path": [
+						""
+					],
+					"query": [
+						{
+							"key": "module",
+							"value": "lobby"
+						},
+						{
+							"key": "action",
+							"value": "addWriteRight"
+						},
+						{
+							"key": "param",
+							"value": "1"
+						}
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Remove user from lobby",
+			"request": {
+				"method": "POST",
+				"header": [
+					{
+						"key": "Content-Type",
+						"name": "Content-Type",
+						"value": "application/json",
+						"type": "text"
+					}
+				],
+				"body": {
+					"mode": "raw",
+					"raw": "{\n\t\"email\": \"nabila@cacompilepas.com\",\n\t\"token\": \"eyJ0eXAiOiJKV1QiLCJhbGciOiJSUzUxMiJ9.eyJlbWFpbCI6InRob21hc0BjYWNvbXBpbGVwYXMuY29tIiwicGFzc3dvcmQiOiIkMnkkMTAkRlU1MG9zeTYzY2x4M1ltTWFyT3l2T0xUeEp2R0hsSkc3ODdEMlwvZkxzN3ZOcDRmazdySVwvSyIsInRpbWUiOnsiZGF0ZSI6IjIwMTktMTItMTQgMjA6Mzc6NDcuMTE2MDIxIiwidGltZXpvbmVfdHlwZSI6MywidGltZXpvbmUiOiJFdXJvcGVcL1BhcmlzIn19.UTIwBxxWuoPUUVKMaJXi-jdb_zlUmx5kMT65Mso2R_83t05pQtRiviq63_Ll4-qSNwi5G11eOUZtQ0yHYanc3cvBxvmGFBSEqOjFcaiFvwQaT_dpeigb43CARVQm8V0VSmPyFitjXMT617pprHCJSDkQ_wLqBqh1hBTYZw8Dq_w\"\n}",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "http://localhost/?module=lobby&action=removeUser&param=1",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"path": [
+						""
+					],
+					"query": [
+						{
+							"key": "module",
+							"value": "lobby"
+						},
+						{
+							"key": "action",
+							"value": "removeUser"
+						},
+						{
+							"key": "param",
+							"value": "1"
+						}
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Remove write rights on lobby",
+			"request": {
+				"method": "POST",
+				"header": [
+					{
+						"key": "Content-Type",
+						"name": "Content-Type",
+						"type": "text",
+						"value": "application/json"
+					}
+				],
+				"body": {
+					"mode": "raw",
+					"raw": "{\n\t\"email\": \"nabila@cacompilepas.com\",\n\t\"token\": \"eyJ0eXAiOiJKV1QiLCJhbGciOiJSUzUxMiJ9.eyJlbWFpbCI6InRob21hc0BjYWNvbXBpbGVwYXMuY29tIiwicGFzc3dvcmQiOiIkMnkkMTAkRlU1MG9zeTYzY2x4M1ltTWFyT3l2T0xUeEp2R0hsSkc3ODdEMlwvZkxzN3ZOcDRmazdySVwvSyIsInRpbWUiOnsiZGF0ZSI6IjIwMTktMTItMTQgMjA6Mzc6NDcuMTE2MDIxIiwidGltZXpvbmVfdHlwZSI6MywidGltZXpvbmUiOiJFdXJvcGVcL1BhcmlzIn19.UTIwBxxWuoPUUVKMaJXi-jdb_zlUmx5kMT65Mso2R_83t05pQtRiviq63_Ll4-qSNwi5G11eOUZtQ0yHYanc3cvBxvmGFBSEqOjFcaiFvwQaT_dpeigb43CARVQm8V0VSmPyFitjXMT617pprHCJSDkQ_wLqBqh1hBTYZw8Dq_w\"\n}",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "http://localhost/?module=lobby&action=removeWriteRight&param=1",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"path": [
+						""
+					],
+					"query": [
+						{
+							"key": "module",
+							"value": "lobby"
+						},
+						{
+							"key": "action",
+							"value": "removeWriteRight"
+						},
+						{
+							"key": "param",
+							"value": "1"
+						}
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Make lobby private",
+			"request": {
+				"method": "POST",
+				"header": [
+					{
+						"key": "Content-Type",
+						"name": "Content-Type",
+						"type": "text",
+						"value": "application/json"
+					}
+				],
+				"body": {
+					"mode": "raw",
+					"raw": "{\n\t\"token\": \"eyJ0eXAiOiJKV1QiLCJhbGciOiJSUzUxMiJ9.eyJlbWFpbCI6InRob21hc0BjYWNvbXBpbGVwYXMuY29tIiwicGFzc3dvcmQiOiIkMnkkMTAkRlU1MG9zeTYzY2x4M1ltTWFyT3l2T0xUeEp2R0hsSkc3ODdEMlwvZkxzN3ZOcDRmazdySVwvSyIsInRpbWUiOnsiZGF0ZSI6IjIwMTktMTItMTQgMjA6Mzc6NDcuMTE2MDIxIiwidGltZXpvbmVfdHlwZSI6MywidGltZXpvbmUiOiJFdXJvcGVcL1BhcmlzIn19.UTIwBxxWuoPUUVKMaJXi-jdb_zlUmx5kMT65Mso2R_83t05pQtRiviq63_Ll4-qSNwi5G11eOUZtQ0yHYanc3cvBxvmGFBSEqOjFcaiFvwQaT_dpeigb43CARVQm8V0VSmPyFitjXMT617pprHCJSDkQ_wLqBqh1hBTYZw8Dq_w\"\n}",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "http://localhost/?module=lobby&action=makePrivate&param=1",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"path": [
+						""
+					],
+					"query": [
+						{
+							"key": "module",
+							"value": "lobby"
+						},
+						{
+							"key": "action",
+							"value": "makePrivate"
+						},
+						{
+							"key": "param",
+							"value": "1"
+						}
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Make lobby public",
+			"request": {
+				"method": "POST",
+				"header": [
+					{
+						"key": "Content-Type",
+						"name": "Content-Type",
+						"type": "text",
+						"value": "application/json"
+					}
+				],
+				"body": {
+					"mode": "raw",
+					"raw": "{\n\t\"token\": \"eyJ0eXAiOiJKV1QiLCJhbGciOiJSUzUxMiJ9.eyJlbWFpbCI6InRob21hc0BjYWNvbXBpbGVwYXMuY29tIiwicGFzc3dvcmQiOiIkMnkkMTAkRlU1MG9zeTYzY2x4M1ltTWFyT3l2T0xUeEp2R0hsSkc3ODdEMlwvZkxzN3ZOcDRmazdySVwvSyIsInRpbWUiOnsiZGF0ZSI6IjIwMTktMTItMTQgMjA6Mzc6NDcuMTE2MDIxIiwidGltZXpvbmVfdHlwZSI6MywidGltZXpvbmUiOiJFdXJvcGVcL1BhcmlzIn19.UTIwBxxWuoPUUVKMaJXi-jdb_zlUmx5kMT65Mso2R_83t05pQtRiviq63_Ll4-qSNwi5G11eOUZtQ0yHYanc3cvBxvmGFBSEqOjFcaiFvwQaT_dpeigb43CARVQm8V0VSmPyFitjXMT617pprHCJSDkQ_wLqBqh1hBTYZw8Dq_w\"\n}",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "http://localhost/?module=lobby&action=makePublic&param=1",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"path": [
+						""
+					],
+					"query": [
+						{
+							"key": "module",
+							"value": "lobby"
+						},
+						{
+							"key": "action",
+							"value": "makePublic"
+						},
+						{
+							"key": "param",
+							"value": "1"
+						}
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Get Users",
+			"protocolProfileBehavior": {
+				"disableBodyPruning": true
+			},
+			"request": {
+				"method": "GET",
+				"header": [
+					{
+						"key": "Content-Type",
+						"name": "Content-Type",
+						"type": "text",
+						"value": "application/json"
+					}
+				],
+				"body": {
+					"mode": "raw",
+					"raw": "{\n\t\"token\": \"eyJ0eXAiOiJKV1QiLCJhbGciOiJSUzUxMiJ9.eyJlbWFpbCI6InRob21hc0BjYWNvbXBpbGVwYXMuY29tIiwicGFzc3dvcmQiOiIkMnkkMTAkRlU1MG9zeTYzY2x4M1ltTWFyT3l2T0xUeEp2R0hsSkc3ODdEMlwvZkxzN3ZOcDRmazdySVwvSyIsInRpbWUiOnsiZGF0ZSI6IjIwMTktMTItMTcgMTM6MDg6MDcuNDEwNDI3IiwidGltZXpvbmVfdHlwZSI6MywidGltZXpvbmUiOiJFdXJvcGVcL1BhcmlzIn19.BAY1Y05Gd2iO1SNTOxhpRoZVFFhvxNcn7W_64u6-FxJmKI0PwdoFTH-g54xu6p1rv-Pkv1cBuoSEdvK4-kgR2Ibp5uX9bXOGhXVlABGMEgWM2yaXkbZ_aZceekOCifiv0rLnTldDrNdJWcolT6_p85nZ4nsRUItupNYUU_KZrNw\"\n}",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "http://localhost/?module=lobby&action=users&param=1",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"path": [
+						""
+					],
+					"query": [
+						{
+							"key": "module",
+							"value": "lobby"
+						},
+						{
+							"key": "action",
+							"value": "users"
+						},
+						{
+							"key": "param",
+							"value": "1"
+						}
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Get lobbies by hashtags",
+			"request": {
+				"method": "POST",
+				"header": [
+					{
+						"key": "Content-Type",
+						"name": "Content-Type",
+						"value": "application/json",
+						"type": "text"
+					}
+				],
+				"body": {
+					"mode": "raw",
+					"raw": "{\n\t\"hashtags\": [\n\t\t\"programmation\",\n\t\t\"java\"\n\t\t]\n}",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "http://localhost/?module=coursesheet&action=getLobbiesByHashtag",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"path": [
+						""
+					],
+					"query": [
+						{
+							"key": "module",
+							"value": "coursesheet"
+						},
+						{
+							"key": "action",
+							"value": "getLobbiesByHashtag"
+						}
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Add hashtags",
+			"request": {
+				"method": "POST",
+				"header": [
+					{
+						"key": "Content-Type",
+						"name": "Content-Type",
+						"type": "text",
+						"value": "application/json"
+					},
+					{
+						"key": "Authorization",
+						"value": "Bearer eyJ0eXAiOiJKV1QiLCJhbGciOiJSUzUxMiJ9.eyJlbWFpbCI6InRob21hc0BjYWNvbXBpbGVwYXMuY29tIiwicGFzc3dvcmQiOiIkMnkkMTAkRlU1MG9zeTYzY2x4M1ltTWFyT3l2T0xUeEp2R0hsSkc3ODdEMlwvZkxzN3ZOcDRmazdySVwvSyIsInRpbWUiOnsiZGF0ZSI6IjIwMTktMTItMjcgMTM6NTE6MTguOTAyMzc0IiwidGltZXpvbmVfdHlwZSI6MywidGltZXpvbmUiOiJFdXJvcGVcL1BhcmlzIn19.FubdOCNura9LtizJY2MxpGizbZsdUDmwKnQjYt3LN9QbSLC35lNldi4DSYY9QVptxhbVCkfra5wnmidyahffG9_heqX1dWs8jFjDyBOdVg3gdbO2rerHNjoN_X8mL7uH_Y1aveVpfA4ru930xEWyFClTI2E3iAGNf5EonPCRLPA",
+						"type": "text"
+					}
+				],
+				"body": {
+					"mode": "raw",
+					"raw": "{\n\t\"hashtags\": [\n\t\t\"lambdas\",\n\t\t\"java8\"\n\t\t]\n}",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "http://localhost/?module=coursesheet&action=addHashtags&param=1",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"path": [
+						""
+					],
+					"query": [
+						{
+							"key": "module",
+							"value": "coursesheet"
+						},
+						{
+							"key": "action",
+							"value": "addHashtags"
+						},
+						{
+							"key": "param",
+							"value": "1"
+						}
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Remove hashtag",
+			"request": {
+				"method": "GET",
+				"header": [
+					{
+						"key": "Content-Type",
+						"name": "Content-Type",
+						"type": "text",
+						"value": "application/json"
+					}
+				],
+				"url": {
+					"raw": "http://localhost/?module=coursesheet&action=removeHashtag&param=java8",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"path": [
+						""
+					],
+					"query": [
+						{
+							"key": "module",
+							"value": "coursesheet"
+						},
+						{
+							"key": "action",
+							"value": "removeHashtag"
+						},
+						{
+							"key": "param",
+							"value": "java8"
+						}
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Get Lobbies",
+			"request": {
+				"method": "GET",
+				"header": [
+					{
+						"key": "Content-Type",
+						"name": "Content-Type",
+						"type": "text",
+						"value": "application/json"
+					},
+					{
+						"key": "Authorization",
+						"value": "Bearer eyJ0eXAiOiJKV1QiLCJhbGciOiJSUzUxMiJ9.eyJlbWFpbCI6InRob21hc0BjYWNvbXBpbGVwYXMuY29tIiwicGFzc3dvcmQiOiIkMnkkMTAkRlU1MG9zeTYzY2x4M1ltTWFyT3l2T0xUeEp2R0hsSkc3ODdEMlwvZkxzN3ZOcDRmazdySVwvSyIsInRpbWUiOnsiZGF0ZSI6IjIwMTktMTItMjkgMTc6NTg6MzguOTc5MTE2IiwidGltZXpvbmVfdHlwZSI6MywidGltZXpvbmUiOiJFdXJvcGVcL1BhcmlzIn19.HaNGwrDqQSLGf6euoy8ilZv-CYWrHyNDtapaZoZo17XUIbm5dR56dDFR6LY8lsZ4XLJGwiKooocCHm7kfKnr6sZeLsA3RO8MaICHBknupo9VCadSF19X_LtrnKFCvxXcREP0x_i75MlRWtEVSAG5pMmgCJE4HTKfwgLyRmvKFok",
+						"type": "text"
+					}
+				],
+				"url": {
+					"raw": "http://localhost/?module=lobby&action=getLobbies&param=0",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"path": [
+						""
+					],
+					"query": [
+						{
+							"key": "module",
+							"value": "lobby"
+						},
+						{
+							"key": "action",
+							"value": "getLobbies"
+						},
+						{
+							"key": "param",
+							"value": "0"
+						}
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Get Logo",
+			"request": {
+				"method": "POST",
+				"header": [
+					{
+						"key": "Content-Type",
+						"name": "Content-Type",
+						"type": "text",
+						"value": "application/json"
+					},
+					{
+						"key": "Authorization",
+						"type": "text",
+						"value": "Bearer eyJ0eXAiOiJKV1QiLCJhbGciOiJSUzUxMiJ9.eyJlbWFpbCI6InRob21hc0BjYWNvbXBpbGVwYXMuY29tIiwicGFzc3dvcmQiOiIkMnkkMTAkRlU1MG9zeTYzY2x4M1ltTWFyT3l2T0xUeEp2R0hsSkc3ODdEMlwvZkxzN3ZOcDRmazdySVwvSyIsInRpbWUiOnsiZGF0ZSI6IjIwMTktMTItMjkgMTc6NTg6MzguOTc5MTE2IiwidGltZXpvbmVfdHlwZSI6MywidGltZXpvbmUiOiJFdXJvcGVcL1BhcmlzIn19.HaNGwrDqQSLGf6euoy8ilZv-CYWrHyNDtapaZoZo17XUIbm5dR56dDFR6LY8lsZ4XLJGwiKooocCHm7kfKnr6sZeLsA3RO8MaICHBknupo9VCadSF19X_LtrnKFCvxXcREP0x_i75MlRWtEVSAG5pMmgCJE4HTKfwgLyRmvKFok"
+					}
+				],
+				"body": {
+					"mode": "raw",
+					"raw": "{\n\t\"idLobby\": 1,\n\t\"path\": \"pink_pencil_case.jpg\"\n}",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "http://localhost/?module=lobby&action=getLogo&param=0",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"path": [
+						""
+					],
+					"query": [
+						{
+							"key": "module",
+							"value": "lobby"
+						},
+						{
+							"key": "action",
+							"value": "getLogo"
+						},
+						{
+							"key": "param",
+							"value": "0"
+						},
+						{
+							"key": "id_lobby",
+							"value": "1",
+							"disabled": true
+						}
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Get By keywords",
+			"protocolProfileBehavior": {
+				"disableBodyPruning": true
+			},
+			"request": {
+				"method": "GET",
+				"header": [
+					{
+						"key": "Content-Type",
+						"name": "Content-Type",
+						"type": "text",
+						"value": "application/json"
+					},
+					{
+						"key": "Authorization",
+						"type": "text",
+						"value": "Bearer eyJ0eXAiOiJKV1QiLCJhbGciOiJSUzUxMiJ9.eyJlbWFpbCI6InRob21hc0BjYWNvbXBpbGVwYXMuY29tIiwicGFzc3dvcmQiOiIkMnkkMTAkRlU1MG9zeTYzY2x4M1ltTWFyT3l2T0xUeEp2R0hsSkc3ODdEMlwvZkxzN3ZOcDRmazdySVwvSyIsInRpbWUiOnsiZGF0ZSI6IjIwMjAtMDEtMDMgMDg6NDQ6NDYuMTc3MjE5IiwidGltZXpvbmVfdHlwZSI6MywidGltZXpvbmUiOiJFdXJvcGVcL1BhcmlzIn19.SGqQiovta1z5QXBd_fgyOqXAzPJEo2oN70j5rgkevZ5yiV3vm3c6YkMCnPV_av3BfbOIMYXkD0exJjBiuduGVfBLnzHBOpVO4fWFJIEnS230vJeyyYcVRzsreaEn1mEMXF0qRNmD8yIYh4FAYSHJT15B98WkHwbwxQNLYfqAgJ8"
+					}
+				],
+				"body": {
+					"mode": "raw",
+					"raw": "{\n\t\"search\": [\n\t\t\"8\",\n\t\t\"JAVA\"\n\t\t]\n}",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "http://localhost/?module=lobby&action=search&param=0",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"path": [
+						""
+					],
+					"query": [
+						{
+							"key": "module",
+							"value": "lobby"
+						},
+						{
+							"key": "action",
+							"value": "search"
+						},
+						{
+							"key": "id_lobby",
+							"value": "1",
+							"disabled": true
+						},
+						{
+							"key": "param",
+							"value": "0"
+						}
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Get Personal Information",
+			"protocolProfileBehavior": {
+				"disableBodyPruning": true
+			},
+			"request": {
+				"method": "GET",
+				"header": [
+					{
+						"key": "Content-Type",
+						"name": "Content-Type",
+						"type": "text",
+						"value": "application/json"
+					},
+					{
+						"key": "Authorization",
+						"type": "text",
+						"value": "Bearer eyJ0eXAiOiJKV1QiLCJhbGciOiJSUzUxMiJ9.eyJlbWFpbCI6InRob21hc0BjYWNvbXBpbGVwYXMuY29tIiwicGFzc3dvcmQiOiIkMnkkMTAkRlU1MG9zeTYzY2x4M1ltTWFyT3l2T0xUeEp2R0hsSkc3ODdEMlwvZkxzN3ZOcDRmazdySVwvSyIsInRpbWUiOnsiZGF0ZSI6IjIwMjAtMDEtMDQgMjE6MjQ6NTAuMzU2NDIwIiwidGltZXpvbmVfdHlwZSI6MywidGltZXpvbmUiOiJFdXJvcGVcL1BhcmlzIn19.NRqjuAeKaiY73CiQsIM6hvWJ3wnzEIw0IuSZvC_4j1ut9xwsOTRMBBgGiuLTTemK2XKZRkz365YwnMfOjCOIeCpZWQ0Kp_SxT0eLlfcPrd7yl3-tWCUh8cQFgxUC3gmExvpvqMaR29crQ2ygzMdjUWRrT1fg4vkr2RWxMtmxNm0"
+					}
+				],
+				"body": {
+					"mode": "raw",
+					"raw": "",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "http://localhost/?module=connection&action=personal&param=1",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"path": [
+						""
+					],
+					"query": [
+						{
+							"key": "id_lobby",
+							"value": "1",
+							"disabled": true
+						},
+						{
+							"key": "module",
+							"value": "connection"
+						},
+						{
+							"key": "action",
+							"value": "personal"
+						},
+						{
+							"key": "param",
+							"value": "1"
+						}
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Get Icon",
+			"protocolProfileBehavior": {
+				"disableBodyPruning": true
+			},
+			"request": {
+				"method": "GET",
+				"header": [
+					{
+						"key": "Content-Type",
+						"name": "Content-Type",
+						"type": "text",
+						"value": "application/json"
+					},
+					{
+						"key": "Authorization",
+						"type": "text",
+						"value": "Bearer eyJ0eXAiOiJKV1QiLCJhbGciOiJSUzUxMiJ9.eyJlbWFpbCI6InRob21hc0BjYWNvbXBpbGVwYXMuY29tIiwicGFzc3dvcmQiOiIkMnkkMTAkRlU1MG9zeTYzY2x4M1ltTWFyT3l2T0xUeEp2R0hsSkc3ODdEMlwvZkxzN3ZOcDRmazdySVwvSyIsInRpbWUiOnsiZGF0ZSI6IjIwMjAtMDEtMDQgMjE6NDc6MjcuMTg2OTQ1IiwidGltZXpvbmVfdHlwZSI6MywidGltZXpvbmUiOiJFdXJvcGVcL1BhcmlzIn19.a3SpeXdlKbjBGwKSBJRmWXHRqiAcJymLAfDegC6iY1U1qA1oJcI2XZ0DykM5yHCIK1rUXPWUEbEb70dINhnQtvvV4llqo_fTirbvSZO-PpeQmmlyCjsU_lNICTCPFzJJJQ-fcnGwek99MnlqrfMgELgrfBPdYp2WSLJwQVfHqog"
+					}
+				],
+				"body": {
+					"mode": "raw",
+					"raw": "{\n\t\"path\": \"pink_pencil_case.jpg\"\n}",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "http://localhost/?module=connection&action=getIcon&param=1",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"path": [
+						""
+					],
+					"query": [
+						{
+							"key": "id_lobby",
+							"value": "1",
+							"disabled": true
+						},
+						{
+							"key": "module",
+							"value": "connection"
+						},
+						{
+							"key": "action",
+							"value": "getIcon"
+						},
+						{
+							"key": "param",
+							"value": "1"
+						}
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Add Message",
+			"protocolProfileBehavior": {
+				"disableBodyPruning": true
+			},
+			"request": {
+				"method": "GET",
+				"header": [
+					{
+						"key": "Content-Type",
+						"name": "Content-Type",
+						"type": "text",
+						"value": "application/json"
+					},
+					{
+						"key": "Authorization",
+						"type": "text",
+						"value": "Bearer eyJ0eXAiOiJKV1QiLCJhbGciOiJSUzUxMiJ9.eyJlbWFpbCI6InRob21hc0BjYWNvbXBpbGVwYXMuY29tIiwicGFzc3dvcmQiOiIkMnkkMTAkRlU1MG9zeTYzY2x4M1ltTWFyT3l2T0xUeEp2R0hsSkc3ODdEMlwvZkxzN3ZOcDRmazdySVwvSyIsInRpbWUiOnsiZGF0ZSI6IjIwMjAtMDEtMDQgMjE6NDc6MjcuMTg2OTQ1IiwidGltZXpvbmVfdHlwZSI6MywidGltZXpvbmUiOiJFdXJvcGVcL1BhcmlzIn19.a3SpeXdlKbjBGwKSBJRmWXHRqiAcJymLAfDegC6iY1U1qA1oJcI2XZ0DykM5yHCIK1rUXPWUEbEb70dINhnQtvvV4llqo_fTirbvSZO-PpeQmmlyCjsU_lNICTCPFzJJJQ-fcnGwek99MnlqrfMgELgrfBPdYp2WSLJwQVfHqog"
+					}
+				],
+				"body": {
+					"mode": "raw",
+					"raw": "{\n\t\"content\": \"Tro bien ce lobby !\"\n}",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "http://localhost/?param=1&module=lobby&action=addMessage",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"path": [
+						""
+					],
+					"query": [
+						{
+							"key": "id_lobby",
+							"value": "1",
+							"disabled": true
+						},
+						{
+							"key": "param",
+							"value": "1"
+						},
+						{
+							"key": "module",
+							"value": "lobby"
+						},
+						{
+							"key": "action",
+							"value": "addMessage"
+						}
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Disconnect",
+			"protocolProfileBehavior": {
+				"disableBodyPruning": true
+			},
+			"request": {
+				"method": "GET",
+				"header": [
+					{
+						"key": "Content-Type",
+						"name": "Content-Type",
+						"type": "text",
+						"value": "application/json"
+					},
+					{
+						"key": "Authorization",
+						"type": "text",
+						"value": "Bearer eyJ0eXAiOiJKV1QiLCJhbGciOiJSUzUxMiJ9.eyJlbWFpbCI6InRob21hc0BjYWNvbXBpbGVwYXMuY29tIiwicGFzc3dvcmQiOiIkMnkkMTAkRlU1MG9zeTYzY2x4M1ltTWFyT3l2T0xUeEp2R0hsSkc3ODdEMlwvZkxzN3ZOcDRmazdySVwvSyIsInRpbWUiOnsiZGF0ZSI6IjIwMjAtMDEtMDQgMjE6NDc6MjcuMTg2OTQ1IiwidGltZXpvbmVfdHlwZSI6MywidGltZXpvbmUiOiJFdXJvcGVcL1BhcmlzIn19.a3SpeXdlKbjBGwKSBJRmWXHRqiAcJymLAfDegC6iY1U1qA1oJcI2XZ0DykM5yHCIK1rUXPWUEbEb70dINhnQtvvV4llqo_fTirbvSZO-PpeQmmlyCjsU_lNICTCPFzJJJQ-fcnGwek99MnlqrfMgELgrfBPdYp2WSLJwQVfHqog"
+					}
+				],
+				"body": {
+					"mode": "raw",
+					"raw": "",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "http://localhost/?param=1&module=connection&action=disconnect",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"path": [
+						""
+					],
+					"query": [
+						{
+							"key": "id_lobby",
+							"value": "1",
+							"disabled": true
+						},
+						{
+							"key": "param",
+							"value": "1"
+						},
+						{
+							"key": "module",
+							"value": "connection"
+						},
+						{
+							"key": "action",
+							"value": "disconnect"
+						}
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Consult lobby",
+			"protocolProfileBehavior": {
+				"disableBodyPruning": true
+			},
+			"request": {
+				"method": "GET",
+				"header": [
+					{
+						"key": "Content-Type",
+						"name": "Content-Type",
+						"type": "text",
+						"value": "application/json"
+					},
+					{
+						"key": "Authorization",
+						"type": "text",
+						"value": "Bearer eyJ0eXAiOiJKV1QiLCJhbGciOiJSUzUxMiJ9.eyJlbWFpbCI6InRob21hc0BjYWNvbXBpbGVwYXMuY29tIiwicGFzc3dvcmQiOiIkMnkkMTAkRlU1MG9zeTYzY2x4M1ltTWFyT3l2T0xUeEp2R0hsSkc3ODdEMlwvZkxzN3ZOcDRmazdySVwvSyIsInRpbWUiOnsiZGF0ZSI6IjIwMjAtMDEtMDUgMTc6Mjc6NTkuMzM4NDQzIiwidGltZXpvbmVfdHlwZSI6MywidGltZXpvbmUiOiJFdXJvcGVcL1BhcmlzIn19.YnT8KaexRzD9gMpISgQXmzQxYbPXZ5lQvGgcAzdxHgRJhTCJcoVXCV4OsQwGIYXQ48o-7ymyameWifibu91diuJe5lg5CT9ATZnTDahs5uNyHMrGYPEpHT2MEJ38rok0B0AVDrkNmkNy07aTeofx-ilewKcDovnX8faDcw1wxM0"
+					}
+				],
+				"body": {
+					"mode": "raw",
+					"raw": "",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "http://localhost/?module=lobby&action=consult&param=2",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"path": [
+						""
+					],
+					"query": [
+						{
+							"key": "id_lobby",
+							"value": "1",
+							"disabled": true
+						},
+						{
+							"key": "module",
+							"value": "lobby"
+						},
+						{
+							"key": "action",
+							"value": "consult"
+						},
+						{
+							"key": "param",
+							"value": "2"
+						}
+					]
+				}
+			},
+			"response": []
+		}
+	],
+	"protocolProfileBehavior": {}
+}
