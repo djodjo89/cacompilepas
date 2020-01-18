@@ -1,6 +1,6 @@
 import connect from '../../plugins/bundle';
 
-describe('Admin Test', function () {
+describe('Admin Description Test', function () {
     it('Update description', function () {
         cy.visit('http://localhost:3000/admin/1');
 

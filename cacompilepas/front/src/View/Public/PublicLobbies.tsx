@@ -8,6 +8,8 @@ interface PublicLobbiesState {
 }
 
 class PublicLobbies extends React.Component<any, PublicLobbiesState> {
+
+    private intervalRefresh: any;
     constructor(props: any) {
         super(props);
         this.state = {
@@ -16,10 +18,18 @@ class PublicLobbies extends React.Component<any, PublicLobbiesState> {
         this.fillLobbies = this.fillLobbies.bind(this);
         this.refreshLobbies = this.refreshLobbies.bind(this);
         this.renderLobbies = this.renderLobbies.bind(this);
+        this.intervalRefresh = setInterval(
+            () => this.refreshLobbies(),
+            1000,
+        );
     }
 
     public componentDidMount(): void {
         this.refreshLobbies();
+    }
+
+    public componentWillUnmount(): void {
+        clearInterval(this.intervalRefresh);
     }
 
     public fillLobbies(payload: any): void {

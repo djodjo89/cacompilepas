@@ -22,6 +22,7 @@ interface LobbyState {
 
 class LobbyPage extends React.Component<any, LobbyState> {
 
+    private intervalRefresh: any;
     public constructor(props: any) {
         super(props);
         this.state = {
@@ -37,14 +38,29 @@ class LobbyPage extends React.Component<any, LobbyState> {
         this.fillDescription = this.fillDescription.bind(this);
         this.fillMessages = this.fillMessages.bind(this);
         this.refreshCourseSheets = this.refreshCourseSheets.bind(this);
+        this.refreshData = this.refreshData.bind(this);
         this.refreshDescription = this.refreshDescription.bind(this);
         this.refreshMessages = this.refreshMessages.bind(this);
+        this.intervalRefresh = setInterval(
+            () => this.refreshData(),
+            1000,
+        );
     }
 
     public componentDidMount(): void {
         this.refreshCourseSheets();
         this.refreshDescription();
         this.refreshMessages();
+    }
+
+    public refreshData(): void {
+        this.refreshCourseSheets();
+        this.refreshDescription();
+        this.refreshMessages();
+    }
+
+    public componentWillUnmount(): void {
+        clearInterval(this.intervalRefresh);
     }
 
     public sendMessage(event: React.KeyboardEvent<HTMLDivElement>): void {

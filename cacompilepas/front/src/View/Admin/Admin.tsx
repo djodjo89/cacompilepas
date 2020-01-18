@@ -43,6 +43,7 @@ interface AdminState {
 
 class Admin extends React.Component<any, AdminState> {
 
+    private intervalRefresh: any;
     public constructor(props: any) {
         super(props);
         this.state = {
@@ -70,6 +71,10 @@ class Admin extends React.Component<any, AdminState> {
         }
         this.init = this.init.bind(this);
         this.init();
+        this.intervalRefresh = setInterval(
+            () => this.refreshData(),
+            1000,
+        );
     }
 
     public init(): void {
@@ -120,6 +125,10 @@ class Admin extends React.Component<any, AdminState> {
 
     public componentDidMount(): void {
         this.refreshData();
+    }
+
+    public componentWillUnmount(): void {
+        clearInterval(this.intervalRefresh);
     }
 
     public refreshData(): void {
