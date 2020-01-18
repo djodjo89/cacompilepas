@@ -1,6 +1,6 @@
 import connect from '../../plugins/bundle';
 
-describe('Admin Course Sheets Test', () => {
+describe('Admin Rights Test', () => {
     it('Add course sheets Test', () => {
         cy.visit('http://localhost:3000/admin/1');
 
