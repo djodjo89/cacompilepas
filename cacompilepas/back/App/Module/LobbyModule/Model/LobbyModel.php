@@ -229,8 +229,8 @@ class LobbyModel extends AbstractFileModel
         string $label,
         string $description,
         string $private,
-        string $logoName,
-        string $logoTmpName
+        string $logoName = '',
+        string $logoTmpName = ''
     ): array
     {
         $successfulInsert = $this->sendQuery('
@@ -252,12 +252,23 @@ class LobbyModel extends AbstractFileModel
 
             $lobbyId = (int)$this->fetchData('Lobby does not exist')['data'][0]['id_lobby'];
 
-            try {
-                $this->uploadOnFTP($lobbyId, $logoName, $logoTmpName, '/logo/', ['jpg', 'jpeg', 'ico', 'png', 'svg', 'bmp']);
-            } catch (IncorrectFileExtension $e) {
-                throw new JSONException($e->getMessage());
-            } catch (JSONException $e) {
-                throw $e;
+            if ('' !== $logoName && '' !== $logoTmpName) {
+
+                try {
+                    $successfulUpload = $this->uploadOnFTP($lobbyId, $logoName, $logoTmpName, '/logo/', ['jpg', 'jpeg', 'ico', 'png', 'svg', 'bmp']);
+                } catch (IncorrectFileExtension $e) {
+                    throw new JSONException($e->getMessage());
+                } catch (JSONException $e) {
+                    throw $e;
+                }
+
+                if ($successfulUpload) {
+                    return [
+                        'message' => 'Lobby was successfully created',
+                    ];
+                } else {
+                    throw new JSONException('Lobby logo could not be uploaded');
+                }
             }
 
             $this->sendQuery('

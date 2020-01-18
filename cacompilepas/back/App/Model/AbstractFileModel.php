@@ -37,7 +37,7 @@ abstract class AbstractFileModel extends AbstractModel
         $newFileOnFTP = $uploadDirectory . $file;
 
         if (!ftp_put($this->connection::$ftp, $newFileOnFTP, $tmpName, FTP_BINARY)) {
-            new JSONException("Could not upload $fileName");
+            throw new JSONException("Could not upload $fileName");
         } else {
             return [
                 'success' => true,
