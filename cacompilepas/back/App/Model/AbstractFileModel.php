@@ -3,7 +3,6 @@
 namespace App\Model;
 
 use App\Exception\IncorrectFileExtension;
-use App\Exception\JSONError;
 use App\Http\JSONException;
 
 abstract class AbstractFileModel extends AbstractModel
@@ -29,7 +28,7 @@ abstract class AbstractFileModel extends AbstractModel
         }
     }
 
-    public function uploadOnFTP(int $id, string $fileName, string $tmpName, string $uploadDirectory, array $allowedExtensions): void
+    public function uploadOnFTP(int $id, string $fileName, string $tmpName, string $uploadDirectory, array $allowedExtensions): array
     {
         $this->checkExtension($fileName, $allowedExtensions);
         // prepend '_$id' to file extension to differentiate
@@ -39,6 +38,11 @@ abstract class AbstractFileModel extends AbstractModel
 
         if (!ftp_put($this->connection::$ftp, $newFileOnFTP, $tmpName, FTP_BINARY)) {
             new JSONException("Could not upload $fileName");
+        } else {
+            return [
+                'success' => true,
+                'message' => 'File was successfully uploaded',
+            ];
         }
     }
 
@@ -61,12 +65,28 @@ abstract class AbstractFileModel extends AbstractModel
     {
         $fileName = $this->getPath($id);
         $file = $this->nameOnFTP($id, $fileName, $this->extension($fileName));
+        // Temporarily suppress FTP warnings
+        set_error_handler(function () {
+        }, E_WARNING);
+        dns_get_record('');
         if (ftp_get($this->connection::$ftp, '/tmp/' . $fileName, $uploadDirectory . $file, FTP_BINARY)) {
             return '/tmp/' . $fileName;
         } else {
-            new JSONError('File could not be fetched');
+            if (ftp_get($this->connection::$ftp, '/tmp/' . $this->defaultFileName($uploadDirectory), $uploadDirectory . $this->defaultFileName($uploadDirectory), FTP_BINARY)) {
+                return '/tmp/' . $this->defaultFileName($uploadDirectory);
+            } else {
+                restore_error_handler();
+                throw new JSONException('File could not be fetched');
+            }
         }
     }
 
     public abstract function getPath(int $id): string;
+
+    public abstract function defaultFileExtension(): string;
+
+    public function defaultFileName(string $uploadDirectory): string
+    {
+        return 'default_' . explode('/', $uploadDirectory)[1] . '.' . $this->defaultFileExtension();
+    }
 }

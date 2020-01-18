@@ -61,11 +61,16 @@ class LobbyPage extends React.Component<any, LobbyState> {
     }
 
     public fillDescription(payload: any): void {
-        this.setState({lobbyInformation: payload['data'][0]});
+        if (payload['success']) {
+            this.setState({lobbyInformation: payload['data'][0]});
+            this.setState({right: 'true'});
+        } else {
+            this.setState({right: 'false'});
+        }
     }
 
     public fillMessages(payload: any): void {
-        this.setState({messages: payload});
+        this.setState({messages: payload['success'] ? payload : []});
     }
 
     public refreshCourseSheets(): void {
@@ -90,7 +95,6 @@ class LobbyPage extends React.Component<any, LobbyState> {
                 }
             );
         } else if (false === payload['success']) {
-            console.log('hello');
             swal({
                 title: 'Tu ne peux pas écrire de message ici',
                 text: 'L\'admin de ce lobby ne t\'a pas donné l\'autorisation d\'envoyer de message ici, tu peux lui en faire la demande si tu le souhaites.',
@@ -104,14 +108,7 @@ class LobbyPage extends React.Component<any, LobbyState> {
     }
 
     public fillCourseSheets(payload: any): void {
-        if (payload['success']) {
-            this.setState({courseSheets: payload});
-            this.setState({right: 'true'});
-        } else if (payload['data']['message'].includes('right')) {
-            this.setState({right: 'false'});
-        } else {
-            this.setState({right: 'true'});
-        }
+        this.setState({courseSheets: payload['success'] ? payload : []});
     }
 
     public render(): ReactNode {

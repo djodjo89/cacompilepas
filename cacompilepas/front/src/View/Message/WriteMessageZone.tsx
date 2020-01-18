@@ -19,7 +19,7 @@ class WriteMessageZone extends React.Component<WriteMessageZoneProps, any> {
                     placeholder={'Ecrire un message sur #' + this.props.labelLobby}
                     checked={false}
                     className={'text-left l'}
-                    onChange={(event: any) => console.log(event)}
+                    onChange={(event: any) => null}
                 />
             </div>
         )

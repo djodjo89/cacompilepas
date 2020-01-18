@@ -215,4 +215,9 @@ class CourseSheetModel extends AbstractFileModel
             throw new InexistentCourseSheetException();
         }
     }
+
+    public function defaultFileExtension(): string
+    {
+        return 'pdf';
+    }
 }

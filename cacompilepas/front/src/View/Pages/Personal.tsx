@@ -96,7 +96,7 @@ class Personal extends React.Component<any, PersonalState> {
             );
         }
         else {
-            res = <h4 className={'text-center col-12 mt-5'}>Il n'y a pas de lobby public pour le moment</h4>;
+            res = <h4 className={'text-center col-12 mt-5'}>Il n'y a pas de lobby pour le moment</h4>;
         }
         return res;
     }
@@ -149,7 +149,7 @@ class Personal extends React.Component<any, PersonalState> {
                             <a href={'/creation'}>
                                 <SubmitButton
                                     text={'Crée un lobby ici !'}
-                                    onClick={(event: any) => console.log('LobbyPage creation')}
+                                    onClick={(event: any) => null}
                                     className={'mt-1px offset-lg-5 col-lg-7 col-md-6 col-sm-12 col-xs-12 container-fluid add-course-sheet-button mt-5'}
                                     disconnectButton={'plus'}
                                 />
