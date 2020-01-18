@@ -119,7 +119,7 @@ class LobbyController extends LinkedWithLobbyController
                                                     $this->getLobbyId(),
                                                     $this->getRequest()->getFile()['name'],
                                                     $this->getRequest()->getFile()['tmp_name'],
-                                                    )['message'];
+                                                    );
                                                 if ($success) {
                                                     $success = $result['message_logo']['success'];
                                                 }

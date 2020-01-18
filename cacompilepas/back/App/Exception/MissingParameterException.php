@@ -6,6 +6,6 @@ class MissingParameterException extends \Exception
 {
     public function __construct(string $param)
     {
-        parent::__construct($param . ' wasn\'t provided');
+        parent::__construct($param . ' was not provided');
     }
 }

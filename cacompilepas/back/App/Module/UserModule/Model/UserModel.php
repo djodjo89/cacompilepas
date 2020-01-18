@@ -89,7 +89,9 @@ class UserModel extends AbstractFileModel
             WHERE email = ?
         ',
             [$email]);
-        return $this->fetchData('User does not own any lobby');
+        return [
+            'data' => $result = $this->getQuery()->fetchAll() ? $result : [],
+        ];
     }
 
     public function checkIfRightExists(int $lobbyId, int $userId): bool

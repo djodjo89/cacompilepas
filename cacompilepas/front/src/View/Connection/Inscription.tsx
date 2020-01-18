@@ -88,11 +88,20 @@ class Inscription extends React.Component<any, InscriptionState> {
     }
 
     public checkForm(): boolean {
-        return this.passwordVerification() && this.state.firstName !== '' && this.state.lastName !== '' && this.state.pseudo !== '' && this.state.email !== '';
+        return this.passwordVerification()
+            && this.state.firstName !== ''
+            && this.state.lastName !== ''
+            && this.state.pseudo !== ''
+            && this.state.email !== ''
+            && this.state.password !== this.state.email
+            && this.state.password !== this.state.firstName
+            && this.state.password !== this.state.lastName
+            && this.state.password !== this.state.pseudo;
     }
 
     public redirectToConnection(payload: any): void {
         if (payload['success']) {
+            localStorage.setItem('token', '');
             swal({
                 title: 'Bravo !',
                 text: 'Tu es des nôtres à présent, connecte-toi vite pour' +
@@ -118,16 +127,27 @@ class Inscription extends React.Component<any, InscriptionState> {
             formData.append('email', '' + this.state.email);
             formData.append('password', '' + this.state.password);
             formData.append('confirm_password', '' + this.state.passwordConfirmation);
-            // @ts-ignore
-            formData.append('file', this.state.icon);
-            new Request(
-                '/connection/register',
-                this.redirectToConnection,
-                'POST',
-                formData,
+            if (null !== this.state.icon) {
                 // @ts-ignore
-                this.state.icon.type,
-            );
+                formData.append('file', this.state.icon);
+
+                new Request(
+                    '/connection/register',
+                    this.redirectToConnection,
+                    'POST',
+                    formData,
+                    // @ts-ignore
+                    this.state.icon.type,
+                );
+            } else {
+                new Request(
+                    '/connection/register',
+                    this.redirectToConnection,
+                    'POST',
+                    formData,
+                    'jpg',
+                );
+            }
         } else {
             this.setState({formWasSubmitted: true});
             swal({
@@ -136,7 +156,8 @@ class Inscription extends React.Component<any, InscriptionState> {
                     '   - Fait au moins 8 caractères\n' +
                     '   - Comporte des majuscules et des minuscules\n' +
                     '   - Contient chiffres et des caractères spéciaux\n' +
-                    '   - Ne contient pas d\'espaces\n',
+                    '   - Ne contient pas d\'espaces\n' +
+                    '   - N\'est pas ton pseudo, ton nom, ton prénom ou ton adresse email',
                 icon: 'error'
             });
         }

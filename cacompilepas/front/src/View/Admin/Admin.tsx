@@ -510,7 +510,6 @@ class Admin extends React.Component<any, AdminState> {
     }
 
     public updateHashtags(hashtags: string[]): void {
-        console.log(hashtags);
         this.setState({hashtags: hashtags});
     }
 

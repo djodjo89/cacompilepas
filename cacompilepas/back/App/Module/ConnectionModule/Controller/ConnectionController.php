@@ -4,6 +4,7 @@ namespace App\Module\ConnectionModule\Controller;
 
 use App\Controller\AbstractController;
 use App\Exception\IncorrectFileExtension;
+use App\Exception\MissingParameterException;
 use App\Http\JSONException;
 use App\Http\JSONResponse;
 use App\Model\AbstractModel;
@@ -45,17 +46,32 @@ class ConnectionController extends AbstractController
 
             case 'register':
                 try {
-                    $this->setJSONResponse($this->getModel()->register(
-                        $this->getRequest()->getPseudo(),
-                        $this->getRequest()->getFirstName(),
-                        $this->getRequest()->getLastName(),
-                        $this->getRequest()->getFile()['name'],
-                        $this->getRequest()->getFile()['tmp_name'],
-                        $this->getRequest()->getPassword(),
-                        $this->getRequest()->getConfirmPassword(),
-                        $this->getRequest()->getEmail(),
-                        )
-                    );
+                    try {
+                        $file = $this->getRequest()->getFile();
+                        $this->setJSONResponse($this->getModel()->register(
+                            $this->getRequest()->getPseudo(),
+                            $this->getRequest()->getFirstName(),
+                            $this->getRequest()->getLastName(),
+                            $file['name'],
+                            $this->getRequest()->getFile()['tmp_name'],
+                            $this->getRequest()->getPassword(),
+                            $this->getRequest()->getConfirmPassword(),
+                            $this->getRequest()->getEmail(),
+                            )
+                        );
+                    } catch (MissingParameterException $e) {
+                        $this->setJSONResponse($this->getModel()->register(
+                            $this->getRequest()->getPseudo(),
+                            $this->getRequest()->getFirstName(),
+                            $this->getRequest()->getLastName(),
+                            'default.png',
+                            '/tmp/default.png',
+                            $this->getRequest()->getPassword(),
+                            $this->getRequest()->getConfirmPassword(),
+                            $this->getRequest()->getEmail(),
+                            )
+                        );
+                    }
                 } catch (IncorrectFileExtension $e) {
                     $this->setResponse(new JSONException($e->getMessage()));
                 }
