@@ -3,17 +3,17 @@ import UserProposal from "./UserProposal";
 import LobbyProposal from "./LobbyProposal";
 import '../../css/SearchBar.css';
 
-class ProposalList extends React.Component<{ proposals: [] }, any> {
-    public constructor(props: { proposals: [] }) {
+class ProposalList extends React.Component<{ proposals: any }, any> {
+    public constructor(props: { proposals: any }) {
         super(props);
         this.renderProposals = this.renderProposals.bind(this);
     }
 
     public renderProposals(): ReactNode {
         let index: number = 0;
-        let length: number = this.props.proposals.length;
+        let length: number = this.props.proposals['data'].length;
         let position: string;
-        let res = this.props.proposals.map(proposal => {
+        let res = this.props.proposals['data'].map((proposal: any) => {
             if (0 === index) {
                 position = 'first';
             } else if (length === index) {
@@ -22,7 +22,7 @@ class ProposalList extends React.Component<{ proposals: [] }, any> {
                 position = '';
             }
             index++;
-            let proposalRes = undefined !== proposal['id_user']
+            return undefined !== proposal['id_user']
                 ? <UserProposal
                     id={'search-user-' + proposal['id_user']}
                     key={'search-user-' + proposal['id_user']}
@@ -40,7 +40,6 @@ class ProposalList extends React.Component<{ proposals: [] }, any> {
                     description={proposal['description']}
                     logo={proposal['logo']}
                 />
-            return proposalRes;
         });
         return res;
     }

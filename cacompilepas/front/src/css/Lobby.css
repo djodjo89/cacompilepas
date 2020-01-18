@@ -51,3 +51,8 @@
     background: rgba(255, 255, 255, 0.2);
     border-color: #ffffff;
 }
+
+.admin-icon {
+    height: 32px;
+    width: 32px;
+}

@@ -315,7 +315,7 @@ class Admin extends React.Component<any, AdminState> {
 
     public refreshAdmin(): void {
         new Request(
-            '/user/check_if_admin/' + this.state.id,
+            '/user/check_if_admin',
             this.checkIfAdmin,
             'POST',
             {

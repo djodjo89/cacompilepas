@@ -1,6 +1,5 @@
 import React, {ReactNode} from 'react';
 import {display} from '../../Model/Month';
-import userIcon from '../../img/icon-female-user.svg';
 import RemoveButton from "../General/Inputs/RemoveButton";
 import Request from "../../API/Request";
 

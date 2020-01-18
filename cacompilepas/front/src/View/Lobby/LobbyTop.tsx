@@ -2,6 +2,8 @@ import React, {ReactNode} from "react";
 import LobbyDescription from "./LobbyDescription";
 import LobbySummary from "./LobbySummary";
 import LobbyDivider from "./LobbyDivider";
+import adminIcon from "../../img/admin.png";
+import Request from "../../API/Request";
 
 interface LobbyTopProps {
     id: string,
@@ -13,7 +15,7 @@ class LobbyTop extends React.Component<LobbyTopProps, any> {
 
     public render(): ReactNode {
         return (
-            <div className={'row container-fluid pr-0'}>
+            <div className={'row container-fluid pr-0 mt-5 mt-lg-5 mt-md-5 mt-sm-5'}>
                 <LobbyDescription
                     id={this.props.id}
                 />
