@@ -3,7 +3,6 @@
 namespace App\Model;
 
 use App\Exception\IncorrectFileExtension;
-use App\Exception\JSONError;
 use App\Http\JSONException;
 
 abstract class AbstractFileModel extends AbstractModel
@@ -73,8 +72,8 @@ abstract class AbstractFileModel extends AbstractModel
         if (ftp_get($this->connection::$ftp, '/tmp/' . $fileName, $uploadDirectory . $file, FTP_BINARY)) {
             return '/tmp/' . $fileName;
         } else {
-            if (ftp_get($this->connection::$ftp, '/tmp/default_' . explode('/', $uploadDirectory)[1] . '.png', $uploadDirectory . 'default_' . explode('/', $uploadDirectory)[1] . '.png', FTP_BINARY)) {
-                return '/tmp/default_' . explode('/', $uploadDirectory)[1] . '.png';
+            if (ftp_get($this->connection::$ftp, '/tmp/' . $this->defaultFileName($uploadDirectory), $uploadDirectory . $this->defaultFileName($uploadDirectory), FTP_BINARY)) {
+                return '/tmp/' . $this->defaultFileName($uploadDirectory);
             } else {
                 restore_error_handler();
                 throw new JSONException('File could not be fetched');
@@ -83,4 +82,11 @@ abstract class AbstractFileModel extends AbstractModel
     }
 
     public abstract function getPath(int $id): string;
+
+    public abstract function defaultFileExtension(): string;
+
+    public function defaultFileName(string $uploadDirectory): string
+    {
+        return 'default_' . explode('/', $uploadDirectory)[1] . '.' . $this->defaultFileExtension();
+    }
 }

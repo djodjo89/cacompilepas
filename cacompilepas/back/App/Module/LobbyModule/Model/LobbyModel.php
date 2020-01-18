@@ -7,7 +7,6 @@ use App\Exception\IncorrectFileExtension;
 use App\Http\JSONException;
 use App\Model\AbstractFileModel;
 use App\Model\AbstractModel;
-use App\Module\ConnectionModule\Model\MessageModel;
 use App\Module\LobbyModule\Exception\InexistentLobbyException;
 
 
@@ -273,5 +272,10 @@ class LobbyModel extends AbstractFileModel
         } else {
             throw new JSONException('Lobby could not be created');
         }
+    }
+
+    public function defaultFileExtension(): string
+    {
+        return 'png';
     }
 }

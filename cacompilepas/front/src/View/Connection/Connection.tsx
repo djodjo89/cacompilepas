@@ -76,7 +76,7 @@ class Connection extends React.Component<{ referrer: string }, ConnectionStates>
             {status: '' + payload['success']},
             () => this.setState(
                 {formWasSubmitted: true},
-                () => localStorage.setItem('token', payload['data']['token'])
+                () => localStorage.setItem('token', payload['success'] ? payload['data']['token'] : '')
             )
         );
     }

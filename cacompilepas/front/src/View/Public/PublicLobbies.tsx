@@ -29,7 +29,7 @@ class PublicLobbies extends React.Component<any, PublicLobbiesState> {
     public renderLobbies(): ReactNode {
         let res;
         let i: number = 0;
-        if (0 !== this.state.lobbies.length && undefined !== this.state.lobbies[0]) {
+        if (undefined !== this.state.lobbies && 0 !== this.state.lobbies.length) {
             res = this.state.lobbies.map(
                 lobby => {
                     i++;

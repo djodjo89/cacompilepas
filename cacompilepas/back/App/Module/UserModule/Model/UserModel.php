@@ -297,4 +297,9 @@ class UserModel extends AbstractFileModel
             throw new InexistentUserException();
         }
     }
+
+    public function defaultFileExtension(): string
+    {
+        return 'png';
+    }
 }
