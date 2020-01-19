@@ -188,8 +188,8 @@ class LobbyCreation extends React.Component<any, LobbyCreationState> {
                             handleFileChange={this.handleLogoChange}
                         />
                     </div>
-                    <div className={'row container-fluid mt-3 mt-sm-2'}>
-                            <div className={'pl-lg-3 pl-md-3 pl-sm-3 pl-xs-3 pt-lg-2 pt-md-1 pt-sm-3 pt-xs-4 pr-lg-2 pr-md-2 pr-sm-0 pr-xs-0'}>
+                    <div className={'row container-fluid mt-3 mt-sm-2 ml-0 pl-3 pl-sm-0'}>
+                        <div className={'pl-lg-3 pl-md-3 pl-sm-3 pl-xs-3 pt-lg-2 pt-md-1 pt-sm-3 pt-xs-4 pr-lg-2 pr-md-2 pr-sm-0 pr-xs-0'}>
                                 <Input
                                     id={'visibility-input'}
                                     inputType={'checkbox'}
@@ -208,13 +208,12 @@ class LobbyCreation extends React.Component<any, LobbyCreationState> {
                             </h4>
                         </div>
                     </div>
-
                     <div className={'row container-fluid'}>
-                        <div className={'col-12'}>
+                        <div className={'col-12 col-sm-10 offset-sm-1 pl-0 pr-0'}>
                             <SubmitButton
                                 text={'Créer le lobby'}
                                 onClick={this.createLobby}
-                                className={'mt-5'}
+                                className={'mt-5 col-12'}
                                 disconnectButton={'plus'}
                             />
                         </div>
