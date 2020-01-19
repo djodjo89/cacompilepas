@@ -32,7 +32,7 @@ class Title extends React.Component {
 class Description extends React.Component {
     public render(): ReactNode {
         return (
-            <p className={"col-lg-6 description"}>"Creer tes propres lobby (page privés ou publique sur laquelle tu peut trouver des fiches de cours et des espaces de disscusions)" </p>
+            <p className={"col-lg-6 description"}>"Crée tes propres lobbies(pages privées ou publiques sur lesquels tu peux trouver des fiches de cours et des espaces de disscusions)" </p>
 
         )
     }
