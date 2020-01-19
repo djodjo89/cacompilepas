@@ -3,10 +3,7 @@
 namespace App\Model;
 
 use App\Connection\Connection;
-use App\Exception\JSONError;
 use App\Http\JSONException;
-use App\Module\ConnectionModule\Model\ConnectionModel;
-use Firebase\JWT\JWT;
 
 abstract class AbstractModel
 {

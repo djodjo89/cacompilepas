@@ -2,7 +2,7 @@
 
 namespace App\Http;
 
-use App\Exception\JSONError;
+use App\Http\JSONException;
 use App\Exception\MissingParameterException;
 
 class Request
@@ -53,7 +53,7 @@ class Request
             if (ctype_alnum($splitted[0]) && strtolower($splitted[0]) === $splitted[0]) {
                 return $this->checkIfWrittenInSnakeCase(substr($param, strlen($splitted[0]) + (1 <= count($splitted) ? 1 : 0)));
             } else {
-                new JSONError('Parameter is not written in snake case');
+                throw new JSONException('Parameter is not written in snake case');
             }
         } else {
             return true;

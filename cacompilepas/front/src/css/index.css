@@ -112,3 +112,9 @@ input {
 textarea {
 	 resize: none;
  }
+
+ol {
+	list-style: none;
+	display: flex;
+	align-items: center;
+}

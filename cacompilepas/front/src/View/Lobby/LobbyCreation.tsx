@@ -72,7 +72,7 @@ class LobbyCreation extends React.Component<any, LobbyCreationState> {
         } else {
             swal({
                 title: 'Oups !',
-                text: 'Il y a eu un soucis lors de la création du lobby, vérifie' +
+                text: 'Il y a eu un soucis lors de la création du lobby, vérifie ' +
                     'que tu as bien rempli tous les champs.',
                 icon: 'warning',
             })
@@ -115,11 +115,10 @@ class LobbyCreation extends React.Component<any, LobbyCreationState> {
             formData.append('label', this.state.label);
             formData.append('description', this.state.description);
             formData.append('private', '' + this.state.isPrivate);
-            // @ts-ignore
-            formData.append('file', this.state.logo);
+
             if (null !== this.state.logo) {
                 // @ts-ignore
-                formData.append('file', this.state.icon);
+                formData.append('file', this.state.logo);
 
                 new Request(
                     '/lobby/create',

@@ -263,7 +263,15 @@ class LobbyModel extends AbstractFileModel
                 }
 
                 if ($successfulUpload) {
+                    $this->sendQuery('
+                        SELECT id_lobby
+                        FROM ccp_lobby
+                        ORDER BY id_lobby DESC 
+                        LIMIT 1
+                    ');
+
                     return [
+                        'id_lobby' => $this->getQuery()->fetch()['id_lobby'],
                         'message' => 'Lobby was successfully created',
                     ];
                 } else {
@@ -278,6 +286,7 @@ class LobbyModel extends AbstractFileModel
                 [$idAdmin, $lobbyId]);
 
             return [
+                'id_lobby' => $lobbyId,
                 'message' => 'Lobby was successfully uploaded',
             ];
         } else {
