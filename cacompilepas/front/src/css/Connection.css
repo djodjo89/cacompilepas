@@ -21,3 +21,9 @@
 .connection-button {
     height: 40px;
 }
+
+@media (min-width: 768px) {
+    #register-input-email {
+        margin-top: -6.3% !important;
+    }
+}

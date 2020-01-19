@@ -1,4 +1,4 @@
-import React, {ReactNode} from "react";
+import React, {ReactNode} from 'react';
 import plusIcon from '../../../img/plus-icon.png';
 import disconnectIcon from '../../../img/logout-icon.png';
 

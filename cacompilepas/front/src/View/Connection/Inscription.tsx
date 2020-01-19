@@ -201,16 +201,17 @@ class Inscription extends React.Component<any, InscriptionState> {
                                        onChange={this.handlePseudoChange}/>
                                 <DropBox
                                     id={'input-icon'}
-                                    className={'col-12'}
-                                    labelNotDragged={'Glisse ta photo profil ici !'}
+                                    className={'col-12 file-upload-container'}
+                                    labelNotDragged={'Glisse ta photo de profil ici !'}
                                     labelDragged={'Photo déposée'}
+                                    labelClassName={'pb-0 mb-0'}
                                     accept={'image/*'}
                                     backgroundClassName={'mt-5'}
                                     handleFileDrop={this.handleIconDrop}
                                     handleFileChange={this.handleIconChange}
                                 />
-                                <Input id={'input-email'} inputType={'email'} placeholder={'Adresse email'}
-                                       formGroupClassName={'col-12 mt-4 pt-3'}
+                                <Input id={'register-input-email'} inputType={'email'} placeholder={'Adresse email'}
+                                       formGroupClassName={'col-12 mt-3 mt-md-0 mt-sm-0 pt-4 pt-md-0'}
                                        className={'connection-input'}onChange={this.handleEmailChange}/>
                                 <Input id={'input-password'} inputType={'password'}
                                        placeholder={'Mot de passe'}
