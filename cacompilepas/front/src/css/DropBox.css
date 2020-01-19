@@ -137,7 +137,7 @@
     }
 
     .file-upload-content {
-        height: 130%;
+        height: 140%;
     }
 }
 
@@ -167,7 +167,7 @@
 
 @media (min-width: 992px) {
     .pdf-file-icon-container {
-        width: 29%;
+        width: 20%;
         margin-left: auto;
         margin-right: auto;
     }

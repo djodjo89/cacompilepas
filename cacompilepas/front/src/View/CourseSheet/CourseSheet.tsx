@@ -181,7 +181,7 @@ class CourseSheet extends React.Component<CourseSheetProps, CourseSheetState> {
                         <p className={'course-sheet-description'}>{this.props.description}</p>
                         <footer className={'container-fluid row'}>
                             <a
-                                href={'/course-sheet/' + this.props.idLobby + '/' + this.props.title + '/' + this.props.link}
+                                href={'/course-sheet/' + this.props.id + '/' + this.props.title + '/' + this.props.link}
                                 className={'course-sheet-link col-5 text-left mt-2 p-0 d-block'}
                             >
                                 Lien vers la fiche

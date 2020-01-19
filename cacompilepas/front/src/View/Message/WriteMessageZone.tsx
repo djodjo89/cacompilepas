@@ -27,13 +27,13 @@ class WriteMessageZone extends React.Component<WriteMessageZoneProps, any> {
         if (undefined !== e.style) {
             e.style.height = '1px';
             e.style.height = (e.scrollHeight) + 'px';
-            window.scroll(e.getBoundingClientRect().x, e.getBoundingClientRect().bottom);
+            e.parentElement.children[0].scrollTop = e.parentElement.children[0].scrollHeight;
         }
     }
 
     public render(): ReactNode {
         return (
-            <div className={'col-lg-12 mt-3 ml-lg-0 ml-lg-2 ml-sm-3 pl-lg-4 text-left'}>
+            <div className={'col-lg-12 mt-3 ml-0 ml-lg-2 ml-md-5 pl-lg-4 pl-md-0 pl-sm-5 text-left'}>
                 <div className={'form-group'}>
                     <textarea
                         id={'message-input'}
