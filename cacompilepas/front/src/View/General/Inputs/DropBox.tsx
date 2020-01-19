@@ -24,7 +24,7 @@ class DropBoxBackground extends React.Component<DropBoxBackgroundProps, any> {
                 style={{
                     backgroundColor: this.props.dragged ? 'transparent' : '#ffffff'
                 }}
-                className={(this.props.dragged ? ' mt-0 mt-lg-2 ' : 'pt-4 pb-4 ') + 'rounded pb-lg-2 pb-md-2 pb-sm-2 file-upload-content ' + this.props.className}
+                className={(this.props.dragged ? ' mt-0 mt-lg-2 ' : 'pt-4 pb-4 ') + 'rounded pb-lg-2 pb-md-2 pb-sm-0 file-upload-content ' + this.props.className}
             >
                 {this.props.children}
                 <div className={'d-none d-lg-block d-md-block d-sm-block'}>
@@ -189,7 +189,7 @@ class DropBox extends React.Component<DropBoxProps, DropBoxState> {
             } else {
                 return (
                     <div
-                        className={'rounded-1 not-dragged-file'}
+                        className={'rounded-1 not-dragged-file pt-lg-3'}
                     >
                         <DropBoxLogo/>
                     </div>
