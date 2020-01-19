@@ -1,7 +1,8 @@
 import React, {ChangeEvent, ReactNode} from 'react';
 import styled from 'styled-components';
 import '../../../css/DropBox.css';
-import {ReactComponent as DropBoxLogo} from "../../../img/usable-image-icon.svg";
+import {ReactComponent as DropBoxLogo} from '../../../img/usable-image-icon.svg';
+import pdfIcon from '../../../img/pdf.svg';
 import {pdfjs, Document, Page} from 'react-pdf';
 
 const Heading = styled.p<{ active: boolean }>`
@@ -23,7 +24,7 @@ class DropBoxBackground extends React.Component<DropBoxBackgroundProps, any> {
                 style={{
                     backgroundColor: this.props.dragged ? 'transparent' : '#ffffff'
                 }}
-                className={(this.props.dragged ? 'pt-3 mt-0 ' : 'pt-4 pb-4 ') + 'rounded pb-lg-2 pb-md-2 pb-sm-2 file-upload-content ' + this.props.className}
+                className={(this.props.dragged ? ' mt-0 mt-lg-2 ' : 'pt-4 pb-4 ') + 'rounded pb-lg-2 pb-md-2 pb-sm-2 file-upload-content ' + this.props.className}
             >
                 {this.props.children}
                 <div className={'d-none d-lg-block d-md-block d-sm-block'}>
@@ -66,6 +67,7 @@ class DropBox extends React.Component<DropBoxProps, DropBoxState> {
             file: null,
         }
         this.handleMouseDown = this.handleMouseDown.bind(this);
+        this.handleMouseOut = this.handleMouseOut.bind(this);
         this.handleMouseUp = this.handleMouseUp.bind(this);
         this.handleDragOver = this.handleDragOver.bind(this);
         this.handleFileDrop = this.handleFileDrop.bind(this);
@@ -80,6 +82,10 @@ class DropBox extends React.Component<DropBoxProps, DropBoxState> {
     public handleMouseDown(event: React.MouseEvent<HTMLDivElement>): void {
         this.setState({label: this.props.labelNotDragged});
         this.setState({draggingState: 'dragging'});
+    }
+
+    public handleMouseOut(event: React.MouseEvent<HTMLDivElement>): void {
+        this.setState({draggingState: 'not dragging'});
     }
 
     public handleMouseUp(event: React.MouseEvent<HTMLDivElement>): void {
@@ -168,13 +174,26 @@ class DropBox extends React.Component<DropBoxProps, DropBoxState> {
                 );
             }
         } else {
-            return (
-                <div
-                    className={'rounded-1 not-dragged-file'}
-                >
-                    <DropBoxLogo/>
-                </div>
-            );
+            if (this.props.accept.includes('pdf')) {
+                return (
+                    <div
+                        className={'pdf-file-icon-container pb-3'}
+                        >
+                        <img
+                            src={pdfIcon}
+                            alt={'Icône de PDF'}
+                            />
+                    </div>
+                )
+            } else {
+                return (
+                    <div
+                        className={'rounded-1 not-dragged-file'}
+                    >
+                        <DropBoxLogo/>
+                    </div>
+                );
+            }
         }
     }
 
@@ -188,6 +207,7 @@ class DropBox extends React.Component<DropBoxProps, DropBoxState> {
                 onDragExit={this.handleDragExit}
                 onMouseDown={this.handleMouseDown}
                 onMouseUp={this.handleMouseUp}
+                onMouseOut={this.handleMouseOut}
                 style={{
                     opacity: this.state.draggingState === 'dragging' ? 0.5 : 1,
                     transform: this.state.draggingState === 'dragging' ? 'rotate(-2deg) translateY(-10px)' : 'rotate(0)',
