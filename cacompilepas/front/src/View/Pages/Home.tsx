@@ -4,7 +4,7 @@ import '../../css/Home.css';
 class Home extends React.Component {
     public render(): ReactNode {
         return (
-            <section className={"container-fluid bodyHome col-lg-9"}>
+            <section className={"container-fluid bodyHome col-lg-11"}>
                 <div className={"row"}>
                     <Title/>
                 </div>
@@ -23,7 +23,7 @@ class Title extends React.Component {
     public render(): ReactNode {
         return (
             <div id={"Title"} className="col-lg-6">
-                <h1>Banque de fiches en ligne pour informaticiens</h1>
+                <h1>Bienvenue sur caCompilePas.com</h1>
             </div>
         )
     }
@@ -32,8 +32,7 @@ class Title extends React.Component {
 class Description extends React.Component {
     public render(): ReactNode {
         return (
-            <p className={"col-lg-6 description"}>"Concurrent direct à StackOverflow, notre plateforme vous aidera à
-                trouver des solutions à vos divers problèmes d'informaticiens !" </p>
+            <p className={"col-lg-6 description"}>"Crée tes propres lobbies(pages privées ou publiques sur lesquels tu peux trouver des fiches de cours et des espaces de disscusions)" </p>
 
         )
     }
