@@ -59,8 +59,6 @@ class Personal extends React.Component<any, PersonalState> {
                             swal('Ca y est, le lobby a été supprimé !', {
                                 icon: 'success',
                             })
-                        } else {
-                            swal('Rassure-toi, le lobby n\'a pas été supprimé !');
                         }
                     })
         );

@@ -407,8 +407,6 @@ class Admin extends React.Component<any, AdminState> {
                 swal('Ca y est, la fiche a été supprimé !', {
                     icon: 'success',
                 });
-            } else {
-                swal('Rassure-toi, rien n\'a été supprimé !');
             }
         });
     }
@@ -432,8 +430,6 @@ class Admin extends React.Component<any, AdminState> {
                 swal('C\'est bon, le message est supprimé !', {
                     icon: 'success',
                 });
-            } else {
-                swal('Pas de problème, le message est sain et sauf !');
             }
         });
     }
@@ -457,8 +453,6 @@ class Admin extends React.Component<any, AdminState> {
                 swal('Désormais, cet utilisateur n\'aura plus accès à ce lobby.', {
                     icon: 'success',
                 });
-            } else {
-                swal('Ok, rien de grave n\'a été fait !');
             }
         });
     }
