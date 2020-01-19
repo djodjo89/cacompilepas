@@ -111,9 +111,19 @@
     width: 100%;
 }
 
+@media (min-width: 576px) {
+    .file-upload {
+        height: 92%;
+    }
+
+    .file-upload-content {
+        height: 100%;
+    }
+}
+
 @media (min-width: 768px) {
     .file-upload {
-        height: 83%;
+        height: 92%;
     }
 
     .file-upload-content {
@@ -123,7 +133,7 @@
 
 @media (min-width: 992px) {
     .file-upload {
-        height: 50%;
+        height: 68%;
     }
 
     .file-upload-content {

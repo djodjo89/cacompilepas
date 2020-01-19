@@ -5,3 +5,60 @@
 #user {
     font-size: 28px;
 }
+
+.breadcrumbs__inner {
+    text-align: left !important;
+}
+
+.breadcrumb-separator {
+    font-size: 20px;
+    margin: auto 6px;
+    user-select: none;
+}
+
+.breadcrumb-collapser {
+    display: flex;
+    align-items: center;
+}
+
+.breadcrumb-collapser svg {
+    cursor: pointer;
+    transition: all 0.2s ease-out;
+    color: #000;
+    width: 25px;
+    height: 25px;
+}
+
+.breadcrumb-collapser svg:hover,
+.breadcrumb-collapser svg:focus {
+    color: #999;
+    transform: scale(1.15);
+}
+
+.breadcrumb-collapser svg:active {
+    color: #333;
+}
+
+@media (max-width: 575px) {
+    .breadcumb-separator-container {
+        flex: 0 0 50%;
+    }
+}
+
+@media (min-width: 576px) {
+    .breadcumb-separator-container {
+        flex: 0 0 50%;
+    }
+}
+
+@media (min-width: 768px) {
+    .breadcumb-separator-container {
+        flex: 0 0 5.5%;
+    }
+}
+
+@media (min-width: 992px) {
+    .breadcumb-separator-container {
+        flex: 0 0 4%;
+    }
+}
