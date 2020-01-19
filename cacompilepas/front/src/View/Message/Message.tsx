@@ -20,6 +20,7 @@ class Message extends React.Component<MessageProps, {}> {
 
         this.fillIcon = this.fillIcon.bind(this);
         this.getIcon = this.getIcon.bind(this);
+        this.renderContent = this.renderContent.bind(this);
     }
 
     public componentDidMount(): void {
@@ -43,6 +44,11 @@ class Message extends React.Component<MessageProps, {}> {
         const img: any = document.getElementById('user-icon-' + this.props.id);
         const blob = new Blob([payload], {type: 'image/jpg'});
         img.src = URL.createObjectURL(blob);
+    }
+
+    public renderContent(): any[] {
+        let lines = this.props.content.split('<br />');
+        return lines.map((line: string) => <p>{line}</p>);
     }
 
     render(): ReactNode {
@@ -71,9 +77,9 @@ class Message extends React.Component<MessageProps, {}> {
                         : <div></div>}
                 </div>
                 <div className={'row col-lg-12 col-md-10 col-sm-12 ml-0 ml-lg-5 ml-md-4 ml-sm-5 pl-0 pl-sm-5'}>
-                    <div className={'ml-0 ml-lg-2 ml-md-5 ml-sm-3'}>
+                    <div className={'ml-0 ml-lg-2 ml-md-5 ml-sm-3 w-100'}>
                         <div className={'ml-0 ml-lg-3 ml-md-2 ml-sm-1 pl-0 pl-lg-1 pl-md-0 pl-sm-1'}>
-                            <p className={'message-body col-12 mt-sm-0 ml-0 ml-sm-1 pr-0 pl-0 pl-lg-2 pl-md-2 pl-sm-2'}>{this.props.content}</p>
+                            <p className={'message-body col-12 mt-sm-0 ml-0 ml-sm-1 pr-0 pl-0 pl-lg-2 pl-md-2 pl-sm-2'}>{this.renderContent()}</p>
                         </div>
                     </div>
                 </div>

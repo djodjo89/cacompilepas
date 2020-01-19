@@ -108,3 +108,7 @@ input {
 .header-title {
 	margin-left: -3px;
 }
+
+textarea {
+	 resize: none;
+ }

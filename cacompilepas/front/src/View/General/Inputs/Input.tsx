@@ -1,4 +1,4 @@
-import React, {ChangeEvent, ReactNode} from "react";
+import React, {ChangeEvent, ReactNode} from 'react';
 
 interface InputProps {
     id: string,

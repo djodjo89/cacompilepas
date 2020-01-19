@@ -7,7 +7,6 @@ import {
     BrowserRouter as Router,
 } from 'react-router-dom';
 import {ReactComponent as Loader} from '../../img/loader.svg';
-import adminIcon from '../../img/admin.png';
 import LobbyTop from './LobbyTop';
 import LobbyBody from './LobbyBody';
 import swal from 'sweetalert';
@@ -18,11 +17,13 @@ interface LobbyState {
     courseSheets: [],
     messages: [],
     lobbyInformation: any,
+    messageContent: string,
 }
 
 class LobbyPage extends React.Component<any, LobbyState> {
 
     private intervalRefresh: any;
+
     public constructor(props: any) {
         super(props);
         this.state = {
@@ -31,6 +32,7 @@ class LobbyPage extends React.Component<any, LobbyState> {
             courseSheets: [],
             messages: [],
             lobbyInformation: [],
+            messageContent: '',
         }
         this.setState = this.setState.bind(this);
         this.sendMessage = this.sendMessage.bind(this);
@@ -41,6 +43,7 @@ class LobbyPage extends React.Component<any, LobbyState> {
         this.refreshData = this.refreshData.bind(this);
         this.refreshDescription = this.refreshDescription.bind(this);
         this.refreshMessages = this.refreshMessages.bind(this);
+        this.updateMessage = this.updateMessage.bind(this);
         this.intervalRefresh = setInterval(
             () => this.refreshData(),
             1000,
@@ -63,20 +66,23 @@ class LobbyPage extends React.Component<any, LobbyState> {
         clearInterval(this.intervalRefresh);
     }
 
-    public sendMessage(event: React.KeyboardEvent<HTMLDivElement>): void {
-        if (13 === event.keyCode) {
-            let content: any = event.target;
-            new Request(
-                '/message/add_message',
-                this.refreshMessages,
-                'POST',
-                {
-                    lobby_id: this.props.location.pathname.split(/\//)[2],
-                    content: content.value,
-                },
-            );
-            content.value = '';
+    public sendMessage(event: React.MouseEvent<HTMLButtonElement>): void {
+        let element: any = event.target;
+        let e: any = event.target;
+        element.parentElement.children[0].value = '';
+        if (undefined !== element.parentElement.children[0].style) {
+            element.parentElement.children[0].style.height = '1px';
+            element.parentElement.children[0].style.height = (element.parentElement.children[0].scrollHeight) + 'px';
         }
+        new Request(
+            '/message/add_message',
+            this.refreshMessages,
+            'POST',
+            {
+                lobby_id: this.props.location.pathname.split(/\//)[2],
+                content: this.state.messageContent,
+            },
+        );
     }
 
     public fillDescription(payload: any): void {
@@ -130,6 +136,10 @@ class LobbyPage extends React.Component<any, LobbyState> {
         this.setState({courseSheets: payload['success'] ? payload : []});
     }
 
+    public updateMessage(content: string): void {
+            this.setState({messageContent: content});
+    }
+
     public render(): ReactNode {
         return (
             <Router>
@@ -150,8 +160,9 @@ class LobbyPage extends React.Component<any, LobbyState> {
                                         <LobbyBody id={this.props.location.pathname.split(/\//)[2]}
                                                    labelLobby={this.state.lobbyInformation['label_lobby']}
                                                    courseSheets={this.state.courseSheets}
-                                                   onEnter={this.sendMessage}
                                                    messages={this.state.messages}
+                                                   sendMessage={this.sendMessage}
+                                                   updateMessage={this.updateMessage}
                                         />
                                     </section>
                                 );
