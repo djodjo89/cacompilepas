@@ -16,7 +16,7 @@ import PublicLobbies from '../Public/PublicLobbies';
 import CourseSheetPage from '../CourseSheet/CourseSheetPage';
 import Personal from '../Pages/Personal';
 import LobbyCreation from '../Lobby/LobbyCreation';
-import Inscription from '../Connection/Inscription';
+import Register from '../Connection/Register';
 
 class App extends React.Component<any, any> {
 
@@ -35,7 +35,7 @@ class App extends React.Component<any, any> {
                             <Connection referrer={document.referrer}/>
                         </Route>
                         <Route path={'/connexion/register'}>
-                            <Inscription/>
+                            <Register/>
                         </Route>
                         <PrivateRoute path={'/admin'} component={Admin} rest={[]}/>
                         <PrivateRoute path={'/creation'} component={LobbyCreation} rest={[]}/>

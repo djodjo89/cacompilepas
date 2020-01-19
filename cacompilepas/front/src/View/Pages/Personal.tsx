@@ -118,7 +118,7 @@ class Personal extends React.Component<any, PersonalState> {
         img.src = URL.createObjectURL(blob);
     }
 
-    public fetchData(payload: any) {
+    public fetchData(payload: any): void {
         this.setState({
                 personalInformation: payload['data'][0],
                 lobbies: undefined !== payload['data'][1] ? payload['data'][1] : [],

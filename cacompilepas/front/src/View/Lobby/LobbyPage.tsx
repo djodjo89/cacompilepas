@@ -163,6 +163,7 @@ class LobbyPage extends React.Component<any, LobbyState> {
                                                    messages={this.state.messages}
                                                    sendMessage={this.sendMessage}
                                                    updateMessage={this.updateMessage}
+                                                   displayNewCourseSheetForm={this.state.isAdmin}
                                         />
                                     </section>
                                 );

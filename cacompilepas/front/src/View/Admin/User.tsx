@@ -17,6 +17,7 @@ class User extends React.Component<UserProps, any> {
     public constructor(props: UserProps) {
         super(props);
 
+        this.check = this.check.bind(this);
         this.fillIcon = this.fillIcon.bind(this);
         this.getIcon = this.getIcon.bind(this);
     }
