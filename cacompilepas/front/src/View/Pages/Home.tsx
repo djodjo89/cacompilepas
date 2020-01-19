@@ -23,7 +23,7 @@ class Title extends React.Component {
     public render(): ReactNode {
         return (
             <div id={"Title"} className="col-lg-6">
-                <h1>Bienvenue sur caCompilePas.com</h1>
+                <h1>Bienvenue sur caCompilePas.com</h1> 
             </div>
         )
     }
