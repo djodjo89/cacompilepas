@@ -71,6 +71,28 @@ class Personal extends React.Component<any, PersonalState> {
         );
     }
 
+    public renderButtonCreationLobbyTop(): ReactNode {
+        let res;
+        let i: number = 0;
+        if (0 !== this.state.lobbies.length && undefined !== this.state.lobbies[0]) {
+            res = <div className={'offset-lg-1 col-lg-7 col-md-12 col-sm-12 col-xs-12 mt-4'}>
+                <a href={'/creation'}>
+                    <SubmitButton
+                        text={'Crée un lobby ici !'}
+                        onClick={(event: any) => null}
+                        className={'mt-1px offset-lg-5 col-lg-11 col-md-9 col-sm-12 col-xs-12 container-fluid add-course-sheet-button mt-5'}
+                        disconnectButton={'plus'}
+                    />
+                </a>
+            </div>
+        }
+        else {
+            res = <div></div>
+
+        }
+        return res;
+    }
+
     public renderLobbies(): ReactNode {
         let res;
         let i: number = 0;
@@ -94,7 +116,17 @@ class Personal extends React.Component<any, PersonalState> {
             );
         }
         else {
-            res = <h4 className={'text-center col-12 mt-5'}>Il n'y a pas de lobby pour le moment</h4>;
+            res = <div className={'offset-lg-3 col-lg-5 col-md-6 col-sm-6 col-xs-12 mt-4'}>
+                         <a href={'/creation'}>
+                            <SubmitButton
+                                text={'Crée ton premier lobby ici !'}
+                                onClick={(event: any) => null}
+                                className={'mt-1px offset-lg-5 col-lg-7 col-md-6 col-sm-12 col-xs-12 container-fluid add-course-sheet-button mt-5'}
+                                disconnectButton={'plus'}
+                            />
+                         </a>
+                    </div>
+
         }
         return res;
     }
@@ -144,14 +176,7 @@ class Personal extends React.Component<any, PersonalState> {
                             <h3>{this.state.personalInformation['first_name']}</h3>
                         </div>
                         <div className={'offset-lg-1 col-lg-5 col-md-6 col-sm-6 col-xs-12 mt-4'}>
-                            <a href={'/creation'}>
-                                <SubmitButton
-                                    text={'Crée un lobby ici !'}
-                                    onClick={(event: any) => null}
-                                    className={'mt-1px offset-lg-5 col-lg-7 col-md-6 col-sm-12 col-xs-12 container-fluid add-course-sheet-button mt-5'}
-                                    disconnectButton={'plus'}
-                                />
-                            </a>
+                            {this.renderButtonCreationLobbyTop()}
                         </div>
                     </div>
                 </div>
