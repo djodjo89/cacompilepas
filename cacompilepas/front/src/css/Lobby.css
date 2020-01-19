@@ -56,3 +56,7 @@
     height: 32px;
     width: 32px;
 }
+
+.lobby-file-upload {
+    border-radius: 70px !important;
+}

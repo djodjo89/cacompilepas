@@ -44,6 +44,7 @@ interface DropBoxProps {
     labelDragged: string,
     accept: string,
     backgroundClassName: string,
+    labelClassName?: string,
     handleFileDrop: (event: React.DragEvent<HTMLDivElement>) => void,
     handleFileChange: (event: ChangeEvent<HTMLInputElement>) => void,
 }
@@ -213,7 +214,7 @@ class DropBox extends React.Component<DropBoxProps, DropBoxState> {
                     transform: this.state.draggingState === 'dragging' ? 'rotate(-2deg) translateY(-10px)' : 'rotate(0)',
                 }}
             >
-                <label className={'file-upload'}>
+                <label className={'file-upload ' + this.props.labelClassName}>
                     <DropBoxBackground
                         label={this.state.label}
                         className={this.props.backgroundClassName}
