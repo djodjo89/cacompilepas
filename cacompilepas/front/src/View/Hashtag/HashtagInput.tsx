@@ -120,10 +120,6 @@ class HashtagInput extends React.Component<HashtagInputProps, HashTagInputState>
         this.deleteHashtags(content);
     }
 
-    public deleteHashtagOnKeyPressed(text: string): void {
-        this.deleteHashtags(text);
-    }
-
     public deleteHashtags(text: string): void {
         let index: number = this.state.hashtags.indexOf(text);
         this.state.hashtags.splice(index, 1);

@@ -7,7 +7,7 @@ import Input from "../General/Inputs/Input";
 import SubmitButton from "../General/Inputs/SubmitButton";
 import Header from "../General/Header";
 
-interface InscriptionState {
+interface RegisterState {
     email: string,
     password: string,
     passwordConfirmation: string,
@@ -19,7 +19,7 @@ interface InscriptionState {
     icon: File | null,
 }
 
-class Inscription extends React.Component<any, InscriptionState> {
+class Register extends React.Component<any, RegisterState> {
 
     constructor(props: any) {
         super(props);
@@ -254,4 +254,4 @@ class Inscription extends React.Component<any, InscriptionState> {
     }
 }
 
-export default Inscription;
+export default Register;
