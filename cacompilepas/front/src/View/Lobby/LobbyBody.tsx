@@ -18,6 +18,7 @@ interface LobbyBodyProps {
     messages: any,
     sendMessage: (event: React.MouseEvent<HTMLButtonElement>) => void,
     updateMessage: (content: string) => void,
+    displayNewCourseSheetForm: boolean,
 }
 
 interface LobbyBodyState {
@@ -57,7 +58,6 @@ class LobbyBody extends React.Component<LobbyBodyProps, LobbyBodyState> {
         this.refreshCourseSheets = this.refreshCourseSheets.bind(this);
         this.addCourseSheet = this.addCourseSheet.bind(this);
     }
-
 
     public handleCourseSheetTitleChange(event: ChangeEvent<HTMLInputElement>): void {
         this.setState({newCourseSheetTitle: event.target.value});
@@ -208,78 +208,86 @@ class LobbyBody extends React.Component<LobbyBodyProps, LobbyBodyState> {
                         </div>
                     </div>
                 </div>
-                <div className={'row'}>
-                    <div className={'col-12 row mt-5'}>
-                        <div
-                            className={'col-lg-4 col-md-4 col-sm-4 col-xs-12 pl-0 pr-lg-5 pr-md-0 pr-sm-0 pr-xs-0 pl-4 pl-lg-0 pl-md-0 pl-sm-0'}>
-                            <Input id={'title-input'} inputType={'text'}
-                                   placeholder={'Titre'}
-                                   className={'no-mb'}
-                                   checked={false}
-                                   formGroupClassName={'mb-0 mb-lg-2 mb-md-1 mb-sm-0 pb-2 pb-lg-1 pb-md-0 pr-0 pl-0 pl-lg-4 pl-md-4 pl-sm-4 col-12'}
-                                   onChange={this.handleCourseSheetTitleChange}/>
-                            <DropBox id={'course-sheet-input'}
-                                     className={'text-sm-left col-6 offset-3 offset-lg-0 offset-md-0 offset-sm-0 col-lg-12 col-md-12 col-sm-12 mt-3 mt-lg-0 mt-md-0 mt-sm-0 pt-3 pr-0 pl-0 pl-lg-4 pl-md-4 pl-sm-4'}
-                                     labelClassName={'lobby-file-upload'}
-                                     backgroundClassName={'mt-1'}
-                                     labelNotDragged={'Glisse une fiche par ici !'}
-                                     labelDragged={'Fiche déposée !'}
-                                     accept={'.docx,.pdf,.html,.htm,.odp,txt,md'}
-                                     handleFileDrop={this.handleCourseSheetDocumentDrop}
-                                     handleFileChange={this.handleCourseSheetDocumentChange}/>
-                        </div>
-                        <div
-                            className={'col-12 col-lg-8 col-md-8 col-sm-8 mt-4 mt-lg-0 mt-md-0 mt-sm-0 pt-2 pt-lg-0 pt-md-0 pt-sm-0 pr-0 pr-lg-4 pr-md-4 pr-sm-4 pl-4 pl-lg-0 pl-md-5 pl-sm-5'}>
-                            <div
-                                className={'row container-fluid course-sheet-textarea-container pr-0 pl-4 pl-lg-0 pl-md-0 pl-sm-0'}>
-                                <InputArea id={'description-input'}
-                                           placeholder={'Description de la fiche\nFais-en un bref résumé permettant de savoir à quoi s\'attendre en la lisant'}
-                                           className={'col-12 pl-0 course-sheet-textarea'}
-                                           textAreaClassName={'course-sheet-textarea'}
-                                           rows={6}
-                                           onChange={this.handleCourseSheetDescriptionChange}
-                                           disabled={false}
-                                />
-                            </div>
-                            <div
-                                className={'row container-fluid mb-4 pr-0 pl-4 pl-lg-0 pl-md-0 pl-sm-0'}>
-                                <div
-                                    className={'col-12 ml-0 pt-1 pr-0 pl-0'}>
-                                    <div className={'form-inline'}>
-                                        <label id="hashtag-label" htmlFor="add-hashtags">
+                {
+                    () => {
+                        if (this.props.displayNewCourseSheetForm) {
+                            return (
+                                <div className={'row'}>
+                                    <div className={'col-12 row mt-5'}>
+                                        <div
+                                            className={'col-lg-4 col-md-4 col-sm-4 col-xs-12 pl-0 pr-lg-5 pr-md-0 pr-sm-0 pr-xs-0 pl-4 pl-lg-0 pl-md-0 pl-sm-0'}>
+                                            <Input id={'title-input'} inputType={'text'}
+                                                   placeholder={'Titre'}
+                                                   className={'no-mb'}
+                                                   checked={false}
+                                                   formGroupClassName={'mb-0 mb-lg-2 mb-md-1 mb-sm-0 pb-2 pb-lg-1 pb-md-0 pr-0 pl-0 pl-lg-4 pl-md-4 pl-sm-4 col-12'}
+                                                   onChange={this.handleCourseSheetTitleChange}/>
+                                            <DropBox id={'course-sheet-input'}
+                                                     className={'text-sm-left col-6 offset-3 offset-lg-0 offset-md-0 offset-sm-0 col-lg-12 col-md-12 col-sm-12 mt-3 mt-lg-0 mt-md-0 mt-sm-0 pt-3 pr-0 pl-0 pl-lg-4 pl-md-4 pl-sm-4'}
+                                                     labelClassName={'lobby-file-upload'}
+                                                     backgroundClassName={'mt-1'}
+                                                     labelNotDragged={'Glisse une fiche par ici !'}
+                                                     labelDragged={'Fiche déposée !'}
+                                                     accept={'.docx,.pdf,.html,.htm,.odp,txt,md'}
+                                                     handleFileDrop={this.handleCourseSheetDocumentDrop}
+                                                     handleFileChange={this.handleCourseSheetDocumentChange}/>
+                                        </div>
+                                        <div
+                                            className={'col-12 col-lg-8 col-md-8 col-sm-8 mt-4 mt-lg-0 mt-md-0 mt-sm-0 pt-2 pt-lg-0 pt-md-0 pt-sm-0 pr-0 pr-lg-4 pr-md-4 pr-sm-4 pl-4 pl-lg-0 pl-md-5 pl-sm-5'}>
+                                            <div
+                                                className={'row container-fluid course-sheet-textarea-container pr-0 pl-4 pl-lg-0 pl-md-0 pl-sm-0'}>
+                                                <InputArea id={'description-input'}
+                                                           placeholder={'Description de la fiche\nFais-en un bref résumé permettant de savoir à quoi s\'attendre en la lisant'}
+                                                           className={'col-12 pl-0 course-sheet-textarea'}
+                                                           textAreaClassName={'course-sheet-textarea'}
+                                                           rows={6}
+                                                           onChange={this.handleCourseSheetDescriptionChange}
+                                                           disabled={false}
+                                                />
+                                            </div>
+                                            <div
+                                                className={'row container-fluid mb-4 pr-0 pl-4 pl-lg-0 pl-md-0 pl-sm-0'}>
+                                                <div
+                                                    className={'col-12 ml-0 pt-1 pr-0 pl-0'}>
+                                                    <div className={'form-inline'}>
+                                                        <label id="hashtag-label" htmlFor="add-hashtags">
                                                                         <span
                                                                             id="hashtag-placeholder">{this.state.hashtagInputIsNotEmpty ? 'Entre des hashtags pour cette fiche' : ''}</span>
-                                        </label>
-                                        {this.state.hashtagsView}
-                                        <div
-                                            className={'col-12 pl-0 pr-0'}>
-                                            <HashtagInput
-                                                id={'add-hashtags'}
-                                                className={'form-control w-100 mt-0 rounded hashtag-input col-12'}
-                                                type={'text'}
-                                                baseIndent={-3}
-                                                onUpdate={this.emptyInput}
-                                                updateHashtagsView={this.updateHashtagsView}
-                                                updateHashtags={this.updateHashtags}
-                                                updateText={this.updateText}
-                                                hashtagClassName={'hashtag-input-box hashtag'}
-                                            />
+                                                        </label>
+                                                        {this.state.hashtagsView}
+                                                        <div
+                                                            className={'col-12 pl-0 pr-0'}>
+                                                            <HashtagInput
+                                                                id={'add-hashtags'}
+                                                                className={'form-control w-100 mt-0 rounded hashtag-input col-12'}
+                                                                type={'text'}
+                                                                baseIndent={-3}
+                                                                onUpdate={this.emptyInput}
+                                                                updateHashtagsView={this.updateHashtagsView}
+                                                                updateHashtags={this.updateHashtags}
+                                                                updateText={this.updateText}
+                                                                hashtagClassName={'hashtag-input-box hashtag'}
+                                                            />
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                            <div
+                                                className={'row container-fluid pr-0 pl-4 pl-lg-0 pl-md-0 pl-sm-0'}>
+                                                <SubmitButton
+                                                    text={'Une nouvelle fiche ? Ajoute-la !'}
+                                                    onClick={this.addCourseSheet}
+                                                    className={'col-sm-12 container-fluid add-course-sheet-button mt-5 mr-0 ml-0 pl-0'}
+                                                    disconnectButton={'plus'}
+                                                />
+                                            </div>
                                         </div>
                                     </div>
                                 </div>
-                            </div>
-                            <div
-                                className={'row container-fluid pr-0 pl-4 pl-lg-0 pl-md-0 pl-sm-0'}>
-                                <SubmitButton
-                                    text={'Une nouvelle fiche ? Ajoute-la !'}
-                                    onClick={this.addCourseSheet}
-                                    className={'col-sm-12 container-fluid add-course-sheet-button mt-5 mr-0 ml-0 pl-0'}
-                                    disconnectButton={'plus'}
-                                />
-                            </div>
-                        </div>
-                    </div>
-                </div>
+                            );
+                        }
+                    }
+                }
             </div>
         )
     }

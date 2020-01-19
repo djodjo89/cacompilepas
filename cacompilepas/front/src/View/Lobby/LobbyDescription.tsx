@@ -89,7 +89,7 @@ class LobbyDescription extends React.Component<LobbyDescriptionProps, LobbyDescr
                     </div>
                     <div className={'col-lg-10 col-md-10 col-sm-9 col-xs-12 pr-0'}>
                         <div className={'row pr-0 pl-0'}>
-                            <div className={'col-11 col-lg-9 col-md-9 text-left pr-0 pl-0'}>
+                            <div className={'col-11 col-lg-9 col-md-9 text-left pr-0 pl-1 pl-sm-2'}>
                                 <h1 id={'lobby-label'}>{this.state.lobby['label_lobby']}</h1>
                             </div>
                             {
@@ -119,7 +119,7 @@ class LobbyDescription extends React.Component<LobbyDescriptionProps, LobbyDescr
                         </div>
                         <div className={'row pr-0 pl-0'}>
                             <div className={'col-12 pr-0 pl-0'}>
-                                <p className="lobby-page-description">{this.state.lobby['description']}</p>
+                                <p className={'lobby-page-description pl-2'}>{this.state.lobby['description']}</p>
                             </div>
                         </div>
                     </div>

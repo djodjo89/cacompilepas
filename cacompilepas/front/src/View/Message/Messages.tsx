@@ -20,13 +20,13 @@ class Messages extends React.Component<MessagesProps, any> {
         this.setState = this.setState.bind(this);
     }
 
-    public renderMessage(id: string, idUser: string, content: string, send_date: string, pseudo: string, icon: string): ReactNode {
+    public renderMessage(id: string, idUser: string, content: string, sendDate: string, pseudo: string, icon: string): ReactNode {
         return <Message
             id={id}
             key={id}
             idUser={idUser}
             content={content}
-            send_date={send_date}
+            sendDate={sendDate}
             pseudo={pseudo}
             icon={icon}
             activeRemoveButton={this.props.activeRemoveButton}

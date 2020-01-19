@@ -106,7 +106,7 @@ class Connection extends React.Component<{ referrer: string }, ConnectionStates>
                     <Header
                         h1={'Connecte-toi ici'}
                         p={'Comme ça tu pourras accéder à notre super site de fiches de cours !'}
-                        containerClassName={'mt-5 pt-5 ml-0 ml-lg-2 ml-md-2 ml-sm-2 mb-5'}
+                        containerClassName={'mt-5 pt-5 ml-0 ml-lg-2 ml-md-2 ml-sm-2 mb-4'}
                         contentClassName={'offset-lg-3 offset-md-2 pl-0 pl-lg-0 pl-md-4 pl-sm-3'}
                     />
                     <div className={'row'}>

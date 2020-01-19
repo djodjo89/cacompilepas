@@ -7,7 +7,7 @@ interface MessageProps {
     id: string,
     idUser: string,
     content: string,
-    send_date: string,
+    sendDate: string,
     pseudo: string,
     icon: string,
     activeRemoveButton?: boolean,
@@ -65,7 +65,7 @@ class Message extends React.Component<MessageProps, {}> {
                     </div>
                     <h4
                         className={(this.props.activeRemoveButton ? 'col-11 ' : 'col-12 ') + ' col-lg-9 col-md-9 col-sm-9 offset-1 mb-sm-0 mt-4 ml-0 ml-lg-4 ml-md-1 ml-sm-4 pt-2 pr-0 pl-0 pl-lg-1'}>
-                        {display(this.props.pseudo + ', ', this.props.send_date)}
+                        {display(this.props.pseudo + ', ', this.props.sendDate)}
                     </h4>
                     {this.props.activeRemoveButton
                         ? <RemoveButton
