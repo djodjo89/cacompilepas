@@ -217,6 +217,7 @@ class Register extends React.Component<any, RegisterState> {
                                        placeholder={'Mot de passe'}
                                        formGroupClassName={'col-12 mt-5'}
                                        className={'connection-input'}onChange={this.handlePasswordChange}/>
+                                <div className={"col-12 mt-1"}>Utilise au moins huit caractères avec des majuscules, des minuscules, des chiffres et des symboles</div>
                                 <Input id={'input-password-confirmation'} inputType={'password'}
                                        placeholder={'Confirmation mot de passe'}
                                        formGroupClassName={'col-12 mt-5'}
