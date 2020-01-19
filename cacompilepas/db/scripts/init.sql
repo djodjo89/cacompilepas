@@ -199,16 +199,24 @@ ON SCHEDULE EVERY 1 MINUTE ENABLE
 
 /******   ccp_user    ********/
 
-INSERT INTO ccp_user (pseudo,first_name,last_name,icon,password,email) VALUES ('tomtom','Thomas','Bonnet','pink_pencil_case.jpg','$2y$10$FU50osy63clx3YmMarOyvOLTxJvGHlJG787D2/fLs7vNp4fk7rI/K', 'thomas@cacompilepas.com');
-INSERT INTO ccp_user (pseudo,first_name,last_name,icon,password,email) VALUES ('nana','nabila','benattia','pink_pencil_case.jpg','$2y$10$FU50osy63clx3YmMarOyvOLTxJvGHlJG787D2/fLs7vNp4fk7rI/K', 'nabila@cacompilepas.com');
-
+INSERT INTO cacompilepasdb.ccp_user (id_user, pseudo, first_name, last_name, icon, password, email) VALUES (1, 'tomtom', 'Thomas', 'Bonnet', 'pink_pencil_case.jpg', '$2y$10$FU50osy63clx3YmMarOyvOLTxJvGHlJG787D2/fLs7vNp4fk7rI/K', 'thomas@cacompilepas.com');
+INSERT INTO cacompilepasdb.ccp_user (id_user, pseudo, first_name, last_name, icon, password, email) VALUES (2, 'nana', 'nabila', 'benattia', 'pink_pencil_case.jpg', '$2y$10$FU50osy63clx3YmMarOyvOLTxJvGHlJG787D2/fLs7vNp4fk7rI/K', 'nabila@cacompilepas.com');
+INSERT INTO cacompilepasdb.ccp_user (id_user, pseudo, first_name, last_name, icon, password, email) VALUES (3, 'Victor', 'Scrum', 'scrum1968', '', '$2y$10$mypwcPVZJac4.66SL1ormeckRKlaYlcEx2haWD8phNf14/S6cV4PS', 'picard@gmail.com');
+INSERT INTO cacompilepasdb.ccp_user (id_user, pseudo, first_name, last_name, icon, password, email) VALUES (4, 'Dimitry', 'Vegas', 'DV93', 'the-quieter-you-become-the-more-you-can-hear-ram-dass.jpg', '$2y$10$nUolHmfBLK4/RF/qr/YYF.R28CoeyTxBCYiq29itoH3dE549VR78q', 'hippolytepicard@yahoo.fr');
+INSERT INTO cacompilepasdb.ccp_user (id_user, pseudo, first_name, last_name, icon, password, email) VALUES (5, 'Djodjo', 'Mathys', 'Simion', 'richard-small.jpg', '$2y$10$4P6.S2Vmvy1cpzsbqdptFuZPHueTrUfKbcCtBc5i4uw1d7TI.hQ8K', 'mathysSimion@lafourche.fr');
+INSERT INTO cacompilepasdb.ccp_user (id_user, pseudo, first_name, last_name, icon, password, email) VALUES (6, 'Hipopo', 'Hippolyte', 'Picard', 'hippo.jpg', '$2y$10$ZQ6HiWFAQirLP/Mwq4/ILeqvezLsXO..9duGuwOmlzGa9Ox22/TDS', 'picardhippolyte@yahoo.fr');
+INSERT INTO cacompilepasdb.ccp_user (id_user, pseudo, first_name, last_name, icon, password, email) VALUES (7, 'Yukitsuo', 'Alexandre', 'Uy', 'maxresdefault.jpg', '$2y$10$Uk1tEl5d/S5kiASTBCrEvu6U30B4PTNylAwCryLr.h/CY9xXxu35C', 'yukitsuo@yahoo.fr');
+INSERT INTO cacompilepasdb.ccp_user (id_user, pseudo, first_name, last_name, icon, password, email) VALUES (8, 'aurelienMontreuil', 'Aurelien', 'Bossard', 'aurelien.jpeg', '$2y$10$W7LPYjL03b8S.cqEv6sUKuifuoTV0q3hWzSqjOOBuQwuiRTFktyXa', 'aurelienbossard@montreuil.fr');
+INSERT INTO cacompilepasdb.ccp_user (id_user, pseudo, first_name, last_name, icon, password, email) VALUES (9, 'manu', 'Emmanuel', 'Macron', 'macron.jpeg', '$2y$10$DUI29lSAy/mzKd4tR7FrBuik0B9WlTupTwprny.O6wiRgU21rvGu2', 'emmanuel@yahoo.fr');
 
 /******   ccp_lobby    ********/
 
-INSERT INTO ccp_lobby (label_lobby, description, logo, private) VALUES ('JAVA 8','Découvrez les nouveautes de JAVA 8 , entre lambda , hmap et compagnie vous ne serez pas decu', 'pink_pencil_case.jpg',TRUE);
-INSERT INTO ccp_lobby (label_lobby, description, logo, private) VALUES ('Bases de lassembleur','Plongez dans le monde infernal de lassembleur , un monde ou vous devez faire 10 lignes de codes juste pour faire un print','Colors-Gucci-Logo.jpg',TRUE);
-INSERT INTO ccp_lobby (label_lobby, description, logo, private) VALUES ('Vim est-il facile a apprendre ? ','Retrouver les arguments du perpetuel debat qui a dechiré plus dune familles ','Roi_Arthur_livre1.jpg',TRUE);
-INSERT INTO ccp_lobby (label_lobby, description, logo, private) VALUES ('JAVASCRIPT ','aucun commentaire','Roi_Arthur_livre1.jpg',TRUE);
+INSERT INTO cacompilepasdb.ccp_lobby (id_lobby, label_lobby, description, logo, private) VALUES (1, 'JAVA 8', 'Découvrez les nouveautes de JAVA 8 , entre lambda , hmap et compagnie vous ne serez pas decu', 'pink_pencil_case.jpg', 1);
+INSERT INTO cacompilepasdb.ccp_lobby (id_lobby, label_lobby, description, logo, private) VALUES (2, 'Bases de lassembleur', 'Plongez dans le monde infernal de lassembleur , un monde ou vous devez faire 10 lignes de codes juste pour faire un print', 'Colors-Gucci-Logo.jpg', 1);
+INSERT INTO cacompilepasdb.ccp_lobby (id_lobby, label_lobby, description, logo, private) VALUES (3, 'Vim est-il facile a apprendre ? ', 'Retrouver les arguments du perpetuel debat qui a dechiré plus dune familles ', 'Roi_Arthur_livre1.jpg', 1);
+INSERT INTO cacompilepasdb.ccp_lobby (id_lobby, label_lobby, description, logo, private) VALUES (4, 'JAVASCRIPT ', 'aucun commentaire', 'Roi_Arthur_livre1.jpg', 1);
+INSERT INTO cacompilepasdb.ccp_lobby (id_lobby, label_lobby, description, logo, private) VALUES (5, 'Introduction au langage C', 'Découvrez les bases de ce fabuleux langage', 'logo.png', 0);
+INSERT INTO cacompilepasdb.ccp_lobby (id_lobby, label_lobby, description, logo, private) VALUES (6, 'Préparation au 24h des IUT informatiques Dijon 2020', 'Retrouvez les sujets des épreuves de 2019 et avant !! Algo , Web et sécu :)', '24h.jpg', 1);
 
 
 /******   ccp_coursesheet    ********/
@@ -220,9 +228,41 @@ INSERT INTO ccp_coursesheet (title,publication_date,file_name,description,id_lob
 
 /******   ccp_message    ********/
 
-INSERT INTO ccp_message (content,send_date,id_user,id_lobby) VALUES ('hey les gars... ca compile pas , vous pouvez maider ?','2019-11-24',1,2);
-INSERT INTO ccp_message (content,send_date,id_user,id_lobby) VALUES ('tro nul se cite, sa vo clerement pa stakovèrflo !!!', '2019-12-09',1,1);
-INSERT INTO ccp_message (content,send_date,id_user,id_lobby) VALUES ('grâce à ces fiches de cours, j\'ai pu apprendre plein de choses malgré les grèves, merci beaucoup !', '2019-12-09',2,1);
+/**LOBBY JAVA 8 ***/
+
+INSERT INTO ccp_message (content,send_date,id_user,id_lobby) VALUES ('tro bien se cite, sa vo clerement pa stakovèrflo !!!', '2019-12-09',1,1);
+INSERT INTO ccp_message (content,send_date,id_user,id_lobby) VALUES ('Je suis daccord il set vraiment génial !', '2019-12-09',2,1);
+INSERT INTO ccp_message (content,send_date,id_user,id_lobby) VALUES ('hey les gars... ca compile pas , vous pouvez maider ?','2019-11-24',3,1);
+
+/**LOBBY Introduction au langage C ***/
+
+INSERT INTO ccp_message (content,send_date,id_user,id_lobby) VALUES ('finalement un pointeur cest quoi concretement ? quelque peut apporter une explication', '2019-12-09',4,5);
+INSERT INTO ccp_message (content,send_date,id_user,id_lobby) VALUES ('Ecoute.. Un pointeur est un objet dont la valeur est égale à l''adresse d''un autre objet.. cest pas compliqué qd même ', '2019-12-09',3,5);
+
+/**LOBBY preparation au 24 des IUT **/
+
+INSERT INTO ccp_message (content,send_date,id_user,id_lobby) VALUES ('hate dy être en tout cas !!', '2019-12-09',6,6);
+INSERT INTO ccp_message (content,send_date,id_user,id_lobby) VALUES ('Merci à ce qui on creé ce lobby OMG il ya toutes les annales des années précédentes !', '2019-12-09',9,6);
+
+
+/** VIM **/
+
+INSERT INTO ccp_message (content,send_date,id_user,id_lobby) VALUES ('Les gars comment on fait pour quitter Vim??', '2019-12-09',2,3);
+INSERT INTO ccp_message (content,send_date,id_user,id_lobby) VALUES ('Bonjour à tous : est ce que vous savez comment on quiite VIM cest important cela fait 3 jours qu eje suis dessus', '2019-12-09',3,3);
+INSERT INTO ccp_message (content,send_date,id_user,id_lobby) VALUES ('Avis à la population !! Je vais uploader une fiche bientot vous aurez toutes les réponses ', '2019-12-09',6,3);
+
+/** ASM  **/
+
+INSERT INTO ccp_message (content,send_date,id_user,id_lobby) VALUES ('Ce langage est génial !! ', '2019-12-09',7,2);
+INSERT INTO ccp_message (content,send_date,id_user,id_lobby) VALUES ('pardon ?', '2019-12-09',2,2);
+
+/** JAVA  8**/
+
+INSERT INTO ccp_message (content,send_date,id_user,id_lobby) VALUES ('Vraiment bravo pour les fiches !! Elles sont très complètes ', '2019-12-09',8,1);
+INSERT INTO ccp_message (content,send_date,id_user,id_lobby) VALUES ('Pouvez mettre un cours sur les Streams svp ?', '2019-12-09',7,1);
+
+
+
 
 /******   ccp_rights     ********/
 
@@ -232,8 +272,19 @@ INSERT INTO ccp_rights (read_right,write_right,id_lobby_protect,id_user) VALUES 
 /******   ccp_is_admin   ********/
 INSERT INTO ccp_is_admin (id_user, id_lobby) VALUES (1, 1);
 INSERT INTO ccp_is_admin (id_user, id_lobby) VALUES (2, 2);
-INSERT INTO ccp_is_admin (id_user, id_lobby) VALUES (1, 3);
+INSERT INTO ccp_is_admin (id_user, id_lobby) VALUES (3, 3);
+INSERT INTO ccp_is_admin (id_user, id_lobby) VALUES (3, 4);
+INSERT INTO ccp_is_admin (id_user, id_lobby) VALUES (4, 5);
+INSERT INTO ccp_is_admin (id_user, id_lobby) VALUES (5, 6);
+
 
 /******   ccp_hashtag    ********/
 INSERT INTO ccp_hashtag (label_hashtag, id_course_sheet) VALUES ("programmation", 1);
 INSERT INTO ccp_hashtag (label_hashtag, id_course_sheet) VALUES ("java", 1);
+INSERT INTO ccp_hashtag (label_hashtag, id_course_sheet) VALUES ("lambdas", 1);
+INSERT INTO ccp_hashtag (label_hashtag, id_course_sheet) VALUES ("Java8", 1);
+INSERT INTO ccp_hashtag (label_hashtag, id_course_sheet) VALUES ("assembleur",2);
+INSERT INTO ccp_hashtag (label_hashtag, id_course_sheet) VALUES ("dépression", 2);
+INSERT INTO ccp_hashtag (label_hashtag, id_course_sheet) VALUES ("design pattern", 3);
+
+
