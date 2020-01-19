@@ -36,12 +36,12 @@ class Request
                 $this->checkIfWrittenInSnakeCase($key);
             }
             if (is_array($value)) {
-                $this->{$this->toCamelCase(htmlspecialchars($key))} = [];
+                $this->{$this->toCamelCase(nl2br(htmlspecialchars($key)))} = [];
                 foreach ($value as $k => $val) {
-                    $this->{$this->toCamelCase(htmlspecialchars($key))}[$k] = $val;
+                    $this->{$this->toCamelCase(nl2br(htmlspecialchars($key)))}[$k] = $val;
                 }
             } else {
-                $this->{$this->toCamelCase(htmlspecialchars($key))} = htmlspecialchars($value);
+                $this->{$this->toCamelCase(nl2br(htmlspecialchars($key)))} = nl2br(htmlspecialchars($value));
             }
         }
     }

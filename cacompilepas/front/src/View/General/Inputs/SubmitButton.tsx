@@ -4,8 +4,8 @@ import disconnectIcon from '../../../img/logout-icon.png';
 
 interface SubmitButtonProps {
     text: string,
-    onClick: (event: React.MouseEvent<HTMLButtonElement, MouseEvent>) => void,
-    className: string,
+    onClick: (event: React.MouseEvent<HTMLButtonElement, MouseEvent>) => void ,
+    className?: string,
     disconnectButton?: string,
 }
 

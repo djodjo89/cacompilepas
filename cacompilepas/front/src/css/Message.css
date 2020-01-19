@@ -1,16 +1,15 @@
 .message-body {
-    overflow: scroll;
+    overflow-y: scroll;
     max-height: 100px;
 }
 
 .messages-list {
-    overflow: scroll;
+    overflow-x: hidden;
+    overflow-y: scroll;
     max-height: 350px;
 }
 
 #message-input {
-    text-align: left !important;
-    height: 44px;
     font-size: 16px;
     background-color: #6669c8;
     border-color: #6669c8;
@@ -20,4 +19,8 @@
 
 #message-input::placeholder {
     color: #ffffff;
+}
+
+textarea {
+    line-height: 2 !important;
 }

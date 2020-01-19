@@ -3,13 +3,15 @@ import CourseSheets from "../CourseSheet/CourseSheets";
 import Messages from "../Message/Messages";
 import WriteMessageZone from "../Message/WriteMessageZone";
 import LobbyDivider from "./LobbyDivider";
+import SubmitButton from "../General/Inputs/SubmitButton";
 
 interface LobbyBodyProps {
     id: string,
     labelLobby: string,
     courseSheets: [],
-    onEnter: (event: React.KeyboardEvent<HTMLDivElement>) => void,
     messages: any,
+    sendMessage: (event: React.MouseEvent<HTMLButtonElement>) => void,
+    updateMessage: (content: string) => void,
 }
 
 class LobbyBody extends React.Component<LobbyBodyProps, any> {
@@ -67,7 +69,8 @@ class LobbyBody extends React.Component<LobbyBodyProps, any> {
                     <div className={'row'}>
                         <WriteMessageZone
                             labelLobby={this.props.labelLobby}
-                            onEnter={this.props.onEnter}
+                            send={this.props.sendMessage}
+                            update={this.props.updateMessage}
                         />
                     </div>
                 </div>

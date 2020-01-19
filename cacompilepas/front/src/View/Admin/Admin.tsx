@@ -812,7 +812,14 @@ class Admin extends React.Component<any, AdminState> {
                                 return (
                                     <section className={'content row container-fluid pl-0 pr-0'}>
                                         <div className={'admin-header'}>
-                                            <h1 className={'lobby-title'}>{this.state.currentLabel}</h1>
+                                            <div className={'row container-fluid ml-0 pr-0 pl-0'}>
+                                                <div className={'col-8 text-left pl-0'}>
+                                                    <h1 className={'lobby-title'}>{this.state.currentLabel}</h1>
+                                                </div>
+                                                <div className={'col-4 mt-4 pr-0 pt-3 text-right'}>
+                                                    <a href={'/lobby/' + this.state.id} className={'d-block h3'}>Lien vers le lobby</a>
+                                                </div>
+                                            </div>
                                             <nav>
                                                 <ul className="nav nav-tabs custom-tab-nav">
                                                     <li className="nav-item" onClick={this.navigate}>
