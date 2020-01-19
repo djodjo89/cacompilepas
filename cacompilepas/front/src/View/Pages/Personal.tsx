@@ -116,14 +116,16 @@ class Personal extends React.Component<any, PersonalState> {
             );
         }
         else {
-            res = <div className={'offset-lg-3 col-lg-5 col-md-6 col-sm-6 col-xs-12 mt-4'}>
+            res = <div className={'col-12 col-lg-5 col-md-10 offset-md-2 col-sm-8 offset-sm-2 mt-4 centered'}>
                          <a href={'/creation'}>
-                            <SubmitButton
-                                text={'Crée ton premier lobby ici !'}
-                                onClick={(event: any) => null}
-                                className={'mt-1px offset-lg-5 col-lg-7 col-md-6 col-sm-12 col-xs-12 container-fluid add-course-sheet-button mt-5'}
-                                disconnectButton={'plus'}
-                            />
+                             <div className={'offset-md-2'}>
+                                 <SubmitButton
+                                     text={'Crée ton premier lobby ici !'}
+                                     onClick={(event: any) => null}
+                                     className={'mt-1 col-12 col-lg-12 col-md-9 pl-md-5 offset-md-5 col-sm-12 container-fluid add-course-sheet-button mt-5'}
+                                     disconnectButton={'plus'}
+                                 />
+                             </div>
                          </a>
                     </div>
 
@@ -172,10 +174,10 @@ class Personal extends React.Component<any, PersonalState> {
                         </div>
                     </div>
                     <div className={'row container-fluid mt-5 pr-0'}>
-                        <div className={'offset-lg-3 col-lg-3 col-md-6 col-sm-6 col-xs-12 text-lg-left text-sm-center'}>
+                        <div className={'offset-lg-3 col-lg-3 col-md-6 col-sm-6 col-xs-12 text-lg-left text-sm-center mt-sm-4'}>
                             <h3>{this.state.personalInformation['first_name']}</h3>
                         </div>
-                        <div className={'offset-lg-1 col-lg-5 col-md-6 col-sm-6 col-xs-12 mt-4'}>
+                        <div className={'offset-lg-1 col-12 col-lg-5 col-md-6 col-sm-6 mt-4'}>
                             {this.renderButtonCreationLobbyTop()}
                         </div>
                     </div>
@@ -183,13 +185,13 @@ class Personal extends React.Component<any, PersonalState> {
                 <Divider
                     className={'mt-5 offset-lg-2 col-lg-8'}
                 />
-                <div className={'row container-fluid mt-5'}>
-                    <div className={'row container-fluid'}>
+                <div className={'container-fluid mt-5'}>
+                    <div className={'container-fluid'}>
                         <div className={'col-12 text-center'}>
                             <h2>Mes lobbies</h2>
                         </div>
                     </div>
-                    <div className={'container-fluid ml-lg-5 pl-lg-5'}>
+                    <div className={'row container-fluid pl-0 pl-lg-5 ml-lg-5'}>
                         <div className={'col-lg-12 offset-lg-1 pr-0'}>
                             {this.renderLobbies()}
                         </div>
