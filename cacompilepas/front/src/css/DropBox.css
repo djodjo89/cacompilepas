@@ -18,8 +18,8 @@
 
 @media (max-width: 575px) {
     .react-pdf__Page__canvas {
-        width: 112% !important;
-        height: 10% !important;
+        width: 110% !important;
+        height: 5% !important;
         margin-left: auto;
         margin-right: auto;
     }
@@ -51,10 +51,36 @@
     height: 0;
 }
 
-.dragged-file {
-    width: 100px;
-    height: 100px;
-    border-radius: 50px;
+@media (max-width: 575px) {
+    .dragged-file {
+        width: 100px;
+        height: 100px;
+        border-radius: 70px;
+    }
+}
+
+@media (min-width: 576px) {
+    .dragged-file {
+        width: 128px;
+        height: 128px;
+        border-radius: 70px;
+    }
+}
+
+@media (min-width: 768px) {
+    .dragged-file {
+        width: 128px;
+        height: 128px;
+        border-radius: 70px;
+    }
+}
+
+@media (min-width: 992px) {
+    .dragged-file {
+        width: 128px;
+        height: 128px;
+        border-radius: 70px;
+    }
 }
 
 .not-dragged-file {
@@ -103,4 +129,43 @@
     .file-upload-content {
         height: 130%;
     }
+}
+
+@media (max-width: 575px) {
+    .pdf-file-icon-container {
+        width: 50%;
+        margin-left: auto;
+        margin-right: auto;
+    }
+}
+
+@media (min-width: 576px) {
+    .pdf-file-icon-container {
+        width: 37%;
+        margin-left: auto;
+        margin-right: auto;
+    }
+}
+
+@media (min-width: 768px) {
+    .pdf-file-icon-container {
+        width: 28%;
+        margin-left: auto;
+        margin-right: auto;
+    }
+}
+
+@media (min-width: 992px) {
+    .pdf-file-icon-container {
+        width: 29%;
+        margin-left: auto;
+        margin-right: auto;
+    }
+}
+
+#dropbox-icon {
+    width: 80%;
+    height: 80%;
+    margin-left: auto;
+    margin-right: auto;
 }

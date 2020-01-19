@@ -603,7 +603,7 @@ class Admin extends React.Component<any, AdminState> {
                                                                  labelNotDragged={'Glisse un logo par ici !'}
                                                                  labelDragged={'Logo déposé !'}
                                                                  accept={'image/*'}
-                                                                 backgroundClassName={'mt-3 mt-lg-4 mt-md-4 mt-sm-4 ml-4 ml-lg-5 ml-md-5 ml-sm-4'}
+                                                                 backgroundClassName={'mt-3 mt-lg-5 mt-md-4 mt-sm-4 ml-4 ml-lg-5 ml-md-5 ml-sm-4 pt-0 pt-lg-1 pt-md-4 pt-sm-3'}
                                                                  handleFileDrop={this.handleLogoDrop}
                                                                  handleFileChange={this.handleLogoChange}
                                                         />
@@ -632,10 +632,10 @@ class Admin extends React.Component<any, AdminState> {
                                                                placeholder={'Titre'}
                                                                className={'no-mb'}
                                                                checked={false}
-                                                               formGroupClassName={'mb-0 mb-lg-2 mb-md-1 mb-sm-4 pb-2 pb-lg-1 pb-md-0 pr-0 pl-0 pl-lg-4 pl-md-4 pl-sm-4 col-12'}
+                                                               formGroupClassName={'mb-0 mb-lg-2 mb-md-1 mb-sm-0 pb-2 pb-lg-1 pb-md-0 pr-0 pl-0 pl-lg-4 pl-md-4 pl-sm-4 col-12'}
                                                                onChange={this.handleCourseSheetTitleChange}/>
                                                         <DropBox id={'course-sheet-input'}
-                                                                 className={'text-sm-left col-6 offset-3 offset-lg-0 offset-md-0 offset-sm-0 col-lg-12 col-md-12 col-sm-12 mt-3 mt-lg-0 mt-md-0 mt-sm-4 pt-3 pr-0 pl-0 pl-lg-4 pl-md-4 pl-sm-4'}
+                                                                 className={'text-sm-left col-6 offset-3 offset-lg-0 offset-md-0 offset-sm-0 col-lg-12 col-md-12 col-sm-12 mt-3 mt-lg-0 mt-md-0 mt-sm-0 pt-3 pr-0 pl-0 pl-lg-4 pl-md-4 pl-sm-4'}
                                                                  backgroundClassName={'mt-1'}
                                                                  labelNotDragged={'Glisse une fiche par ici !'}
                                                                  labelDragged={'Fiche déposée !'}
