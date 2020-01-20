@@ -55,7 +55,7 @@ class LobbyController extends LinkedWithLobbyController
                     $lobbies = $this->getModel()->searchLobbies($this->getRequest()->getSearch(), $this->getRequest()->getHashtags());
                 } catch (JSONException $e) {
                 }
-                $this->setJSONResponse(array_merge($users, $lobbies));
+                $this->setJSONResponse(array_merge($users['data'], $lobbies['data']));
                 break;
 
             default:
