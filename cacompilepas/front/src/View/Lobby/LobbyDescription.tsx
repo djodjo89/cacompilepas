@@ -4,46 +4,27 @@ import adminIcon from "../../img/admin.png";
 
 interface LobbyDescriptionProps {
     id: string,
+    isAdmin: boolean
 }
 
 interface LobbyDescriptionState {
-    isAdmin: boolean,
     lobby: any,
 }
 
 class LobbyDescription extends React.Component<LobbyDescriptionProps, LobbyDescriptionState> {
-    public constructor(props: { id: string }) {
+    public constructor(props: LobbyDescriptionProps) {
         super(props);
         this.state = {
-            isAdmin: false,
             lobby: [],
         };
-        this.checkIfAdmin = this.checkIfAdmin.bind(this);
         this.fillDescription = this.fillDescription.bind(this);
         this.getLogo = this.getLogo.bind(this);
         this.fillLogo = this.fillLogo.bind(this);
-        this.refreshAdmin = this.refreshAdmin.bind(this);
         this.refreshDescription = this.refreshDescription.bind(this);
     }
 
     public componentDidMount(): void {
-        this.refreshAdmin();
         this.refreshDescription();
-    }
-
-    public checkIfAdmin(payload: any): void {
-        this.setState({isAdmin: payload['success']});
-    }
-
-    public refreshAdmin(): void {
-        new Request(
-            '/user/check_if_admin',
-            this.checkIfAdmin,
-            'POST',
-            {
-                'lobby_id': this.props.id,
-            }
-        );
     }
 
     public refreshDescription(): void {
@@ -94,7 +75,7 @@ class LobbyDescription extends React.Component<LobbyDescriptionProps, LobbyDescr
                             </div>
                             {
                                 (() => {
-                                    return this.state.isAdmin
+                                    return this.props.isAdmin
                                         ? <div className={'col-1 col-lg-3 col-md-3 text-right pt-0 pt-lg-5 pt-md-5 mt-5 mt-lg-0 mt-md-0'}>
                                             <a
                                                 href={'/admin/' + this.props.id}

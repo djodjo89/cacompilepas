@@ -13,12 +13,12 @@ import swal from "sweetalert";
 
 interface LobbyBodyProps {
     id: string,
+    isAdmin: boolean,
     labelLobby: string,
     courseSheets: [],
     messages: any,
     sendMessage: (event: React.MouseEvent<HTMLButtonElement>) => void,
     updateMessage: (content: string) => void,
-    displayNewCourseSheetForm: boolean,
 }
 
 interface LobbyBodyState {
@@ -209,8 +209,8 @@ class LobbyBody extends React.Component<LobbyBodyProps, LobbyBodyState> {
                     </div>
                 </div>
                 {
-                    () => {
-                        if (this.props.displayNewCourseSheetForm) {
+                    (() => {
+                        if (this.props.isAdmin) {
                             return (
                                 <div className={'row'}>
                                     <div className={'col-12 row mt-5'}>
@@ -225,7 +225,7 @@ class LobbyBody extends React.Component<LobbyBodyProps, LobbyBodyState> {
                                             <DropBox id={'course-sheet-input'}
                                                      className={'text-sm-left col-6 offset-3 offset-lg-0 offset-md-0 offset-sm-0 col-lg-12 col-md-12 col-sm-12 mt-3 mt-lg-0 mt-md-0 mt-sm-0 pt-3 pr-0 pl-0 pl-lg-4 pl-md-4 pl-sm-4'}
                                                      labelClassName={'lobby-file-upload'}
-                                                     backgroundClassName={'mt-1'}
+                                                     backgroundClassName={'mt-1 pb-lg-1 pb-md-3 pb-sm-3'}
                                                      labelNotDragged={'Glisse une fiche par ici !'}
                                                      labelDragged={'Fiche déposée !'}
                                                      accept={'.docx,.pdf,.html,.htm,.odp,txt,md'}
@@ -275,7 +275,7 @@ class LobbyBody extends React.Component<LobbyBodyProps, LobbyBodyState> {
                                             <div
                                                 className={'row container-fluid pr-0 pl-4 pl-lg-0 pl-md-0 pl-sm-0'}>
                                                 <SubmitButton
-                                                    text={'Une nouvelle fiche ? Ajoute-la !'}
+                                                    text={'Ajoute cette fiche au lobby !'}
                                                     onClick={this.addCourseSheet}
                                                     className={'col-sm-12 container-fluid add-course-sheet-button mt-5 mr-0 ml-0 pl-0'}
                                                     disconnectButton={'plus'}
@@ -286,7 +286,7 @@ class LobbyBody extends React.Component<LobbyBodyProps, LobbyBodyState> {
                                 </div>
                             );
                         }
-                    }
+                    })()
                 }
             </div>
         )

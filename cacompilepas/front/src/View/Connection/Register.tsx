@@ -206,7 +206,7 @@ class Register extends React.Component<any, RegisterState> {
                                     labelDragged={'Photo déposée'}
                                     labelClassName={'pb-0 mb-0'}
                                     accept={'image/*'}
-                                    backgroundClassName={'mt-5'}
+                                    backgroundClassName={'mt-5 pb-lg-4 pb-md-2 pb-sm-1'}
                                     handleFileDrop={this.handleIconDrop}
                                     handleFileChange={this.handleIconChange}
                                 />
