@@ -7,10 +7,32 @@
 	"item": [
 		{
 			"name": "Get Coursesheets",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"id": "25626325-69ea-4935-870c-a9fcb878d43c",
+						"exec": [
+							""
+						],
+						"type": "text/javascript"
+					}
+				}
+			],
 			"protocolProfileBehavior": {
 				"disableBodyPruning": true
 			},
 			"request": {
+				"auth": {
+					"type": "bearer",
+					"bearer": [
+						{
+							"key": "token",
+							"value": "{{token}}",
+							"type": "string"
+						}
+					]
+				},
 				"method": "GET",
 				"header": [
 					{
@@ -20,9 +42,85 @@
 						"type": "text"
 					},
 					{
-						"key": "Authorization",
-						"value": "Bearer eyJ0eXAiOiJKV1QiLCJhbGciOiJSUzUxMiJ9.eyJlbWFpbCI6InRob21hc0BjYWNvbXBpbGVwYXMuY29tIiwicGFzc3dvcmQiOiIkMnkkMTAkRlU1MG9zeTYzY2x4M1ltTWFyT3l2T0xUeEp2R0hsSkc3ODdEMlwvZkxzN3ZOcDRmazdySVwvSyIsInRpbWUiOnsiZGF0ZSI6IjIwMjAtMDEtMDYgMTM6NTI6MTAuNTc1Mjk5IiwidGltZXpvbmVfdHlwZSI6MywidGltZXpvbmUiOiJFdXJvcGVcL1BhcmlzIn19.b8F7kG6R9fH92l5Kxqa3XRB2X-4z88aQn20gftRdZoyLX1wQMKZca_1LBlBZcqS7EInkAVzxC_t4Z8yR_fz5R4ycTuqECa9ixdm0_oKxKCwpiTQrOih24VevQsO3NhfiE99JEJeJ3N052GCbdochSUHVaaMGhcI6TjRdmzg0tFw",
-						"type": "text"
+						"key": "",
+						"value": "",
+						"type": "text",
+						"disabled": true
+					}
+				],
+				"body": {
+					"mode": "raw",
+					"raw": "{\n\t\"lobby_id\": 1\n}",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "http://localhost/?module=course_sheet&action=course_sheets",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"path": [
+						""
+					],
+					"query": [
+						{
+							"key": "module",
+							"value": "course_sheet"
+						},
+						{
+							"key": "action",
+							"value": "course_sheets"
+						}
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Get Coursesheet",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"id": "25626325-69ea-4935-870c-a9fcb878d43c",
+						"exec": [
+							""
+						],
+						"type": "text/javascript"
+					}
+				}
+			],
+			"protocolProfileBehavior": {
+				"disableBodyPruning": true
+			},
+			"request": {
+				"auth": {
+					"type": "bearer",
+					"bearer": [
+						{
+							"key": "token",
+							"value": "{{token}}",
+							"type": "string"
+						}
+					]
+				},
+				"method": "GET",
+				"header": [
+					{
+						"key": "Content-Type",
+						"name": "Content-Type",
+						"type": "text",
+						"value": "application/json"
+					},
+					{
+						"key": "",
+						"type": "text",
+						"value": "",
+						"disabled": true
 					}
 				],
 				"body": {
@@ -35,7 +133,7 @@
 					}
 				},
 				"url": {
-					"raw": "http://localhost/?module=lobby&action=coursesheets&param=1",
+					"raw": "http://localhost/?module=course_sheet&action=course_sheet&param=6",
 					"protocol": "http",
 					"host": [
 						"localhost"
@@ -46,15 +144,15 @@
 					"query": [
 						{
 							"key": "module",
-							"value": "lobby"
+							"value": "course_sheet"
 						},
 						{
 							"key": "action",
-							"value": "coursesheets"
+							"value": "course_sheet"
 						},
 						{
 							"key": "param",
-							"value": "1"
+							"value": "6"
 						}
 					]
 				}
@@ -64,6 +162,16 @@
 		{
 			"name": "Update Lobby label",
 			"request": {
+				"auth": {
+					"type": "bearer",
+					"bearer": [
+						{
+							"key": "token",
+							"value": "{{token}}",
+							"type": "string"
+						}
+					]
+				},
 				"method": "POST",
 				"header": [
 					{
@@ -75,7 +183,7 @@
 				],
 				"body": {
 					"mode": "raw",
-					"raw": "{\n\t\"token\":\"eyJ0eXAiOiJKV1QiLCJhbGciOiJSUzUxMiJ9.eyJlbWFpbCI6InRob21hc0BjYWNvbXBpbGVwYXMuY29tIiwicGFzc3dvcmQiOiIkMnkkMTAkRlU1MG9zeTYzY2x4M1ltTWFyT3l2T0xUeEp2R0hsSkc3ODdEMlwvZkxzN3ZOcDRmazdySVwvSyIsInRpbWUiOnsiZGF0ZSI6IjIwMTktMTItMTMgMTM6MjE6NTYuODk5Njg5IiwidGltZXpvbmVfdHlwZSI6MywidGltZXpvbmUiOiJFdXJvcGVcL1BhcmlzIn19.cDWswLtT-KhDAgn0aDGmHuPLA-tbbLt21nBMKcpTWpjsdZOC_2aYxdMZ3F9xf_IzCZQdtbLozf5_QmrAu_kWf2OnbaLKwdPVxahZV2K9DlNZzQq2SOk4HZ7kh_aPgqKcdgq_WmselKgdiIl8PC5TXLkq2GsbGQIiRWulbygFagA\",\n\t\"label\": \"Le java pour les nuls\",\n\t\"description\": \"Le java nanana\"\n}",
+					"raw": "{\n\t\"label\": \"Le java pour les nuls\",\n\t\"description\": \"Le java nanana\"\n}",
 					"options": {
 						"raw": {
 							"language": "json"
@@ -131,9 +239,9 @@
 					}
 				},
 				"url": {
-					"raw": "localhost/?module=connection&action=login&Authorization=Bearer eyJ0eXAiOiJKV1QiLCJhbGciOiJSUzUxMiJ9.eyJlbWFpbCI6InRob21hc0BjYWNvbXBpbGVwYXMuY29tIiwicGFzc3dvcmQiOiIkMnkkMTAkRlU1MG9zeTYzY2x4M1ltTWFyT3l2T0xUeEp2R0hsSkc3ODdEMlwvZkxzN3ZOcDRmazdySVwvSyIsInRpbWUiOnsiZGF0ZSI6IjIwMTktMTItMjcgMTM6NTE6MTguOTAyMzc0IiwidGltZXpvbmVfdHlwZSI6MywidGltZXpvbmUiOiJFdXJvcGVcL1BhcmlzIn19.FubdOCNura9LtizJY2MxpGizbZsdUDmwKnQjYt3LN9QbSLC35lNldi4DSYY9QVptxhbVCkfra5wnmidyahffG9_heqX1dWs8jFjDyBOdVg3gdbO2rerHNjoN_X8mL7uH_Y1aveVpfA4ru930xEWyFClTI2E3iAGNf5EonPCRLPA",
+					"raw": "{{url}}/?module=connection&action=login",
 					"host": [
-						"localhost"
+						"{{url}}"
 					],
 					"path": [
 						""
@@ -146,10 +254,6 @@
 						{
 							"key": "action",
 							"value": "login"
-						},
-						{
-							"key": "Authorization",
-							"value": "Bearer eyJ0eXAiOiJKV1QiLCJhbGciOiJSUzUxMiJ9.eyJlbWFpbCI6InRob21hc0BjYWNvbXBpbGVwYXMuY29tIiwicGFzc3dvcmQiOiIkMnkkMTAkRlU1MG9zeTYzY2x4M1ltTWFyT3l2T0xUeEp2R0hsSkc3ODdEMlwvZkxzN3ZOcDRmazdySVwvSyIsInRpbWUiOnsiZGF0ZSI6IjIwMTktMTItMjcgMTM6NTE6MTguOTAyMzc0IiwidGltZXpvbmVfdHlwZSI6MywidGltZXpvbmUiOiJFdXJvcGVcL1BhcmlzIn19.FubdOCNura9LtizJY2MxpGizbZsdUDmwKnQjYt3LN9QbSLC35lNldi4DSYY9QVptxhbVCkfra5wnmidyahffG9_heqX1dWs8jFjDyBOdVg3gdbO2rerHNjoN_X8mL7uH_Y1aveVpfA4ru930xEWyFClTI2E3iAGNf5EonPCRLPA"
 						}
 					]
 				}
@@ -162,6 +266,16 @@
 				"disableBodyPruning": true
 			},
 			"request": {
+				"auth": {
+					"type": "bearer",
+					"bearer": [
+						{
+							"key": "token",
+							"value": "{{token}}",
+							"type": "string"
+						}
+					]
+				},
 				"method": "GET",
 				"header": [
 					{
@@ -173,7 +287,7 @@
 				],
 				"body": {
 					"mode": "raw",
-					"raw": "{\n\t\"email\": \"thomas@cacompilepas.com\",\n\t\"password\": \"root\"\n}",
+					"raw": "",
 					"options": {
 						"raw": {
 							"language": "json"
@@ -206,6 +320,16 @@
 		{
 			"name": "Delete Course sheet",
 			"request": {
+				"auth": {
+					"type": "bearer",
+					"bearer": [
+						{
+							"key": "token",
+							"value": "{{token}}",
+							"type": "string"
+						}
+					]
+				},
 				"method": "POST",
 				"header": [
 					{
@@ -217,7 +341,7 @@
 				],
 				"body": {
 					"mode": "raw",
-					"raw": "{\n\t\"id\": \"1\",\n\t\"token\": \"eyJ0eXAiOiJKV1QiLCJhbGciOiJSUzUxMiJ9.eyJlbWFpbCI6InRob21hc0BjYWNvbXBpbGVwYXMuY29tIiwicGFzc3dvcmQiOiIkMnkkMTAkRlU1MG9zeTYzY2x4M1ltTWFyT3l2T0xUeEp2R0hsSkc3ODdEMlwvZkxzN3ZOcDRmazdySVwvSyIsInRpbWUiOnsiZGF0ZSI6IjIwMTktMTItMTQgMTc6MDA6NTQuODkxODI1IiwidGltZXpvbmVfdHlwZSI6MywidGltZXpvbmUiOiJFdXJvcGVcL1BhcmlzIn19.OjOUMrqiJoxTJDKshVfZJbupcy7-y2M7mrL4V6OZlsPI1-qBDHioG_TOuaXL3Jsr6esFxjRRb8C3vsMYlOSwX_Lu_-GNbuIHlNqRSUJ6KCpCcyKRU7w6S_zOwtI1dVUo4Mmum4uxq3cC-GUR64P5T5Kao2XwoZRcrZ3-TPXWJmg\"\n}",
+					"raw": "",
 					"options": {
 						"raw": {
 							"language": "json"
@@ -225,7 +349,7 @@
 					}
 				},
 				"url": {
-					"raw": "http://localhost/?module=lobby&action=deleteCourseSheet&param=1",
+					"raw": "http://localhost/?module=course_sheet&action=delete_course_sheet&param=18",
 					"protocol": "http",
 					"host": [
 						"localhost"
@@ -236,15 +360,95 @@
 					"query": [
 						{
 							"key": "module",
-							"value": "lobby"
+							"value": "course_sheet"
 						},
 						{
 							"key": "action",
-							"value": "deleteCourseSheet"
+							"value": "delete_course_sheet"
 						},
 						{
 							"key": "param",
-							"value": "1"
+							"value": "18"
+						}
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Add Course sheet",
+			"request": {
+				"auth": {
+					"type": "bearer",
+					"bearer": [
+						{
+							"key": "token",
+							"value": "{{token}}",
+							"type": "string"
+						}
+					]
+				},
+				"method": "POST",
+				"header": [
+					{
+						"key": "Content-Type",
+						"name": "Content-Type",
+						"type": "text",
+						"value": "application/json"
+					}
+				],
+				"body": {
+					"mode": "formdata",
+					"formdata": [
+						{
+							"key": "lobby_id",
+							"value": "1",
+							"type": "text"
+						},
+						{
+							"key": "title",
+							"value": "jador le java",
+							"type": "text"
+						},
+						{
+							"key": "file",
+							"type": "file",
+							"src": "/Users/danidani/Downloads/Archi_Little_Boat.pdf"
+						},
+						{
+							"key": "description",
+							"value": "tro bien est le java, l'apprendre tu le pourras",
+							"type": "text"
+						},
+						{
+							"key": "hashtags",
+							"value": "java, prog, programmation",
+							"type": "text"
+						}
+					],
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "http://localhost/?module=course_sheet&action=add_course_sheet",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"path": [
+						""
+					],
+					"query": [
+						{
+							"key": "module",
+							"value": "course_sheet"
+						},
+						{
+							"key": "action",
+							"value": "add_course_sheet"
 						}
 					]
 				}
@@ -254,6 +458,16 @@
 		{
 			"name": "Add user to lobby",
 			"request": {
+				"auth": {
+					"type": "bearer",
+					"bearer": [
+						{
+							"key": "token",
+							"value": "{{token}}",
+							"type": "string"
+						}
+					]
+				},
 				"method": "POST",
 				"header": [
 					{
@@ -265,7 +479,7 @@
 				],
 				"body": {
 					"mode": "raw",
-					"raw": "{\n\t\"email\": \"nabila@cacompilepas.com\",\n\t\"token\": \"eyJ0eXAiOiJKV1QiLCJhbGciOiJSUzUxMiJ9.eyJlbWFpbCI6InRob21hc0BjYWNvbXBpbGVwYXMuY29tIiwicGFzc3dvcmQiOiIkMnkkMTAkRlU1MG9zeTYzY2x4M1ltTWFyT3l2T0xUeEp2R0hsSkc3ODdEMlwvZkxzN3ZOcDRmazdySVwvSyIsInRpbWUiOnsiZGF0ZSI6IjIwMTktMTItMTcgMTM6MDg6MDcuNDEwNDI3IiwidGltZXpvbmVfdHlwZSI6MywidGltZXpvbmUiOiJFdXJvcGVcL1BhcmlzIn19.BAY1Y05Gd2iO1SNTOxhpRoZVFFhvxNcn7W_64u6-FxJmKI0PwdoFTH-g54xu6p1rv-Pkv1cBuoSEdvK4-kgR2Ibp5uX9bXOGhXVlABGMEgWM2yaXkbZ_aZceekOCifiv0rLnTldDrNdJWcolT6_p85nZ4nsRUItupNYUU_KZrNw\"\n}",
+					"raw": "{\n\t\"lobby_id\": 1,\n\t\"email\": \"nabila@cacompilepas.com\"\n}",
 					"options": {
 						"raw": {
 							"language": "json"
@@ -273,10 +487,9 @@
 					}
 				},
 				"url": {
-					"raw": "http://localhost/?module=lobby&action=addUser&param=1",
-					"protocol": "http",
+					"raw": "{{url}}/?module=user&action=add_user",
 					"host": [
-						"localhost"
+						"{{url}}"
 					],
 					"path": [
 						""
@@ -284,63 +497,11 @@
 					"query": [
 						{
 							"key": "module",
-							"value": "lobby"
+							"value": "user"
 						},
 						{
 							"key": "action",
-							"value": "addUser"
-						},
-						{
-							"key": "param",
-							"value": "1"
-						}
-					]
-				}
-			},
-			"response": []
-		},
-		{
-			"name": "Add write rights on lobby",
-			"request": {
-				"method": "POST",
-				"header": [
-					{
-						"key": "Content-Type",
-						"name": "Content-Type",
-						"type": "text",
-						"value": "application/json"
-					}
-				],
-				"body": {
-					"mode": "raw",
-					"raw": "{\n\t\"email\": \"nabila@cacompilepas.com\",\n\t\"token\": \"eyJ0eXAiOiJKV1QiLCJhbGciOiJSUzUxMiJ9.eyJlbWFpbCI6InRob21hc0BjYWNvbXBpbGVwYXMuY29tIiwicGFzc3dvcmQiOiIkMnkkMTAkRlU1MG9zeTYzY2x4M1ltTWFyT3l2T0xUeEp2R0hsSkc3ODdEMlwvZkxzN3ZOcDRmazdySVwvSyIsInRpbWUiOnsiZGF0ZSI6IjIwMTktMTItMTQgMjA6Mzc6NDcuMTE2MDIxIiwidGltZXpvbmVfdHlwZSI6MywidGltZXpvbmUiOiJFdXJvcGVcL1BhcmlzIn19.UTIwBxxWuoPUUVKMaJXi-jdb_zlUmx5kMT65Mso2R_83t05pQtRiviq63_Ll4-qSNwi5G11eOUZtQ0yHYanc3cvBxvmGFBSEqOjFcaiFvwQaT_dpeigb43CARVQm8V0VSmPyFitjXMT617pprHCJSDkQ_wLqBqh1hBTYZw8Dq_w\"\n}",
-					"options": {
-						"raw": {
-							"language": "json"
-						}
-					}
-				},
-				"url": {
-					"raw": "http://localhost/?module=lobby&action=addWriteRight&param=1",
-					"protocol": "http",
-					"host": [
-						"localhost"
-					],
-					"path": [
-						""
-					],
-					"query": [
-						{
-							"key": "module",
-							"value": "lobby"
-						},
-						{
-							"key": "action",
-							"value": "addWriteRight"
-						},
-						{
-							"key": "param",
-							"value": "1"
+							"value": "add_user"
 						}
 					]
 				}
@@ -350,6 +511,16 @@
 		{
 			"name": "Remove user from lobby",
 			"request": {
+				"auth": {
+					"type": "bearer",
+					"bearer": [
+						{
+							"key": "token",
+							"value": "{{token}}",
+							"type": "string"
+						}
+					]
+				},
 				"method": "POST",
 				"header": [
 					{
@@ -361,7 +532,7 @@
 				],
 				"body": {
 					"mode": "raw",
-					"raw": "{\n\t\"email\": \"nabila@cacompilepas.com\",\n\t\"token\": \"eyJ0eXAiOiJKV1QiLCJhbGciOiJSUzUxMiJ9.eyJlbWFpbCI6InRob21hc0BjYWNvbXBpbGVwYXMuY29tIiwicGFzc3dvcmQiOiIkMnkkMTAkRlU1MG9zeTYzY2x4M1ltTWFyT3l2T0xUeEp2R0hsSkc3ODdEMlwvZkxzN3ZOcDRmazdySVwvSyIsInRpbWUiOnsiZGF0ZSI6IjIwMTktMTItMTQgMjA6Mzc6NDcuMTE2MDIxIiwidGltZXpvbmVfdHlwZSI6MywidGltZXpvbmUiOiJFdXJvcGVcL1BhcmlzIn19.UTIwBxxWuoPUUVKMaJXi-jdb_zlUmx5kMT65Mso2R_83t05pQtRiviq63_Ll4-qSNwi5G11eOUZtQ0yHYanc3cvBxvmGFBSEqOjFcaiFvwQaT_dpeigb43CARVQm8V0VSmPyFitjXMT617pprHCJSDkQ_wLqBqh1hBTYZw8Dq_w\"\n}",
+					"raw": "{\n\t\"lobby_id\": 1\n}",
 					"options": {
 						"raw": {
 							"language": "json"
@@ -369,7 +540,7 @@
 					}
 				},
 				"url": {
-					"raw": "http://localhost/?module=lobby&action=removeUser&param=1",
+					"raw": "http://localhost/?module=user&action=remove_user&param=2",
 					"protocol": "http",
 					"host": [
 						"localhost"
@@ -380,15 +551,15 @@
 					"query": [
 						{
 							"key": "module",
-							"value": "lobby"
+							"value": "user"
 						},
 						{
 							"key": "action",
-							"value": "removeUser"
+							"value": "remove_user"
 						},
 						{
 							"key": "param",
-							"value": "1"
+							"value": "2"
 						}
 					]
 				}
@@ -396,8 +567,18 @@
 			"response": []
 		},
 		{
-			"name": "Remove write rights on lobby",
+			"name": "Add user write right",
 			"request": {
+				"auth": {
+					"type": "bearer",
+					"bearer": [
+						{
+							"key": "token",
+							"value": "{{token}}",
+							"type": "string"
+						}
+					]
+				},
 				"method": "POST",
 				"header": [
 					{
@@ -409,7 +590,7 @@
 				],
 				"body": {
 					"mode": "raw",
-					"raw": "{\n\t\"email\": \"nabila@cacompilepas.com\",\n\t\"token\": \"eyJ0eXAiOiJKV1QiLCJhbGciOiJSUzUxMiJ9.eyJlbWFpbCI6InRob21hc0BjYWNvbXBpbGVwYXMuY29tIiwicGFzc3dvcmQiOiIkMnkkMTAkRlU1MG9zeTYzY2x4M1ltTWFyT3l2T0xUeEp2R0hsSkc3ODdEMlwvZkxzN3ZOcDRmazdySVwvSyIsInRpbWUiOnsiZGF0ZSI6IjIwMTktMTItMTQgMjA6Mzc6NDcuMTE2MDIxIiwidGltZXpvbmVfdHlwZSI6MywidGltZXpvbmUiOiJFdXJvcGVcL1BhcmlzIn19.UTIwBxxWuoPUUVKMaJXi-jdb_zlUmx5kMT65Mso2R_83t05pQtRiviq63_Ll4-qSNwi5G11eOUZtQ0yHYanc3cvBxvmGFBSEqOjFcaiFvwQaT_dpeigb43CARVQm8V0VSmPyFitjXMT617pprHCJSDkQ_wLqBqh1hBTYZw8Dq_w\"\n}",
+					"raw": "{\n\t\"lobby_id\": 1\n}",
 					"options": {
 						"raw": {
 							"language": "json"
@@ -417,7 +598,7 @@
 					}
 				},
 				"url": {
-					"raw": "http://localhost/?module=lobby&action=removeWriteRight&param=1",
+					"raw": "http://localhost/?module=user&action=add_write_right&param=2",
 					"protocol": "http",
 					"host": [
 						"localhost"
@@ -428,15 +609,73 @@
 					"query": [
 						{
 							"key": "module",
-							"value": "lobby"
+							"value": "user"
 						},
 						{
 							"key": "action",
-							"value": "removeWriteRight"
+							"value": "add_write_right"
 						},
 						{
 							"key": "param",
-							"value": "1"
+							"value": "2"
+						}
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Remove user write right",
+			"request": {
+				"auth": {
+					"type": "bearer",
+					"bearer": [
+						{
+							"key": "token",
+							"value": "{{token}}",
+							"type": "string"
+						}
+					]
+				},
+				"method": "POST",
+				"header": [
+					{
+						"key": "Content-Type",
+						"name": "Content-Type",
+						"type": "text",
+						"value": "application/json"
+					}
+				],
+				"body": {
+					"mode": "raw",
+					"raw": "{\n\t\"lobby_id\": 1\n}",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "http://localhost/?module=user&action=remove_write_right&param=2",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"path": [
+						""
+					],
+					"query": [
+						{
+							"key": "module",
+							"value": "user"
+						},
+						{
+							"key": "action",
+							"value": "remove_write_right"
+						},
+						{
+							"key": "param",
+							"value": "2"
 						}
 					]
 				}
@@ -445,8 +684,21 @@
 		},
 		{
 			"name": "Make lobby private",
+			"protocolProfileBehavior": {
+				"disableBodyPruning": true
+			},
 			"request": {
-				"method": "POST",
+				"auth": {
+					"type": "bearer",
+					"bearer": [
+						{
+							"key": "token",
+							"value": "{{token}}",
+							"type": "string"
+						}
+					]
+				},
+				"method": "GET",
 				"header": [
 					{
 						"key": "Content-Type",
@@ -457,7 +709,7 @@
 				],
 				"body": {
 					"mode": "raw",
-					"raw": "{\n\t\"token\": \"eyJ0eXAiOiJKV1QiLCJhbGciOiJSUzUxMiJ9.eyJlbWFpbCI6InRob21hc0BjYWNvbXBpbGVwYXMuY29tIiwicGFzc3dvcmQiOiIkMnkkMTAkRlU1MG9zeTYzY2x4M1ltTWFyT3l2T0xUeEp2R0hsSkc3ODdEMlwvZkxzN3ZOcDRmazdySVwvSyIsInRpbWUiOnsiZGF0ZSI6IjIwMTktMTItMTQgMjA6Mzc6NDcuMTE2MDIxIiwidGltZXpvbmVfdHlwZSI6MywidGltZXpvbmUiOiJFdXJvcGVcL1BhcmlzIn19.UTIwBxxWuoPUUVKMaJXi-jdb_zlUmx5kMT65Mso2R_83t05pQtRiviq63_Ll4-qSNwi5G11eOUZtQ0yHYanc3cvBxvmGFBSEqOjFcaiFvwQaT_dpeigb43CARVQm8V0VSmPyFitjXMT617pprHCJSDkQ_wLqBqh1hBTYZw8Dq_w\"\n}",
+					"raw": "",
 					"options": {
 						"raw": {
 							"language": "json"
@@ -465,7 +717,7 @@
 					}
 				},
 				"url": {
-					"raw": "http://localhost/?module=lobby&action=makePrivate&param=1",
+					"raw": "http://localhost/?module=lobby&action=make_private&param=1",
 					"protocol": "http",
 					"host": [
 						"localhost"
@@ -480,7 +732,7 @@
 						},
 						{
 							"key": "action",
-							"value": "makePrivate"
+							"value": "make_private"
 						},
 						{
 							"key": "param",
@@ -493,8 +745,21 @@
 		},
 		{
 			"name": "Make lobby public",
+			"protocolProfileBehavior": {
+				"disableBodyPruning": true
+			},
 			"request": {
-				"method": "POST",
+				"auth": {
+					"type": "bearer",
+					"bearer": [
+						{
+							"key": "token",
+							"value": "{{token}}",
+							"type": "string"
+						}
+					]
+				},
+				"method": "GET",
 				"header": [
 					{
 						"key": "Content-Type",
@@ -505,7 +770,7 @@
 				],
 				"body": {
 					"mode": "raw",
-					"raw": "{\n\t\"token\": \"eyJ0eXAiOiJKV1QiLCJhbGciOiJSUzUxMiJ9.eyJlbWFpbCI6InRob21hc0BjYWNvbXBpbGVwYXMuY29tIiwicGFzc3dvcmQiOiIkMnkkMTAkRlU1MG9zeTYzY2x4M1ltTWFyT3l2T0xUeEp2R0hsSkc3ODdEMlwvZkxzN3ZOcDRmazdySVwvSyIsInRpbWUiOnsiZGF0ZSI6IjIwMTktMTItMTQgMjA6Mzc6NDcuMTE2MDIxIiwidGltZXpvbmVfdHlwZSI6MywidGltZXpvbmUiOiJFdXJvcGVcL1BhcmlzIn19.UTIwBxxWuoPUUVKMaJXi-jdb_zlUmx5kMT65Mso2R_83t05pQtRiviq63_Ll4-qSNwi5G11eOUZtQ0yHYanc3cvBxvmGFBSEqOjFcaiFvwQaT_dpeigb43CARVQm8V0VSmPyFitjXMT617pprHCJSDkQ_wLqBqh1hBTYZw8Dq_w\"\n}",
+					"raw": "",
 					"options": {
 						"raw": {
 							"language": "json"
@@ -513,7 +778,7 @@
 					}
 				},
 				"url": {
-					"raw": "http://localhost/?module=lobby&action=makePublic&param=1",
+					"raw": "http://localhost/?module=lobby&action=make_public&param=1",
 					"protocol": "http",
 					"host": [
 						"localhost"
@@ -528,7 +793,7 @@
 						},
 						{
 							"key": "action",
-							"value": "makePublic"
+							"value": "make_public"
 						},
 						{
 							"key": "param",
@@ -545,6 +810,16 @@
 				"disableBodyPruning": true
 			},
 			"request": {
+				"auth": {
+					"type": "bearer",
+					"bearer": [
+						{
+							"key": "token",
+							"value": "{{token}}",
+							"type": "string"
+						}
+					]
+				},
 				"method": "GET",
 				"header": [
 					{
@@ -556,7 +831,7 @@
 				],
 				"body": {
 					"mode": "raw",
-					"raw": "{\n\t\"token\": \"eyJ0eXAiOiJKV1QiLCJhbGciOiJSUzUxMiJ9.eyJlbWFpbCI6InRob21hc0BjYWNvbXBpbGVwYXMuY29tIiwicGFzc3dvcmQiOiIkMnkkMTAkRlU1MG9zeTYzY2x4M1ltTWFyT3l2T0xUeEp2R0hsSkc3ODdEMlwvZkxzN3ZOcDRmazdySVwvSyIsInRpbWUiOnsiZGF0ZSI6IjIwMTktMTItMTcgMTM6MDg6MDcuNDEwNDI3IiwidGltZXpvbmVfdHlwZSI6MywidGltZXpvbmUiOiJFdXJvcGVcL1BhcmlzIn19.BAY1Y05Gd2iO1SNTOxhpRoZVFFhvxNcn7W_64u6-FxJmKI0PwdoFTH-g54xu6p1rv-Pkv1cBuoSEdvK4-kgR2Ibp5uX9bXOGhXVlABGMEgWM2yaXkbZ_aZceekOCifiv0rLnTldDrNdJWcolT6_p85nZ4nsRUItupNYUU_KZrNw\"\n}",
+					"raw": "{\n\t\"lobby_id\": 1\n}",
 					"options": {
 						"raw": {
 							"language": "json"
@@ -564,7 +839,7 @@
 					}
 				},
 				"url": {
-					"raw": "http://localhost/?module=lobby&action=users&param=1",
+					"raw": "http://localhost/?module=user&action=users",
 					"protocol": "http",
 					"host": [
 						"localhost"
@@ -575,59 +850,11 @@
 					"query": [
 						{
 							"key": "module",
-							"value": "lobby"
+							"value": "user"
 						},
 						{
 							"key": "action",
 							"value": "users"
-						},
-						{
-							"key": "param",
-							"value": "1"
-						}
-					]
-				}
-			},
-			"response": []
-		},
-		{
-			"name": "Get lobbies by hashtags",
-			"request": {
-				"method": "POST",
-				"header": [
-					{
-						"key": "Content-Type",
-						"name": "Content-Type",
-						"value": "application/json",
-						"type": "text"
-					}
-				],
-				"body": {
-					"mode": "raw",
-					"raw": "{\n\t\"hashtags\": [\n\t\t\"programmation\",\n\t\t\"java\"\n\t\t]\n}",
-					"options": {
-						"raw": {
-							"language": "json"
-						}
-					}
-				},
-				"url": {
-					"raw": "http://localhost/?module=coursesheet&action=getLobbiesByHashtag",
-					"protocol": "http",
-					"host": [
-						"localhost"
-					],
-					"path": [
-						""
-					],
-					"query": [
-						{
-							"key": "module",
-							"value": "coursesheet"
-						},
-						{
-							"key": "action",
-							"value": "getLobbiesByHashtag"
 						}
 					]
 				}
@@ -637,6 +864,16 @@
 		{
 			"name": "Add hashtags",
 			"request": {
+				"auth": {
+					"type": "bearer",
+					"bearer": [
+						{
+							"key": "token",
+							"value": "{{token}}",
+							"type": "string"
+						}
+					]
+				},
 				"method": "POST",
 				"header": [
 					{
@@ -644,11 +881,6 @@
 						"name": "Content-Type",
 						"type": "text",
 						"value": "application/json"
-					},
-					{
-						"key": "Authorization",
-						"value": "Bearer eyJ0eXAiOiJKV1QiLCJhbGciOiJSUzUxMiJ9.eyJlbWFpbCI6InRob21hc0BjYWNvbXBpbGVwYXMuY29tIiwicGFzc3dvcmQiOiIkMnkkMTAkRlU1MG9zeTYzY2x4M1ltTWFyT3l2T0xUeEp2R0hsSkc3ODdEMlwvZkxzN3ZOcDRmazdySVwvSyIsInRpbWUiOnsiZGF0ZSI6IjIwMTktMTItMjcgMTM6NTE6MTguOTAyMzc0IiwidGltZXpvbmVfdHlwZSI6MywidGltZXpvbmUiOiJFdXJvcGVcL1BhcmlzIn19.FubdOCNura9LtizJY2MxpGizbZsdUDmwKnQjYt3LN9QbSLC35lNldi4DSYY9QVptxhbVCkfra5wnmidyahffG9_heqX1dWs8jFjDyBOdVg3gdbO2rerHNjoN_X8mL7uH_Y1aveVpfA4ru930xEWyFClTI2E3iAGNf5EonPCRLPA",
-						"type": "text"
 					}
 				],
 				"body": {
@@ -661,10 +893,9 @@
 					}
 				},
 				"url": {
-					"raw": "http://localhost/?module=coursesheet&action=addHashtags&param=1",
-					"protocol": "http",
+					"raw": "{{url}}/?module=course_sheet&action=add_hashtags&param=16",
 					"host": [
-						"localhost"
+						"{{url}}"
 					],
 					"path": [
 						""
@@ -672,15 +903,15 @@
 					"query": [
 						{
 							"key": "module",
-							"value": "coursesheet"
+							"value": "course_sheet"
 						},
 						{
 							"key": "action",
-							"value": "addHashtags"
+							"value": "add_hashtags"
 						},
 						{
 							"key": "param",
-							"value": "1"
+							"value": "16"
 						}
 					]
 				}
@@ -689,7 +920,20 @@
 		},
 		{
 			"name": "Remove hashtag",
+			"protocolProfileBehavior": {
+				"disableBodyPruning": true
+			},
 			"request": {
+				"auth": {
+					"type": "bearer",
+					"bearer": [
+						{
+							"key": "token",
+							"value": "{{token}}",
+							"type": "string"
+						}
+					]
+				},
 				"method": "GET",
 				"header": [
 					{
@@ -699,8 +943,17 @@
 						"value": "application/json"
 					}
 				],
+				"body": {
+					"mode": "raw",
+					"raw": "{\n\t\"hashtag\": \"java8\"\n}",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
 				"url": {
-					"raw": "http://localhost/?module=coursesheet&action=removeHashtag&param=java8",
+					"raw": "http://localhost/?module=course_sheet&action=remove_hashtag&param=16",
 					"protocol": "http",
 					"host": [
 						"localhost"
@@ -711,15 +964,15 @@
 					"query": [
 						{
 							"key": "module",
-							"value": "coursesheet"
+							"value": "course_sheet"
 						},
 						{
 							"key": "action",
-							"value": "removeHashtag"
+							"value": "remove_hashtag"
 						},
 						{
 							"key": "param",
-							"value": "java8"
+							"value": "16"
 						}
 					]
 				}
@@ -729,6 +982,16 @@
 		{
 			"name": "Get Lobbies",
 			"request": {
+				"auth": {
+					"type": "bearer",
+					"bearer": [
+						{
+							"key": "token",
+							"value": "{{token}}",
+							"type": "string"
+						}
+					]
+				},
 				"method": "GET",
 				"header": [
 					{
@@ -736,18 +999,12 @@
 						"name": "Content-Type",
 						"type": "text",
 						"value": "application/json"
-					},
-					{
-						"key": "Authorization",
-						"value": "Bearer eyJ0eXAiOiJKV1QiLCJhbGciOiJSUzUxMiJ9.eyJlbWFpbCI6InRob21hc0BjYWNvbXBpbGVwYXMuY29tIiwicGFzc3dvcmQiOiIkMnkkMTAkRlU1MG9zeTYzY2x4M1ltTWFyT3l2T0xUeEp2R0hsSkc3ODdEMlwvZkxzN3ZOcDRmazdySVwvSyIsInRpbWUiOnsiZGF0ZSI6IjIwMTktMTItMjkgMTc6NTg6MzguOTc5MTE2IiwidGltZXpvbmVfdHlwZSI6MywidGltZXpvbmUiOiJFdXJvcGVcL1BhcmlzIn19.HaNGwrDqQSLGf6euoy8ilZv-CYWrHyNDtapaZoZo17XUIbm5dR56dDFR6LY8lsZ4XLJGwiKooocCHm7kfKnr6sZeLsA3RO8MaICHBknupo9VCadSF19X_LtrnKFCvxXcREP0x_i75MlRWtEVSAG5pMmgCJE4HTKfwgLyRmvKFok",
-						"type": "text"
 					}
 				],
 				"url": {
-					"raw": "http://localhost/?module=lobby&action=getLobbies&param=0",
-					"protocol": "http",
+					"raw": "{{url}}/?module=lobby&action=get_lobbies",
 					"host": [
-						"localhost"
+						"{{url}}"
 					],
 					"path": [
 						""
@@ -759,11 +1016,7 @@
 						},
 						{
 							"key": "action",
-							"value": "getLobbies"
-						},
-						{
-							"key": "param",
-							"value": "0"
+							"value": "get_lobbies"
 						}
 					]
 				}
@@ -772,24 +1025,32 @@
 		},
 		{
 			"name": "Get Logo",
+			"protocolProfileBehavior": {
+				"disableBodyPruning": true
+			},
 			"request": {
-				"method": "POST",
+				"auth": {
+					"type": "bearer",
+					"bearer": [
+						{
+							"key": "token",
+							"value": "{{token}}",
+							"type": "string"
+						}
+					]
+				},
+				"method": "GET",
 				"header": [
 					{
 						"key": "Content-Type",
 						"name": "Content-Type",
 						"type": "text",
 						"value": "application/json"
-					},
-					{
-						"key": "Authorization",
-						"type": "text",
-						"value": "Bearer eyJ0eXAiOiJKV1QiLCJhbGciOiJSUzUxMiJ9.eyJlbWFpbCI6InRob21hc0BjYWNvbXBpbGVwYXMuY29tIiwicGFzc3dvcmQiOiIkMnkkMTAkRlU1MG9zeTYzY2x4M1ltTWFyT3l2T0xUeEp2R0hsSkc3ODdEMlwvZkxzN3ZOcDRmazdySVwvSyIsInRpbWUiOnsiZGF0ZSI6IjIwMTktMTItMjkgMTc6NTg6MzguOTc5MTE2IiwidGltZXpvbmVfdHlwZSI6MywidGltZXpvbmUiOiJFdXJvcGVcL1BhcmlzIn19.HaNGwrDqQSLGf6euoy8ilZv-CYWrHyNDtapaZoZo17XUIbm5dR56dDFR6LY8lsZ4XLJGwiKooocCHm7kfKnr6sZeLsA3RO8MaICHBknupo9VCadSF19X_LtrnKFCvxXcREP0x_i75MlRWtEVSAG5pMmgCJE4HTKfwgLyRmvKFok"
 					}
 				],
 				"body": {
 					"mode": "raw",
-					"raw": "{\n\t\"idLobby\": 1,\n\t\"path\": \"pink_pencil_case.jpg\"\n}",
+					"raw": "",
 					"options": {
 						"raw": {
 							"language": "json"
@@ -797,7 +1058,7 @@
 					}
 				},
 				"url": {
-					"raw": "http://localhost/?module=lobby&action=getLogo&param=0",
+					"raw": "http://localhost/?module=lobby&action=get_logo&param=5",
 					"protocol": "http",
 					"host": [
 						"localhost"
@@ -812,16 +1073,11 @@
 						},
 						{
 							"key": "action",
-							"value": "getLogo"
+							"value": "get_logo"
 						},
 						{
 							"key": "param",
-							"value": "0"
-						},
-						{
-							"key": "id_lobby",
-							"value": "1",
-							"disabled": true
+							"value": "5"
 						}
 					]
 				}
@@ -829,11 +1085,21 @@
 			"response": []
 		},
 		{
-			"name": "Get By keywords",
+			"name": "Search",
 			"protocolProfileBehavior": {
 				"disableBodyPruning": true
 			},
 			"request": {
+				"auth": {
+					"type": "bearer",
+					"bearer": [
+						{
+							"key": "token",
+							"value": "{{token}}",
+							"type": "string"
+						}
+					]
+				},
 				"method": "GET",
 				"header": [
 					{
@@ -841,16 +1107,11 @@
 						"name": "Content-Type",
 						"type": "text",
 						"value": "application/json"
-					},
-					{
-						"key": "Authorization",
-						"type": "text",
-						"value": "Bearer eyJ0eXAiOiJKV1QiLCJhbGciOiJSUzUxMiJ9.eyJlbWFpbCI6InRob21hc0BjYWNvbXBpbGVwYXMuY29tIiwicGFzc3dvcmQiOiIkMnkkMTAkRlU1MG9zeTYzY2x4M1ltTWFyT3l2T0xUeEp2R0hsSkc3ODdEMlwvZkxzN3ZOcDRmazdySVwvSyIsInRpbWUiOnsiZGF0ZSI6IjIwMjAtMDEtMDMgMDg6NDQ6NDYuMTc3MjE5IiwidGltZXpvbmVfdHlwZSI6MywidGltZXpvbmUiOiJFdXJvcGVcL1BhcmlzIn19.SGqQiovta1z5QXBd_fgyOqXAzPJEo2oN70j5rgkevZ5yiV3vm3c6YkMCnPV_av3BfbOIMYXkD0exJjBiuduGVfBLnzHBOpVO4fWFJIEnS230vJeyyYcVRzsreaEn1mEMXF0qRNmD8yIYh4FAYSHJT15B98WkHwbwxQNLYfqAgJ8"
 					}
 				],
 				"body": {
 					"mode": "raw",
-					"raw": "{\n\t\"search\": [\n\t\t\"8\",\n\t\t\"JAVA\"\n\t\t]\n}",
+					"raw": "{\n\t\"search\": [\n\t\t\"t\"\n\t\t],\n\t\"hashtags\": [\n\t\t]\n}",
 					"options": {
 						"raw": {
 							"language": "json"
@@ -858,10 +1119,9 @@
 					}
 				},
 				"url": {
-					"raw": "http://localhost/?module=lobby&action=search&param=0",
-					"protocol": "http",
+					"raw": "{{url}}/?module=lobby&action=search",
 					"host": [
-						"localhost"
+						"{{url}}"
 					],
 					"path": [
 						""
@@ -879,10 +1139,6 @@
 							"key": "id_lobby",
 							"value": "1",
 							"disabled": true
-						},
-						{
-							"key": "param",
-							"value": "0"
 						}
 					]
 				}
@@ -895,6 +1151,16 @@
 				"disableBodyPruning": true
 			},
 			"request": {
+				"auth": {
+					"type": "bearer",
+					"bearer": [
+						{
+							"key": "token",
+							"value": "{{token}}",
+							"type": "string"
+						}
+					]
+				},
 				"method": "GET",
 				"header": [
 					{
@@ -902,11 +1168,6 @@
 						"name": "Content-Type",
 						"type": "text",
 						"value": "application/json"
-					},
-					{
-						"key": "Authorization",
-						"type": "text",
-						"value": "Bearer eyJ0eXAiOiJKV1QiLCJhbGciOiJSUzUxMiJ9.eyJlbWFpbCI6InRob21hc0BjYWNvbXBpbGVwYXMuY29tIiwicGFzc3dvcmQiOiIkMnkkMTAkRlU1MG9zeTYzY2x4M1ltTWFyT3l2T0xUeEp2R0hsSkc3ODdEMlwvZkxzN3ZOcDRmazdySVwvSyIsInRpbWUiOnsiZGF0ZSI6IjIwMjAtMDEtMDQgMjE6MjQ6NTAuMzU2NDIwIiwidGltZXpvbmVfdHlwZSI6MywidGltZXpvbmUiOiJFdXJvcGVcL1BhcmlzIn19.NRqjuAeKaiY73CiQsIM6hvWJ3wnzEIw0IuSZvC_4j1ut9xwsOTRMBBgGiuLTTemK2XKZRkz365YwnMfOjCOIeCpZWQ0Kp_SxT0eLlfcPrd7yl3-tWCUh8cQFgxUC3gmExvpvqMaR29crQ2ygzMdjUWRrT1fg4vkr2RWxMtmxNm0"
 					}
 				],
 				"body": {
@@ -919,7 +1180,7 @@
 					}
 				},
 				"url": {
-					"raw": "http://localhost/?module=connection&action=personal&param=1",
+					"raw": "http://localhost/?action=personal&param=1&module=user",
 					"protocol": "http",
 					"host": [
 						"localhost"
@@ -929,21 +1190,16 @@
 					],
 					"query": [
 						{
-							"key": "id_lobby",
-							"value": "1",
-							"disabled": true
-						},
-						{
-							"key": "module",
-							"value": "connection"
-						},
-						{
 							"key": "action",
 							"value": "personal"
 						},
 						{
 							"key": "param",
 							"value": "1"
+						},
+						{
+							"key": "module",
+							"value": "user"
 						}
 					]
 				}
@@ -956,6 +1212,16 @@
 				"disableBodyPruning": true
 			},
 			"request": {
+				"auth": {
+					"type": "bearer",
+					"bearer": [
+						{
+							"key": "token",
+							"value": "{{token}}",
+							"type": "string"
+						}
+					]
+				},
 				"method": "GET",
 				"header": [
 					{
@@ -963,16 +1229,11 @@
 						"name": "Content-Type",
 						"type": "text",
 						"value": "application/json"
-					},
-					{
-						"key": "Authorization",
-						"type": "text",
-						"value": "Bearer eyJ0eXAiOiJKV1QiLCJhbGciOiJSUzUxMiJ9.eyJlbWFpbCI6InRob21hc0BjYWNvbXBpbGVwYXMuY29tIiwicGFzc3dvcmQiOiIkMnkkMTAkRlU1MG9zeTYzY2x4M1ltTWFyT3l2T0xUeEp2R0hsSkc3ODdEMlwvZkxzN3ZOcDRmazdySVwvSyIsInRpbWUiOnsiZGF0ZSI6IjIwMjAtMDEtMDQgMjE6NDc6MjcuMTg2OTQ1IiwidGltZXpvbmVfdHlwZSI6MywidGltZXpvbmUiOiJFdXJvcGVcL1BhcmlzIn19.a3SpeXdlKbjBGwKSBJRmWXHRqiAcJymLAfDegC6iY1U1qA1oJcI2XZ0DykM5yHCIK1rUXPWUEbEb70dINhnQtvvV4llqo_fTirbvSZO-PpeQmmlyCjsU_lNICTCPFzJJJQ-fcnGwek99MnlqrfMgELgrfBPdYp2WSLJwQVfHqog"
 					}
 				],
 				"body": {
 					"mode": "raw",
-					"raw": "{\n\t\"path\": \"pink_pencil_case.jpg\"\n}",
+					"raw": "",
 					"options": {
 						"raw": {
 							"language": "json"
@@ -980,7 +1241,7 @@
 					}
 				},
 				"url": {
-					"raw": "http://localhost/?module=connection&action=getIcon&param=1",
+					"raw": "http://localhost/?action=get_icon&module=user&param=1",
 					"protocol": "http",
 					"host": [
 						"localhost"
@@ -990,17 +1251,12 @@
 					],
 					"query": [
 						{
-							"key": "id_lobby",
-							"value": "1",
-							"disabled": true
+							"key": "action",
+							"value": "get_icon"
 						},
 						{
 							"key": "module",
-							"value": "connection"
-						},
-						{
-							"key": "action",
-							"value": "getIcon"
+							"value": "user"
 						},
 						{
 							"key": "param",
@@ -1017,6 +1273,16 @@
 				"disableBodyPruning": true
 			},
 			"request": {
+				"auth": {
+					"type": "bearer",
+					"bearer": [
+						{
+							"key": "token",
+							"value": "{{token}}",
+							"type": "string"
+						}
+					]
+				},
 				"method": "GET",
 				"header": [
 					{
@@ -1024,16 +1290,11 @@
 						"name": "Content-Type",
 						"type": "text",
 						"value": "application/json"
-					},
-					{
-						"key": "Authorization",
-						"type": "text",
-						"value": "Bearer eyJ0eXAiOiJKV1QiLCJhbGciOiJSUzUxMiJ9.eyJlbWFpbCI6InRob21hc0BjYWNvbXBpbGVwYXMuY29tIiwicGFzc3dvcmQiOiIkMnkkMTAkRlU1MG9zeTYzY2x4M1ltTWFyT3l2T0xUeEp2R0hsSkc3ODdEMlwvZkxzN3ZOcDRmazdySVwvSyIsInRpbWUiOnsiZGF0ZSI6IjIwMjAtMDEtMDQgMjE6NDc6MjcuMTg2OTQ1IiwidGltZXpvbmVfdHlwZSI6MywidGltZXpvbmUiOiJFdXJvcGVcL1BhcmlzIn19.a3SpeXdlKbjBGwKSBJRmWXHRqiAcJymLAfDegC6iY1U1qA1oJcI2XZ0DykM5yHCIK1rUXPWUEbEb70dINhnQtvvV4llqo_fTirbvSZO-PpeQmmlyCjsU_lNICTCPFzJJJQ-fcnGwek99MnlqrfMgELgrfBPdYp2WSLJwQVfHqog"
 					}
 				],
 				"body": {
 					"mode": "raw",
-					"raw": "{\n\t\"content\": \"Tro bien ce lobby !\"\n}",
+					"raw": "{\n\t\"lobby_id\": 2,\n\t\"content\": \"Vive les crêpes bretonnes !\"\n}",
 					"options": {
 						"raw": {
 							"language": "json"
@@ -1041,7 +1302,7 @@
 					}
 				},
 				"url": {
-					"raw": "http://localhost/?param=1&module=lobby&action=addMessage",
+					"raw": "http://localhost/?module=message&action=add_message",
 					"protocol": "http",
 					"host": [
 						"localhost"
@@ -1051,21 +1312,12 @@
 					],
 					"query": [
 						{
-							"key": "id_lobby",
-							"value": "1",
-							"disabled": true
-						},
-						{
-							"key": "param",
-							"value": "1"
-						},
-						{
 							"key": "module",
-							"value": "lobby"
+							"value": "message"
 						},
 						{
 							"key": "action",
-							"value": "addMessage"
+							"value": "add_message"
 						}
 					]
 				}
@@ -1078,6 +1330,16 @@
 				"disableBodyPruning": true
 			},
 			"request": {
+				"auth": {
+					"type": "bearer",
+					"bearer": [
+						{
+							"key": "token",
+							"value": "{{token}}",
+							"type": "string"
+						}
+					]
+				},
 				"method": "GET",
 				"header": [
 					{
@@ -1085,11 +1347,6 @@
 						"name": "Content-Type",
 						"type": "text",
 						"value": "application/json"
-					},
-					{
-						"key": "Authorization",
-						"type": "text",
-						"value": "Bearer eyJ0eXAiOiJKV1QiLCJhbGciOiJSUzUxMiJ9.eyJlbWFpbCI6InRob21hc0BjYWNvbXBpbGVwYXMuY29tIiwicGFzc3dvcmQiOiIkMnkkMTAkRlU1MG9zeTYzY2x4M1ltTWFyT3l2T0xUeEp2R0hsSkc3ODdEMlwvZkxzN3ZOcDRmazdySVwvSyIsInRpbWUiOnsiZGF0ZSI6IjIwMjAtMDEtMDQgMjE6NDc6MjcuMTg2OTQ1IiwidGltZXpvbmVfdHlwZSI6MywidGltZXpvbmUiOiJFdXJvcGVcL1BhcmlzIn19.a3SpeXdlKbjBGwKSBJRmWXHRqiAcJymLAfDegC6iY1U1qA1oJcI2XZ0DykM5yHCIK1rUXPWUEbEb70dINhnQtvvV4llqo_fTirbvSZO-PpeQmmlyCjsU_lNICTCPFzJJJQ-fcnGwek99MnlqrfMgELgrfBPdYp2WSLJwQVfHqog"
 					}
 				],
 				"body": {
@@ -1111,11 +1368,6 @@
 						""
 					],
 					"query": [
-						{
-							"key": "id_lobby",
-							"value": "1",
-							"disabled": true
-						},
 						{
 							"key": "param",
 							"value": "1"
@@ -1139,6 +1391,16 @@
 				"disableBodyPruning": true
 			},
 			"request": {
+				"auth": {
+					"type": "bearer",
+					"bearer": [
+						{
+							"key": "token",
+							"value": "{{token}}",
+							"type": "string"
+						}
+					]
+				},
 				"method": "GET",
 				"header": [
 					{
@@ -1146,11 +1408,6 @@
 						"name": "Content-Type",
 						"type": "text",
 						"value": "application/json"
-					},
-					{
-						"key": "Authorization",
-						"type": "text",
-						"value": "Bearer eyJ0eXAiOiJKV1QiLCJhbGciOiJSUzUxMiJ9.eyJlbWFpbCI6InRob21hc0BjYWNvbXBpbGVwYXMuY29tIiwicGFzc3dvcmQiOiIkMnkkMTAkRlU1MG9zeTYzY2x4M1ltTWFyT3l2T0xUeEp2R0hsSkc3ODdEMlwvZkxzN3ZOcDRmazdySVwvSyIsInRpbWUiOnsiZGF0ZSI6IjIwMjAtMDEtMDUgMTc6Mjc6NTkuMzM4NDQzIiwidGltZXpvbmVfdHlwZSI6MywidGltZXpvbmUiOiJFdXJvcGVcL1BhcmlzIn19.YnT8KaexRzD9gMpISgQXmzQxYbPXZ5lQvGgcAzdxHgRJhTCJcoVXCV4OsQwGIYXQ48o-7ymyameWifibu91diuJe5lg5CT9ATZnTDahs5uNyHMrGYPEpHT2MEJ38rok0B0AVDrkNmkNy07aTeofx-ilewKcDovnX8faDcw1wxM0"
 					}
 				],
 				"body": {
@@ -1163,7 +1420,7 @@
 					}
 				},
 				"url": {
-					"raw": "http://localhost/?module=lobby&action=consult&param=2",
+					"raw": "http://localhost/?module=lobby&action=consult&param=1",
 					"protocol": "http",
 					"host": [
 						"localhost"
@@ -1172,11 +1429,6 @@
 						""
 					],
 					"query": [
-						{
-							"key": "id_lobby",
-							"value": "1",
-							"disabled": true
-						},
 						{
 							"key": "module",
 							"value": "lobby"
@@ -1187,12 +1439,445 @@
 						},
 						{
 							"key": "param",
-							"value": "2"
+							"value": "1"
 						}
 					]
 				}
 			},
 			"response": []
+		},
+		{
+			"name": "Delete lobby",
+			"protocolProfileBehavior": {
+				"disableBodyPruning": true
+			},
+			"request": {
+				"auth": {
+					"type": "bearer",
+					"bearer": [
+						{
+							"key": "token",
+							"value": "{{token}}",
+							"type": "string"
+						}
+					]
+				},
+				"method": "GET",
+				"header": [
+					{
+						"key": "Content-Type",
+						"name": "Content-Type",
+						"type": "text",
+						"value": "application/json"
+					}
+				],
+				"body": {
+					"mode": "raw",
+					"raw": "",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "http://localhost/?module=lobby&action=delete&param=11",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"path": [
+						""
+					],
+					"query": [
+						{
+							"key": "module",
+							"value": "lobby"
+						},
+						{
+							"key": "action",
+							"value": "delete"
+						},
+						{
+							"key": "param",
+							"value": "11"
+						}
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Create lobby",
+			"request": {
+				"auth": {
+					"type": "bearer",
+					"bearer": [
+						{
+							"key": "token",
+							"value": "{{token}}",
+							"type": "string"
+						}
+					]
+				},
+				"method": "POST",
+				"header": [
+					{
+						"key": "Content-Type",
+						"name": "Content-Type",
+						"type": "text",
+						"value": "application/json"
+					}
+				],
+				"body": {
+					"mode": "formdata",
+					"formdata": [
+						{
+							"key": "file",
+							"type": "file",
+							"src": "/Users/danidani/Pictures/20190804_165519.jpg",
+							"disabled": true
+						},
+						{
+							"key": "label",
+							"value": "Python",
+							"type": "text"
+						},
+						{
+							"key": "description",
+							"value": "Python c tro bien !!!",
+							"type": "text"
+						},
+						{
+							"key": "private",
+							"value": "false",
+							"type": "text"
+						}
+					],
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "http://localhost/?module=lobby&action=create",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"path": [
+						""
+					],
+					"query": [
+						{
+							"key": "module",
+							"value": "lobby"
+						},
+						{
+							"key": "action",
+							"value": "create"
+						}
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Create user",
+			"request": {
+				"auth": {
+					"type": "bearer",
+					"bearer": [
+						{
+							"key": "token",
+							"value": "{{token}}",
+							"type": "string"
+						}
+					]
+				},
+				"method": "POST",
+				"header": [
+					{
+						"key": "Content-Type",
+						"name": "Content-Type",
+						"type": "text",
+						"value": "application/json"
+					}
+				],
+				"body": {
+					"mode": "formdata",
+					"formdata": [
+						{
+							"key": "file",
+							"type": "file",
+							"src": "/Users/danidani/Pictures/20190804_165519.jpg"
+						},
+						{
+							"key": "pseudo",
+							"value": "Amelax",
+							"type": "text"
+						},
+						{
+							"key": "first_name",
+							"value": "Amélie",
+							"type": "text"
+						},
+						{
+							"key": "last_name",
+							"value": "Perrin",
+							"type": "text"
+						},
+						{
+							"key": "password",
+							"value": "Pacha",
+							"type": "text"
+						},
+						{
+							"key": "confirm_password",
+							"value": "Pacha",
+							"type": "text"
+						},
+						{
+							"key": "email",
+							"value": "amelie.perrin@outlook.com",
+							"type": "text"
+						}
+					],
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "http://localhost/?module=connection&action=register&param=-1",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"path": [
+						""
+					],
+					"query": [
+						{
+							"key": "module",
+							"value": "connection"
+						},
+						{
+							"key": "action",
+							"value": "register"
+						},
+						{
+							"key": "param",
+							"value": "-1"
+						}
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Delete message",
+			"protocolProfileBehavior": {
+				"disableBodyPruning": true
+			},
+			"request": {
+				"auth": {
+					"type": "bearer",
+					"bearer": [
+						{
+							"key": "token",
+							"value": "{{token}}",
+							"type": "string"
+						}
+					]
+				},
+				"method": "GET",
+				"header": [
+					{
+						"key": "Content-Type",
+						"name": "Content-Type",
+						"type": "text",
+						"value": "application/json"
+					}
+				],
+				"body": {
+					"mode": "raw",
+					"raw": "",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "http://localhost/?param=3&module=message&action=delete_message",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"path": [
+						""
+					],
+					"query": [
+						{
+							"key": "param",
+							"value": "3"
+						},
+						{
+							"key": "module",
+							"value": "message"
+						},
+						{
+							"key": "action",
+							"value": "delete_message"
+						}
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Get messages",
+			"protocolProfileBehavior": {
+				"disableBodyPruning": true
+			},
+			"request": {
+				"auth": {
+					"type": "bearer",
+					"bearer": [
+						{
+							"key": "token",
+							"value": "{{token}}",
+							"type": "string"
+						}
+					]
+				},
+				"method": "GET",
+				"header": [
+					{
+						"key": "Content-Type",
+						"name": "Content-Type",
+						"type": "text",
+						"value": "application/json"
+					}
+				],
+				"body": {
+					"mode": "raw",
+					"raw": "{\n\t\"lobby_id\": 1\n}",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "http://localhost/?module=message&action=messages",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"path": [
+						""
+					],
+					"query": [
+						{
+							"key": "module",
+							"value": "message"
+						},
+						{
+							"key": "action",
+							"value": "messages"
+						}
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Check if admin",
+			"protocolProfileBehavior": {
+				"disableBodyPruning": true
+			},
+			"request": {
+				"auth": {
+					"type": "bearer",
+					"bearer": [
+						{
+							"key": "token",
+							"value": "{{token}}",
+							"type": "string"
+						}
+					]
+				},
+				"method": "GET",
+				"header": [
+					{
+						"key": "Content-Type",
+						"name": "Content-Type",
+						"type": "text",
+						"value": "application/json"
+					}
+				],
+				"body": {
+					"mode": "raw",
+					"raw": "{\n\t\"lobby_id\": 1\n}",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "http://localhost/?module=user&action=check_if_admin",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"path": [
+						""
+					],
+					"query": [
+						{
+							"key": "module",
+							"value": "user"
+						},
+						{
+							"key": "action",
+							"value": "check_if_admin"
+						}
+					]
+				}
+			},
+			"response": []
+		}
+	],
+	"event": [
+		{
+			"listen": "prerequest",
+			"script": {
+				"id": "e35b32f1-0914-4598-88a3-c8f86957afde",
+				"type": "text/javascript",
+				"exec": [
+					""
+				]
+			}
+		},
+		{
+			"listen": "test",
+			"script": {
+				"id": "32fbf7a9-076a-43e3-a0cd-6c18665cd52d",
+				"type": "text/javascript",
+				"exec": [
+					"pm.test('Sucess status', () => {",
+					"    pm.response.to.have.status(200);",
+					"    pm.response.to.be.json;",
+					"    let success = pm.response.json()['success'];",
+					"    pm.expect(success).to.equal(true);",
+					"});"
+				]
+			}
 		}
 	],
 	"protocolProfileBehavior": {}
