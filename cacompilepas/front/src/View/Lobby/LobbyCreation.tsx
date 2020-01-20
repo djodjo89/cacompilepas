@@ -204,7 +204,7 @@ class LobbyCreation extends React.Component<any, LobbyCreationState> {
                                 className={'mt-2 mt-lg-2 mt-md-1 pt-1 pt-md-1 ml-3 ml-lg-2 ml-md-2 ml-sm-3'}
                             >
                                 Lobby privé (seules les personnes autorisées pourront le
-                                consulter
+                                consulter)
                             </h4>
                         </div>
                     </div>

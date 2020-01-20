@@ -244,7 +244,7 @@ class Admin extends React.Component<any, AdminState> {
         }
     }
 
-    public navigate(event: React.MouseEvent<HTMLLIElement, MouseEvent>): void {
+    public navigate(event: React.MouseEvent<HTMLAnchorElement, MouseEvent>): void {
         event.preventDefault();
         this.refreshData();
         let target: any = event.target;
@@ -597,7 +597,7 @@ class Admin extends React.Component<any, AdminState> {
                                                                  labelNotDragged={'Glisse un logo par ici !'}
                                                                  labelDragged={'Logo déposé !'}
                                                                  accept={'image/*'}
-                                                                 backgroundClassName={'mt-3 mt-lg-5 mt-md-4 mt-sm-4 ml-4 ml-lg-5 ml-md-5 ml-sm-4 pt-0 pt-lg-1 pt-md-4 pt-sm-3'}
+                                                                 backgroundClassName={'mt-3 mt-lg-5 mt-md-4 mt-sm-4 ml-4 ml-lg-5 ml-md-5 ml-sm-4 pt-0 pt-lg-3 pt-md-4 pt-sm-3 pb-lg-2 pb-md-2 pb-sm-2'}
                                                                  handleFileDrop={this.handleLogoDrop}
                                                                  handleFileChange={this.handleLogoChange}
                                                         />
@@ -630,7 +630,7 @@ class Admin extends React.Component<any, AdminState> {
                                                                onChange={this.handleCourseSheetTitleChange}/>
                                                         <DropBox id={'course-sheet-input'}
                                                                  className={'text-sm-left col-6 offset-3 offset-lg-0 offset-md-0 offset-sm-0 col-lg-12 col-md-12 col-sm-12 mt-3 mt-lg-0 mt-md-0 mt-sm-0 pt-3 pr-0 pl-0 pl-lg-4 pl-md-4 pl-sm-4'}
-                                                                 backgroundClassName={'mt-1'}
+                                                                 backgroundClassName={'mt-1 pt-lg-5 pb-lg-4 pb-md-2 pb-sm-2'}
                                                                  labelNotDragged={'Glisse une fiche par ici !'}
                                                                  labelDragged={'Fiche déposée !'}
                                                                  accept={'.docx,.pdf,.html,.htm,.odp,txt,md'}
@@ -680,7 +680,7 @@ class Admin extends React.Component<any, AdminState> {
                                                         <div
                                                             className={'row container-fluid pr-0 pl-4 pl-lg-0 pl-md-0 pl-sm-0'}>
                                                             <SubmitButton
-                                                                text={'Une nouvelle fiche ? Ajoute-la !'}
+                                                                text={'Ajoute cette fiche au lobby !'}
                                                                 onClick={this.addCourseSheet}
                                                                 className={'col-sm-12 container-fluid add-course-sheet-button mt-5 mr-0 ml-0 pl-0'}
                                                                 disconnectButton={'plus'}
@@ -767,7 +767,7 @@ class Admin extends React.Component<any, AdminState> {
                                                         className={'col-11 pt-0 pt-lg-0 pt-md-0 pt-sm-0 pr-0 pl-2 pl-lg-0 pl-md-0 pl-sm-0 text-left lobby-write-right-label'}
                                                     >
                                                         Lobby privé (seules les personnes autorisées pourront le
-                                                        consulter
+                                                        consulter)
                                                     </h4>
                                                 </div>
                                             </div>
@@ -816,21 +816,37 @@ class Admin extends React.Component<any, AdminState> {
                                             </div>
                                             <nav>
                                                 <ul className="nav nav-tabs custom-tab-nav">
-                                                    <li className="nav-item" onClick={this.navigate}>
+                                                    <li className="nav-item">
                                                         <a className="nav-link custom-tab-active custom-tab"
-                                                           href={'presentation'}>Description</a>
+                                                           href={'presentation'}
+                                                           onClick={this.navigate}
+                                                        >
+                                                            Description
+                                                        </a>
                                                     </li>
-                                                    <li className="nav-item" onClick={this.navigate}>
+                                                    <li className="nav-item">
                                                         <a className="nav-link custom-tab"
-                                                           href={'course-sheets'}>Fiches</a>
+                                                           href={'course-sheets'}
+                                                           onClick={this.navigate}
+                                                        >
+                                                            Fiches
+                                                        </a>
                                                     </li>
-                                                    <li className="nav-item" onClick={this.navigate}>
+                                                    <li className="nav-item">
                                                         <a className="nav-link custom-tab"
-                                                           href={'rights'}>Droits</a>
+                                                           href={'rights'}
+                                                           onClick={this.navigate}
+                                                        >
+                                                            Droits
+                                                        </a>
                                                     </li>
-                                                    <li className="nav-item" onClick={this.navigate}>
+                                                    <li className="nav-item">
                                                         <a className="nav-link custom-tab"
-                                                           href={'messages'}>Messages</a>
+                                                           href={'messages'}
+                                                           onClick={this.navigate}
+                                                        >
+                                                            Messages
+                                                        </a>
                                                     </li>
                                                 </ul>
                                             </nav>

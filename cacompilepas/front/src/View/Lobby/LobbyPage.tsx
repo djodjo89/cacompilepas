@@ -34,6 +34,7 @@ class LobbyPage extends React.Component<any, LobbyState> {
             lobbyInformation: [],
             messageContent: '',
         }
+        this.checkIfAdmin = this.checkIfAdmin.bind(this);
         this.setState = this.setState.bind(this);
         this.sendMessage = this.sendMessage.bind(this);
         this.fillCourseSheets = this.fillCourseSheets.bind(this);
@@ -42,6 +43,7 @@ class LobbyPage extends React.Component<any, LobbyState> {
         this.refreshCourseSheets = this.refreshCourseSheets.bind(this);
         this.refreshData = this.refreshData.bind(this);
         this.refreshDescription = this.refreshDescription.bind(this);
+        this.refreshAdmin = this.refreshAdmin.bind(this);
         this.refreshMessages = this.refreshMessages.bind(this);
         this.updateMessage = this.updateMessage.bind(this);
         this.intervalRefresh = setInterval(
@@ -53,6 +55,7 @@ class LobbyPage extends React.Component<any, LobbyState> {
     public componentDidMount(): void {
         this.refreshCourseSheets();
         this.refreshDescription();
+        this.refreshAdmin();
         this.refreshMessages();
     }
 
@@ -64,6 +67,10 @@ class LobbyPage extends React.Component<any, LobbyState> {
 
     public componentWillUnmount(): void {
         clearInterval(this.intervalRefresh);
+    }
+
+    public checkIfAdmin(payload: any): void {
+        this.setState({isAdmin: payload['success']});
     }
 
     public sendMessage(event: React.MouseEvent<HTMLButtonElement>): void {
@@ -102,6 +109,17 @@ class LobbyPage extends React.Component<any, LobbyState> {
         new Request(
             '/course_sheet/course_sheets',
             this.fillCourseSheets,
+            'POST',
+            {
+                'lobby_id': this.props.location.pathname.split(/\//)[2],
+            }
+        );
+    }
+
+    public refreshAdmin(): void {
+        new Request(
+            '/user/check_if_admin',
+            this.checkIfAdmin,
             'POST',
             {
                 'lobby_id': this.props.location.pathname.split(/\//)[2],
@@ -155,6 +173,7 @@ class LobbyPage extends React.Component<any, LobbyState> {
                                         <LobbyTop
                                             id={this.props.location.pathname.split(/\//)[2]}
                                             lobbyInformation={this.state.lobbyInformation}
+                                            isAdmin={this.state.isAdmin}
                                             courseSheets={this.state.courseSheets}
                                         />
                                         <LobbyBody id={this.props.location.pathname.split(/\//)[2]}
@@ -163,7 +182,7 @@ class LobbyPage extends React.Component<any, LobbyState> {
                                                    messages={this.state.messages}
                                                    sendMessage={this.sendMessage}
                                                    updateMessage={this.updateMessage}
-                                                   displayNewCourseSheetForm={this.state.isAdmin}
+                                                   isAdmin={this.state.isAdmin}
                                         />
                                     </section>
                                 );
