@@ -29,8 +29,10 @@ class App extends React.Component<any, any> {
                         <Route exact path={'/'}>
                             <Home/>
                         </Route>
-                        <PrivateRoute path={'/lobby'} component={LobbyPage} rest={[]}/>
-                        <PrivateRoute path={'/course-sheet'} component={CourseSheetPage} rest={[]}/>
+                        <Route path={'/lobby'} component={LobbyPage} rest={[]}>
+                            <LobbyPage location={document.location}/>
+                        </Route>
+                        <Route path={'/course-sheet'} component={CourseSheetPage} rest={[]}/>
                         <Route path={'/connexion/login'}>
                             <Connection referrer={document.referrer}/>
                         </Route>

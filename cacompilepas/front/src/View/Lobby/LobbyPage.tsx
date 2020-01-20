@@ -162,9 +162,6 @@ class LobbyPage extends React.Component<any, LobbyState> {
         return (
             <Router>
                 <Switch>
-                    <Route exact path={this.props.path}>
-                        <h3>Veuillez choisir un lobby</h3>
-                    </Route>
                     <Route path={this.props.location.pathname}>
                         {() => {
                             if ('true' === this.state.right) {
