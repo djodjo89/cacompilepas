@@ -118,7 +118,7 @@ class Personal extends React.Component<any, PersonalState> {
         else {
             res = <div className={'col-12 col-lg-5 col-md-10 offset-md-2 col-sm-8 offset-sm-2 mt-4 centered'}>
                          <a href={'/creation'}>
-                             <div className={'offset-md-2'}>
+                             <div className={'offset-lg-0 offset-md-2 pl-lg-0 pl-md-5'}>
                                  <SubmitButton
                                      text={'Crée ton premier lobby ici !'}
                                      onClick={(event: any) => null}
