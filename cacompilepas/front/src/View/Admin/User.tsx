@@ -92,7 +92,8 @@ class User extends React.Component<UserProps, any> {
                             className={'col-11 pt-1 pt-lg-0 pr-0 pl-4 pl-lg-0 pl-md-0 pl-sm-0 text-left lobby-write-right-label'}
                             onClick={this.check}
                         >
-                            Peut modifier le lobby
+
+                            Peut écrire des messages sur le lobby
                         </h4>
                     </div>
                 </div>
