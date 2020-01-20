@@ -31,7 +31,7 @@ class SearchBar extends React.Component<any, SearchBarState> {
     }
 
     public refreshProposals(payload: any): void {
-        this.setState({proposals: payload['success'] && [] !== payload['data'] ? payload : []});
+        this.setState({proposals: payload['success'] && [] !== payload['data'] && undefined !== payload['data'] ? payload : []});
     }
 
     public emptyInput(isEmpty: boolean): void {

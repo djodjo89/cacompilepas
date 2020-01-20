@@ -252,43 +252,55 @@ class LobbyModel extends AbstractFileModel
 
             $lobbyId = (int)$this->fetchData('Lobby does not exist')['data'][0]['id_lobby'];
 
-            if ('' !== $logoName && '' !== $logoTmpName) {
+            $successfulInsert = $this->sendQuery('
+            INSERT INTO ccp_is_admin
+            (id_user, id_lobby)
+            VALUES
+            (?, ?)
+        ',
+                [$idAdmin, $lobbyId]);
 
-                try {
-                    $successfulUpload = $this->uploadOnFTP($lobbyId, $logoName, $logoTmpName, '/logo/', ['jpg', 'jpeg', 'ico', 'png', 'svg', 'bmp']);
-                } catch (IncorrectFileExtension $e) {
-                    throw new JSONException($e->getMessage());
-                } catch (JSONException $e) {
-                    throw $e;
-                }
+            if ($successfulInsert) {
+                if ('' !== $logoName && '' !== $logoTmpName) {
 
-                if ($successfulUpload) {
-                    $this->sendQuery('
+                    try {
+                        $successfulUpload = $this->uploadOnFTP($lobbyId, $logoName, $logoTmpName, '/logo/', ['jpg', 'jpeg', 'ico', 'png', 'svg', 'bmp']);
+                    } catch (IncorrectFileExtension $e) {
+                        throw new JSONException($e->getMessage());
+                    } catch (JSONException $e) {
+                        throw $e;
+                    }
+
+                    if ($successfulUpload) {
+                        $this->sendQuery('
                         SELECT id_lobby
                         FROM ccp_lobby
                         ORDER BY id_lobby DESC 
                         LIMIT 1
                     ');
 
-                    return [
-                        'id_lobby' => $this->getQuery()->fetch()['id_lobby'],
-                        'message' => 'Lobby was successfully created',
-                    ];
-                } else {
-                    throw new JSONException('Lobby logo could not be uploaded');
+                        return [
+                            'id_lobby' => $this->getQuery()->fetch()['id_lobby'],
+                            'message' => 'Lobby was successfully created',
+                        ];
+                    } else {
+                        throw new JSONException('Lobby logo could not be uploaded');
+                    }
                 }
-            }
 
-            $this->sendQuery('
+                $this->sendQuery('
                 INSERT INTO ccp_is_admin
                 (id_user, id_lobby) VALUES (?, ?)
             ',
-                [$idAdmin, $lobbyId]);
+                    [$idAdmin, $lobbyId]);
 
-            return [
-                'id_lobby' => $lobbyId,
-                'message' => 'Lobby was successfully uploaded',
-            ];
+                return [
+                    'id_lobby' => $lobbyId,
+                    'message' => 'Lobby was successfully uploaded',
+                ];
+            } else {
+                throw new JSONException('Lobby could not be created');
+            }
         } else {
             throw new JSONException('Lobby could not be created');
         }
